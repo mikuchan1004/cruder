@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>채용 공고 와이어프레임</title>
+    <link rel="stylesheet" href="recult.css">
+</head>
+<body>
+    <!-- 상단 헤더 영역 -->
+    <header class="wireframe-header">
+        헤더
+    </header>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="main-container">
+        <!-- 타이틀 -->
+        <div class="page-title-area">
+            <h1>채용 공고</h1>
+            <p>다양한 기업의 채용 정보를 확인하세요.</p>
+        </div>
+
+        <!-- 검색 영역 -->
+        <div class="search-area">
+            <input type="text" placeholder="검색" class="search-input">
+        </div>
+
+        <!-- 게시판 (테이블) 영역 -->
+        <div class="table-area">
+            <!-- 데스크톱용 테이블 헤더 -->
+            <div class="table-header">
+                <span>회사명</span>
+                <span>공고명</span>
+                <span>경력</span>
+                <span>지역</span>
+                <span>상세</span>
+            </div>
+            
+            <!-- 리스트 아이템 1 -->
+            <div class="table-row">
+                <span class="col" data-label="회사명">네이버</span>
+                <span class="col" data-label="공고명">백엔드 개발자 모집</span>
+                <span class="col" data-label="경력">3년이상</span>
+                <span class="col" data-label="지역">천안시 동남구</span>
+                <span class="col" data-label="상세"><a href="#" class="detail-link">상세보기</a></span>
+            </div>
+            
+            <!-- 리스트 아이템 2 -->
+            <div class="table-row">
+                <span class="col" data-label="회사명">구글</span>
+                <span class="col" data-label="공고명">백엔드 개발자 모집</span>
+                <span class="col" data-label="경력">5년이상</span>
+                <span class="col" data-label="지역">천안시 서북구</span>
+                <span class="col" data-label="상세"><a href="#" class="detail-link">상세보기</a></span>
+            </div>
+        </div>
+
+        <!-- 페이지네이션 영역 -->
+        <div class="pagination">
+            <button class="page-btn arrow">◀</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">4</button>
+            <button class="page-btn">5</button>
+            <button class="page-btn arrow">▶</button>
+            <span class="page-text">페이지</span>
+        </div>
+    </main>
+
+    <!-- 하단 푸터 영역 -->
+    <footer class="wireframe-footer">
+        푸터
+    </footer>
+</body>
+</html>

@@ -1,0 +1,124 @@
+/* 기본 리셋 및 폰트 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+}
+
+/* 상단 헤더 영역 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #333; /* 이미지 하단의 선 묘사 */
+}
+
+/* 로고 스타일 */
+.logo img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* 중앙 네비게이션 스타일 */
+.gnb ul {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.gnb a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/* 우측 사용자 메뉴 스타일 */
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.95rem;
+}
+
+.user-menu a {
+    text-decoration: none;
+    color: #333;
+}
+
+.greeting {
+    color: #555;
+}
+
+.btn-logout {
+    background-color: #555;
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #333;
+}
+
+/* 모바일 전용 햄버거 버튼 숨김 처리 (데스크톱) */
+.mobile-menu-btn {
+    display: none; 
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+/* ==================================
+   모바일 대응 (반응형 웹 미디어 쿼리)
+=================================== */
+@media (max-width: 900px) {
+    .header {
+        flex-wrap: wrap;
+        padding: 15px 20px;
+    }
+
+    /* 모바일에서는 메뉴와 사용자 정보를 세로로 배치하고 숨김 처리 */
+    .gnb {
+        display: none; 
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .gnb ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .user-menu {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .mobile-menu-btn {
+        display: block; /* 모바일에서 햄버거 메뉴 버튼 노출 */
+    }
+
+    /* hover 시 메뉴 표시 (실제 구현 시 JS로 클릭 토글 이벤트 구현 필요) */
+    .header:hover .gnb,
+    .header:hover .user-menu {
+        display: flex;
+    }
+}

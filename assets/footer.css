@@ -1,0 +1,101 @@
+/* 기본 리셋 및 폰트 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333333;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+/* 메인 콘텐츠 래퍼 */
+.main-content {
+    width: 100%;
+    max-width: 1000px;
+    text-align: center; /* 전체 텍스트 중앙 정렬 */
+}
+
+/* ==================================
+   CRUD 소개 영역
+=================================== */
+.main-title {
+    color: #6B30E4; /* 보라색 텍스트 적용 */
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.intro-box {
+    background-color: #A6C3F8; /* 파란색 배경 적용 */
+    border: 1px solid #333; /* 얇은 테두리 */
+    padding: 40px 20px;
+    margin-bottom: 80px;
+}
+
+.intro-box p {
+    font-size: 1.15rem;
+    color: #222;
+    line-height: 1.8;
+}
+
+/* ==================================
+   일대일 문의 영역
+=================================== */
+.section-title {
+    color: #6B30E4; /* 보라색 텍스트 적용 */
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.contact-info p {
+    font-size: 1.15rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+/* ==================================
+   모바일 대응 (반응형 웹 미디어 쿼리)
+=================================== */
+@media (max-width: 768px) {
+    body {
+        padding: 40px 15px;
+    }
+
+    .main-title {
+        font-size: 2.2rem;
+    }
+
+    .intro-box {
+        padding: 30px 15px;
+        margin-bottom: 50px;
+    }
+
+    .intro-box p {
+        font-size: 1rem;
+        word-break: keep-all; /* 모바일에서 단어 단위로 줄바꿈 되도록 설정 */
+    }
+
+    /* 데스크톱용 수동 줄바꿈(<br>) 요소를 모바일에서는 숨김 처리 */
+    .desktop-only {
+        display: none; 
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+
+    .contact-info p {
+        font-size: 1rem;
+    }
+}

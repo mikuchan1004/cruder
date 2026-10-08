@@ -1,0 +1,163 @@
+/* 기본 리셋 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: #000; /* 와이어프레임 스타일에 맞춘 검은색 텍스트 */
+    background-color: #fff;
+}
+
+/* 임시 헤더 & 푸터 스타일 */
+.wireframe-header, .wireframe-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+}
+
+.wireframe-footer {
+    margin-top: auto; /* 콘텐츠가 부족해도 하단에 고정 */
+}
+
+/* 메인 래퍼 */
+.main-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+/* 타이틀 스타일 */
+.page-title-area h1 {
+    font-size: 2.2rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.page-title-area p {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+/* 검색창 스타일 */
+.search-area {
+    margin-bottom: 40px;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 450px;
+    padding: 15px 20px;
+    border: 1px solid #000;
+    font-size: 1rem;
+    outline: none;
+}
+
+/* 게시판 테이블 스타일 (CSS Grid 적용) */
+.table-area {
+    border: 1px solid #000; /* 전체 표 테두리 */
+    margin-bottom: 50px;
+}
+
+.table-header, .table-row {
+    display: grid;
+    /* 회사명, 공고명(넓게), 경력, 지역(넓게), 상세 비율 조정 */
+    grid-template-columns: 1.2fr 2fr 1.2fr 1.5fr 1fr;
+    padding: 20px 10px;
+    align-items: center;
+}
+
+.table-header {
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-row {
+    border-bottom: 1px solid #ddd;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.detail-link {
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+}
+
+.detail-link:hover {
+    text-decoration: underline;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-btn {
+    width: 32px;
+    height: 32px;
+    border: 2px solid #000;
+    background-color: #fff;
+    color: #000;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-btn.active {
+    background-color: #000;
+    color: #fff; /* 활성화된 페이지는 반전 효과 */
+}
+
+.page-text {
+    font-size: 1.1rem;
+    margin-left: 5px;
+}
+
+/* ==================================
+   모바일 반응형 웹 설정 (미디어 쿼리)
+=================================== */
+@media (max-width: 768px) {
+    /* 모바일에서는 기본 가로 헤더를 숨김 */
+    .table-header {
+        display: none;
+    }
+
+    /* 각 행을 카드(Card) 형태로 세로 배치 */
+    .table-row {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        padding: 25px 20px;
+        gap: 12px;
+    }
+
+    /* HTML에 추가해둔 data-label 속성을 CSS ::before로 불러와서 제목처럼 표시 */
+    .table-row .col {
+        display: flex;
+        align-items: center;
+    }
+
+    .table-row .col::before {
+        content: attr(data-label);
+        font-weight: bold;
+        width: 80px; /* 라벨 너비 고정 */
+        display: inline-block;
+        color: #555;
+    }
+}
