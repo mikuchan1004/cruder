@@ -37,3 +37,6 @@ dist/
 .DS_Store
 Thumbs.db
 
+# 스크립트 폴더
+
+Script/
