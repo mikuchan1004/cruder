@@ -1,4 +1,6 @@
-/* 기본 리셋 및 폰트 설정 */
+/* ==================================
+   기본 리셋 및 폰트 설정
+=================================== */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +9,7 @@
 }
 
 body {
-    background-color: #ffffff;
+    background-color: #F8F9FA;
 }
 
 /* 상단 헤더 영역 */
@@ -15,14 +17,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 40px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #333; /* 이미지 하단의 선 묘사 */
+    padding: 16px 40px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #E5E7EB;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 /* 로고 스타일 */
 .logo img {
-    height: 60px;
+    height: 50px;
     width: auto;
     object-fit: contain;
 }
@@ -31,46 +34,60 @@ body {
 .gnb ul {
     display: flex;
     list-style: none;
-    gap: 40px;
+    gap: 30px;
 }
 
 .gnb a {
     text-decoration: none;
-    color: #333;
-    font-size: 1.2rem;
+    color: #4B5563;
+    font-size: 1.05rem;
     font-weight: 500;
+    transition: color 0.2s;
+}
+
+.gnb a:hover {
+    color: #6B46C1;
+    font-weight: 600;
 }
 
 /* 우측 사용자 메뉴 스타일 */
 .user-menu {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 16px;
     font-size: 0.95rem;
 }
 
 .user-menu a {
     text-decoration: none;
-    color: #333;
+    color: #4B5563;
+    transition: color 0.2s;
+}
+
+.user-menu a:hover {
+    color: #6B46C1;
 }
 
 .greeting {
-    color: #555;
+    color: #6B7280;
 }
 
 .btn-logout {
-    background-color: #555;
+    background-color: #6B46C1;
     color: #fff;
     border: none;
-    padding: 6px 14px;
+    padding: 8px 16px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.9rem;
-    transition: background-color 0.2s;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
 }
 
 .btn-logout:hover {
-    background-color: #333;
+    background-color: #5533A3;
+    transform: translateY(-1px);
 }
 
 /* 모바일 전용 햄버거 버튼 숨김 처리 (데스크톱) */
@@ -78,8 +95,9 @@ body {
     display: none; 
     background: none;
     border: none;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     cursor: pointer;
+    color: #374151;
 }
 
 /* ==================================
@@ -88,7 +106,7 @@ body {
 @media (max-width: 900px) {
     .header {
         flex-wrap: wrap;
-        padding: 15px 20px;
+        padding: 16px 20px;
     }
 
     /* 모바일에서는 메뉴와 사용자 정보를 세로로 배치하고 숨김 처리 */
@@ -96,27 +114,32 @@ body {
         display: none; 
         width: 100%;
         margin-top: 15px;
+        border-top: 1px solid #F3F4F6;
+        padding-top: 15px;
     }
 
     .gnb ul {
         flex-direction: column;
         align-items: center;
-        gap: 15px;
+        gap: 12px;
     }
 
     .user-menu {
         display: none;
         width: 100%;
         flex-direction: column;
-        margin-top: 20px;
+        align-items: center;
+        margin-top: 15px;
         gap: 10px;
+        border-top: 1px solid #F3F4F6;
+        padding-top: 15px;
     }
 
     .mobile-menu-btn {
-        display: block; /* 모바일에서 햄버거 메뉴 버튼 노출 */
+        display: block; 
     }
 
-    /* hover 시 메뉴 표시 (실제 구현 시 JS로 클릭 토글 이벤트 구현 필요) */
+    /* hover 시 메뉴 표시 */
     .header:hover .gnb,
     .header:hover .user-menu {
         display: flex;

@@ -1,4 +1,6 @@
-/* 기본 리셋 및 폰트 설정 */
+/* ==================================
+   기본 리셋 및 폰트 설정
+=================================== */
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +9,8 @@
 }
 
 body {
-    background-color: #ffffff;
-    color: #333;
+    background-color: #F8F9FA;
+    color: #212529;
     display: flex;
     justify-content: center;
     padding: 40px 20px;
@@ -19,20 +21,28 @@ body {
 .signup-container {
     width: 100%;
     max-width: 1000px;
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 45px 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    margin: auto;
 }
 
 /* 타이틀 */
 .page-title {
     text-align: center;
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin-bottom: 50px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 35px;
+    color: #111;
+    letter-spacing: -0.5px;
 }
 
 /* 콘텐츠 래퍼 (좌우 분할) */
 .signup-content {
     display: flex;
-    gap: 50px;
+    gap: 40px;
     align-items: flex-start;
 }
 
@@ -46,19 +56,20 @@ body {
 .signup-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
 }
 
 .input-row {
     display: flex;
-    gap: 15px;
+    gap: 10px;
 }
 
 .form-input {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    padding: 12px 16px;
+    background-color: #ffffff;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
     font-size: 1rem;
     outline: none;
     transition: border-color 0.2s;
@@ -66,6 +77,10 @@ body {
 
 .form-input:focus {
     border-color: #6B46C1;
+}
+
+.form-input::placeholder {
+    color: #9CA3AF;
 }
 
 .flex-grow {
@@ -77,47 +92,50 @@ body {
     border: none;
     color: #fff;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
 }
 
 /* 보라색 테마 버튼 */
 .btn-purple {
     background-color: #6B46C1;
+    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
 }
 
 .btn-purple:hover {
     background-color: #5533A3;
+    transform: translateY(-1px);
 }
 
 .btn-small {
-    padding: 0 20px;
-    border-radius: 20px; /* 둥근 캡슐 형태 */
-    font-size: 0.95rem;
+    padding: 0 18px;
+    border-radius: 8px; 
+    font-size: 0.9rem;
     white-space: nowrap;
 }
 
 .btn-large {
     flex: 1;
-    padding: 15px 0;
-    border-radius: 6px;
-    font-size: 1.2rem;
+    padding: 14px 0;
+    border-radius: 8px;
+    font-size: 1.1rem;
 }
 
 /* 경고 메세지 */
 .warning-message {
-    color: #333;
-    font-size: 1rem;
-    padding-left: 5px;
+    color: #DC2626;
+    font-size: 0.85rem;
+    padding-left: 4px;
+    font-weight: 500;
 }
 
 /* 하단 가입/취소 버튼 그룹 */
 .action-buttons {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     margin-top: 10px;
 }
 
@@ -131,14 +149,16 @@ body {
 }
 
 .terms-box {
-    border: 1px solid #333;
-    padding: 30px;
-    height: 480px; /* 좌측 폼 높이와 비슷하게 고정 */
-    overflow-y: auto; /* 내용이 길면 스크롤 생성 */
+    background-color: #F9FAFB;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    padding: 24px;
+    height: 470px; 
+    overflow-y: auto; 
     font-size: 0.95rem;
     line-height: 1.6;
-    color: #444;
-    margin-bottom: 15px;
+    color: #4B5563;
+    margin-bottom: 16px;
 }
 
 .terms-box p {
@@ -148,9 +168,11 @@ body {
 .terms-agree {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 1.05rem;
+    gap: 10px;
+    font-size: 1rem;
     cursor: pointer;
+    color: #374151;
+    font-weight: 500;
 }
 
 .agree-checkbox {
@@ -164,10 +186,20 @@ body {
    모바일 반응형 웹 설정 (미디어 쿼리)
 =================================== */
 @media (max-width: 768px) {
-    /* 폼과 약관 영역을 세로로 배치 */
+    body {
+        padding: 20px 10px;
+    }
+
+    .signup-container {
+        padding: 25px 20px;
+        border: none;
+        box-shadow: none;
+        background-color: transparent;
+    }
+
     .signup-content {
         flex-direction: column;
-        gap: 40px;
+        gap: 30px;
     }
 
     .form-section, .terms-section {
@@ -175,18 +207,20 @@ body {
     }
 
     .page-title {
-        font-size: 2rem;
-        margin-bottom: 30px;
+        font-size: 1.8rem;
+        margin-bottom: 24px;
     }
 
-    /* 약관 박스 높이 축소 */
     .terms-box {
-        height: 250px; 
+        height: 220px; 
     }
 
-    /* 모바일에서는 버튼을 조금 더 크게 */
     .btn-small {
-        padding: 0 15px;
-        font-size: 0.9rem;
+        padding: 0 14px;
+        font-size: 0.85rem;
+    }
+
+    .action-buttons {
+        gap: 10px;
     }
 }

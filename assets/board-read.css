@@ -1,4 +1,6 @@
-/* 기본 리셋 및 폰트 설정 */
+/* ==================================
+   기본 리셋 및 폰트 설정
+=================================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -10,8 +12,8 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    color: #333;
-    background-color: #fff;
+    color: #212529;
+    background-color: #F8F9FA;
 }
 
 /* 임시 헤더 스타일 */
@@ -19,7 +21,9 @@ body {
     text-align: center;
     padding: 20px;
     font-size: 1.1rem;
-    color: #000;
+    background-color: #ffffff;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
 }
 
 /* 메인 래퍼 */
@@ -27,7 +31,7 @@ body {
     width: 100%;
     max-width: 1000px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px 20px;
 }
 
 /* ==================================
@@ -37,20 +41,25 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #000;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-    font-size: 1.15rem;
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .header-left {
     display: flex;
     gap: 30px;
+    color: #4B5563;
 }
 
 .header-right {
     display: flex;
     gap: 30px;
+    color: #6B7280;
 }
 
 /* ==================================
@@ -60,68 +69,73 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border: 1px solid #000;
-    min-height: 500px; /* 본문 영역의 최소 높이 확보 */
-    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    min-height: 450px;
+    padding: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .content-text {
     font-size: 1.1rem;
-    line-height: 1.6;
+    line-height: 1.7;
+    color: #1F2937;
 }
 
 /* 액션 버튼 영역 */
 .action-area {
     display: flex;
-    justify-content: flex-end; /* 버튼을 우측 하단으로 정렬 */
-    margin-top: 40px;
+    justify-content: flex-end;
+    margin-top: 30px;
 }
 
 .btn-report {
-    background-color: #C92A2A; /* 붉은색 포인트 컬러 */
-    color: #fff;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 6px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    background-color: #FEF2F2;
+    color: #DC2626;
+    border: 1px solid #FCA5A5;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
 }
 
 .btn-report:hover {
-    background-color: #A61E1E;
+    background-color: #DC2626;
+    color: #fff;
+    border-color: #DC2626;
 }
 
 /* ==================================
    모바일 반응형 웹 설정 (미디어 쿼리)
 =================================== */
 @media (max-width: 768px) {
-    /* 모바일에서는 메타 정보가 세로로 떨어지도록 변경 */
     .post-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 15px;
+        gap: 12px;
+        padding: 20px;
     }
 
     .header-left, .header-right {
         width: 100%;
-        justify-content: space-between; /* 항목들을 양끝으로 분산 */
+        justify-content: space-between;
         gap: 10px;
     }
 
-    /* 본문 높이를 기기에 맞게 축소 */
     .post-content {
         min-height: 350px;
+        padding: 20px;
     }
 
-    /* 버튼 터치 편의성을 위해 너비 확장 */
     .action-area {
         justify-content: stretch;
     }
 
     .btn-report {
         width: 100%;
-        padding: 15px;
+        padding: 14px;
     }
 }

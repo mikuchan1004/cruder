@@ -1,4 +1,6 @@
-/* 기본 리셋 및 폰트 설정 */
+/* ==================================
+   기본 리셋 및 폰트 설정
+=================================== */
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +9,8 @@
 }
 
 body {
-    background-color: #ffffff;
-    color: #333;
+    background-color: #F8F9FA;
+    color: #212529;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -30,8 +32,10 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
-    border-bottom: 2px solid #333;
+    padding: 18px 40px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #E5E7EB;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .header-left {
@@ -41,9 +45,10 @@ a {
 }
 
 .logo {
-    font-size: 1.6rem;
-    font-weight: 500;
-    color: #333;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.5px;
 }
 
 .gnb ul {
@@ -52,14 +57,15 @@ a {
 }
 
 .gnb a {
-    font-size: 1.1rem;
-    color: #666;
+    font-size: 1.05rem;
+    color: #6B7280;
     font-weight: 500;
+    transition: color 0.2s;
 }
 
 .gnb a.active, .gnb a:hover {
-    color: #333;
-    font-weight: bold;
+    color: #6B46C1;
+    font-weight: 600;
 }
 
 .header-right {
@@ -69,24 +75,26 @@ a {
 }
 
 .admin-greeting {
-    font-size: 1rem;
-    color: #555;
+    font-size: 0.95rem;
+    color: #4B5563;
 }
 
 .btn-logout {
     background-color: #6B46C1;
     color: #fff;
     border: none;
-    padding: 8px 25px;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: bold;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
 }
 
 .btn-logout:hover {
     background-color: #5533A3;
+    transform: translateY(-1px);
 }
 
 /* ==================================
@@ -103,26 +111,30 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .section-title {
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: #333;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.5px;
 }
 
 .status-filter {
-    padding: 8px 15px;
-    border: 1px solid #ddd;
+    padding: 8px 16px;
+    border: 1px solid #D1D5DB;
     border-radius: 20px;
     outline: none;
     font-size: 0.95rem;
+    background-color: #ffffff;
+    color: #374151;
+    cursor: pointer;
 }
 
 .content-wrapper {
     display: flex;
-    gap: 20px;
+    gap: 24px;
     align-items: flex-start;
 }
 
@@ -134,22 +146,31 @@ a {
 }
 
 .board-table {
-    border: 2px solid #333;
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
     border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .table-header {
-    font-weight: bold;
-    border-bottom: 2px solid #333;
-    padding: 20px 10px;
-    background-color: #fff;
+    font-weight: 600;
+    background-color: #F9FAFB;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 16px 20px;
+    color: #374151;
+    font-size: 0.95rem;
 }
 
 .table-row {
-    padding: 20px 10px;
-    border-bottom: 1px solid #ddd;
-    font-size: 1.1rem;
+    padding: 18px 20px;
+    border-bottom: 1px solid #F3F4F6;
+    font-size: 1rem;
+    transition: background-color 0.15s ease;
+}
+
+.table-row:hover {
+    background-color: #FAFAFA;
 }
 
 .table-row:last-child {
@@ -161,7 +182,7 @@ a {
 }
 
 .text-gray {
-    color: #777;
+    color: #9CA3AF;
 }
 
 .truncate {
@@ -181,21 +202,21 @@ a {
 
 /* 상태 뱃지 */
 .badge {
-    padding: 8px 16px;
+    padding: 6px 14px;
     border-radius: 20px;
-    font-size: 0.95rem;
-    font-weight: bold;
+    font-size: 0.85rem;
+    font-weight: 600;
     display: inline-block;
 }
 
 .pending {
-    background-color: #FFF3CD;
-    color: #856404;
+    background-color: #FEF3C7;
+    color: #D97706;
 }
 
 .completed {
-    background-color: #D4EDDA;
-    color: #155724;
+    background-color: #D1FAE5;
+    color: #059669;
 }
 
 /* ==================================
@@ -206,68 +227,83 @@ a {
 }
 
 .reply-box {
-    border: 2px solid #333;
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
     border-radius: 12px;
     padding: 30px;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .reply-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 30px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #111;
 }
 
 .inquiry-info {
-    margin-bottom: 30px;
+    background-color: #F9FAFB;
+    border: 1px solid #F3F4F6;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 24px;
 }
 
 .inquiry-type {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #6B46C1;
+    margin-bottom: 8px;
 }
 
 .inquiry-question {
-    font-size: 1rem;
-    color: #888;
+    font-size: 1.05rem;
+    color: #4B5563;
 }
 
 .reply-form {
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
 }
 
 .reply-label {
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 0.95rem;
+    font-weight: 600;
     margin-bottom: 10px;
+    color: #374151;
 }
 
 .reply-textarea {
     width: 100%;
-    min-height: 200px;
-    padding: 20px;
-    border: 2px solid #333;
-    border-radius: 12px;
+    min-height: 180px;
+    padding: 16px;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
     font-size: 1rem;
     resize: none;
     outline: none;
+    transition: border-color 0.2s;
+}
+
+.reply-textarea:focus {
+    border-color: #6B46C1;
 }
 
 .btn-submit {
     background-color: #6B46C1;
     color: #fff;
     border: none;
-    padding: 18px;
+    padding: 16px;
     border-radius: 8px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s;
     width: 100%;
+    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
 }
 
 .btn-submit:hover {
@@ -278,7 +314,6 @@ a {
    모바일 반응형 웹 설정 (미디어 쿼리)
 =================================== */
 @media (max-width: 900px) {
-    /* 헤더 레이아웃 세로 변경 */
     .admin-header {
         flex-direction: column;
         align-items: stretch;
@@ -289,6 +324,7 @@ a {
     .header-left {
         flex-direction: column;
         gap: 15px;
+        align-items: center;
     }
 
     .gnb ul {
@@ -299,10 +335,9 @@ a {
 
     .header-right {
         justify-content: center;
-        margin-top: 10px;
+        margin-top: 5px;
     }
     
-    /* 좌우 분할을 상하 분할로 변경 */
     .content-wrapper {
         flex-direction: column;
     }
@@ -311,24 +346,27 @@ a {
         width: 100%;
     }
 
-    /* 테이블 모바일 카드 뷰 전환 */
     .table-header {
         display: none;
     }
 
     .board-table {
         border: none;
+        background-color: transparent;
+        box-shadow: none;
     }
 
     .table-row {
         display: flex;
         flex-direction: column;
         text-align: left;
-        border: 2px solid #333;
-        margin-bottom: 15px;
+        background-color: #ffffff;
+        border: 1px solid #E5E7EB;
+        margin-bottom: 16px;
         padding: 20px;
         border-radius: 12px;
         gap: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
     }
 
     .table-row .col {
@@ -338,16 +376,15 @@ a {
     }
 
     .truncate {
-        white-space: normal; /* 모바일에서는 내용 전체 노출 */
+        white-space: normal;
     }
 
-    /* data-label 속성으로 모바일 라벨 생성 */
     .table-row .col[data-label]::before {
         content: attr(data-label);
-        font-weight: bold;
-        width: 80px;
+        font-weight: 600;
+        width: 90px;
         flex-shrink: 0;
         display: inline-block;
-        color: #333;
+        color: #374151;
     }
 }

@@ -1,4 +1,6 @@
-/* 기본 리셋 및 폰트 설정 */
+/* ==================================
+   기본 리셋 및 폰트 설정
+=================================== */
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +9,8 @@
 }
 
 body {
-    background-color: #ffffff;
-    color: #333;
+    background-color: #F8F9FA;
+    color: #212529;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,21 +27,26 @@ a {
     padding: 40px 20px;
     width: 100%;
     max-width: 600px;
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
 /* 상단 경고 아이콘 */
 .error-icon {
-    font-size: 8rem;
-    color: #000;
-    margin-bottom: 40px;
+    font-size: 5rem;
+    color: #DC2626; /* 경고를 뜻하는 세련된 붉은색 계열 적용 */
+    margin-bottom: 24px;
 }
 
 /* 경고 문구 */
 .error-title {
-    font-size: 2.2rem;
-    font-weight: 500;
-    margin-bottom: 50px;
-    color: #222;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 35px;
+    color: #111;
+    letter-spacing: -0.5px;
 }
 
 /* 메인페이지 이동 버튼 (보라색 아웃라인 테마) */
@@ -48,36 +55,44 @@ a {
     border: 1px solid #6B46C1;
     color: #6B46C1;
     background-color: #ffffff;
-    padding: 16px 80px;
+    padding: 14px 40px;
     border-radius: 8px;
-    font-size: 1.15rem;
-    font-weight: 500;
-    transition: all 0.2s;
+    font-size: 1.05rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.1);
 }
 
 /* 버튼 호버 시 반전 효과 */
 .btn-main:hover {
     background-color: #6B46C1;
     color: #ffffff;
+    transform: translateY(-1px);
 }
 
 /* ==================================
    모바일 반응형 웹 설정 (미디어 쿼리)
 =================================== */
 @media (max-width: 768px) {
+    .error-container {
+        padding: 30px 20px;
+        border: none;
+        box-shadow: none;
+        background-color: transparent;
+    }
+
     .error-icon {
-        font-size: 6rem;
-        margin-bottom: 30px;
+        font-size: 4rem;
+        margin-bottom: 20px;
     }
 
     .error-title {
-        font-size: 1.6rem;
-        margin-bottom: 40px;
+        font-size: 1.4rem;
+        margin-bottom: 30px;
     }
 
-    /* 모바일에서는 버튼을 누르기 쉽게 가로로 꽉 채움 */
     .btn-main {
         width: 100%;
-        padding: 16px 0;
+        padding: 14px 0;
     }
 }

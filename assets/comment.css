@@ -1,4 +1,6 @@
-/* 기본 리셋 및 폰트 설정 */
+/* ==================================
+   기본 리셋 및 폰트 설정
+=================================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -7,8 +9,8 @@
 }
 
 body {
-    background-color: #fff;
-    color: #333;
+    background-color: #F8F9FA;
+    color: #212529;
     padding: 40px 20px;
     display: flex;
     justify-content: center;
@@ -24,23 +26,33 @@ body {
 
 /* 타이틀 */
 .comments-title {
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 10px;
-    padding-left: 10px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-left: 4px;
+    color: #111;
 }
 
 /* 댓글 리스트 */
 .comments-list {
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #333;
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    margin-bottom: 24px;
 }
 
 .comment-item {
     display: flex;
     gap: 20px;
-    padding: 25px 20px;
-    border-bottom: 1px solid #ddd;
+    padding: 24px 20px;
+    border-bottom: 1px solid #F3F4F6;
+    transition: background-color 0.15s ease;
+}
+
+.comment-item:hover {
+    background-color: #FAFAFA;
 }
 
 .comment-item:last-child {
@@ -49,25 +61,25 @@ body {
 
 /* 프로필 아바타 */
 .comment-avatar {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background-color: #D9D9D9;
+    background-color: #E5E7EB;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.8rem;
-    color: #333;
-    flex-shrink: 0; /* 크기 축소 방지 */
+    font-size: 1.5rem;
+    color: #4B5563;
+    flex-shrink: 0;
 }
 
 /* 댓글 내용 영역 */
 .comment-content {
-    flex: 1; /* 남은 가로 공간 모두 차지 */
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
 }
 
 .comment-header {
@@ -77,13 +89,14 @@ body {
 }
 
 .comment-header .author {
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #111;
 }
 
 .comment-header .date {
-    font-size: 1.1rem;
-    color: #555;
+    font-size: 0.9rem;
+    color: #9CA3AF;
 }
 
 .comment-body {
@@ -93,113 +106,133 @@ body {
 }
 
 .comment-body .text {
-    font-size: 1.15rem;
-    color: #333;
-    line-height: 1.5;
+    font-size: 1.05rem;
+    color: #4B5563;
+    line-height: 1.6;
     word-break: break-all;
 }
 
 /* 삭제 버튼 */
 .btn-delete {
-    background-color: #C92A2A; /* 빨간색 포인트 */
-    color: #fff;
-    border: none;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    background-color: #FEF2F2;
+    color: #DC2626;
+    border: 1px solid #FCA5A5;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
     flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.btn-delete:hover {
+    background-color: #DC2626;
+    color: #fff;
+    border-color: #DC2626;
 }
 
 /* 중앙 하단 페이징 드롭다운 */
 .comments-pagination {
     display: flex;
     justify-content: center;
-    padding: 15px 0;
+    padding: 10px 0 24px 0;
 }
 
 .comments-pagination select {
-    padding: 5px 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 0.9rem;
+    padding: 8px 16px;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 0.95rem;
     outline: none;
+    background-color: #ffffff;
+    color: #374151;
+    cursor: pointer;
 }
 
 /* 댓글 입력 영역 */
 .comment-input-area {
     display: flex;
-    gap: 15px;
-    padding-top: 15px;
+    gap: 12px;
 }
 
 .comment-input {
     flex: 1;
-    padding: 15px 20px;
-    border: 1px solid #ddd;
+    padding: 14px 18px;
+    background-color: #ffffff;
+    border: 1px solid #D1D5DB;
     border-radius: 8px;
     font-size: 1rem;
     outline: none;
+    transition: border-color 0.2s;
+}
+
+.comment-input:focus {
+    border-color: #6B46C1;
 }
 
 .comment-input::placeholder {
-    color: #888;
+    color: #9CA3AF;
 }
 
-/* 전송 버튼 (기존 프로젝트 보라색 테마 적용) */
+/* 전송 버튼 */
 .btn-submit {
     background-color: #6B46C1;
     color: #fff;
     border: none;
-    padding: 0 35px;
+    padding: 0 30px;
     border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: bold;
+    font-size: 1.05rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
     white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
 }
 
 .btn-submit:hover {
     background-color: #5533A3;
+    transform: translateY(-1px);
 }
 
 /* ==================================
    모바일 반응형 웹 설정 (미디어 쿼리)
 =================================== */
 @media (max-width: 768px) {
-    .comment-item {
-        gap: 15px;
+    body {
         padding: 20px 10px;
     }
 
+    .comment-item {
+        gap: 15px;
+        padding: 18px 15px;
+    }
+
     .comment-avatar {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
     }
 
     .comment-header .author,
     .comment-body .text {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .comment-header .date {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 
-    /* 댓글 입력 영역 레이아웃 조정 */
     .comment-input-area {
         gap: 10px;
     }
 
     .comment-input {
-        padding: 12px 15px;
+        padding: 12px 14px;
     }
 
     .btn-submit {
         padding: 0 20px;
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 }

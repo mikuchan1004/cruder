@@ -1,4 +1,6 @@
-/* 기본 리셋 및 폰트 설정 */
+/* ==================================
+   기본 리셋 및 폰트 설정
+=================================== */
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +9,8 @@
 }
 
 body {
-    background-color: #ffffff;
-    color: #333;
+    background-color: #F8F9FA;
+    color: #212529;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -30,8 +32,10 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
-    border-bottom: 2px solid #333;
+    padding: 18px 40px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #E5E7EB;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .header-left {
@@ -41,9 +45,10 @@ a {
 }
 
 .logo {
-    font-size: 1.6rem;
-    font-weight: 500;
-    color: #333;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.5px;
 }
 
 .gnb ul {
@@ -52,14 +57,15 @@ a {
 }
 
 .gnb a {
-    font-size: 1.1rem;
-    color: #666;
+    font-size: 1.05rem;
+    color: #6B7280;
     font-weight: 500;
+    transition: color 0.2s;
 }
 
 .gnb a.active, .gnb a:hover {
-    color: #333;
-    font-weight: bold;
+    color: #6B46C1;
+    font-weight: 600;
 }
 
 .header-right {
@@ -69,24 +75,26 @@ a {
 }
 
 .admin-greeting {
-    font-size: 1rem;
-    color: #555;
+    font-size: 0.95rem;
+    color: #4B5563;
 }
 
 .btn-logout {
     background-color: #6B46C1;
     color: #fff;
     border: none;
-    padding: 8px 25px;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: bold;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
 }
 
 .btn-logout:hover {
     background-color: #5533A3;
+    transform: translateY(-1px);
 }
 
 /* ==================================
@@ -100,7 +108,7 @@ a {
 }
 
 .admin-section {
-    margin-bottom: 60px;
+    margin-bottom: 50px;
 }
 
 .section-header {
@@ -111,51 +119,59 @@ a {
 }
 
 .section-title {
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: #333;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
     display: flex;
     align-items: center;
     gap: 15px;
+    letter-spacing: -0.5px;
 }
 
 /* 뱃지 공통 */
 .badge {
     padding: 6px 14px;
     border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: bold;
+    font-size: 0.85rem;
+    font-weight: 600;
     display: inline-block;
 }
 
 .badge-count {
-    background-color: #f26b6b;
-    color: #fff;
-    font-size: 1rem;
+    background-color: #FEE2E2;
+    color: #DC2626;
+    font-size: 0.9rem;
 }
 
 .status-normal {
-    background-color: #A3E4D7;
-    color: #117A65;
+    background-color: #D1FAE5;
+    color: #059669;
 }
 
 .status-suspend {
-    background-color: #F1948A;
-    color: #fff;
+    background-color: #FEE2E2;
+    color: #DC2626;
 }
 
 /* 검색 박스 */
 .search-box {
     display: flex;
     align-items: center;
-    border: 1px solid #333;
-    border-radius: 4px;
-    padding: 10px 15px;
-    width: 300px;
+    background-color: #ffffff;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    padding: 10px 16px;
+    width: 320px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    transition: border-color 0.2s;
+}
+
+.search-box:focus-within {
+    border-color: #6B46C1;
 }
 
 .search-box i {
-    color: #666;
+    color: #9CA3AF;
     margin-right: 10px;
 }
 
@@ -163,30 +179,40 @@ a {
     border: none;
     outline: none;
     width: 100%;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    background: transparent;
 }
 
 /* ==================================
    테이블 공통 영역 (CSS Grid)
 =================================== */
 .board-table {
-    border: 1px solid #333;
-    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .table-header {
-    font-weight: bold;
-    border-bottom: 1px solid #333;
-    padding: 20px 10px;
-    background-color: #fff;
+    font-weight: 600;
+    background-color: #F9FAFB;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 16px 20px;
+    color: #374151;
+    font-size: 0.95rem;
 }
 
 .table-row {
-    padding: 20px 10px;
-    border-bottom: 1px solid #eee;
-    font-size: 1.1rem;
-    color: #555;
+    padding: 18px 20px;
+    border-bottom: 1px solid #F3F4F6;
+    font-size: 1rem;
+    color: #4B5563;
+    transition: background-color 0.15s ease;
+}
+
+.table-row:hover {
+    background-color: #FAFAFA;
 }
 
 .table-row:last-child {
@@ -204,7 +230,7 @@ a {
 .member-table .table-header, 
 .member-table .table-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 1.2fr 0.5fr 0.8fr 3fr;
+    grid-template-columns: 1fr 1fr 1.2fr 0.8fr 1fr 3fr;
     align-items: center;
     text-align: center;
 }
@@ -212,7 +238,7 @@ a {
 .report-table .table-header, 
 .report-table .table-row {
     display: grid;
-    grid-template-columns: 0.6fr 1fr 1fr 1fr 2.5fr 2fr 0.8fr;
+    grid-template-columns: 0.6fr 1fr 1fr 1fr 2.5fr 2fr 1fr;
     align-items: center;
     text-align: center;
 }
@@ -226,40 +252,42 @@ a {
 }
 
 .btn {
-    padding: 6px 12px;
-    border-radius: 4px;
+    padding: 6px 14px;
+    border-radius: 6px;
     font-size: 0.85rem;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
 }
 
 .btn-outline-purple {
-    border: 1px solid #6B46C1;
+    border: 1px solid #D8B4FE;
     color: #6B46C1;
-    background: transparent;
+    background: #FAF5FF;
 }
 
 .btn-outline-purple:hover {
     background-color: #6B46C1;
     color: #fff;
+    border-color: #6B46C1;
 }
 
 .btn-red {
-    border: 1px solid #C92A2A;
-    background-color: #C92A2A;
-    color: #fff;
+    border: 1px solid #FCA5A5;
+    background-color: #FEF2F2;
+    color: #DC2626;
 }
 
 .btn-red:hover {
-    background-color: #A61E1E;
+    background-color: #DC2626;
+    color: #fff;
+    border-color: #DC2626;
 }
 
 /* ==================================
    모바일 반응형 웹 설정 (미디어 쿼리)
 =================================== */
 @media (max-width: 900px) {
-    /* 헤더 레이아웃 세로 변경 */
     .admin-header {
         flex-direction: column;
         align-items: stretch;
@@ -270,6 +298,7 @@ a {
     .header-left {
         flex-direction: column;
         gap: 15px;
+        align-items: center;
     }
 
     .gnb ul {
@@ -280,10 +309,9 @@ a {
 
     .header-right {
         justify-content: center;
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
-    /* 테이블 모바일 카드 뷰 전환 */
     .section-header {
         flex-direction: column;
         align-items: flex-start;
@@ -300,6 +328,8 @@ a {
 
     .board-table {
         border: none;
+        background-color: transparent;
+        box-shadow: none;
     }
 
     .member-table .table-row, 
@@ -307,37 +337,37 @@ a {
         display: flex;
         flex-direction: column;
         text-align: left;
-        border: 1px solid #333;
-        margin-bottom: 15px;
+        background-color: #ffffff;
+        border: 1px solid #E5E7EB;
+        margin-bottom: 16px;
         padding: 20px;
-        border-radius: 8px;
+        border-radius: 12px;
         gap: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
     }
 
     .table-row .col {
         display: flex;
         align-items: center;
-        justify-content: space-between; /* 모바일에서 라벨과 값을 양끝 정렬 */
+        justify-content: space-between;
     }
 
     .truncate {
-        white-space: normal; /* 모바일에서는 내용 전체 노출 */
+        white-space: normal;
     }
 
-    /* data-label 속성으로 모바일 라벨 생성 */
     .table-row .col[data-label]::before {
         content: attr(data-label);
-        font-weight: bold;
-        width: 100px;
+        font-weight: 600;
+        width: 110px;
         flex-shrink: 0;
         display: inline-block;
-        color: #333;
+        color: #374151;
     }
 
-    /* 모바일 버튼 정렬 */
     .action-buttons {
         justify-content: flex-end;
         width: 100%;
-        margin-top: 10px;
+        margin-top: 8px;
     }
 }

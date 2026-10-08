@@ -1,4 +1,6 @@
-/* 기본 리셋 및 폰트 설정 */
+/* ==================================
+   기본 리셋 및 폰트 설정
+=================================== */
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +9,8 @@
 }
 
 body {
-    background-color: #ffffff;
-    color: #333;
+    background-color: #F8F9FA;
+    color: #212529;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -30,8 +32,10 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
-    border-bottom: 1px solid #ddd;
+    padding: 18px 40px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #E5E7EB;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .header-left {
@@ -41,8 +45,10 @@ a {
 }
 
 .logo {
-    font-size: 1.4rem;
-    font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.5px;
 }
 
 .gnb ul {
@@ -51,8 +57,15 @@ a {
 }
 
 .gnb a {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
+    color: #6B7280;
     font-weight: 500;
+    transition: color 0.2s;
+}
+
+.gnb a:hover {
+    color: #6B46C1;
+    font-weight: 600;
 }
 
 .header-right {
@@ -62,24 +75,31 @@ a {
 }
 
 .admin-link {
-    font-size: 1rem;
-    color: #555;
+    font-size: 0.95rem;
+    color: #4B5563;
+    transition: color 0.2s;
+}
+
+.admin-link:hover {
+    color: #6B46C1;
 }
 
 .btn-logout {
-    background-color: #6B46C1; /* 테마 포인트 컬러 적용 */
+    background-color: #6B46C1;
     color: #fff;
     border: none;
-    padding: 10px 25px;
+    padding: 8px 20px;
     border-radius: 6px;
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
 }
 
 .btn-logout:hover {
     background-color: #5533A3;
+    transform: translateY(-1px);
 }
 
 /* ==================================
@@ -103,40 +123,60 @@ a {
 /* 좌측 문의 작성 폼 */
 .inquiry-write-box {
     flex: 1;
-    border: 1px solid #333;
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
     border-radius: 16px;
-    padding: 30px;
+    padding: 35px;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .input-title {
     width: 100%;
     border: none;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #E5E7EB;
     padding-bottom: 15px;
     margin-bottom: 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.15rem;
+    font-weight: 600;
     outline: none;
+    color: #111;
+    transition: border-color 0.2s;
+}
+
+.input-title:focus {
+    border-color: #6B46C1;
+}
+
+.input-title::placeholder {
+    color: #9CA3AF;
 }
 
 .input-content {
     flex: 1;
     width: 100%;
-    border: 1px solid #333;
-    border-radius: 16px;
-    padding: 40px;
-    font-size: 1.8rem; /* 와이어프레임처럼 큼직한 텍스트 */
-    text-align: center; /* 텍스트 중앙 정렬 */
+    background-color: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 30px;
+    font-size: 1.3rem; 
+    text-align: center; 
     resize: none;
     outline: none;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    color: #374151;
+    transition: all 0.2s;
+}
+
+.input-content:focus {
+    background-color: #ffffff;
+    border-color: #6B46C1;
 }
 
 .input-content::placeholder {
-    color: #333;
-    font-weight: 500;
+    color: #9CA3AF;
+    font-weight: 400;
 }
 
 .btn-submit {
@@ -144,41 +184,47 @@ a {
     background-color: #6B46C1;
     color: #fff;
     border: none;
-    padding: 18px;
+    padding: 16px;
     border-radius: 8px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
 }
 
 .btn-submit:hover {
     background-color: #5533A3;
+    transform: translateY(-1px);
 }
 
 /* 우측 문의 답변 폼 */
 .inquiry-reply-box {
     flex: 1;
-    border: 1px solid #333;
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
     border-radius: 16px;
-    padding: 30px;
+    padding: 35px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .reply-title {
-    font-size: 1.6rem;
-    font-weight: bold;
+    font-size: 1.4rem;
+    font-weight: 700;
     margin-bottom: 30px;
     margin-top: 10px;
+    color: #111;
 }
 
 .reply-content {
     flex: 1;
     width: 100%;
-    border: 1px solid #333;
-    border-radius: 16px;
+    background-color: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -188,7 +234,8 @@ a {
 
 .reply-content p {
     font-size: 1.1rem;
-    color: #333;
+    color: #4B5563;
+    line-height: 1.6;
 }
 
 /* ==================================
@@ -196,27 +243,28 @@ a {
 =================================== */
 .main-footer {
     text-align: center;
-    padding: 20px;
-    border-top: 1px solid #ddd;
-    font-size: 1.1rem;
-    color: #333;
+    padding: 24px;
+    background-color: #ffffff;
+    border-top: 1px solid #E5E7EB;
+    font-size: 1rem;
+    color: #6B7280;
 }
 
 /* ==================================
    모바일 반응형 웹 설정 (미디어 쿼리)
 =================================== */
 @media (max-width: 768px) {
-    /* 헤더 레이아웃 세로 변경 */
     .main-header {
         flex-direction: column;
         align-items: center;
-        gap: 20px;
+        gap: 15px;
         padding: 20px;
     }
 
     .header-left {
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
+        align-items: center;
     }
 
     .gnb ul {
@@ -225,7 +273,6 @@ a {
         gap: 15px;
     }
 
-    /* 좌우 분할을 상하 분할로 변경 */
     .inquiry-container {
         flex-direction: column;
         height: auto;
@@ -234,15 +281,16 @@ a {
     .inquiry-write-box, 
     .inquiry-reply-box {
         width: 100%;
-        min-height: 500px; /* 모바일에서도 적절한 높이 유지 */
+        min-height: 400px;
+        padding: 25px 20px;
     }
 
     .input-content {
-        font-size: 1.2rem; /* 모바일 폰트 사이즈 조정 */
+        font-size: 1.1rem; 
         padding: 20px;
     }
 
     .reply-title {
-        font-size: 1.4rem;
+        font-size: 1.25rem;
     }
 }

@@ -1,4 +1,6 @@
-/* 기본 리셋 */
+/* ==================================
+   기본 리셋 및 폰트 설정
+=================================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -10,18 +12,23 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    color: #000;
-    background-color: #fff;
+    color: #212529;
+    background-color: #F8F9FA;
 }
 
 /* 임시 헤더 & 푸터 스타일 */
 .wireframe-header, .wireframe-footer {
     text-align: center;
     padding: 20px;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid #E5E7EB;
+    color: #4B5563;
 }
 
 .wireframe-footer {
+    border-top: 1px solid #E5E7EB;
+    border-bottom: none;
     margin-top: auto; 
 }
 
@@ -36,23 +43,32 @@ body {
 /* 검색 및 글쓰기 영역 */
 .board-controls {
     display: flex;
-    justify-content: center; /* 와이어프레임처럼 기본은 중앙 배치 */
+    justify-content: center;
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .search-box {
     display: flex;
     align-items: center;
-    border: 1px solid #000;
-    padding: 10px 15px;
+    background-color: #ffffff;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    padding: 12px 16px;
     width: 100%;
     max-width: 400px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    transition: border-color 0.2s;
+}
+
+.search-box:focus-within {
+    border-color: #6B46C1;
 }
 
 .search-icon {
-    margin-right: 8px;
+    margin-right: 10px;
     font-size: 1rem;
+    color: #9CA3AF;
 }
 
 .search-input {
@@ -60,6 +76,11 @@ body {
     outline: none;
     width: 100%;
     font-size: 1rem;
+    background: transparent;
+}
+
+.search-input::placeholder {
+    color: #9CA3AF;
 }
 
 .btn-write {
@@ -67,48 +88,71 @@ body {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #6B30E4; /* 보라색 톤 적용 */
+    background-color: #6B46C1; 
     color: #fff;
     border: none;
-    padding: 10px 30px;
-    border-radius: 20px; /* 둥근 버튼 모서리 */
-    font-size: 1.1rem;
-    font-weight: bold;
+    padding: 10px 24px;
+    border-radius: 8px; 
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
+}
+
+.btn-write:hover {
+    background-color: #5533A3;
+    transform: translateY(-50%) translateY(-1px);
 }
 
 /* 게시판 테이블 스타일 (CSS Grid 적용) */
 .board-table {
-    border: 1px solid #000; /* 전체 표 테두리 */
-    min-height: 400px; /* 와이어프레임의 여백 느낌 구현 */
-    margin-bottom: 50px;
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 400px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .board-header, .board-row {
     display: grid;
-    /* 번호(좁게), 제목(넓게), 글쓴이, 날짜, 조회수 비율 조정 */
     grid-template-columns: 1fr 4fr 1.5fr 2fr 1fr;
     align-items: center;
     text-align: center;
 }
 
 .board-header {
-    font-weight: bold;
-    border-bottom: 1px solid #000;
-    padding: 15px 10px;
-    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #F9FAFB;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 16px 10px;
+    font-size: 0.95rem;
+    color: #374151;
 }
 
 .board-row {
-    border-bottom: 1px solid #000;
-    padding: 15px 10px;
-    font-size: 1.05rem;
+    border-bottom: 1px solid #F3F4F6;
+    padding: 18px 10px;
+    font-size: 1rem;
+    color: #4B5563;
+    transition: background-color 0.15s ease;
 }
 
-/* 빈 공간에는 줄이 없으므로, 마지막 아이템 하단 줄을 유지하거나 상황에 맞게 조정 */
+.board-row:hover {
+    background-color: #FAFAFA;
+}
+
+.board-row:last-child {
+    border-bottom: none;
+}
+
 .board-row .col-title {
     text-align: left;
     padding-left: 20px;
+    color: #111;
+    font-weight: 500;
 }
 
 /* 페이지네이션 스타일 */
@@ -120,88 +164,98 @@ body {
 }
 
 .page-btn {
-    width: 32px;
-    height: 32px;
-    border: 2px solid #000;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #D1D5DB;
     background-color: #fff;
-    color: #000;
-    font-size: 1rem;
-    font-weight: bold;
+    color: #374151;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 4px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.page-btn:hover {
+    border-color: #6B46C1;
+    color: #6B46C1;
 }
 
 .page-btn.active {
-    background-color: #000;
+    background-color: #6B46C1;
     color: #fff; 
+    border-color: #6B46C1;
 }
 
 .page-text {
-    font-size: 1.1rem;
-    margin-left: 5px;
+    font-size: 1rem;
+    margin-left: 8px;
+    color: #4B5563;
 }
 
 /* ==================================
    모바일 반응형 웹 설정 (미디어 쿼리)
 =================================== */
 @media (max-width: 768px) {
-    /* 모바일에서는 검색창과 글쓰기 버튼 세로 배치 */
     .board-controls {
         flex-direction: column;
         gap: 15px;
     }
 
     .btn-write {
-        position: static; /* absolute 속성 해제 */
+        position: static; 
         transform: none;
-        align-self: flex-end; /* 우측 정렬 */
+        align-self: flex-end; 
     }
 
     .search-box {
         max-width: 100%;
     }
 
-    /* 모바일에서는 기본 가로 헤더를 숨김 */
     .board-header {
         display: none;
     }
 
-    /* 전체 테두리 및 여백 제거 */
     .board-table {
         border: none;
         min-height: auto;
+        background-color: transparent;
+        box-shadow: none;
     }
 
-    /* 각 행을 카드(Card) 형태로 세로 배치 */
     .board-row {
         display: flex;
         flex-direction: column;
         text-align: left;
-        border: 1px solid #000;
-        margin-bottom: 15px;
+        background-color: #ffffff;
+        border: 1px solid #E5E7EB;
+        margin-bottom: 16px;
         padding: 20px;
-        gap: 10px;
-        border-radius: 8px;
+        gap: 12px;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
     }
 
-    /* HTML에 추가해둔 data-label 속성을 CSS ::before로 불러와서 제목처럼 표시 */
     .board-row div {
         display: flex;
         align-items: center;
+        justify-content: space-between;
     }
 
     .board-row div::before {
         content: attr(data-label);
-        font-weight: bold;
-        width: 70px; /* 라벨 너비 고정 */
+        font-weight: 600;
+        width: 80px; 
         display: inline-block;
-        color: #555;
+        color: #374151;
     }
 
     .board-row .col-title {
         padding-left: 0;
+        font-weight: 600;
+        font-size: 1.05rem;
     }
 }

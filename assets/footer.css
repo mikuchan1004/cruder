@@ -1,4 +1,6 @@
-/* 기본 리셋 및 폰트 설정 */
+/* ==================================
+   기본 리셋 및 폰트 설정
+=================================== */
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +9,8 @@
 }
 
 body {
-    background-color: #ffffff;
-    color: #333333;
+    background-color: #F8F9FA;
+    color: #212529;
     line-height: 1.6;
     display: flex;
     justify-content: center;
@@ -19,30 +21,32 @@ body {
 .main-content {
     width: 100%;
     max-width: 1000px;
-    text-align: center; /* 전체 텍스트 중앙 정렬 */
+    text-align: center;
 }
 
 /* ==================================
    CRUD 소개 영역
 =================================== */
 .main-title {
-    color: #6B30E4; /* 보라색 텍스트 적용 */
-    font-size: 3rem;
+    color: #6B46C1; /* 프로젝트 메인 보라색 테마 적용 */
+    font-size: 2.8rem;
     font-weight: 800;
-    margin-bottom: 20px;
-    letter-spacing: 2px;
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
 }
 
 .intro-box {
-    background-color: #A6C3F8; /* 파란색 배경 적용 */
-    border: 1px solid #333; /* 얇은 테두리 */
-    padding: 40px 20px;
-    margin-bottom: 80px;
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 40px 30px;
+    margin-bottom: 60px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .intro-box p {
-    font-size: 1.15rem;
-    color: #222;
+    font-size: 1.1rem;
+    color: #4B5563;
     line-height: 1.8;
 }
 
@@ -50,17 +54,33 @@ body {
    일대일 문의 영역
 =================================== */
 .section-title {
-    color: #6B30E4; /* 보라색 텍스트 적용 */
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 30px;
+    color: #111111;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.contact-info {
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    display: inline-block;
+    width: 100%;
+    max-width: 600px;
 }
 
 .contact-info p {
-    font-size: 1.15rem;
-    color: #333;
-    margin-bottom: 8px;
+    font-size: 1.05rem;
+    color: #4B5563;
+    margin-bottom: 10px;
     line-height: 1.6;
+}
+
+.contact-info p:last-child {
+    margin-bottom: 0;
 }
 
 /* ==================================
@@ -68,7 +88,7 @@ body {
 =================================== */
 @media (max-width: 768px) {
     body {
-        padding: 40px 15px;
+        padding: 30px 15px;
     }
 
     .main-title {
@@ -76,26 +96,31 @@ body {
     }
 
     .intro-box {
-        padding: 30px 15px;
-        margin-bottom: 50px;
+        padding: 24px 20px;
+        margin-bottom: 40px;
+        border-radius: 12px;
     }
 
     .intro-box p {
-        font-size: 1rem;
-        word-break: keep-all; /* 모바일에서 단어 단위로 줄바꿈 되도록 설정 */
+        font-size: 0.95rem;
+        word-break: keep-all;
     }
 
-    /* 데스크톱용 수동 줄바꿈(<br>) 요소를 모바일에서는 숨김 처리 */
     .desktop-only {
         display: none; 
     }
 
     .section-title {
-        font-size: 1.3rem;
-        margin-bottom: 20px;
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .contact-info {
+        padding: 20px;
+        border-radius: 10px;
     }
 
     .contact-info p {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 }

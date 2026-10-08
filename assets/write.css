@@ -1,4 +1,6 @@
-/* 기본 리셋 및 폰트 설정 */
+/* ==================================
+   기본 리셋 및 폰트 설정
+=================================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -10,19 +12,23 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    color: #333;
-    background-color: #fff;
+    color: #212529;
+    background-color: #F8F9FA;
 }
 
 /* 임시 헤더 & 푸터 스타일 */
 .wireframe-header, .wireframe-footer {
     text-align: center;
     padding: 20px;
-    font-size: 1.1rem;
-    color: #000;
+    font-size: 1.05rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid #E5E7EB;
+    color: #4B5563;
 }
 
 .wireframe-footer {
+    border-top: 1px solid #E5E7EB;
+    border-bottom: none;
     margin-top: auto; 
 }
 
@@ -41,20 +47,28 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
     margin-bottom: 20px;
 }
 
 .title-input {
-    flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
-    border: 1px solid #000;
-    padding: 15px 20px;
-    font-size: 1.2rem;
+    flex: 1; 
+    background-color: #ffffff;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 1.1rem;
     outline: none;
+    transition: border-color 0.2s;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.title-input:focus {
+    border-color: #6B46C1;
 }
 
 .title-input::placeholder {
-    color: #333;
+    color: #9CA3AF;
 }
 
 .button-group {
@@ -64,57 +78,64 @@ body {
 
 .btn {
     border: none;
-    padding: 12px 25px;
-    border-radius: 6px;
-    font-size: 1.05rem;
-    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
     color: #fff;
+    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
 }
 
-/* 와이어프레임 시안에 맞춘 보라색 버튼 적용 */
 .btn-cancel, .btn-submit {
     background-color: #6B46C1; 
 }
 
 .btn-cancel:hover, .btn-submit:hover {
     background-color: #5533A3;
+    transform: translateY(-1px);
 }
 
 /* ==================================
    에디터 영역
 =================================== */
 .editor-container {
-    border: 1px solid #000; /* 에디터 전체 테두리 */
+    background-color: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
-    height: 500px; /* 에디터 기본 높이 */
+    height: 500px; 
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 /* 에디터 상단 툴바 */
 .editor-toolbar {
     display: flex;
-    gap: 20px;
-    padding: 15px 20px;
-    border-bottom: 1px solid #000; /* 본문 영역과의 경계선 */
-    background-color: #fff;
+    gap: 24px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #E5E7EB; 
+    background-color: #F9FAFB;
 }
 
 .tool-btn {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     background: none;
     border: none;
     cursor: pointer;
-    color: #333;
-    font-size: 0.9rem;
+    color: #4B5563;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.2s;
 }
 
 .tool-btn i {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .tool-btn:hover {
@@ -123,7 +144,7 @@ body {
 
 /* 에디터 본문 작성 영역 */
 .editor-content {
-    flex: 1; /* 툴바를 제외한 나머지 세로 공간을 모두 차지 */
+    flex: 1; 
     display: flex;
 }
 
@@ -132,20 +153,21 @@ body {
     height: 100%;
     padding: 20px;
     border: none;
-    resize: none; /* 사용자 임의 크기 조절 방지 */
-    font-size: 1.1rem;
+    resize: none; 
+    font-size: 1.05rem;
     outline: none;
+    color: #1F2937;
+    background: transparent;
 }
 
 .editor-content textarea::placeholder {
-    color: #333;
+    color: #9CA3AF;
 }
 
 /* ==================================
    모바일 반응형 웹 설정 (미디어 쿼리)
 =================================== */
 @media (max-width: 768px) {
-    /* 모바일에서는 제목 입력창과 버튼을 세로로 분리 */
     .form-header {
         flex-direction: column;
         align-items: stretch;
@@ -156,18 +178,16 @@ body {
     }
 
     .button-group {
-        justify-content: flex-end; /* 모바일에서 버튼을 우측 정렬 */
+        justify-content: flex-end; 
     }
 
-    /* 버튼 크기를 터치하기 편하게 키움 */
     .btn {
         flex: 1;
-        padding: 15px;
+        padding: 14px;
     }
 
-    /* 에디터 모바일 최적화 */
     .editor-container {
-        height: 400px; /* 모바일 기기에 맞게 높이 축소 */
+        height: 380px; 
     }
 
     .editor-toolbar {
