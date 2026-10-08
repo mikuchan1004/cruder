@@ -1,0 +1,39 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+
+# 환경변수
+.env
+.env.*
+
+# 가상환경
+venv/
+.venv/
+env/
+
+# 실행파일
+*.exe
+*.bat
+*.sh
+
+# Python 캐시
+__pycache__/
+*.pyc
+*.pyo
+
+# 임시파일
+*.tmp
+*.log
+*.bak
+
+# IDE 설정
+.vscode/
+.idea/
+
+# 빌드파일
+build/
+dist/
+*.egg-info/
+
+# 운영체제 파일
+.DS_Store
+Thumbs.db
+
