@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 맞춤 추천 - 취업 할래말래</title>
+    <link rel="stylesheet" href="ai-chat.css">
+    <!-- FontAwesome (로봇 아이콘 렌더링용) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 상단 임시 헤더 -->
+    <header class="wireframe-header">
+        헤더
+    </header>
+
+    <!-- 메인 챗봇 콘텐츠 영역 -->
+    <main class="chat-main">
+        <div class="chat-container">
+            
+            <!-- AI 메세지 영역 -->
+            <section class="ai-message-section">
+                <div class="bot-icon">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="message-box outline-yellow">
+                    <p>
+                        안녕하세요. 취업 도우미입니다.<br>
+                        원하는 직무나 기술 스택을 알려주시면<br>
+                        맞춤형 채용 공고를 알려드릴께요.<br>
+                        아래의 형식으로 입력하시면 보다 나은<br>
+                        결과를 얻을 수 있습니다.
+                    </p>
+                    <div class="example-format">
+                        <p>직무: 개발자</p>
+                        <p>경력: 신입</p>
+                        <p>기술스택:파이선,자바</p>
+                        <p>희망 지역:지역무관</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 사용자 입력 영역 -->
+            <section class="user-input-section">
+                <h2 class="input-title">입력칸</h2>
+                <!-- textarea placeholder 내 줄바꿈을 위해 &#13;&#10; 사용 -->
+                <textarea class="input-box outline-yellow" placeholder="원하는 직무, 경력, 기술 스택, 희망 지역 등을 자유롭게 입력해주세요.&#13;&#10;예) 신입 백엔드 개발자이고 Python, Java를 사용할 수 있습니다. 지역은 상관없어요"></textarea>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- 하단 임시 푸터 -->
+    <footer class="wireframe-footer">
+        &lt;푸터 삽입&gt;
+    </footer>
+</body>
+</html>

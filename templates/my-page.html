@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지 - 취업 할래말래</title>
+    <link rel="stylesheet" href="my-page.css">
+    <!-- 폰트어썸 (사용자 프로필 아이콘 렌더링용) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 상단 임시 헤더 -->
+    <header class="wireframe-header">
+        헤더
+    </header>
+
+    <!-- 메인 레이아웃 컨테이너 -->
+    <main class="mypage-container">
+        <!-- 1. 좌측 사이드바 영역 -->
+        <aside class="sidebar">
+            <h2 class="sidebar-title">마이페이지</h2>
+            <ul class="sidebar-menu">
+                <li><a href="#">회원 정보 수정</a></li>
+                <li><a href="#">쓴 글 목록</a></li>
+                <li><a href="#">찜한 공고 목록</a></li>
+                <li><a href="#">일대일 문의</a></li>
+            </ul>
+        </aside>
+
+        <!-- 2. 중앙 사용자 정보 및 퀵 링크 영역 -->
+        <section class="user-profile-section">
+            <div class="user-greeting">
+                <div class="avatar">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <h3>홍길동님 환영합니다</h3>
+            </div>
+            <ul class="quick-links">
+                <li><a href="#">회원 정보 수정</a></li>
+                <li><a href="#">찜한 공고 목록</a></li>
+                <li><a href="#">쓴 글 목록</a></li>
+                <li><a href="#">일대일 문의</a></li>
+                <li><a href="#">메인 페이지로</a></li>
+            </ul>
+        </section>
+
+        <!-- 3. 우측 본인 확인 폼 영역 -->
+        <section class="verification-section">
+            <div class="verification-box">
+                <h2>본인 확인</h2>
+                <form class="verification-form">
+                    <input type="password" placeholder="현재 비밀번호">
+                    <input type="password" placeholder="비밀번호 확인">
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-confirm">확인</button>
+                        <button type="button" class="btn btn-cancel">취소</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- 하단 임시 푸터 -->
+    <footer class="wireframe-footer">
+        푸터
+    </footer>
+</body>
+</html>

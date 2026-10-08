@@ -1,0 +1,265 @@
+/* 기본 리셋 및 폰트 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #ffffff;
+    color: #333;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 임시 헤더 & 푸터 */
+.wireframe-header, .wireframe-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+}
+
+.wireframe-footer {
+    margin-top: 20px; 
+}
+
+/* 메인 컨테이너 (2단 레이아웃) */
+.mypage-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    gap: 40px;
+    flex: 1; /* 콘텐츠 영역이 부족해도 하단 버튼과 푸터가 아래에 위치하도록 함 */
+}
+
+/* ==================================
+   좌측 사이드바
+=================================== */
+.sidebar {
+    width: 250px;
+    border: 1px solid #333;
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.sidebar-title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 50px;
+}
+
+.sidebar-menu {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+}
+
+.sidebar-menu a {
+    font-size: 1.15rem;
+    color: #555;
+}
+
+/* 활성화된 메뉴 굵게 표시 */
+.sidebar-menu a.active {
+    font-weight: bold;
+    color: #000;
+}
+
+/* ==================================
+   우측 메인 콘텐츠
+=================================== */
+.content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px; /* 좌우 여백 미세 조정 */
+}
+
+/* 상단 유저 정보 영역 */
+.user-greeting {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    background-color: #D9D9D9;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2rem;
+    color: #333;
+}
+
+.user-greeting h3 {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+/* 질문 목록 테이블 (CSS Grid 적용) */
+.board-table {
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+.table-header, .table-row {
+    display: grid;
+    /* 답변 상태, 제목(넓게), 작성일, 답변일 비율 */
+    grid-template-columns: 1fr 3fr 1.5fr 1.5fr;
+    align-items: center;
+    text-align: center;
+}
+
+.table-header {
+    font-weight: bold;
+    border-bottom: 1px solid #333;
+    padding: 15px 10px;
+}
+
+.table-row {
+    border-bottom: 1px solid #eee;
+    padding: 15px 10px;
+    font-size: 1.05rem;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+/* 제목 링크 스타일 (블루 톤) */
+.col-title a {
+    color: #337ab7;
+}
+
+.col-title a:hover {
+    text-decoration: underline;
+}
+
+/* ==================================
+   하단 마이페이지 버튼 영역
+=================================== */
+.bottom-action {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.btn-return {
+    background-color: #6B46C1; /* 테마 색상 적용 */
+    color: #fff;
+    border: none;
+    padding: 15px 50px;
+    border-radius: 30px; /* 둥근 캡슐형 버튼 */
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-return:hover {
+    background-color: #5533A3;
+}
+
+/* ==================================
+   모바일 반응형 웹 설정 (미디어 쿼리)
+=================================== */
+@media (max-width: 768px) {
+    .mypage-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* 사이드바를 가로 형태로 상단에 배치 */
+    .sidebar {
+        width: 100%;
+        padding: 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .sidebar-title {
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .sidebar-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .content-area {
+        width: 100%;
+    }
+
+    /* 유저 아바타 크기 축소 */
+    .avatar {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .user-greeting h3 {
+        font-size: 1.2rem;
+    }
+
+    /* 모바일 환경 테이블(카드 뷰) 전환 */
+    .table-header {
+        display: none;
+    }
+
+    .board-table {
+        border: none;
+    }
+
+    .table-row {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        border: 1px solid #333;
+        margin-bottom: 15px;
+        padding: 20px;
+        border-radius: 8px;
+        gap: 10px;
+    }
+
+    .table-row div {
+        display: flex;
+        align-items: center;
+    }
+
+    /* data-label 속성으로 모바일 라벨 생성 */
+    .table-row div[data-label]::before {
+        content: attr(data-label);
+        font-weight: bold;
+        width: 80px;
+        display: inline-block;
+        color: #555;
+    }
+}

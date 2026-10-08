@@ -1,0 +1,353 @@
+/* 기본 리셋 및 폰트 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ==================================
+   상단 헤더 영역
+=================================== */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    border-bottom: 2px solid #333;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.gnb ul {
+    display: flex;
+    gap: 25px;
+}
+
+.gnb a {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.gnb a.active, .gnb a:hover {
+    color: #333;
+    font-weight: bold;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.admin-greeting {
+    font-size: 1rem;
+    color: #555;
+}
+
+.btn-logout {
+    background-color: #6B46C1;
+    color: #fff;
+    border: none;
+    padding: 8px 25px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #5533A3;
+}
+
+/* ==================================
+   메인 콘텐츠 영역
+=================================== */
+.admin-main {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.status-filter {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    font-size: 0.95rem;
+}
+
+.content-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* ==================================
+   좌측 문의 목록 (테이블)
+=================================== */
+.inquiry-list-section {
+    flex: 1.5;
+}
+
+.board-table {
+    border: 2px solid #333;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table-header {
+    font-weight: bold;
+    border-bottom: 2px solid #333;
+    padding: 20px 10px;
+    background-color: #fff;
+}
+
+.table-row {
+    padding: 20px 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.1rem;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.font-bold {
+    font-weight: 600;
+}
+
+.text-gray {
+    color: #777;
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 그리드 레이아웃 (글 번호, 회원, 유형, 제목, 상태) */
+.table-header, 
+.table-row {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr 1.2fr 2.5fr 1fr;
+    align-items: center;
+    text-align: center;
+}
+
+/* 상태 뱃지 */
+.badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.pending {
+    background-color: #FFF3CD;
+    color: #856404;
+}
+
+.completed {
+    background-color: #D4EDDA;
+    color: #155724;
+}
+
+/* ==================================
+   우측 문의 답변 폼
+=================================== */
+.inquiry-reply-section {
+    flex: 1;
+}
+
+.reply-box {
+    border: 2px solid #333;
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.reply-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.inquiry-info {
+    margin-bottom: 30px;
+}
+
+.inquiry-type {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.inquiry-question {
+    font-size: 1rem;
+    color: #888;
+}
+
+.reply-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.reply-label {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.reply-textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 20px;
+    border: 2px solid #333;
+    border-radius: 12px;
+    font-size: 1rem;
+    resize: none;
+    outline: none;
+}
+
+.btn-submit {
+    background-color: #6B46C1;
+    color: #fff;
+    border: none;
+    padding: 18px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+}
+
+.btn-submit:hover {
+    background-color: #5533A3;
+}
+
+/* ==================================
+   모바일 반응형 웹 설정 (미디어 쿼리)
+=================================== */
+@media (max-width: 900px) {
+    /* 헤더 레이아웃 세로 변경 */
+    .admin-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .header-left {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .gnb ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .header-right {
+        justify-content: center;
+        margin-top: 10px;
+    }
+    
+    /* 좌우 분할을 상하 분할로 변경 */
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .inquiry-list-section, .inquiry-reply-section {
+        width: 100%;
+    }
+
+    /* 테이블 모바일 카드 뷰 전환 */
+    .table-header {
+        display: none;
+    }
+
+    .board-table {
+        border: none;
+    }
+
+    .table-row {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        border: 2px solid #333;
+        margin-bottom: 15px;
+        padding: 20px;
+        border-radius: 12px;
+        gap: 12px;
+    }
+
+    .table-row .col {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .truncate {
+        white-space: normal; /* 모바일에서는 내용 전체 노출 */
+    }
+
+    /* data-label 속성으로 모바일 라벨 생성 */
+    .table-row .col[data-label]::before {
+        content: attr(data-label);
+        font-weight: bold;
+        width: 80px;
+        flex-shrink: 0;
+        display: inline-block;
+        color: #333;
+    }
+}

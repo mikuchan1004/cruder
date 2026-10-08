@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자페이지 - 대시보드</title>
+    <link rel="stylesheet" href="admin-dashboard.css">
+</head>
+<body>
+    <!-- 상단 헤더 영역 -->
+    <header class="admin-header">
+        <div class="header-left">
+            <h1 class="logo">관리자페이지</h1>
+            <nav class="gnb">
+                <ul>
+                    <li><a href="#" class="active">대시보드</a></li>
+                    <li><a href="#">회원관리</a></li>
+                    <li><a href="#">게시물관리</a></li>
+                    <li><a href="#">채용 공고 관리</a></li>
+                    <li><a href="#">문의관리</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="header-right">
+            <span class="admin-greeting">관리자님 환영합니다</span>
+            <button type="button" class="btn-logout">로그아웃</button>
+        </div>
+    </header>
+
+    <!-- 메인 대시보드 콘텐츠 영역 -->
+    <main class="admin-main">
+        <h2 class="section-title">대시보드</h2>
+        
+        <!-- 대시보드 상단 요약 및 빠른 이동 영역 -->
+        <section class="dashboard-top">
+            <!-- 요약 통계 카드 그룹 -->
+            <div class="stats-group">
+                <div class="stat-card">
+                    <h3>총 회원 수</h3>
+                    <p class="stat-number">5명</p>
+                </div>
+                <div class="stat-card">
+                    <h3>API 호출 건수</h3>
+                    <p class="stat-number">15건</p>
+                </div>
+            </div>
+            
+            <!-- 빠른 이동 링크 카드 -->
+            <div class="quick-links-card">
+                <h3>빠른 이동</h3>
+                <div class="quick-links-buttons">
+                    <a href="#" class="btn-outline-purple">회원관리</a>
+                    <a href="#" class="btn-outline-purple">게시물관리</a>
+                    <a href="#" class="btn-outline-purple">메인페이지 이동</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 최근 게시물 테이블 영역 -->
+        <section class="recent-posts">
+            <h2 class="section-title">최근 게시물</h2>
+            
+            <div class="board-table">
+                <!-- 데스크톱용 테이블 헤더 -->
+                <div class="table-header">
+                    <div class="col-category">카테고리</div>
+                    <div class="col-title">제목</div>
+                    <div class="col-author">작성자</div>
+                    <div class="col-date">작성일</div>
+                </div>
+                
+                <!-- 리스트 아이템 1 -->
+                <div class="table-row">
+                    <div class="col-category" data-label="카테고리">공지</div>
+                    <div class="col-title" data-label="제목">공지사항입니다.</div>
+                    <div class="col-author" data-label="작성자">admin</div>
+                    <div class="col-date" data-label="작성일">2026.09.30</div>
+                </div>
+
+                <!-- 리스트 아이템 2 -->
+                <div class="table-row">
+                    <div class="col-category" data-label="카테고리">채용 공고</div>
+                    <div class="col-title" data-label="제목">천안 풀스택 개발자 모집합니다</div>
+                    <div class="col-author" data-label="작성자">A IT</div>
+                    <div class="col-date" data-label="작성일">2026.09.30</div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티 게시판</title>
+    <link rel="stylesheet" href="job-tip.css">
+</head>
+<body>
+    <!-- 상단 헤더 영역 -->
+    <header class="wireframe-header">
+        헤더
+    </header>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="main-container">
+        <!-- 검색 및 글쓰기 영역 -->
+        <div class="board-controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="검색" class="search-input">
+            </div>
+            <button class="btn-write">글쓰기</button>
+        </div>
+
+        <!-- 게시판 (테이블) 영역 -->
+        <div class="board-table">
+            <!-- 데스크톱용 테이블 헤더 -->
+            <div class="board-header">
+                <div class="col-num">번호</div>
+                <div class="col-title">제목</div>
+                <div class="col-author">글쓴이</div>
+                <div class="col-date">날짜</div>
+                <div class="col-views">조회수</div>
+            </div>
+            
+            <!-- 리스트 아이템 -->
+            <div class="board-row">
+                <div class="col-num" data-label="번호">25</div>
+                <div class="col-title" data-label="제목">자소서 잘쓰는 방법</div>
+                <div class="col-author" data-label="글쓴이">이현</div>
+                <div class="col-date" data-label="날짜">1920-05-25</div>
+                <div class="col-views" data-label="조회수">2500</div>
+            </div>
+            
+            <div class="board-row">
+                <div class="col-num" data-label="번호">12</div>
+                <div class="col-title" data-label="제목">네이버 면접 후기</div>
+                <div class="col-author" data-label="글쓴이">이상</div>
+                <div class="col-date" data-label="날짜">1920-04-25</div>
+                <div class="col-views" data-label="조회수">25000</div>
+            </div>
+
+            <div class="board-row">
+                <div class="col-num" data-label="번호">5</div>
+                <div class="col-title" data-label="제목">취업하고 싶으면 이글부터 봐라</div>
+                <div class="col-author" data-label="글쓴이">123</div>
+                <div class="col-date" data-label="날짜">1750-05-11</div>
+                <div class="col-views" data-label="조회수">2540</div>
+            </div>
+
+            <div class="board-row">
+                <div class="col-num" data-label="번호">7</div>
+                <div class="col-title" data-label="제목">중간쯤 제목</div>
+                <div class="col-author" data-label="글쓴이">admin</div>
+                <div class="col-date" data-label="날짜">2000-07-04</div>
+                <div class="col-views" data-label="조회수">1452</div>
+            </div>
+
+            <div class="board-row">
+                <div class="col-num" data-label="번호">75</div>
+                <div class="col-title" data-label="제목">광고</div>
+                <div class="col-author" data-label="글쓴이">나쁜놈</div>
+                <div class="col-date" data-label="날짜">2010-07-04</div>
+                <div class="col-views" data-label="조회수">12</div>
+            </div>
+
+            <div class="board-row">
+                <div class="col-num" data-label="번호">78</div>
+                <div class="col-title" data-label="제목">책읽으면 졸리다</div>
+                <div class="col-author" data-label="글쓴이">123</div>
+                <div class="col-date" data-label="날짜">2010-07-15</div>
+                <div class="col-views" data-label="조회수">1220</div>
+            </div>
+        </div>
+
+        <!-- 페이지네이션 영역 -->
+        <div class="pagination">
+            <button class="page-btn arrow">◀</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">4</button>
+            <button class="page-btn">5</button>
+            <button class="page-btn arrow">▶</button>
+            <span class="page-text">페이지</span>
+        </div>
+    </main>
+
+    <!-- 하단 푸터 영역 -->
+    <footer class="wireframe-footer">
+        푸터
+    </footer>
+</body>
+</html>

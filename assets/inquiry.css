@@ -1,0 +1,248 @@
+/* 기본 리셋 및 폰트 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ==================================
+   상단 헤더 영역
+=================================== */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid #ddd;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.gnb ul {
+    display: flex;
+    gap: 30px;
+}
+
+.gnb a {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.admin-link {
+    font-size: 1rem;
+    color: #555;
+}
+
+.btn-logout {
+    background-color: #6B46C1; /* 테마 포인트 컬러 적용 */
+    color: #fff;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #5533A3;
+}
+
+/* ==================================
+   메인 콘텐츠 영역 (좌우 분할)
+=================================== */
+.inquiry-main {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.inquiry-container {
+    display: flex;
+    gap: 30px;
+    height: 100%;
+    min-height: 600px;
+}
+
+/* 좌측 문의 작성 폼 */
+.inquiry-write-box {
+    flex: 1;
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-title {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    outline: none;
+}
+
+.input-content {
+    flex: 1;
+    width: 100%;
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 40px;
+    font-size: 1.8rem; /* 와이어프레임처럼 큼직한 텍스트 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    resize: none;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+.input-content::placeholder {
+    color: #333;
+    font-weight: 500;
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: #6B46C1;
+    color: #fff;
+    border: none;
+    padding: 18px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: #5533A3;
+}
+
+/* 우측 문의 답변 폼 */
+.inquiry-reply-box {
+    flex: 1;
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reply-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.reply-content {
+    flex: 1;
+    width: 100%;
+    border: 1px solid #333;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.reply-content p {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* ==================================
+   하단 푸터 영역
+=================================== */
+.main-footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* ==================================
+   모바일 반응형 웹 설정 (미디어 쿼리)
+=================================== */
+@media (max-width: 768px) {
+    /* 헤더 레이아웃 세로 변경 */
+    .main-header {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .header-left {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .gnb ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    /* 좌우 분할을 상하 분할로 변경 */
+    .inquiry-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .inquiry-write-box, 
+    .inquiry-reply-box {
+        width: 100%;
+        min-height: 500px; /* 모바일에서도 적절한 높이 유지 */
+    }
+
+    .input-content {
+        font-size: 1.2rem; /* 모바일 폰트 사이즈 조정 */
+        padding: 20px;
+    }
+
+    .reply-title {
+        font-size: 1.4rem;
+    }
+}

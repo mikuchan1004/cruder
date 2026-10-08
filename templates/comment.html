@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>댓글 영역 와이어프레임</title>
+    <link rel="stylesheet" href="comment.css">
+    <!-- FontAwesome (프로필 아이콘 등을 위해 사용) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="comments-section">
+        <!-- 댓글 타이틀 -->
+        <h2 class="comments-title">댓글</h2>
+
+        <!-- 댓글 리스트 영역 -->
+        <div class="comments-list">
+            <!-- 댓글 아이템 1 (내 댓글 - 삭제 버튼 있음) -->
+            <div class="comment-item">
+                <div class="comment-avatar">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <div class="comment-content">
+                    <div class="comment-header">
+                        <span class="author">익명1</span>
+                        <span class="date">2025-05-11</span>
+                    </div>
+                    <div class="comment-body">
+                        <p class="text">꿀팁 감사요~</p>
+                        <button type="button" class="btn-delete">삭제</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 댓글 아이템 2 -->
+            <div class="comment-item">
+                <div class="comment-avatar">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <div class="comment-content">
+                    <div class="comment-header">
+                        <span class="author">익명7</span>
+                        <span class="date">2025-05-11</span>
+                    </div>
+                    <div class="comment-body">
+                        <p class="text">잘 썼어요</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이지네이션 (드롭다운 형태) -->
+        <div class="comments-pagination">
+            <select aria-label="페이지 선택">
+                <option value="1">1</option>
+            </select>
+        </div>
+
+        <!-- 댓글 입력 영역 -->
+        <div class="comment-input-area">
+            <input type="text" class="comment-input" placeholder="입력 필드">
+            <button type="button" class="btn-submit">전송</button>
+        </div>
+    </div>
+</body>
+</html>

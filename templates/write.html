@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글쓰기 에디터 와이어프레임</title>
+    <link rel="stylesheet" href="write.css">
+    <!-- 아이콘 렌더링을 위한 FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 상단 헤더 영역 -->
+    <header class="wireframe-header">
+        헤더
+    </header>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="main-container">
+        <!-- 제목 및 등록/취소 버튼 영역 -->
+        <div class="form-header">
+            <input type="text" class="title-input" placeholder="제목을 입력하시오">
+            <div class="button-group">
+                <button type="button" class="btn btn-cancel">취소</button>
+                <button type="submit" class="btn btn-submit">등록</button>
+            </div>
+        </div>
+
+        <!-- 에디터 영역 -->
+        <div class="editor-container">
+            <!-- 에디터 상단 툴바 -->
+            <div class="editor-toolbar">
+                <button type="button" class="tool-btn">
+                    <i class="fa-regular fa-image"></i>
+                    <span>이미지</span>
+                </button>
+                <button type="button" class="tool-btn">
+                    <i class="fa-solid fa-film"></i>
+                    <span>동영상</span>
+                </button>
+                <button type="button" class="tool-btn">
+                    <i class="fa-solid fa-paperclip"></i>
+                    <span>첨부 파일</span>
+                </button>
+            </div>
+            
+            <!-- 에디터 본문 작성 영역 -->
+            <div class="editor-content">
+                <textarea placeholder="내용을 입력하시오"></textarea>
+            </div>
+        </div>
+    </main>
+
+    <!-- 하단 푸터 영역 -->
+    <footer class="wireframe-footer">
+        푸터
+    </footer>
+</body>
+</html>

@@ -1,0 +1,83 @@
+/* 기본 리셋 및 폰트 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* 에러 화면 컨테이너 (중앙 정렬) */
+.error-container {
+    text-align: center;
+    padding: 40px 20px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* 상단 경고 아이콘 */
+.error-icon {
+    font-size: 8rem;
+    color: #000;
+    margin-bottom: 40px;
+}
+
+/* 경고 문구 */
+.error-title {
+    font-size: 2.2rem;
+    font-weight: 500;
+    margin-bottom: 50px;
+    color: #222;
+}
+
+/* 메인페이지 이동 버튼 (보라색 아웃라인 테마) */
+.btn-main {
+    display: inline-block;
+    border: 1px solid #6B46C1;
+    color: #6B46C1;
+    background-color: #ffffff;
+    padding: 16px 80px;
+    border-radius: 8px;
+    font-size: 1.15rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+/* 버튼 호버 시 반전 효과 */
+.btn-main:hover {
+    background-color: #6B46C1;
+    color: #ffffff;
+}
+
+/* ==================================
+   모바일 반응형 웹 설정 (미디어 쿼리)
+=================================== */
+@media (max-width: 768px) {
+    .error-icon {
+        font-size: 6rem;
+        margin-bottom: 30px;
+    }
+
+    .error-title {
+        font-size: 1.6rem;
+        margin-bottom: 40px;
+    }
+
+    /* 모바일에서는 버튼을 누르기 쉽게 가로로 꽉 채움 */
+    .btn-main {
+        width: 100%;
+        padding: 16px 0;
+    }
+}

@@ -1,0 +1,219 @@
+/* 기본 리셋 및 폰트 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #ffffff;
+    color: #333;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 임시 헤더 & 푸터 */
+.wireframe-header, .wireframe-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+}
+.wireframe-footer {
+    margin-top: auto; 
+}
+
+/* 메인 컨테이너 (2단 레이아웃) */
+.mypage-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    gap: 40px;
+}
+
+/* ==================================
+   좌측 사이드바
+=================================== */
+.sidebar {
+    width: 250px;
+    border: 1px solid #333;
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.sidebar-title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 50px;
+}
+
+.sidebar-menu {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+}
+
+.sidebar-menu a {
+    font-size: 1.15rem;
+    color: #555;
+}
+
+/* 활성화된 메뉴 굵게 표시 */
+.sidebar-menu a.active {
+    font-weight: bold;
+    color: #000;
+}
+
+/* ==================================
+   우측 메인 콘텐츠 (회원 정보 수정 폼)
+=================================== */
+.content-box {
+    flex: 1;
+    border: 1px solid #333;
+    padding: 40px;
+    display: flex;
+}
+
+.form-container {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+}
+
+/* 프로필 아바타 영역 */
+.avatar-area {
+    flex-shrink: 0;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    background-color: #D9D9D9;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2rem;
+    color: #333;
+}
+
+/* 폼 영역 */
+.edit-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 350px;
+}
+
+.edit-form input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.edit-form input::placeholder {
+    color: #555;
+}
+
+.disabled-input {
+    background-color: #f9f9f9;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* 하단 버튼 그룹 */
+.btn-group {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 우측으로 정렬 */
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.btn {
+    background-color: #6B46C1; /* 프로젝트 메인 테마 보라색 적용 */
+    color: #fff;
+    border: none;
+    padding: 12px 40px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #5533A3;
+}
+
+/* ==================================
+   모바일 반응형 웹 설정 (미디어 쿼리)
+=================================== */
+@media (max-width: 768px) {
+    /* 가로 배치를 세로 배치로 변경 */
+    .mypage-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sidebar {
+        width: 100%;
+        max-width: 500px;
+        padding: 30px 20px;
+    }
+
+    .content-box {
+        width: 100%;
+        max-width: 500px;
+        padding: 30px 20px;
+    }
+
+    /* 폼 영역 내부 레이아웃 변경 */
+    .form-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input-group {
+        width: 100%;
+        max-width: 100%; /* 모바일에서는 입력 필드가 꽉 차게 */
+    }
+
+    /* 모바일에서는 버튼 영역을 꽉 차게 배치하여 터치 편의성 증대 */
+    .btn-group {
+        width: 100%;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 15px;
+    }
+}

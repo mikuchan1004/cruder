@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>찜한 공고 목록 - 취업 할래말래</title>
+    <link rel="stylesheet" href="bookmark.css">
+    <!-- FontAwesome (사용자 프로필 아이콘 렌더링용) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 상단 임시 헤더 -->
+    <header class="wireframe-header">
+        헤더
+    </header>
+
+    <!-- 메인 레이아웃 컨테이너 -->
+    <main class="mypage-container">
+        <!-- 좌측 사이드바 영역 -->
+        <aside class="sidebar">
+            <h2 class="sidebar-title">마이페이지</h2>
+            <ul class="sidebar-menu">
+                <li><a href="#">회원 정보 수정</a></li>
+                <li><a href="#">쓴 글 목록</a></li>
+                <li><a href="#" class="active">찜한 공고 목록</a></li>
+                <li><a href="#">일대일 문의</a></li>
+            </ul>
+        </aside>
+
+        <!-- 우측 메인 콘텐츠 영역 -->
+        <section class="content-area">
+            <!-- 사용자 정보 및 타이틀 -->
+            <div class="user-greeting">
+                <div class="avatar">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <h3>OOO 님이 최근 찜한 게시글 목록</h3>
+            </div>
+
+            <!-- 찜한 공고 테이블 -->
+            <div class="bookmark-table">
+                <!-- 데스크톱용 테이블 헤더 -->
+                <div class="table-header">
+                    <div class="col-company">회사명</div>
+                    <div class="col-title">공고명</div>
+                    <div class="col-exp">경력</div>
+                    <div class="col-loc">지역</div>
+                    <div class="col-detail">상세</div>
+                    <div class="col-check"></div> <!-- 체크박스 영역 -->
+                </div>
+                
+                <!-- 리스트 아이템 1 -->
+                <div class="table-row">
+                    <div class="col-company" data-label="회사명">네이버</div>
+                    <div class="col-title" data-label="공고명">백엔드 개발자 모집</div>
+                    <div class="col-exp" data-label="경력">3년이상</div>
+                    <div class="col-loc" data-label="지역">천안시 동남구</div>
+                    <div class="col-detail"><a href="#" class="btn-detail">상세보기</a></div>
+                    <div class="col-check"><input type="checkbox" checked class="custom-checkbox"></div>
+                </div>
+
+                <!-- 리스트 아이템 2 -->
+                <div class="table-row">
+                    <div class="col-company" data-label="회사명">구글</div>
+                    <div class="col-title" data-label="공고명">백엔드 개발자 모집</div>
+                    <div class="col-exp" data-label="경력">5년이상</div>
+                    <div class="col-loc" data-label="지역">천안시 서북구</div>
+                    <div class="col-detail"><a href="#" class="btn-detail">상세보기</a></div>
+                    <div class="col-check"><input type="checkbox" class="custom-checkbox"></div>
+                </div>
+            </div>
+
+            <!-- 하단 삭제 버튼 영역 -->
+            <div class="action-area">
+                <button type="button" class="btn-delete">삭제</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- 하단 임시 푸터 -->
+    <footer class="wireframe-footer">
+        푸터
+    </footer>
+</body>
+</html>

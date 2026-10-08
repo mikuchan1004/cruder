@@ -1,0 +1,127 @@
+/* 기본 리셋 및 폰트 설정 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: #333;
+    background-color: #fff;
+}
+
+/* 임시 헤더 스타일 */
+.wireframe-header {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+    color: #000;
+}
+
+/* 메인 래퍼 */
+.main-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ==================================
+   게시글 메타 정보 영역
+=================================== */
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #000;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    font-size: 1.15rem;
+}
+
+.header-left {
+    display: flex;
+    gap: 30px;
+}
+
+.header-right {
+    display: flex;
+    gap: 30px;
+}
+
+/* ==================================
+   게시글 본문 영역
+=================================== */
+.post-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #000;
+    min-height: 500px; /* 본문 영역의 최소 높이 확보 */
+    padding: 20px;
+}
+
+.content-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* 액션 버튼 영역 */
+.action-area {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 우측 하단으로 정렬 */
+    margin-top: 40px;
+}
+
+.btn-report {
+    background-color: #C92A2A; /* 붉은색 포인트 컬러 */
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-report:hover {
+    background-color: #A61E1E;
+}
+
+/* ==================================
+   모바일 반응형 웹 설정 (미디어 쿼리)
+=================================== */
+@media (max-width: 768px) {
+    /* 모바일에서는 메타 정보가 세로로 떨어지도록 변경 */
+    .post-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .header-left, .header-right {
+        width: 100%;
+        justify-content: space-between; /* 항목들을 양끝으로 분산 */
+        gap: 10px;
+    }
+
+    /* 본문 높이를 기기에 맞게 축소 */
+    .post-content {
+        min-height: 350px;
+    }
+
+    /* 버튼 터치 편의성을 위해 너비 확장 */
+    .action-area {
+        justify-content: stretch;
+    }
+
+    .btn-report {
+        width: 100%;
+        padding: 15px;
+    }
+}

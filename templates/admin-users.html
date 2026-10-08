@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자페이지 - 회원 및 신고 관리</title>
+    <link rel="stylesheet" href="admin-users.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 상단 헤더 영역 -->
+    <header class="admin-header">
+        <div class="header-left">
+            <h1 class="logo">관리자페이지</h1>
+            <nav class="gnb">
+                <ul>
+                    <li><a href="#">대시보드</a></li>
+                    <li><a href="#" class="active">회원관리</a></li>
+                    <li><a href="#">게시물관리</a></li>
+                    <li><a href="#">채용 공고 관리</a></li>
+                    <li><a href="#">문의관리</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="header-right">
+            <span class="admin-greeting">관리자님 환영합니다</span>
+            <button type="button" class="btn-logout">로그아웃</button>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="admin-main">
+        
+        <!-- 회원관리 섹션 -->
+        <section class="admin-section">
+            <div class="section-header">
+                <h2 class="section-title">회원관리</h2>
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="아이디 또는 이름 검색">
+                </div>
+            </div>
+            
+            <div class="board-table member-table">
+                <!-- 테이블 헤더 -->
+                <div class="table-header">
+                    <div class="col" data-label="아이디">아이디</div>
+                    <div class="col" data-label="이름">이름</div>
+                    <div class="col" data-label="연락처">연락처</div>
+                    <div class="col" data-label="경고">경고</div>
+                    <div class="col" data-label="상태">상태</div>
+                    <div class="col" data-label="관리">관리</div>
+                </div>
+                
+                <!-- 리스트 아이템 1 -->
+                <div class="table-row">
+                    <div class="col" data-label="아이디">admin</div>
+                    <div class="col" data-label="이름">관리자</div>
+                    <div class="col" data-label="연락처">01012345678</div>
+                    <div class="col" data-label="경고">0</div>
+                    <div class="col" data-label="상태"><span class="badge status-normal">정상</span></div>
+                    <div class="col action-buttons" data-label="관리">
+                        <button class="btn btn-outline-purple">경고</button>
+                        <button class="btn btn-outline-purple">경고 제거</button>
+                        <button class="btn btn-red">계정 정지</button>
+                        <button class="btn btn-red">회원 삭제</button>
+                    </div>
+                </div>
+
+                <!-- 리스트 아이템 2 -->
+                <div class="table-row">
+                    <div class="col" data-label="아이디">user</div>
+                    <div class="col" data-label="이름">사용자</div>
+                    <div class="col" data-label="연락처">01011112222</div>
+                    <div class="col" data-label="경고">10</div>
+                    <div class="col" data-label="상태"><span class="badge status-suspend">정지</span></div>
+                    <div class="col action-buttons" data-label="관리">
+                        <button class="btn btn-outline-purple">경고</button>
+                        <button class="btn btn-outline-purple">경고 제거</button>
+                        <button class="btn btn-outline-purple">정지 해제</button>
+                        <button class="btn btn-red">회원 삭제</button>
+                    </div>
+                </div>
+
+                <!-- 리스트 아이템 3 -->
+                <div class="table-row">
+                    <div class="col" data-label="아이디">user1</div>
+                    <div class="col" data-label="이름">사용자1</div>
+                    <div class="col" data-label="연락처">01012345678</div>
+                    <div class="col" data-label="경고">0</div>
+                    <div class="col" data-label="상태"><span class="badge status-normal">정상</span></div>
+                    <div class="col action-buttons" data-label="관리">
+                        <button class="btn btn-outline-purple">경고</button>
+                        <button class="btn btn-outline-purple">경고 제거</button>
+                        <button class="btn btn-red">계정 정지</button>
+                        <button class="btn btn-red">회원 삭제</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 글 신고 내역 섹션 -->
+        <section class="admin-section">
+            <div class="section-header">
+                <h2 class="section-title">글 신고 내역 <span class="badge badge-count">총 3건</span></h2>
+            </div>
+            
+            <div class="board-table report-table">
+                <!-- 테이블 헤더 -->
+                <div class="table-header">
+                    <div class="col" data-label="신고 번호">신고 번호</div>
+                    <div class="col" data-label="글 작성자 ID">글 작성자 ID</div>
+                    <div class="col" data-label="글 작성자">글 작성자</div>
+                    <div class="col" data-label="글 신고자">글 신고자</div>
+                    <div class="col" data-label="글 제목">글 제목</div>
+                    <div class="col" data-label="신고 사유">신고 사유</div>
+                    <div class="col" data-label="관리">관리</div>
+                </div>
+                
+                <!-- 리스트 아이템 1 -->
+                <div class="table-row">
+                    <div class="col" data-label="신고 번호">1</div>
+                    <div class="col" data-label="글 작성자 ID">user1</div>
+                    <div class="col" data-label="글 작성자">사용자 1</div>
+                    <div class="col" data-label="글 신고자">사용자 2</div>
+                    <div class="col truncate" data-label="글 제목">구직자 여러분! 취업때문에 고민이시죠?</div>
+                    <div class="col truncate" data-label="신고 사유">광고가 의심됩니다.</div>
+                    <div class="col action-buttons" data-label="관리">
+                        <button class="btn btn-red">삭제</button>
+                    </div>
+                </div>
+
+                <!-- 리스트 아이템 2 -->
+                <div class="table-row">
+                    <div class="col" data-label="신고 번호">2</div>
+                    <div class="col" data-label="글 작성자 ID">user2</div>
+                    <div class="col" data-label="글 작성자">사용자 2</div>
+                    <div class="col" data-label="글 신고자">사용자 3</div>
+                    <div class="col truncate" data-label="글 제목">혹시 당신도 목디스크에 시달리고 있나요?</div>
+                    <div class="col truncate" data-label="신고 사유">누가봐도 광고 아님?</div>
+                    <div class="col action-buttons" data-label="관리">
+                        <button class="btn btn-red">삭제</button>
+                    </div>
+                </div>
+                
+                <!-- 리스트 아이템 3 -->
+                <div class="table-row">
+                    <div class="col" data-label="신고 번호">3</div>
+                    <div class="col" data-label="글 작성자 ID">user3</div>
+                    <div class="col" data-label="글 작성자">사용자 3</div>
+                    <div class="col" data-label="글 신고자">사용자 1</div>
+                    <div class="col truncate" data-label="글 제목">20대 사회초년생을 위한 맞춤형 주식 투자...</div>
+                    <div class="col truncate" data-label="신고 사유">빼박 광고</div>
+                    <div class="col action-buttons" data-label="관리">
+                        <button class="btn btn-red">삭제</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+</body>
+</html>

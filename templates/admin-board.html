@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자페이지 - 게시물 관리</title>
+    <link rel="stylesheet" href="admin-board.css">
+</head>
+<body>
+    <!-- 상단 헤더 영역 -->
+    <header class="admin-header">
+        <div class="header-left">
+            <h1 class="logo">관리자페이지</h1>
+            <nav class="gnb">
+                <ul>
+                    <li><a href="#">대시보드</a></li>
+                    <li><a href="#">회원관리</a></li>
+                    <li><a href="#" class="active">게시물관리</a></li>
+                    <li><a href="#">채용 공고 관리</a></li>
+                    <li><a href="#">문의관리</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="header-right">
+            <span class="admin-greeting">관리자님 환영합니다</span>
+            <button type="button" class="btn-logout">로그아웃</button>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="admin-main">
+        <h2 class="section-title">게시물 관리</h2>
+        
+        <!-- 게시물 테이블 영역 -->
+        <div class="board-table">
+            <!-- 테이블 헤더 -->
+            <div class="table-header">
+                <div class="col" data-label="카테고리">카테고리</div>
+                <div class="col" data-label="글 번호">글 번호</div>
+                <div class="col" data-label="제목">제목</div>
+                <div class="col" data-label="작성자">작성자</div>
+                <div class="col" data-label="관리">관리</div>
+            </div>
+            
+            <!-- 리스트 아이템 1 -->
+            <div class="table-row">
+                <div class="col" data-label="카테고리">공지</div>
+                <div class="col" data-label="글 번호">1</div>
+                <div class="col truncate" data-label="제목">공지사항입니다.</div>
+                <div class="col" data-label="작성자">admin</div>
+                <div class="col action-buttons" data-label="관리">
+                    <button class="btn btn-outline-purple">상세내용</button>
+                </div>
+            </div>
+
+            <!-- 리스트 아이템 2 -->
+            <div class="table-row">
+                <div class="col" data-label="카테고리">취업 꿀팁</div>
+                <div class="col" data-label="글 번호">1</div>
+                <div class="col truncate" data-label="제목">취업 꿀팁 그 첫번째!</div>
+                <div class="col" data-label="작성자">admin</div>
+                <div class="col action-buttons" data-label="관리">
+                    <button class="btn btn-outline-purple">상세내용</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

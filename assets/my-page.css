@@ -1,0 +1,245 @@
+/* 기본 리셋 및 폰트 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #ffffff;
+    color: #333;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 임시 헤더 & 푸터 */
+.wireframe-header, .wireframe-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+}
+.wireframe-footer {
+    margin-top: auto; 
+}
+
+/* 메인 컨테이너 (3단 레이아웃) */
+.mypage-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+    gap: 40px;
+}
+
+/* ==================================
+   1. 좌측 사이드바
+=================================== */
+.sidebar {
+    flex: 1;
+    border: 1px solid #000;
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 60px;
+}
+
+.sidebar-menu {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 50px; /* 메뉴 간격 띄우기 */
+}
+
+.sidebar-menu a {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+/* ==================================
+   2. 중앙 사용자 정보 영역
+=================================== */
+.user-profile-section {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.user-greeting {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 60px;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    background-color: #D9D9D9;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.user-greeting h3 {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.quick-links {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.quick-links a {
+    color: #6B46C1; /* 프로젝트 메인 테마 보라색 적용 */
+    font-size: 1.15rem;
+    font-weight: 500;
+}
+
+.quick-links a:hover {
+    text-decoration: underline;
+}
+
+/* ==================================
+   3. 우측 본인 확인 폼
+=================================== */
+.verification-section {
+    flex: 1.5;
+}
+
+.verification-box {
+    border: 1px solid #000;
+    padding: 60px 40px;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.verification-box h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 40px;
+}
+
+.verification-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.verification-form input {
+    width: 100%;
+    max-width: 280px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    text-align: center;
+    outline: none;
+}
+
+.verification-form input::placeholder {
+    color: #555;
+}
+
+.btn-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.btn {
+    background-color: #6B46C1;
+    color: #fff;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 25px; /* 둥근 캡슐형 버튼 */
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #5533A3;
+}
+
+/* ==================================
+   모바일 반응형 웹 설정 (미디어 쿼리)
+=================================== */
+@media (max-width: 900px) {
+    /* 3단 가로 배치를 1단 세로 배치로 변경 */
+    .mypage-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 60px;
+        margin: 40px auto;
+    }
+
+    .sidebar, .user-profile-section, .verification-section {
+        width: 100%;
+        max-width: 500px; /* 모바일에서 박스가 너무 넓어지지 않도록 제어 */
+    }
+
+    /* 사이드바 여백 조정 */
+    .sidebar {
+        padding: 30px 20px;
+    }
+    
+    .sidebar-menu {
+        gap: 25px;
+    }
+
+    /* 프로필 영역 상하 구분선 추가 */
+    .user-profile-section {
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        padding: 40px 0;
+    }
+
+    /* 입력 폼 너비 꽉 채우기 */
+    .verification-form input {
+        max-width: 100%;
+    }
+    
+    /* 모바일 환경에서는 버튼을 누르기 쉽게 가로로 꽉 채움 */
+    .btn-group {
+        width: 100%;
+        gap: 10px;
+    }
+    
+    .btn {
+        flex: 1;
+    }
+}

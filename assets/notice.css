@@ -1,0 +1,207 @@
+/* 기본 리셋 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: #000;
+    background-color: #fff;
+}
+
+/* 임시 헤더 & 푸터 스타일 */
+.wireframe-header, .wireframe-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+}
+
+.wireframe-footer {
+    margin-top: auto; 
+}
+
+/* 메인 래퍼 */
+.main-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* 검색 및 글쓰기 영역 */
+.board-controls {
+    display: flex;
+    justify-content: center; /* 와이어프레임처럼 기본은 중앙 배치 */
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #000;
+    padding: 10px 15px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-icon {
+    margin-right: 8px;
+    font-size: 1rem;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.btn-write {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #6B30E4; /* 보라색 톤 적용 */
+    color: #fff;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 20px; /* 둥근 버튼 모서리 */
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* 게시판 테이블 스타일 (CSS Grid 적용) */
+.board-table {
+    border: 1px solid #000; /* 전체 표 테두리 */
+    min-height: 400px; /* 와이어프레임의 여백 느낌 구현 */
+    margin-bottom: 50px;
+}
+
+.board-header, .board-row {
+    display: grid;
+    /* 번호(좁게), 제목(넓게), 글쓴이, 날짜, 조회수 비율 조정 */
+    grid-template-columns: 1fr 4fr 1.5fr 2fr 1fr;
+    align-items: center;
+    text-align: center;
+}
+
+.board-header {
+    font-weight: bold;
+    border-bottom: 1px solid #000;
+    padding: 15px 10px;
+    font-size: 1.1rem;
+}
+
+.board-row {
+    border-bottom: 1px solid #000;
+    padding: 15px 10px;
+    font-size: 1.05rem;
+}
+
+/* 빈 공간에는 줄이 없으므로, 마지막 아이템 하단 줄을 유지하거나 상황에 맞게 조정 */
+.board-row .col-title {
+    text-align: left;
+    padding-left: 20px;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-btn {
+    width: 32px;
+    height: 32px;
+    border: 2px solid #000;
+    background-color: #fff;
+    color: #000;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.page-btn.active {
+    background-color: #000;
+    color: #fff; 
+}
+
+.page-text {
+    font-size: 1.1rem;
+    margin-left: 5px;
+}
+
+/* ==================================
+   모바일 반응형 웹 설정 (미디어 쿼리)
+=================================== */
+@media (max-width: 768px) {
+    /* 모바일에서는 검색창과 글쓰기 버튼 세로 배치 */
+    .board-controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn-write {
+        position: static; /* absolute 속성 해제 */
+        transform: none;
+        align-self: flex-end; /* 우측 정렬 */
+    }
+
+    .search-box {
+        max-width: 100%;
+    }
+
+    /* 모바일에서는 기본 가로 헤더를 숨김 */
+    .board-header {
+        display: none;
+    }
+
+    /* 전체 테두리 및 여백 제거 */
+    .board-table {
+        border: none;
+        min-height: auto;
+    }
+
+    /* 각 행을 카드(Card) 형태로 세로 배치 */
+    .board-row {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        border: 1px solid #000;
+        margin-bottom: 15px;
+        padding: 20px;
+        gap: 10px;
+        border-radius: 8px;
+    }
+
+    /* HTML에 추가해둔 data-label 속성을 CSS ::before로 불러와서 제목처럼 표시 */
+    .board-row div {
+        display: flex;
+        align-items: center;
+    }
+
+    .board-row div::before {
+        content: attr(data-label);
+        font-weight: bold;
+        width: 70px; /* 라벨 너비 고정 */
+        display: inline-block;
+        color: #555;
+    }
+
+    .board-row .col-title {
+        padding-left: 0;
+    }
+}

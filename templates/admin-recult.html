@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자페이지 - 채용 공고 관리</title>
+    <link rel="stylesheet" href="admin-recult.css">
+</head>
+<body>
+    <!-- 상단 헤더 영역 -->
+    <header class="admin-header">
+        <div class="header-left">
+            <h1 class="logo">관리자페이지</h1>
+            <nav class="gnb">
+                <ul>
+                    <li><a href="#">대시보드</a></li>
+                    <li><a href="#">회원관리</a></li>
+                    <li><a href="#">게시물관리</a></li>
+                    <li><a href="#" class="active">채용 공고 관리</a></li>
+                    <li><a href="#">문의관리</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="header-right">
+            <span class="admin-greeting">관리자님 환영합니다</span>
+            <button type="button" class="btn-logout">로그아웃</button>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="admin-main">
+        <h2 class="section-title">채용 공고 관리</h2>
+        
+        <!-- 채용 공고 테이블 영역 -->
+        <div class="board-table">
+            <!-- 테이블 헤더 -->
+            <div class="table-header">
+                <div class="col" data-label="공고 번호">공고 번호</div>
+                <div class="col" data-label="제목">제목</div>
+                <div class="col" data-label="작성자">작성자</div>
+                <div class="col" data-label="관리">관리</div>
+            </div>
+            
+            <!-- 리스트 아이템 1 -->
+            <div class="table-row">
+                <div class="col" data-label="공고 번호">1</div>
+                <div class="col truncate" data-label="제목">천안 풀스택 개발자 모집합니다.</div>
+                <div class="col" data-label="작성자">A IT</div>
+                <div class="col action-buttons" data-label="관리">
+                    <button class="btn btn-outline-purple">상세내용</button>
+                </div>
+            </div>
+
+            <!-- 리스트 아이템 2 -->
+            <div class="table-row">
+                <div class="col" data-label="공고 번호">2</div>
+                <div class="col truncate" data-label="제목">천안 경력직 백엔드 개발자 모집합니다</div>
+                <div class="col" data-label="작성자">B IT</div>
+                <div class="col action-buttons" data-label="관리">
+                    <button class="btn btn-outline-purple">상세내용</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

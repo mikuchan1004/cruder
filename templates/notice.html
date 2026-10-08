@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 와이어프레임</title>
+    <link rel="stylesheet" href="notice.css">
+</head>
+<body>
+    <!-- 상단 헤더 영역 -->
+    <header class="wireframe-header">
+        헤더
+    </header>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="main-container">
+        <!-- 검색 및 글쓰기 영역 -->
+        <div class="board-controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="검색" class="search-input">
+            </div>
+            <button class="btn-write">글쓰기</button>
+        </div>
+
+        <!-- 게시판 (테이블) 영역 -->
+        <div class="board-table">
+            <!-- 데스크톱용 테이블 헤더 -->
+            <div class="board-header">
+                <div class="col-num">번호</div>
+                <div class="col-title">제목</div>
+                <div class="col-author">글쓴이</div>
+                <div class="col-date">날짜</div>
+                <div class="col-views">조회수</div>
+            </div>
+            
+            <!-- 리스트 아이템 1 -->
+            <div class="board-row">
+                <div class="col-num" data-label="번호">11</div>
+                <div class="col-title" data-label="제목">사이트 개편 안내</div>
+                <div class="col-author" data-label="글쓴이">관리자</div>
+                <div class="col-date" data-label="날짜">1920-05-25</div>
+                <div class="col-views" data-label="조회수">2500</div>
+            </div>
+            
+            <!-- 리스트 아이템 2 -->
+            <div class="board-row">
+                <div class="col-num" data-label="번호">12</div>
+                <div class="col-title" data-label="제목">취업 꿀팁 게시판 개설 안내</div>
+                <div class="col-author" data-label="글쓴이">이상</div>
+                <div class="col-date" data-label="날짜">1920-04-25</div>
+                <div class="col-views" data-label="조회수">25000</div>
+            </div>
+
+            <!-- 리스트 아이템 3 -->
+            <div class="board-row">
+                <div class="col-num" data-label="번호">5</div>
+                <div class="col-title" data-label="제목">짧은 제목</div>
+                <div class="col-author" data-label="글쓴이">123</div>
+                <div class="col-date" data-label="날짜">1750-05-11</div>
+                <div class="col-views" data-label="조회수">2540</div>
+            </div>
+
+            <!-- 리스트 아이템 4 -->
+            <div class="board-row">
+                <div class="col-num" data-label="번호">7</div>
+                <div class="col-title" data-label="제목">중간쯤 제목</div>
+                <div class="col-author" data-label="글쓴이">admin</div>
+                <div class="col-date" data-label="날짜">2000-07-04</div>
+                <div class="col-views" data-label="조회수">1452</div>
+            </div>
+        </div>
+
+        <!-- 페이지네이션 영역 -->
+        <div class="pagination">
+            <button class="page-btn arrow">◀</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">4</button>
+            <button class="page-btn">5</button>
+            <button class="page-btn arrow">▶</button>
+            <span class="page-text">페이지</span>
+        </div>
+    </main>
+
+    <!-- 하단 푸터 영역 -->
+    <footer class="wireframe-footer">
+        푸터
+    </footer>
+</body>
+</html>

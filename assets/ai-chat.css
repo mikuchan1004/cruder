@@ -1,0 +1,160 @@
+/* 기본 리셋 및 폰트 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 임시 헤더 & 푸터 */
+.wireframe-header, .wireframe-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #333;
+}
+
+.wireframe-footer {
+    border-top: 1px solid #333;
+    border-bottom: none;
+    margin-top: auto; 
+    color: #555;
+}
+
+/* 메인 챗봇 컨테이너 */
+.chat-main {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+/* 공통 노란색 테두리 스타일 */
+.outline-yellow {
+    border: 4px solid #FCD34D; /* 와이어프레임의 노란색 적용 */
+    border-radius: 40px; /* 둥근 캡슐형 모서리 */
+    background-color: #fff;
+}
+
+/* ==================================
+   AI 메세지 영역
+=================================== */
+.ai-message-section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+/* 로봇 아이콘을 박스 좌측 상단으로 절대 배치 */
+.bot-icon {
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    font-size: 4rem;
+    color: #000;
+}
+
+.message-box {
+    width: 100%;
+    max-width: 750px; /* 아이콘 공간을 제외하고 박스 크기 제한 */
+    padding: 40px 20px;
+    text-align: center;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.example-format {
+    margin-top: 25px;
+}
+
+/* ==================================
+   사용자 입력 영역
+=================================== */
+.user-input-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.input-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.input-box {
+    width: 100%;
+    min-height: 180px;
+    padding: 40px;
+    font-size: 1.1rem;
+    text-align: center;
+    resize: none;
+    outline: none;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+}
+
+.input-box::placeholder {
+    color: #555;
+    text-align: center;
+}
+
+.input-box:focus {
+    border-color: #F59E0B; /* 포커스 시 약간 더 진한 노란색 */
+}
+
+/* ==================================
+   모바일 반응형 웹 설정 (미디어 쿼리)
+=================================== */
+@media (max-width: 768px) {
+    .chat-container {
+        gap: 40px;
+    }
+
+    /* 모바일에서는 아이콘을 중앙 상단으로 배치하고 절대 위치 해제 */
+    .ai-message-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bot-icon {
+        position: static;
+        margin-bottom: 15px;
+    }
+
+    .message-box {
+        padding: 30px 15px;
+        border-radius: 25px;
+    }
+
+    /* 모바일 환경 입력창 최적화 */
+    .input-box {
+        padding: 30px 20px;
+        border-radius: 25px;
+        min-height: 200px;
+    }
+
+    /* 긴 placeholder 텍스트가 짤리지 않도록 사이즈 축소 */
+    .input-box::placeholder {
+        font-size: 0.95rem;
+    }
+}

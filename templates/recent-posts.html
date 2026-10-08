@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최근 작성한 게시물 - 취업 할래말래</title>
+    <link rel="stylesheet" href="recent-posts.css">
+    <!-- FontAwesome (사용자 프로필 아이콘 렌더링용) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 상단 임시 헤더 -->
+    <header class="wireframe-header">
+        헤더
+    </header>
+
+    <!-- 메인 레이아웃 컨테이너 -->
+    <main class="mypage-container">
+        <!-- 좌측 사이드바 영역 -->
+        <aside class="sidebar">
+            <h2 class="sidebar-title">마이페이지</h2>
+            <ul class="sidebar-menu">
+                <li><a href="#">회원 정보 수정</a></li>
+                <li><a href="#" class="active">쓴 글 목록</a></li>
+                <li><a href="#">찜한 공고 목록</a></li>
+                <li><a href="#">일대일 문의</a></li>
+            </ul>
+        </aside>
+
+        <!-- 우측 메인 콘텐츠 영역 -->
+        <section class="content-area">
+            <!-- 사용자 정보 및 타이틀 -->
+            <div class="user-greeting">
+                <div class="avatar">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <h3>OOO 님이 최근 작성한 게시물</h3>
+            </div>
+
+            <!-- 작성 게시물 테이블 -->
+            <div class="board-table">
+                <!-- 데스크톱용 테이블 헤더 -->
+                <div class="table-header">
+                    <div class="col-category">카테고리</div>
+                    <div class="col-title">제목</div>
+                    <div class="col-author">작성자</div>
+                    <div class="col-date">작성일</div>
+                    <div class="col-action"></div> <!-- 버튼 영역 -->
+                </div>
+                
+                <!-- 리스트 아이템 1 -->
+                <div class="table-row">
+                    <div class="col-category" data-label="카테고리">취업 꿀팁 게시판</div>
+                    <div class="col-title" data-label="제목">취업하고 싶으면 이글부터 봐라</div>
+                    <div class="col-author" data-label="작성자">123</div>
+                    <div class="col-date" data-label="작성일">1750-05-11</div>
+                    <div class="col-action"><button class="btn-view">보기</button></div>
+                </div>
+
+                <!-- 리스트 아이템 2 -->
+                <div class="table-row">
+                    <div class="col-category" data-label="카테고리">취업 꿀팁 게시판</div>
+                    <div class="col-title" data-label="제목">책읽으면 졸리다</div>
+                    <div class="col-author" data-label="작성자">123</div>
+                    <div class="col-date" data-label="작성일">2010-07-15</div>
+                    <div class="col-action"><button class="btn-view">보기</button></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 하단 액션 버튼 영역 -->
+    <div class="bottom-action">
+        <button type="button" class="btn-return">마이페이지로</button>
+    </div>
+
+    <!-- 하단 임시 푸터 -->
+    <footer class="wireframe-footer">
+        푸터
+    </footer>
+</body>
+</html>
