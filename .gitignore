@@ -38,5 +38,7 @@ dist/
 Thumbs.db
 
 # 스크립트 폴더
-
 Script/
+
+# 라이브러리 폴더 
+Lib/
