@@ -1,6 +1,7 @@
 from sqlmodel import SQLModel, Field
 
 class AiChatMsg(SQLModel,table=True):
+    __tablename__ = "ai_chat_message"
     ai_chat_message_id:int|None=Field(
         default=None,
         primary_key=True

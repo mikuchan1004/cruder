@@ -1,6 +1,7 @@
 from sqlmodel import SQLModel, Field
 
 class ReportLogsDTO(SQLModel,table=True):
+    __tablename__ = "report_logs"
     report_id:int |None=Field(
         default=None,
         primary_key=True

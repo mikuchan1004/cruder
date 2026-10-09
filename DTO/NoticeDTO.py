@@ -9,10 +9,12 @@ class Notice(SQLModel, table=True):
     notice_title:str=Field(
         max_length=200
     )
-    notice_date:str=Field(
+    notice_detail:str=Field(
         max_length=2000
     )
+    
     notice_date:datetime
+    
     user_id:str=Field(
         foreign_key='user.user_id',
         max_length=12

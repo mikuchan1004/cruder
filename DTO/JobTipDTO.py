@@ -4,6 +4,10 @@ from datetime import datetime
 # 취업 꿀팀 게시판 Dto
 # auto_increment 들어가는 곳은 기본값 none이라고 설정하기
 class JobTip(SQLModel,table=True):
+
+    # erd에서 설계한 테이블 명과 일치시키는 작업 추가
+    __tablename__ = "job_tip"
+
     job_tip_no:int| None=Field(
         default=None,
         primary_key=True
