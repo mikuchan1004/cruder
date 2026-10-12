@@ -2,11 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from router.main_router import router as main_router
 from router.jobs_router import router as jobs_router
+from router.admin_router import router as admin_router
 from database import engine
 
 router = FastAPI()
 router.include_router(main_router)
 router.include_router(jobs_router)
+router.include_router(admin_router)
 router.add_middleware(
     CORSMiddleware,
     allow_origins=[
