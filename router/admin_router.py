@@ -174,11 +174,11 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
         session.execute({'user_id' : user_id})
         session.commit()
 
-        return RedirectResponse (url='/admin/user?delete_result=success' , status_code=303)
+        return RedirectResponse (url='/admin-users' , status_code=303)
     except  Exception as e:
         session.rollback()
         print(e)
 
         return RedirectResponse (
-            url='/admin/user?delete_result=failed', status_code=303
+            url='/admin-users', status_code=303
         )
