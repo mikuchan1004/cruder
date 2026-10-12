@@ -11,6 +11,10 @@ class User(SQLModel,table=True):
     user_name:str=Field(
         max_length=20
     )
+    user_nickname:str=Field(
+        min_length=2,
+        max_length=30
+    )
     user_pw:str=Field(
         max_length=255
     )

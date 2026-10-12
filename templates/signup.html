@@ -13,42 +13,42 @@
         <div class="signup-content">
             <!-- 좌측 회원 정보 입력 폼 -->
             <div class="form-section">
-                <form class="signup-form">
+                <form method="post" action="/api/signup">
                     <!-- 아이디 -->
                     <div class="input-row">
-                        <input type="text" placeholder="아이디" class="form-input flex-grow">
+                        <input type="text" placeholder="아이디" class="form-input flex-grow" name="user_id">
                         <button type="button" class="btn btn-purple btn-small">중복확인</button>
                     </div>
                     
                     <!-- 비밀번호 -->
                     <div class="input-row">
-                        <input type="password" placeholder="비밀번호" class="form-input">
+                        <input type="password" placeholder="비밀번호" class="form-input" name="user_pw">
                     </div>
                     
                     <!-- 비밀번호 확인 -->
                     <div class="input-row">
-                        <input type="password" placeholder="비밀번호 확인" class="form-input">
+                        <input type="password" placeholder="비밀번호 확인" class="form-input" name="user_pw">
                     </div>
                     
                     <!-- 닉네임 -->
                     <div class="input-row">
-                        <input type="text" placeholder="닉네임" class="form-input">
+                        <input type="text" placeholder="닉네임" class="form-input" name="user_nickname">
                     </div>
                     
                     <!-- 주소 -->
                     <div class="input-row">
-                        <input type="text" placeholder="주소" class="form-input flex-grow">
+                        <input type="text" placeholder="주소" class="form-input flex-grow" name="user_home">
                         <button type="button" class="btn btn-purple btn-small">주소 검색</button>
                     </div>
                     
                     <!-- 이메일 -->
                     <div class="input-row">
-                        <input type="email" placeholder="이메일: (@mail.com형식으로 입력)" class="form-input">
+                        <input type="email" placeholder="이메일: (@mail.com형식으로 입력)" class="form-input" name="user_email">
                     </div>
                     
                     <!-- 전화번호 -->
                     <div class="input-row">
-                        <input type="tel" placeholder="전화번호는 010-1234-5678 형식으로 입력" class="form-input">
+                        <input type="tel" placeholder="전화번호는 010-1234-5678 형식으로 입력" class="form-input" name="user_phone">
                     </div>
                     
                     <!-- 경고 메세지 -->

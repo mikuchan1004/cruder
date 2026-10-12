@@ -10,8 +10,8 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
-
-from sqlmodel import Session, select
+from passlib.context import CryptContext
+from sqlmodel import Session, select,text
 
 from database import get_session
 from DTO.UserDTO import User
@@ -19,6 +19,97 @@ from DTO.UserDTO import User
 
 router = APIRouter()
 templates = Jinja2Templates(directory='templates/')
+
+
+
+# =========================================================
+# 회원가입 
+# =========================================================
+
+@router.get('/jobgogo/signup')
+def signup(request: Request):
+    
+    return templates.TemplateResponse(
+        request,
+        'signup.html'
+    )
+    
+# =========================================================
+# 회원가입 처리
+# =========================================================
+ctx_pw = CryptContext(
+    schemes=['argon2'],
+    deprecated='auto'
+)
+
+def crypt(txt):
+    return ctx_pw.hash(txt)
+
+@router.post('/api/signup')
+def signup(
+    user:User=Form(),
+    session: Session = Depends(get_session)):
+    
+    print('api/signup 실행 성공함')
+    print('user',user)
+    
+    hashed=crypt(user.user_pw)
+    #  회원가입할떄 user_status_id를 일반 유저를 1로 일단 넘기기
+    try:
+        sql=text('''
+               insert into user(
+                user_id,
+                user_name,
+                user_pw,
+                user_nickname,
+                user_home,
+                user_email,
+                user_phone,
+                user_status_id
+                 )  
+              VALUES(
+                  :user_id,
+                  :user_name,
+                  :user_pw,
+                  :user_nickname,
+                  :user_home,
+                  :user_email,
+                  :user_phone,
+                  1
+                            
+              )    
+                 
+                 ''')
+        session.exec(
+            sql,
+            params={
+                'user_id': user.user_id,
+                'user_name': user.user_name,
+                'user_pw': hashed,
+                'user_nickname':user.user_nickname,
+                'user_home':user.user_home,
+                'user_email':user.user_email,
+                'user_phone':user.user_phone
+            }
+        )
+  
+    
+    except Exception as e:
+        print(e,'에러에러에러에러')
+        
+    return RedirectResponse(
+        url='/jobgogo/login',
+        status_code=303
+        )
+
+
+
+
+
+
+
+
+
 
 
 
@@ -98,14 +189,5 @@ def logout(request: Request):
         status_code=303
     )
     
-# =========================================================
-# 회원가입 
-# =========================================================
 
-@router.get('/jobgogo/signup')
-def signup(request: Request):
     
-    return templates.TemplateResponse(
-        request,
-        'signup.html'
-    )
