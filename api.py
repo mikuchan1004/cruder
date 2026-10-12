@@ -7,7 +7,7 @@ from router.main_router import router as main_router
 from router.jobs_router import router as jobs_router
 from router.login_router import router as login_router
 # from router.signup_router import router as signup_router
-from router.mypage_router import router as mypage_router
+# from router.mypage_router import router as mypage_router
 
 from config import SESSION_SECRET_KEY
 
@@ -17,7 +17,7 @@ router.include_router(main_router)
 router.include_router(jobs_router)
 router.include_router(login_router)
 # router.include_router(signup_router)
-router.include_router(mypage_router)
+# router.include_router(mypage_router)
 
 router.add_middleware(
     SessionMiddleware,
