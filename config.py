@@ -11,3 +11,4 @@ ALIO_API_KEY = os.getenv('ALIO_API_KEY')
 #  MariDB 접속 정보
 
 DATABASE_URL = os.getenv("DATABASE_URL")
+SESSION_SECRET_KEY = os.getenv("SESSION_SECRET_KEY")

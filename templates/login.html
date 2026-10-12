@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 - 취업 할래말래</title>
-    <link rel="stylesheet" href="../assets/login.css">
+    <link rel="stylesheet" href="/assets/login.css">
 </head>
 <body>
     <div class="login-container">
@@ -13,17 +13,46 @@
         <div class="login-content">
             <!-- 좌측 입력 폼 영역 -->
             <div class="form-section">
-                <form class="login-form">
-                    <input type="text" placeholder="아이디 입력" class="form-input">
-                    <!-- 에러 메시지 노출 영역 -->
-                    <p class="error-message">! 아이디 혹은 비밀번호가 틀립니다</p>
-                    <input type="password" placeholder="비밀번호 입력" class="form-input">
+                <form
+                    id="login-form"
+                    class="login-form"
+                    method="post"
+                    action="/jobgogo/login"
+                >
+                    <input
+                        type="text"
+                        name="user_id"
+                        maxlength="12"
+                        placeholder="아이디 입력"
+                        class="form-input"
+                        value="{{ entered_user_id | default('') }}"
+                        autocomplete="username"
+                        required
+                    >
+
+                    <!-- 로그인 실패 시에만 에러 메시지 노출 -->
+                    {% if error %}
+                    <p class="error-message">! {{ error }}</p>
+                    {% endif %}
+
+                    <input
+                        type="password"
+                        name="user_pw"
+                        placeholder="비밀번호 입력"
+                        class="form-input"
+                        autocomplete="current-password"
+                        required
+                    >
                 </form>
             </div>
 
             <!-- 우측 로그인 버튼 영역 -->
             <div class="button-section">
-                <button type="submit" class="btn-login">로그인</button>
+                <button
+                    type="submit"
+                    form="login-form"
+                    class="btn-login"
+                >로그인</button>
             </div>
         </div>
 
@@ -32,9 +61,9 @@
             <span class="warning-text">경고창</span>
             <div class="signup-prompt">
                 <span>아직 회원이 아니신가요?</span>
-                <a href="#" class="link-purple">회원가입</a>
+                <a href="/jobgogo/signup" class="link-purple">회원가입</a>
             </div>
-            <a href="#" class="link-purple link-main">메인으로</a>
+            <a href="/jobgogo" class="link-purple link-main">메인으로</a>
         </div>
     </div>
 </body>
