@@ -1,13 +1,14 @@
 <header class="header">
-    <!-- 좌측 로고 -->
-    <div class="logo">
-        <a href="/jobgogo">
+    <!-- 좌측 브랜드 -->
+    <div class="brand">
+        <a href="/jobgogo" class="brand-link" aria-label="취업할래 말래 메인페이지">
             <img src="/static/images/logo.png" alt="취업할래말래 로고">
+            <span class="brand-name">취업할래 말래</span>
         </a>
     </div>
 
-    <!-- 중앙 메뉴 -->
-    <nav class="gnb">
+    <!-- 중앙 주요 메뉴 -->
+    <nav class="gnb" aria-label="주요 메뉴">
         <ul>
             <li><a href="#">공지사항</a></li>
             <li><a href="#">채용 공고</a></li>
@@ -47,7 +48,9 @@
             <a href="/jobgogo/signup" class="mypage-link">
                 회원가입
             </a>
+
         {% endif %}
     </div>
-    <button class="mobile-menu-btn">☰</button>
+
+    <button class="mobile-menu-btn" type="button" aria-label="메뉴 열기">☰</button>
 </header>
