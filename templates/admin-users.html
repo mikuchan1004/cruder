@@ -84,9 +84,15 @@
                             <button class="btn btn-red" type="submit">계정 정지</button>
                         </form>
                         {% endif %}
+                        {% if user_id == 'admin' %}
+                        <form method="post" action="">
+                            <button class="btn btn-red">회원 삭제</button>
+                        </form>
+                        {% else %}
                         <form method="post" action="/admin/user/delete/{{user.user_id}}">
                             <button class="btn btn-red" type="submit">회원 삭제</button>
                         </form>
+                        {% endif %}
                     </div>
                     {% endfor %}
                 </div>
