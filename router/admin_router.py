@@ -171,7 +171,7 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
         where user_id = :user_id
     ''')
     try:
-        session.execute({'user_id' : user_id})
+        session.execute(sql, {'user_id' : user_id})
         session.commit()
 
         return RedirectResponse (url='/admin-users' , status_code=303)
