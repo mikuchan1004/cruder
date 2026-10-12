@@ -54,9 +54,16 @@ def admin_dashboard(request:Request, session: Session = Depends(get_session)):
     ''')
     results2 = session.execute(sql2).mappings().fetchall()
 
-    # 최근 게시물들을 한눈에 볼 수 있게 가져오는 SQL문
+    # 공지사항을 한눈에 볼 수 있게 가져오는 SQL문
+    sql3=text('''
+        select *
+        from notice
+        order by notice_date desc
+    ''')
+    results3 = session.execute(sql3).mappings().fetchall() 
 
     return templates.TemplateResponse(request, 'admin-dashboard.html',{
         'total_users_count' : results1[0]['count(*)'],
-        'total_api_call_count' : results2[0]['count(total_count)']
+        'total_api_call_count' : results2[0]['count(total_count)'],
+        'notices' : results3
     })

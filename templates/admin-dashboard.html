@@ -56,7 +56,7 @@
             </div>
         </section>
 
-        <!-- 최근 게시물 테이블 영역 -->
+        <!-- 공지사항 테이블 영역 -->
         <section class="recent-posts">
             <h2 class="section-title">공지사항</h2>
             
@@ -68,11 +68,12 @@
                     <div class="col-date">작성일</div>
                 </div>
                 
-                <!-- 리스트 아이템 1 -->
                 <div class="table-row">
-                    <div class="col-title" data-label="제목">공지사항입니다.</div>
-                    <div class="col-author" data-label="작성자">admin</div>
-                    <div class="col-date" data-label="작성일">2026.09.30</div>
+                    {% for notices in notice %}
+                        <div class="col-title" data-label="제목">{{notices.notice_title}}</div>
+                        <div class="col-author" data-label="작성자">{{notices.user_id}}</div>
+                        <div class="col-date" data-label="작성일">{{notices.notice_date}}</div>
+                    {% endfor %}
                 </div>
             </div>
         </section>
