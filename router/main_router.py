@@ -67,8 +67,8 @@ def jobgogo(
             "jobs": jobs,
 
             # 로그인 세션
-            "member_id": request.session.get("member_id"),
-            "member_name": request.session.get("member_name"),
+            "user_id": request.session.get("user_id"),
+            "user_name": request.session.get("user_name"),
             "user_status_id": request.session.get("user_status_id")
         }
     )

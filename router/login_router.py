@@ -76,8 +76,8 @@ def login(
         )
 
     # 로그인 성공
-    request.session["member_id"] = user.user_id
-    request.session["member_name"] = user.user_name
+    request.session["user_id"] = user.user_id
+    request.session["user_name"] = user.user_name
     request.session["user_status_id"] = user.user_status_id
 
     return RedirectResponse(

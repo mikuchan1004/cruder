@@ -21,7 +21,7 @@
     <!-- 우측 사용자 메뉴 -->
     <div class="user-menu">
 
-        {% if member_id %}
+        {% if user_id %}
 
             {% if user_status_id == 1 %}
                 <a href="/jobgogo/admin" class="admin-link">
@@ -30,7 +30,7 @@
             {% endif %}
 
             <span class="greeting">
-                {{ member_name }}님 환영합니다
+                {{ user_name }}님 환영합니다
             </span>
 
             <a href="/jobgogo/mypage" class="mypage-link">
