@@ -97,3 +97,15 @@ def logout(request: Request):
         url="/jobgogo",
         status_code=303
     )
+    
+# =========================================================
+# 회원가입 
+# =========================================================
+
+@router.get('/jobgogo/signup')
+def signup(request: Request):
+    
+    return templates.TemplateResponse(
+        request,
+        'signup.html'
+    )

@@ -5,7 +5,7 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from router.main_router import router as main_router
 from router.api_router import router as api_router
-from router.login_router import router as login_router
+from router.auth_router import router as auth_router
 from router.admin_router import router as admin_router
 # from router.signup_router import router as signup_router
 from router.mypage_router import router as mypage_router
@@ -18,9 +18,8 @@ router = FastAPI()
 
 router.include_router(main_router)
 router.include_router(api_router)
-router.include_router(login_router)
+router.include_router(auth_router)
 router.include_router(admin_router)
-# router.include_router(signup_router)
 router.include_router(mypage_router)
 router.include_router(recult_router)
 router.include_router(jobtip_router)
