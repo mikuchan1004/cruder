@@ -50,6 +50,8 @@ def jobgogo(
         sql_jobs_notice = text('''
             SELECT *
             FROM jobs
+            WHERE ongoing_yn = 'Y'
+            ORDER BY pbanc_bgng_ymd DESC
             LIMIT 8;
         ''')
 
