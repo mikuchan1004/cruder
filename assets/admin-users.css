@@ -148,6 +148,11 @@ a {
     color: #059669;
 }
 
+.status-warning {
+    background-color: #D1FAE5;
+    color: #FFA07A;
+}
+
 .status-suspend {
     background-color: #FEE2E2;
     color: #DC2626;
