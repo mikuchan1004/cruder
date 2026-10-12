@@ -29,7 +29,7 @@ def get_session():
     with Session(engine) as session:
         yield session
 
-@router.get('/admin')
+@router.get('/jobgogo/admin')
 def admin_dashboard(request:Request, session: Session = Depends(get_session)):
     print('/admin 실행')
     # 현재 회원의 수가 몇 명인지 세는 SQL문 
