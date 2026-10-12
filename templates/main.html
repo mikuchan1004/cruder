@@ -39,25 +39,26 @@
                 </div>
                 <a href="#" class="view-all">전체 보기</a>
             </div>
-
+           
             <div class="job-grid">
+             {% for job in jobs%} 
                 <!-- 공고 카드 1 -->
                 <article class="job-card">
                     <div class="card-header">
-                        <span class="badge recruiting">모집중</span>
+                        <span class="badge recruiting">{{job.ongoing_yn}}</span>
                         <i class="fa-regular fa-star icon-bookmark"></i>
                     </div>
                     <div class="card-body">
-                        <span class="company-name">한국전력공사</span>
-                        <h3 class="job-title">2026년 하반기 신입사원 채용</h3>
+                        <span class="company-name">{{job.inst_nm}}</span>
+                        <h3 class="job-title">{{job.recrut_pbanc_ttl}}</h3>
                         <div class="tags">
-                            <span>서울</span>
-                            <span>신입</span>
-                            <span>10명</span>
+                            <span>{{job.recrut_pbanc_ttl}}</span>
+                            <span>{{job.recrut_se_nm}}</span>
+                            <span>{{job.recrut_nope}}</span>
                         </div>
-                        <p class="date">접수 기간<br>2026.10.01~2026.10.20</p>
+                        <p class="date">{{job.pbanc_bgng_ymd}}~{{job.pbanc_end_ymd}}</p>
                     </div>
-                    <button class="btn-detail">상세보기</button>
+                    <button class="btn-detail"><a href="{{job.src_url}}">상세보기</a></button>
                 </article>
 
                 <!-- 공고 카드 2 -->
@@ -76,7 +77,7 @@
                         </div>
                         <p class="date">접수 기간<br>2026.10.01~2026.10.20</p>
                     </div>
-                    <button class="btn-detail">상세보기</button>
+                    <button class="btn-detail"><a href="{{job.src_url}}">상세보기</a></button>
                 </article>
 
                 <!-- 공고 카드 3 -->
@@ -95,7 +96,7 @@
                         </div>
                         <p class="date">접수 기간<br>2026.10.01~2026.10.20</p>
                     </div>
-                    <button class="btn-detail">상세보기</button>
+                     <button class="btn-detail"><a href="{{job.src_url}}">상세보기</a></button>
                 </article>
 
                 <!-- 공고 카드 4 -->
@@ -114,9 +115,11 @@
                         </div>
                         <p class="date">접수 기간<br>2026.10.01~2026.10.20</p>
                     </div>
-                    <button class="btn-detail">상세보기</button>
+                     <button class="btn-detail"><a href="{{job.src_url}}">상세보기</a></button>
                 </article>
+              {% endfor %} 
             </div>
+        
         </section>
 
         <!-- AI 채용 추천 배너 영역 -->

@@ -4,7 +4,9 @@ from fastapi.templating import Jinja2Templates
 from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
 
+from sqlmodel import Session, create_engine,text
 
+from database import get_session
 
 
 router = APIRouter()
@@ -38,11 +40,29 @@ router.mount(
 
 @router.get('/jobgogo')
 def jobgogo(
-    request: Request
+    request: Request,
+    session: Session = Depends(get_session)
 ):
+    print('메인 페이지 접속 성공!')
+
+    # 채용공고를 가져오기 위한 SQL문
+    try:
+        sql_jobs_notice = text('''
+            SELECT *
+            FROM jobs
+            LIMIT 8;
+        ''')
+
+        # 채용공고 가져오기
+        result=session.exec(sql_jobs_notice)
+        jobs=result.mappings().fetchall()
+    except Exception as e:
+        print('에러에러 ')    
+    
+
+    # HTML에 데이터 전달
     return templates.TemplateResponse(
         request,
-        'main.html'
+        'main.html',
+        {"jobs": jobs}
     )
-    
-    
