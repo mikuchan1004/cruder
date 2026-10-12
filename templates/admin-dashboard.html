@@ -37,11 +37,11 @@
             <div class="stats-group">
                 <div class="stat-card">
                     <h3>총 회원 수</h3>
-                    <p class="stat-number">5명</p>
+                    <p class="stat-number">{{total_users_count}}명</p>
                 </div>
                 <div class="stat-card">
                     <h3>API 호출 건수</h3>
-                    <p class="stat-number">15건</p>
+                    <p class="stat-number">{{total_api_call_count}}건</p>
                 </div>
             </div>
             
@@ -63,7 +63,6 @@
             <div class="board-table">
                 <!-- 데스크톱용 테이블 헤더 -->
                 <div class="table-header">
-                    <div class="col-category">카테고리</div>
                     <div class="col-title">제목</div>
                     <div class="col-author">작성자</div>
                     <div class="col-date">작성일</div>
@@ -71,17 +70,8 @@
                 
                 <!-- 리스트 아이템 1 -->
                 <div class="table-row">
-                    <div class="col-category" data-label="카테고리">공지</div>
                     <div class="col-title" data-label="제목">공지사항입니다.</div>
                     <div class="col-author" data-label="작성자">admin</div>
-                    <div class="col-date" data-label="작성일">2026.09.30</div>
-                </div>
-
-                <!-- 리스트 아이템 2 -->
-                <div class="table-row">
-                    <div class="col-category" data-label="카테고리">채용 공고</div>
-                    <div class="col-title" data-label="제목">천안 풀스택 개발자 모집합니다</div>
-                    <div class="col-author" data-label="작성자">A IT</div>
                     <div class="col-date" data-label="작성일">2026.09.30</div>
                 </div>
             </div>
