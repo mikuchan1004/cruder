@@ -12,25 +12,35 @@ body {
     background-color: #F8F9FA;
 }
 
-/* 상단 헤더 영역 */
+/* 상단 헤더 영역: 가운데 메뉴가 우측 메뉴 너비에 영향받지 않도록 3열 배치 */
 .header {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
     padding: 16px 40px;
     background-color: #ffffff;
     border-bottom: 1px solid #E5E7EB;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    column-gap: 16px;
 }
 
-/* 로고 스타일 */
+/* 좌측 로고 */
+.logo {
+    justify-self: start;
+}
+
 .logo img {
     height: 50px;
     width: auto;
     object-fit: contain;
+    display: block;
 }
 
-/* 중앙 네비게이션 스타일 */
+/* 중앙 네비게이션: 헤더 전체의 정중앙에 고정 */
+.gnb {
+    justify-self: center;
+}
+
 .gnb ul {
     display: flex;
     list-style: none;
@@ -42,6 +52,7 @@ body {
     color: #4B5563;
     font-size: 1.05rem;
     font-weight: 500;
+    white-space: nowrap;
     transition: color 0.2s;
 }
 
@@ -50,12 +61,14 @@ body {
     font-weight: 600;
 }
 
-/* 우측 사용자 메뉴 스타일 */
+/* 우측 사용자 메뉴: 항상 오른쪽 정렬 */
 .user-menu {
     display: flex;
     align-items: center;
+    justify-self: end;
     gap: 16px;
     font-size: 0.95rem;
+    white-space: nowrap;
 }
 
 .user-menu a {
@@ -73,8 +86,9 @@ body {
 }
 
 .btn-logout {
+    display: inline-block;
     background-color: #6B46C1;
-    color: #fff;
+    color: #fff !important;
     border: none;
     padding: 8px 16px;
     border-radius: 6px;
@@ -90,9 +104,9 @@ body {
     transform: translateY(-1px);
 }
 
-/* 모바일 전용 햄버거 버튼 숨김 처리 (데스크톱) */
+/* 모바일용 메뉴 버튼은 PC에서 숨김 */
 .mobile-menu-btn {
-    display: none; 
+    display: none;
     background: none;
     border: none;
     font-size: 1.5rem;
@@ -100,18 +114,46 @@ body {
     color: #374151;
 }
 
+/* PC 화면이 좁아질 때 메뉴 간격 완화 */
+@media (min-width: 901px) and (max-width: 1150px) {
+    .header {
+        padding-left: 20px;
+        padding-right: 20px;
+        column-gap: 10px;
+    }
+
+    .gnb ul {
+        gap: 15px;
+    }
+
+    .gnb a {
+        font-size: 0.95rem;
+    }
+
+    .user-menu {
+        gap: 8px;
+        font-size: 0.85rem;
+    }
+
+    .btn-logout {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+}
+
 /* ==================================
-   모바일 대응 (반응형 웹 미디어 쿼리)
+   모바일 대응 (900px 이하)
 =================================== */
 @media (max-width: 900px) {
     .header {
+        display: flex;
+        justify-content: space-between;
         flex-wrap: wrap;
         padding: 16px 20px;
     }
 
-    /* 모바일에서는 메뉴와 사용자 정보를 세로로 배치하고 숨김 처리 */
     .gnb {
-        display: none; 
+        display: none;
         width: 100%;
         margin-top: 15px;
         border-top: 1px solid #F3F4F6;
@@ -122,6 +164,7 @@ body {
         flex-direction: column;
         align-items: center;
         gap: 12px;
+        width: 100%;
     }
 
     .user-menu {
@@ -133,13 +176,14 @@ body {
         gap: 10px;
         border-top: 1px solid #F3F4F6;
         padding-top: 15px;
+        white-space: normal;
     }
 
     .mobile-menu-btn {
-        display: block; 
+        display: block;
     }
 
-    /* hover 시 메뉴 표시 */
+    /* 기존 모바일 방식 유지: 헤더에 마우스를 올리면 메뉴 표시 */
     .header:hover .gnb,
     .header:hover .user-menu {
         display: flex;
