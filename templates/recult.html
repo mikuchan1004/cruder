@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>채용 공고 와이어프레임</title>
     <link rel="stylesheet" href="../assets/recult.css">
+    <link rel="stylesheet" href="../assets/header.css">
+    <!-- 푸터 css적용 -->
+    <link rel="stylesheet" href="../assets/footer.css">
 </head>
 <body>
-    <!-- 상단 헤더 영역 -->
-    <header class="wireframe-header">
-        헤더
-    </header>
+    {% include 'header.html' %}
 
     <!-- 메인 콘텐츠 영역 -->
     <main class="main-container">
@@ -69,8 +69,6 @@
     </main>
 
     <!-- 하단 푸터 영역 -->
-    <footer class="wireframe-footer">
-        푸터
-    </footer>
+   {% include 'footer.html' %} 
 </body>
 </html>

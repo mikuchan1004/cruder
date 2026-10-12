@@ -9,6 +9,8 @@ from router.login_router import router as login_router
 from router.admin_router import router as admin_router
 # from router.signup_router import router as signup_router
 from router.mypage_router import router as mypage_router
+from router.recult_router import router as recult_router
+from router.jobtip_router import router as jobtip_router
 
 from config import SESSION_SECRET_KEY
 
@@ -20,6 +22,9 @@ router.include_router(login_router)
 router.include_router(admin_router)
 # router.include_router(signup_router)
 router.include_router(mypage_router)
+router.include_router(recult_router)
+router.include_router(jobtip_router)
+
 
 router.add_middleware(
     SessionMiddleware,

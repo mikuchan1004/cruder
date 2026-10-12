@@ -1,191 +1,544 @@
 /* ==================================
-   기본 리셋 및 폰트 설정
+   기본 설정
 =================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo',
+                 'Noto Sans KR', sans-serif;
 }
 
 body {
-    background-color: #F8F9FA;
+    background: #F8F9FC;
 }
 
-/* 상단 헤더 영역: 가운데 메뉴가 우측 메뉴 너비에 영향받지 않도록 3열 배치 */
+
+/* ==================================
+   메인 헤더
+=================================== */
 .header {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    padding: 16px 40px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #E5E7EB;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-    column-gap: 16px;
+    gap: 28px;
+
+    width: 100%;
+    min-height: 88px;
+    padding: 12px 40px;
+
+    background: rgba(255, 255, 255, 0.98);
+    border-bottom: 1px solid #ECECF3;
+    box-shadow: 0 3px 18px rgba(36, 25, 78, 0.045);
+
+    position: relative;
+    z-index: 100;
 }
 
-/* 좌측 로고 */
-.logo {
+
+/* ==================================
+   좌측 브랜드
+=================================== */
+.brand {
     justify-self: start;
+    min-width: 0;
 }
 
-.logo img {
-    height: 50px;
-    width: auto;
-    object-fit: contain;
+.brand-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+
+    color: inherit;
+    text-decoration: none;
+}
+
+.brand-link img {
     display: block;
+    width: auto;
+    height: 56px;
+    max-width: 210px;
+    object-fit: contain;
+
+    transition: transform 0.25s ease;
 }
 
-/* 중앙 네비게이션: 헤더 전체의 정중앙에 고정 */
+.brand-name {
+    color: #6941C6;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.65px;
+    white-space: nowrap;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.brand-link:hover img {
+    transform: scale(1.035);
+}
+
+.brand-link:hover .brand-name {
+    color: #5634AD;
+    transform: translateX(1px);
+}
+
+
+/* ==================================
+   중앙 네비게이션
+=================================== */
 .gnb {
     justify-self: center;
 }
 
 .gnb ul {
     display: flex;
+    align-items: center;
     list-style: none;
-    gap: 30px;
+    gap: 34px;
+}
+
+.gnb li {
+    position: relative;
 }
 
 .gnb a {
+    position: relative;
+    display: inline-block;
+    padding: 12px 2px;
+
+    color: #414457;
     text-decoration: none;
-    color: #4B5563;
-    font-size: 1.05rem;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 650;
     white-space: nowrap;
-    transition: color 0.2s;
+
+    transition: color 0.25s ease;
+}
+
+.gnb a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 4px;
+
+    width: 0;
+    height: 3px;
+
+    background: linear-gradient(90deg, #7353D7, #A78BFA);
+    border-radius: 999px;
+
+    transform: translateX(-50%);
+    transition: width 0.25s ease;
 }
 
 .gnb a:hover {
-    color: #6B46C1;
-    font-weight: 600;
+    color: #6941C6;
 }
 
-/* 우측 사용자 메뉴: 항상 오른쪽 정렬 */
+.gnb a:hover::after {
+    width: 100%;
+}
+
+
+/* ==================================
+   우측 사용자 메뉴
+=================================== */
 .user-menu {
+    justify-self: end;
+
     display: flex;
     align-items: center;
-    justify-self: end;
-    gap: 16px;
-    font-size: 0.95rem;
+    gap: 14px;
+
+    font-size: 14px;
     white-space: nowrap;
 }
 
 .user-menu a {
     text-decoration: none;
-    color: #4B5563;
-    transition: color 0.2s;
+    transition:
+        background 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease,
+        box-shadow 0.22s ease,
+        transform 0.22s ease;
 }
 
-.user-menu a:hover {
-    color: #6B46C1;
-}
 
+/* 환영 문구 */
 .greeting {
-    color: #6B7280;
+    color: #74798A;
+    font-size: 13px;
+    font-weight: 500;
 }
 
-.btn-logout {
-    display: inline-block;
-    background-color: #6B46C1;
-    color: #fff !important;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
+
+/* 관리자 페이지 */
+.user-menu .admin-link {
+    padding: 8px 13px;
+
+    background: #F3EFFF;
+    border: 1px solid #E8DFFF;
+    border-radius: 8px;
+
+    color: #6B46C1;
+    font-size: 13px;
+    font-weight: 650;
 }
 
-.btn-logout:hover {
-    background-color: #5533A3;
+.user-menu .admin-link:hover {
+    background: #EDE5FF;
+    border-color: #DCCDFB;
+    color: #5834AF;
+}
+
+
+/* 마이페이지 / 로그인 계열 보조 버튼 */
+.user-menu .mypage-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    padding: 9px 16px;
+
+    background: #F7F4FF;
+    border: 1px solid #DDD3F7;
+    border-radius: 9px;
+
+    color: #6547B7;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+
+    box-shadow: 0 2px 7px rgba(101, 71, 183, 0.07);
+}
+
+.user-menu .mypage-link:hover {
+    background: #EFE9FF;
+    border-color: #CBBCEF;
+    color: #5635A8;
+
+    box-shadow: 0 4px 11px rgba(101, 71, 183, 0.13);
     transform: translateY(-1px);
 }
 
-/* 모바일용 메뉴 버튼은 PC에서 숨김 */
-.mobile-menu-btn {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #374151;
+.user-menu .mypage-link:active {
+    transform: translateY(0);
 }
 
-/* PC 화면이 좁아질 때 메뉴 간격 완화 */
-@media (min-width: 901px) and (max-width: 1150px) {
+
+/* 로그아웃 버튼 */
+.header .user-menu a.btn-logout,
+.header .user-menu a.btn-logout:link,
+.header .user-menu a.btn-logout:visited {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    padding: 10px 22px;
+
+    background: linear-gradient(135deg, #7851D8, #6240BE);
+    border: 1px solid transparent;
+    border-radius: 9px;
+
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF;
+
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.2px;
+    text-decoration: none;
+
+    box-shadow: 0 4px 12px rgba(107, 70, 193, 0.22);
+
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.header .user-menu a.btn-logout:hover {
+    background: linear-gradient(135deg, #6840CB, #5231A5);
+
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF;
+
+    box-shadow: 0 6px 18px rgba(107, 70, 193, 0.34);
+    transform: translateY(-2px);
+}
+
+.header .user-menu a.btn-logout:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(107, 70, 193, 0.2);
+}
+
+
+/* ==================================
+   키보드 접근성
+=================================== */
+.header a:focus-visible,
+.mobile-menu-btn:focus-visible {
+    outline: 3px solid #B8A3F5;
+    outline-offset: 4px;
+}
+
+
+/* ==================================
+   모바일 메뉴 버튼
+=================================== */
+.mobile-menu-btn {
+    display: none;
+
+    background: #F3EFFF;
+    color: #6941C6;
+
+    border: 1px solid #E8DFFF;
+    border-radius: 9px;
+
+    padding: 8px 12px;
+
+    font-size: 23px;
+    line-height: 1;
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.mobile-menu-btn:hover {
+    background: #EAE1FF;
+    border-color: #DCCDFB;
+}
+
+
+/* ==================================
+   태블릿 및 작은 PC
+=================================== */
+@media (min-width: 901px) and (max-width: 1200px) {
+
     .header {
-        padding-left: 20px;
-        padding-right: 20px;
-        column-gap: 10px;
+        min-height: 80px;
+        padding: 10px 20px;
+        gap: 14px;
+    }
+
+    .brand-link {
+        gap: 9px;
+    }
+
+    .brand-link img {
+        height: 47px;
+        max-width: 165px;
+    }
+
+    .brand-name {
+        font-size: 16px;
+        letter-spacing: -0.45px;
     }
 
     .gnb ul {
-        gap: 15px;
+        gap: 17px;
     }
 
     .gnb a {
-        font-size: 0.95rem;
+        font-size: 13px;
     }
 
     .user-menu {
         gap: 8px;
-        font-size: 0.85rem;
     }
 
-    .btn-logout {
+    /* 작은 PC에서 가장 먼저 줄여도 되는 정보 */
+    .greeting {
+        display: none;
+    }
+
+    .user-menu .admin-link,
+    .user-menu .mypage-link,
+    .header .user-menu a.btn-logout {
+        font-size: 12px;
+    }
+
+    .user-menu .admin-link {
         padding: 8px 10px;
-        font-size: 0.85rem;
+    }
+
+    .user-menu .mypage-link {
+        padding: 9px 12px;
+    }
+
+    .header .user-menu a.btn-logout {
+        padding: 9px 13px;
     }
 }
 
+
 /* ==================================
-   모바일 대응 (900px 이하)
+   모바일 대응
 =================================== */
 @media (max-width: 900px) {
+
     .header {
         display: flex;
+        align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
-        padding: 16px 20px;
+
+        min-height: 74px;
+        padding: 10px 18px;
+        gap: 0;
     }
 
-    .gnb {
-        display: none;
-        width: 100%;
-        margin-top: 15px;
-        border-top: 1px solid #F3F4F6;
-        padding-top: 15px;
+    .brand {
+        min-width: 0;
     }
 
-    .gnb ul {
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-        width: 100%;
+    .brand-link {
+        gap: 9px;
     }
 
-    .user-menu {
-        display: none;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 15px;
-        gap: 10px;
-        border-top: 1px solid #F3F4F6;
-        padding-top: 15px;
-        white-space: normal;
+    .brand-link img {
+        height: 46px;
+        max-width: 150px;
+    }
+
+    .brand-name {
+        font-size: 16px;
+        letter-spacing: -0.45px;
     }
 
     .mobile-menu-btn {
         display: block;
+        margin-left: auto;
     }
 
-    /* 기존 모바일 방식 유지: 헤더에 마우스를 올리면 메뉴 표시 */
+    .gnb {
+        display: none;
+        order: 3;
+
+        width: 100%;
+        margin-top: 14px;
+        padding-top: 14px;
+
+        border-top: 1px solid #F0EDF8;
+    }
+
+    .gnb ul {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+    }
+
+    .gnb li {
+        width: 100%;
+    }
+
+    .gnb a {
+        display: block;
+        width: 100%;
+        padding: 12px 14px;
+
+        text-align: center;
+        font-size: 15px;
+
+        border-radius: 8px;
+    }
+
+    .gnb a:hover {
+        background: #F7F4FF;
+    }
+
+    .gnb a::after {
+        display: none;
+    }
+
+    .user-menu {
+        display: none;
+        order: 4;
+
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+
+        margin-top: 10px;
+        padding: 14px 0 4px;
+
+        border-top: 1px solid #F0EDF8;
+        white-space: normal;
+    }
+
+    .greeting {
+        display: block;
+        width: 100%;
+        padding: 3px 0 7px;
+
+        text-align: center;
+    }
+
+    .user-menu .admin-link,
+    .header .user-menu a.mypage-link,
+    .header .user-menu a.btn-logout {
+        width: 100%;
+        min-height: 42px;
+        text-align: center;
+    }
+
+    /*
+       현재 헤더는 별도 JS 없이도 기존처럼
+       마우스 hover / 키보드 focus 시 메뉴를 펼칠 수 있게 유지.
+    */
     .header:hover .gnb,
-    .header:hover .user-menu {
+    .header:hover .user-menu,
+    .header:focus-within .gnb,
+    .header:focus-within .user-menu {
         display: flex;
+    }
+}
+
+
+/* ==================================
+   아주 작은 화면
+=================================== */
+@media (max-width: 480px) {
+
+    .header {
+        padding: 10px 14px;
+    }
+
+    .brand-link {
+        gap: 7px;
+    }
+
+    .brand-link img {
+        height: 42px;
+        max-width: 128px;
+    }
+
+    .brand-name {
+        font-size: 14px;
+    }
+
+    .mobile-menu-btn {
+        padding: 7px 10px;
+        font-size: 21px;
+    }
+}
+
+
+/* ==================================
+   애니메이션 최소화 설정
+=================================== */
+@media (prefers-reduced-motion: reduce) {
+    .header *,
+    .header *::before,
+    .header *::after {
+        transition: none !important;
     }
 }
