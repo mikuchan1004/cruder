@@ -51,7 +51,7 @@
                 <div class="quick-links-buttons">
                     <a href="#" class="btn-outline-purple">회원관리</a>
                     <a href="#" class="btn-outline-purple">게시물관리</a>
-                    <a href="#" class="btn-outline-purple">메인페이지 이동</a>
+                    <a href="/jobgogo" class="btn-outline-purple">메인페이지 이동</a>
                 </div>
             </div>
         </section>
@@ -68,13 +68,13 @@
                     <div class="col-date">작성일</div>
                 </div>
                 
+                {% for notice in notices %}
                 <div class="table-row">
-                    {% for notices in notice %}
-                        <div class="col-title" data-label="제목">{{notices.notice_title}}</div>
-                        <div class="col-author" data-label="작성자">{{notices.user_id}}</div>
-                        <div class="col-date" data-label="작성일">{{notices.notice_date}}</div>
-                    {% endfor %}
-                </div>
+                        <div class="col-title" data-label="제목">{{notice.notice_title}}</div>
+                        <div class="col-author" data-label="작성자">{{notice.user_id}}</div>
+                        <div class="col-date" data-label="작성일">{{notice.notice_date}}</div>
+                    </div>
+                {% endfor %}
             </div>
         </section>
     </main>

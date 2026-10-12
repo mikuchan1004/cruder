@@ -7,8 +7,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 from fastapi import APIRouter
 
-# from starlette.middleware.sessions import SessionMiddleware
-
 import os
 from dotenv import load_dotenv
 
@@ -33,12 +31,6 @@ def get_session():
 
 @router.get('/admin')
 def admin_dashboard(request:Request, session: Session = Depends(get_session)):
-    # print('관리자 세션인지 아닌지 검사합니다')
-    # if request.session.get('user_id') != 'admin':
-    #     return RedirectResponse(
-    #         url='/warning',
-    #         status_code=303
-    #     )
     print('/admin 실행')
     # 현재 회원의 수가 몇 명인지 세는 SQL문 
     sql1 = text('''
@@ -49,7 +41,7 @@ def admin_dashboard(request:Request, session: Session = Depends(get_session)):
 
     # API 호출 건수를 세는 SQL문 
     sql2=text('''
-        select count(total_count)
+        select count(*)
         from api_sync_log
     ''')
     results2 = session.execute(sql2).mappings().fetchall()
@@ -64,6 +56,6 @@ def admin_dashboard(request:Request, session: Session = Depends(get_session)):
 
     return templates.TemplateResponse(request, 'admin-dashboard.html',{
         'total_users_count' : results1[0]['count(*)'],
-        'total_api_call_count' : results2[0]['count(total_count)'],
+        'total_api_call_count' : results2[0]['count(*)'],
         'notices' : results3
     })
