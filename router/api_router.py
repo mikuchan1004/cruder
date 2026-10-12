@@ -1,13 +1,17 @@
 from elasticsearch import Elasticsearch, helpers
 import requests
 from fastapi import APIRouter
-
+from sqlalchemy import text
+from database import engine
+from datetime import datetime,date
 from config import ALIO_API_KEY, ELASTIC_ENDPOINT
-
-
+from sqlalchemy import text
+from database import get_session
+from fastapi import FastAPI, Depends
+from sqlmodel import Session
 # 채용정보 관련 API를 모아두는 라우터
 router = APIRouter(tags=['채용정보 관련 라우터'])
-
+session = requests.Session()
 # Elasticsearch 연결
 # 현재는 기존 run.py에서 사용하던 로컬 Elasticsearch 주소를 그대로 유지
 es = Elasticsearch(
@@ -16,7 +20,7 @@ es = Elasticsearch(
  
 
 # ==============================================================================
-# 1. ALIO 채용정보 가져오기
+# 1. ALIO 채용정보 가져오기(이거를 활용해서 MariaDB에 실제로 넣어야함)
 # ==============================================================================
 def fetch_jobs():
     # 청년 일자리 채용정보 목록 Open API 주소
@@ -31,7 +35,7 @@ def fetch_jobs():
         # 조회할 페이지 번호
         'pageNo': 1,
         # 한 번에 가져올 데이터 개수
-        'numOfRows': 500
+        'numOfRows': 1000
     }
 
     # HTTP 요청에 같이 전달할 Header
@@ -185,3 +189,124 @@ def get_jobs(keyword: str):
 #     'location': response.headers.get('Location'),
 #     'content_type': response.headers.get('Content-Type'),
 #     'response': response.text
+
+
+# 채용 공고를 담을 변수를 생성
+# jobs=fetch_jobs()
+
+def jobs_save_db(jobs,session):
+    for job in jobs:
+        
+        recrutPblntSn= job.get('recrutPblntSn')
+        recrutPbancTtl=job.get('recrutPbancTtl')
+        instNm=job.get('instNm')
+        pbancBgngYmd=job.get('pbancBgngYmd')
+        pbancEndYmd=job.get('pbancEndYmd')
+        srcUrl=job.get('srcUrl')
+        ongoingYn=job.get('ongoingYn')
+        recrutSeNm=job.get('recrutSeNm')
+        recrutNope=job.get('recrutNope')
+        workRgnNmLst=job.get('workRgnNmLst')
+        
+        # 만약에 공고 번호가 없으면 저장  x
+        if recrutPblntSn is None:
+            continue
+        
+        # db에 밀어넣기
+        sql = text('''
+         insert into jobs(
+             recrut_pblnt_sn,
+             recrut_pbanc_ttl,
+             inst_nm,
+             pbanc_bgng_ymd,
+             pbanc_end_ymd,
+             src_url,
+             ongoing_yn,
+             recrut_se_nm,
+             recrut_nope,
+             work_rgn_nm_lst     
+         )
+         
+         values(
+             :recrut_pblnt_sn,
+             :recrut_pbanc_ttl,
+             :inst_nm,
+             :pbanc_bgng_ymd,
+             :pbanc_end_ymd,
+             :src_url,
+             :ongoing_yn,
+             :recrut_se_nm,
+             :recrut_nope,
+             :work_rgn_nm_lst          
+         )
+         on duplicate key update
+         recrut_pblnt_sn=:recrut_pblnt_sn,
+         recrut_pbanc_ttl=:recrut_pbanc_ttl,
+         inst_nm=:inst_nm,
+         pbanc_bgng_ymd=:pbanc_bgng_ymd,
+         pbanc_end_ymd=:pbanc_end_ymd,
+         src_url=:src_url,
+         ongoing_yn=:ongoing_yn,
+         recrut_se_nm=:recrut_se_nm,
+         recrut_nope=:recrut_nope,
+         work_rgn_nm_lst=:work_rgn_nm_lst
+         
+         
+         ''')
+        
+        # maria db
+        
+        # sql문을 실행
+        
+        session.exec(sql, params={
+        'recrut_pblnt_sn': recrutPblntSn,
+        'recrut_pbanc_ttl': recrutPbancTtl,
+        'inst_nm': instNm,
+        'pbanc_bgng_ymd': pbancBgngYmd,
+        'pbanc_end_ymd': pbancEndYmd,
+        'src_url': srcUrl,
+        'ongoing_yn': ongoingYn,
+        'recrut_se_nm': recrutSeNm,
+        'recrut_nope': recrutNope,
+        'work_rgn_nm_lst': workRgnNmLst
+            })
+        
+        # mariaDB 날짜 포맷 저장할때 하라는건데(gpt 피드백임)
+        
+        if pbancBgngYmd:
+                pbancBgngYmd = str(pbancBgngYmd)
+                pbancBgngYmd = (
+                pbancBgngYmd[:4] + '-' +
+                pbancBgngYmd[4:6] + '-' +
+                pbancBgngYmd[6:8]
+            )
+
+        if pbancEndYmd:
+            pbancEndYmd = str(pbancEndYmd)
+            pbancEndYmd = (
+                pbancEndYmd[:4] + '-' +
+                pbancEndYmd[4:6] + '-' +
+                pbancEndYmd[6:8]
+            )
+         
+    session.commit()
+    
+    
+
+# 이거는 함수 테스트용
+@router.post('/jobs/sync')
+def insert_data(session: Session = Depends(get_session)): 
+    jobs=fetch_jobs()
+    jobs_save_db(jobs,session)
+    
+    
+    print('저장 성공이니!')
+    return{'msg':'채용공고 저장 성공!',
+           'count':len(jobs)}
+    
+
+        
+    
+        
+
+    
