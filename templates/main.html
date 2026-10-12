@@ -42,10 +42,12 @@
            
             <div class="job-grid">
              {% for job in jobs%} 
+               {% if job.ongoing_yn =='Y'%}
                 <!-- 공고 카드 1 -->
                 <article class="job-card">
                     <div class="card-header">
-                        <span class="badge recruiting">{{job.ongoing_yn}}</span>
+             
+                        <span class="badge recruiting">모집중</span>
                         <i class="fa-regular fa-star icon-bookmark"></i>
                     </div>
                     <div class="card-body">
@@ -54,69 +56,14 @@
                         <div class="tags">
                             <span>{{job.recrut_pbanc_ttl}}</span>
                             <span>{{job.recrut_se_nm}}</span>
-                            <span>{{job.recrut_nope}}</span>
+                            <span>채용인원:{{job.recrut_nope}}명</span>
                         </div>
                         <p class="date">{{job.pbanc_bgng_ymd}}~{{job.pbanc_end_ymd}}</p>
                     </div>
-                    <button class="btn-detail"><a href="{{job.src_url}}">상세보기</a></button>
+                    <button class="btn-detail"><a href="https://job.alio.go.kr/mobile2021/recruit/recruitView.do?idx={{ job.recrut_pblnt_sn }}">상세보기</a></button>
                 </article>
 
-                <!-- 공고 카드 2 -->
-                <!-- <article class="job-card">
-                    <div class="card-header">
-                        <span class="badge recruiting">모집중</span>
-                        <i class="fa-regular fa-star icon-bookmark"></i>
-                    </div>
-                    <div class="card-body">
-                        <span class="company-name">한국전력공사</span>
-                        <h3 class="job-title">2026년 하반기 신입사원 채용</h3>
-                        <div class="tags">
-                            <span>서울</span>
-                            <span>신입</span>
-                            <span>10명</span>
-                        </div>
-                        <p class="date">접수 기간<br>2026.10.01~2026.10.20</p>
-                    </div>
-                    <button class="btn-detail"><a href="{{job.src_url}}">상세보기</a></button>
-                </article> -->
-
-                <!-- 공고 카드 3 -->
-                <!-- <article class="job-card">
-                    <div class="card-header">
-                        <span class="badge recruiting">모집중</span>
-                        <i class="fa-regular fa-star icon-bookmark"></i>
-                    </div>
-                    <div class="card-body">
-                        <span class="company-name">한국전력공사</span>
-                        <h3 class="job-title">2026년 하반기 신입사원 채용</h3>
-                        <div class="tags">
-                            <span>서울</span>
-                            <span>신입</span>
-                            <span>10명</span>
-                        </div>
-                        <p class="date">접수 기간<br>2026.10.01~2026.10.20</p>
-                    </div>
-                     <button class="btn-detail"><a href="{{job.src_url}}">상세보기</a></button>
-                </article> -->
-
-                <!-- 공고 카드 4 -->
-                <!-- <article class="job-card">
-                    <div class="card-header">
-                        <span class="badge recruiting">모집중</span>
-                        <i class="fa-regular fa-star icon-bookmark"></i>
-                    </div>
-                    <div class="card-body">
-                        <span class="company-name">한국전력공사</span>
-                        <h3 class="job-title">2026년 하반기 신입사원 채용</h3>
-                        <div class="tags">
-                            <span>서울</span>
-                            <span>신입</span>
-                            <span>10명</span>
-                        </div>
-                        <p class="date">접수 기간<br>2026.10.01~2026.10.20</p>
-                    </div>
-                     <button class="btn-detail"><a href="{{job.src_url}}">상세보기</a></button>
-                </article> -->
+               {% endif %}
               {% endfor %} 
             </div>
         
