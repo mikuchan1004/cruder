@@ -131,50 +131,99 @@ def jobgogo(
 # 로그인 처리
 # =========================================================
 
+def verify(orig, hashed):
+    return ctx_pw.verify(orig, hashed)
+
+
 @router.post("/jobgogo/login")
 def login(
     request: Request,
-    user_id: Annotated[str, Form()],
-    user_pw: Annotated[str, Form()],
+    user_id: str=Form(),
+    user_pw: str=Form(),
     session: Session = Depends(get_session)
 ):
-    # 아이디로 사용자 조회
-    statement = select(User).where(User.user_id == user_id)
-    user = session.exec(statement).first()
+    print('가는거니')
+    
+       
+    sql=text('''
+             select *
+             from user
+             where user_id=:user_id
+             
+             ''')
+    
+    result=session.exec(
+               sql,
+               params={
+                   'user_id':user_id,
+                   
+               }
+           )
+    
+    user=result.mappings().fetchone()
+    
+    if user is None:
+          return RedirectResponse(
+                url='/login',
+                status_code=303
+            )
+    if not verify(user_pw,user['user_pw']):
+            request.session['login_error']='아이디 또는 비밀번호가 올바르지 않습니다.'
+        
+    
+            return RedirectResponse(
+                        url='/jobgogo/login',
+                        status_code=303
+                    )
+            
+    request.session["user_id"] = user['user_id']
+    request.session["user_name"] = user['user_name']
+    request.session["user_status_id"] = user['user_status_id']
+    
+    return RedirectResponse(
+           url='/jobgogo',
+           status_code=303
+       )
+    
+    
+    
+    # # 아이디로 사용자 조회
+    # statement = select(User).where(User.user_id == user_id)
+    # user = session.exec(statement).first()
 
     # 아이디가 존재하지 않음
-    if user is None:
-        return templates.TemplateResponse(
-            request=request,
-            name="login.html",
-            context={
-                "error": "아이디 또는 비밀번호가 올바르지 않습니다.",
-                "entered_user_id": user_id
-            },
-            status_code=401
-        )
+    # if user is None:
+    #     return templates.TemplateResponse(
+    #         request=request,
+    #         name="login.html",
+    #         context={
+    #             "error": "아이디 또는 비밀번호가 올바르지 않습니다.",
+    #             "entered_user_id": user_id
+    #         },
+    #         status_code=401
+    #     )
 
-    # 비밀번호 불일치
-    if user.user_pw != user_pw:
-        return templates.TemplateResponse(
-            request=request,
-            name="login.html",
-            context={
-                "error": "아이디 또는 비밀번호가 올바르지 않습니다.",
-                "entered_user_id": user_id
-            },
-            status_code=401
-        )
+    # # 비밀번호 불일치
+    # if user.user_pw != user_pw:
+    #     return templates.TemplateResponse(
+    #         request=request,
+    #         name="login.html",
+    #         context={
+    #             "error": "아이디 또는 비밀번호가 올바르지 않습니다.",
+    #             "entered_user_id": user_id
+    #         },
+    #         status_code=401
+    #     )
 
-    # 로그인 성공
-    request.session["user_id"] = user.user_id
-    request.session["user_name"] = user.user_name
-    request.session["user_status_id"] = user.user_status_id
+    # # 로그인 성공
+    # request.session["user_id"] = user.user_id
+    # request.session["user_name"] = user.user_name
+    # request.session["user_status_id"] = user.user_status_id
 
-    return RedirectResponse(
-        url="/jobgogo",
-        status_code=303
-    )
+    # return RedirectResponse(
+    #     url="/jobgogo",
+    #     status_code=303
+    # )
 
 # =========================================================
 # 로그아웃
@@ -191,3 +240,4 @@ def logout(request: Request):
     
 
     
+# 내일 작업 따로 하는걸로!
