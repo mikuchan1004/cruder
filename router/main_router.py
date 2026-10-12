@@ -57,12 +57,18 @@ def jobgogo(
         result=session.exec(sql_jobs_notice)
         jobs=result.mappings().fetchall()
     except Exception as e:
-        print('에러에러 ')    
+        print('에러에러')    
     
 
-    # HTML에 데이터 전달
     return templates.TemplateResponse(
-        request,
-        'main.html',
-        {"jobs": jobs}
+        request=request,
+        name='main.html',
+        context={
+            "jobs": jobs,
+
+            # 로그인 세션
+            "member_id": request.session.get("member_id"),
+            "member_name": request.session.get("member_name"),
+            "user_status_id": request.session.get("user_status_id")
+        }
     )
