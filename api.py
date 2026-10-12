@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from router.main_router import router as main_router
 from router.jobs_router import router as jobs_router
-
+from database import engine
 
 router = FastAPI()
 router.include_router(main_router)
