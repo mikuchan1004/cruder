@@ -243,6 +243,12 @@ a {
     max-width: 100%;
 }
 
+/* 관리자 상태 */
+.status-admin {
+    background-color: #EDE9FE;
+    color: #6B46C1;
+}
+
 /* 회원 관리 테이블 컬럼 비율 (아이디, 이름, 연락처, 경고, 상태, 관리) */
 .member-table .table-header, 
 .member-table .table-row {

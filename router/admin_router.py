@@ -133,6 +133,7 @@ def user_warning(request:Request, user_id: str, session: Session = Depends(get_s
             warning_count = warning_count + 1
         where 
             user_id = :user_id
+            AND user_status_id != 1
     ''')
 
     # 경고횟수가 5회 이상일경우, 상태 코드를 4 : 경고로 변경
@@ -142,6 +143,7 @@ def user_warning(request:Request, user_id: str, session: Session = Depends(get_s
             user_status_id = 4 
         where 
             warning_count >=5 and user_id = :user_id
+            AND user_status_id != 1
     ''')
 
     # 경고횟수가 10회 이상일경우, 상태 코드를 5: 정지로 변경 
@@ -151,6 +153,7 @@ def user_warning(request:Request, user_id: str, session: Session = Depends(get_s
             user_status_id = 5 
         where
             warning_count >= 10 and user_id = :user_id 
+            AND user_status_id != 1
     ''')
     session.execute(sql1, {'user_id' : user_id})
     session.execute(sql2, {'user_id' : user_id})
@@ -192,6 +195,7 @@ def user_suspension (request:Request, user_id: str, session: Session = Depends(g
         update user 
         set user_status_id = 5
         where user_id = :user_id
+            AND user_status_id != 1
     ''')
     session.execute(sql, {'user_id' : user_id})
     session.commit()
@@ -219,6 +223,7 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
     sql = text('''
         delete from user
         where user_id = :user_id
+            AND user_status_id != 1
     ''')
     try:
         session.execute(sql, {'user_id' : user_id})
