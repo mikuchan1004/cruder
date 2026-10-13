@@ -1,0 +1,18 @@
+    <header class="admin-header">
+        <div class="header-left">
+            <h1 class="logo">관리자페이지</h1>
+            <nav class="gnb">
+                <ul>
+                    <li><a href="/admin" class="active">대시보드</a></li>
+                    <li><a href="/admin-users">회원관리</a></li>
+                    <li><a href="/admin-board">게시물관리</a></li>
+                    <li><a href="#">채용 공고 관리</a></li>
+                    <li><a href="#">문의관리</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="header-right">
+            <span class="admin-greeting">{{ request.session.get('user_name') }}님 환영합니다</span>
+            <button type="button" class="btn-logout">로그아웃</button>
+        </div>
+    </header>

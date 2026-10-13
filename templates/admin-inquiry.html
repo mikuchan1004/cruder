@@ -8,24 +8,7 @@
 </head>
 <body>
     <!-- 상단 헤더 영역 -->
-    <header class="admin-header">
-        <div class="header-left">
-            <h1 class="logo">관리자페이지</h1>
-            <nav class="gnb">
-                <ul>
-                    <li><a href="#">대시보드</a></li>
-                    <li><a href="#">회원관리</a></li>
-                    <li><a href="#">게시물관리</a></li>
-                    <li><a href="#">채용 공고 관리</a></li>
-                    <li><a href="#" class="active">문의관리</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="header-right">
-            <span class="admin-greeting">관리자님 환영합니다</span>
-            <button type="button" class="btn-logout">로그아웃</button>
-        </div>
-    </header>
+    {% include 'admin-header.html' %}
 
     <!-- 메인 콘텐츠 영역 -->
     <main class="admin-main">
