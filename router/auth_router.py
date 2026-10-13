@@ -189,6 +189,11 @@ def login(
     request.session["user_id"] = user['user_id']
     request.session["user_name"] = user['user_name']
     request.session["user_status_id"] = user['user_status_id']
+    request.session["user_nickname"] = user['user_nickname']
+    request.session["user_phone"] = user['user_phone']
+    request.session["user_home"] = user['user_home']
+    request.session["user_email"] = user['user_email']
+    request.session["warning_count"] = user['warning_count']
 
     
     
