@@ -3,66 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마이페이지 - 취업 할래말래</title>
-    <link rel="stylesheet" href="../assets/my-page.css">
-    <!-- 폰트어썸 (사용자 프로필 아이콘 렌더링용) -->
+    <title>마이페이지 - 취업할래 말래</title>
+
+    <link rel="stylesheet" href="../assets/header.css">
+    <!-- <link rel="stylesheet" href="../assets/my-page.css"> -->
+    <link rel="stylesheet" href="../assets/my-page.css?v=20261013">
+    <link rel="stylesheet" href="../assets/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- 상단 임시 헤더 -->
-    <header class="wireframe-header">
-        헤더
-    </header>
+    {% include 'header.html' %}
 
-    <!-- 메인 레이아웃 컨테이너 -->
-    <main class="mypage-container">
-        <!-- 1. 좌측 사이드바 영역 -->
-        <aside class="sidebar">
-            <h2 class="sidebar-title">마이페이지</h2>
-            <ul class="sidebar-menu">
-                <li><a href="#">회원 정보 수정</a></li>
-                <li><a href="#">쓴 글 목록</a></li>
-                <li><a href="#">찜한 공고 목록</a></li>
-                <li><a href="#">일대일 문의</a></li>
-            </ul>
-        </aside>
-
-        <!-- 2. 중앙 사용자 정보 및 퀵 링크 영역 -->
-        <section class="user-profile-section">
-            <div class="user-greeting">
-                <div class="avatar">
-                    <i class="fa-regular fa-user"></i>
-                </div>
-                <h3>{{ user.user_name }}님 환영합니다</h3>
+    <main class="mypage-main">
+        <section class="mypage-hero" aria-labelledby="mypage-title">
+            <div class="hero-copy">
+                <span class="hero-eyebrow">MY PAGE</span>
+                <h1 id="mypage-title">마이페이지</h1>
+                <p>내 정보와 활동을 한곳에서 편하게 확인하고 관리해보세요.</p>
             </div>
-            <ul class="quick-links">
-                <li><a href="#">회원 정보 수정</a></li>
-                <li><a href="#">찜한 공고 목록</a></li>
-                <li><a href="#">쓴 글 목록</a></li>
-                <li><a href="#">일대일 문의</a></li>
-                <li><a href="/jobgogo">메인 페이지로</a></li>
-            </ul>
         </section>
 
-        <!-- 3. 우측 본인 확인 폼 영역 -->
-        <section class="verification-section">
-            <div class="verification-box">
-                <h2>본인 확인</h2>
-                <form class="verification-form">
-                    <input type="password" placeholder="현재 비밀번호">
-                    <input type="password" placeholder="비밀번호 확인">
-                    <div class="btn-group">
-                        <button type="submit" class="btn btn-confirm">확인</button>
-                        <button type="button" class="btn btn-cancel">취소</button>
+        <div class="mypage-layout">
+            <aside class="mypage-sidebar" aria-label="마이페이지 메뉴">
+                <div class="sidebar-heading">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <i class="fa-regular fa-user"></i>
+                    </span>
+                    <div>
+                        <strong>{{ user.user_name }}</strong>
+                        <span>회원님</span>
                     </div>
-                </form>
-            </div>
-        </section>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a href="#profile" class="active">
+                        <i class="fa-solid fa-house"></i>
+                        <span>마이페이지 홈</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa-regular fa-address-card"></i>
+                        <span>회원 정보 수정</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                        <span>쓴 글 목록</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa-regular fa-star"></i>
+                        <span>찜한 공고 목록</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa-regular fa-circle-question"></i>
+                        <span>일대일 문의</span>
+                    </a>
+                </nav>
+            </aside>
+
+            <section class="mypage-content" id="profile">
+                <article class="profile-card">
+                    <div class="profile-avatar" aria-hidden="true">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+
+                    <div class="profile-copy">
+                        <span class="profile-label">WELCOME</span>
+                        <h2>{{ user.user_name }}님, 반가워요!</h2>
+                        <p>오늘도 취업할래 말래에서 원하는 정보를 빠르게 찾아보세요.</p>
+                    </div>
+
+                    <a href="/jobgogo" class="home-button">
+                        메인으로
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </article>
+
+                <section class="menu-section" aria-labelledby="menu-title">
+                    <div class="section-title-group">
+                        <div>
+                            <span class="section-kicker">QUICK MENU</span>
+                            <h2 id="menu-title">빠른 메뉴</h2>
+                        </div>
+                        <p>자주 사용하는 기능을 빠르게 확인할 수 있어요.</p>
+                    </div>
+
+                    <div class="menu-grid">
+                        <a href="#" class="menu-card">
+                            <span class="menu-icon purple">
+                                <i class="fa-regular fa-address-card"></i>
+                            </span>
+                            <span class="menu-text">
+                                <strong>회원 정보 수정</strong>
+                                <small>내 계정 정보를 확인하고 수정합니다.</small>
+                            </span>
+                            <i class="fa-solid fa-chevron-right card-arrow"></i>
+                        </a>
+
+                        <a href="#" class="menu-card">
+                            <span class="menu-icon blue">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </span>
+                            <span class="menu-text">
+                                <strong>쓴 글 목록</strong>
+                                <small>내가 작성한 게시글을 확인합니다.</small>
+                            </span>
+                            <i class="fa-solid fa-chevron-right card-arrow"></i>
+                        </a>
+
+                        <a href="#" class="menu-card">
+                            <span class="menu-icon amber">
+                                <i class="fa-regular fa-star"></i>
+                            </span>
+                            <span class="menu-text">
+                                <strong>찜한 공고 목록</strong>
+                                <small>관심 있는 채용 공고를 모아봅니다.</small>
+                            </span>
+                            <i class="fa-solid fa-chevron-right card-arrow"></i>
+                        </a>
+
+                        <a href="#" class="menu-card">
+                            <span class="menu-icon green">
+                                <i class="fa-regular fa-circle-question"></i>
+                            </span>
+                            <span class="menu-text">
+                                <strong>일대일 문의</strong>
+                                <small>문의 내역과 답변을 확인합니다.</small>
+                            </span>
+                            <i class="fa-solid fa-chevron-right card-arrow"></i>
+                        </a>
+                    </div>
+                </section>
+
+                <aside class="mypage-guide">
+                    <span class="guide-icon" aria-hidden="true">
+                        <i class="fa-regular fa-lightbulb"></i>
+                    </span>
+                    <div>
+                        <strong>마이페이지 안내</strong>
+                        <p>회원 정보 수정 시 필요한 본인 확인 절차는 해당 메뉴에서 진행하도록 분리할 수 있습니다.</p>
+                    </div>
+                </aside>
+            </section>
+        </div>
     </main>
 
-    <!-- 하단 임시 푸터 -->
-    <footer class="wireframe-footer">
-        푸터
-    </footer>
+    {% include 'footer.html' %}
 </body>
 </html>
