@@ -185,7 +185,7 @@ def user_warning_delete(request:Request, user_id: str, session: Session = Depend
     session.execute(sql, {'user_id' : user_id})
     session.commit()
 
-    return RedirectResponse(url='/admin-users' , status_code=303)
+    return RedirectResponse(url='/jobgogo/admin-users' , status_code=303)
 
 @router.post('/admin/user/suspension/{user_id}')
 def user_suspension (request:Request, user_id: str, session: Session = Depends(get_session)):
@@ -200,7 +200,7 @@ def user_suspension (request:Request, user_id: str, session: Session = Depends(g
     session.execute(sql, {'user_id' : user_id})
     session.commit()
 
-    return RedirectResponse(url='/admin-users', status_code=303)
+    return RedirectResponse(url='/jobgogo/admin-users', status_code=303)
 
 @router.post('/admin/user/unsuspension/{user_id}')
 def user_unsuspension(request:Request, user_id: str, session: Session = Depends(get_session)):
@@ -214,7 +214,7 @@ def user_unsuspension(request:Request, user_id: str, session: Session = Depends(
     session.execute(sql, {'user_id' : user_id})
     session.commit()
 
-    return RedirectResponse(url='/admin-users', status_code=303)
+    return RedirectResponse(url='/jobgogo/admin-users', status_code=303)
 
 @router.post('/admin/user/delete/{user_id}')
 def user_delete(request:Request, user_id: str, session:Session = Depends(get_session)):
@@ -229,7 +229,7 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
         session.execute(sql, {'user_id' : user_id})
         session.commit()
 
-        return RedirectResponse (url='/admin-users' , status_code=303)
+        return RedirectResponse (url='/jobgogo/admin-users' , status_code=303)
     except  Exception as e:
         session.rollback()
         print(e)
@@ -342,7 +342,7 @@ def delete_post(request: Request,  post_number : int, category: str = Form(...) 
         print(f"게시글 삭제에 실패했습니다. : {e}")
 
     return RedirectResponse (
-                url='/admin-board', status_code=303
+                url='/jobgogo/admin-board', status_code=303
             )
 
 @router.get('/jobgogo/warning')

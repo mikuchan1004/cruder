@@ -23,10 +23,6 @@
                     popup.querySelector('[name = "post_number"]').value = e.currentTarget.dataset.id; // 글 번호 
                     popup.querySelector('[name = "post_title"]').value = e.currentTarget.dataset.title; // 제목 
                     popup.querySelector('[name = "post_detail"]').value = e.currentTarget.dataset.detail; // 내용
-
-                    // 팝업창 안의 '수정' 버튼 링크 주소를 클릭한 글의 번호에 맞춰서 동적으로 바꿔줌
-                    popup.querySelector('#modify-button').formAction=`/admin/board/modify/${e.currentTarget.dataset.id}`
-
                     // 팝업창 안의 '삭제' 버튼 링크 주소를 클릭한 글의 번호에 맞춰서 동적으로 바꿔줌
                     popup.querySelector('#delete-button').formAction = `/admin/board/delete/${e.currentTarget.dataset.id}`
 
@@ -92,7 +88,6 @@
                         내용 : <textarea class="form-control" type="text" name="post_detail"></textarea><br> 
                     </div>
                     <div class="popup-footer">
-                        <button class="btn btn-outline-purple" id="modify-button" type="submit" formmethod="post">수정</button>
                         <button class="btn btn-red" id="delete-button" type="submit" formmethod="post">삭제</button>
                         <button class="btn btn-outline-purple" id="close" type="button">닫기</button>
                     </div>
