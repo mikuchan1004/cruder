@@ -3,9 +3,26 @@
             <h1 class="logo">관리자페이지</h1>
             <nav class="gnb">
                 <ul>
-                    <li><a href="/jobgogo/admin" class="active">대시보드</a></li>
-                    <li><a href="/jobgogo/admin-users">회원관리</a></li>
-                    <li><a href="/jobgogo/admin-board">게시물관리</a></li>
+                    <li>
+                        <a href="/jobgogo/admin"
+                        class="{{ 'active' if request.url.path == '/admin' else '' }}">
+                            대시보드
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/jobgogo/admin-users"
+                        class="{{ 'active' if request.url.path.startswith('/admin-users') else '' }}">
+                            회원관리
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/jobgogo/admin-board"
+                        class="{{ 'active' if request.url.path.startswith('/admin-board') else '' }}">
+                            게시물관리
+                        </a>
+                    </li>
                     <li><a href="#">채용 공고 관리</a></li>
                     <li><a href="#">문의관리</a></li>
                 </ul>
