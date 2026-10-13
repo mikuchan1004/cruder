@@ -271,3 +271,218 @@ a {
         margin-top: 8px;
     }
 }
+
+/* ============================
+팝업 CSS
+=============================*/
+
+/* ==================================
+   팝업 오버레이 (배경 딤 처리)
+=================================== */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(17, 24, 39, 0.45); /* 은은한 어두운 배경 */
+    backdrop-filter: blur(4px);              /* 뒷배경 블러 처리 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 팝업 숨김 제어 */
+.popup-overlay.hide {
+    display: none !important;
+}
+
+/* ==================================
+   팝업 카드 컨테이너
+=================================== */
+.popup-card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 540px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #E5E7EB;
+    overflow: hidden;
+    animation: popupFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ==================================
+   헤더 영역
+=================================== */
+.popup-header {
+    padding: 20px 28px;
+    border-bottom: 1px solid #F3F4F6;
+    background-color: #FAFAFA;
+}
+
+.popup-title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.3px;
+}
+
+/* ==================================
+   바디 & 입력 폼 영역
+=================================== */
+.popup-body {
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: #374151;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* 기존 <br> 태그로 인한 불필요한 공백 제거 */
+.popup-body br {
+    display: none;
+}
+
+/* 입력 필드 공통 */
+.popup-body .form-control {
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px 14px;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #1F2937;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+/* 포커스 효과 (프로젝트 포인트 테마: 보라색) */
+.popup-body .form-control:focus {
+    border-color: #6B46C1;
+    box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.12);
+}
+
+/* 읽기 전용(readonly) 필드 */
+.popup-body .form-control[readonly] {
+    background-color: #F9FAFB;
+    color: #6B7280;
+    border-color: #E5E7EB;
+    cursor: default;
+}
+
+/* 텍스트에어리어 높이 및 리사이즈 조절 */
+.popup-body textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* ==================================
+   하단 푸터 & 버튼 영역
+=================================== */
+.popup-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding: 18px 28px;
+    border-top: 1px solid #F3F4F6;
+    background-color: #FAFAFA;
+}
+
+.btn {
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: 1.5px solid transparent;
+}
+
+/* 보라색 테두리 버튼 (기본 수정 버튼) */
+.btn-outline-purple {
+    background-color: #ffffff;
+    color: #6B46C1;
+    border-color: #6B46C1;
+}
+
+.btn-outline-purple:hover {
+    background-color: #6B46C1;
+    color: #ffffff;
+}
+
+/* 삭제 버튼 (위험/경고 강조 스타일) */
+#delete-button {
+    background-color: #ffffff;
+    color: #DC2626;
+    border-color: #FCA5A5;
+}
+
+#delete-button:hover {
+    background-color: #DC2626;
+    color: #ffffff;
+    border-color: #DC2626;
+}
+
+/* 닫기 버튼 (회색 보조 버튼) */
+#close {
+    background-color: #F3F4F6;
+    color: #4B5563;
+    border-color: #E5E7EB;
+}
+
+#close:hover {
+    background-color: #E5E7EB;
+    color: #111827;
+}
+
+/* ==================================
+   모바일 반응형 (640px 이하)
+=================================== */
+@media (max-width: 640px) {
+    .popup-card {
+        max-width: 100%;
+        border-radius: 12px;
+    }
+
+    .popup-header {
+        padding: 16px 20px;
+    }
+
+    .popup-body {
+        padding: 20px;
+        gap: 14px;
+    }
+
+    .popup-footer {
+        flex-direction: column-reverse;
+        gap: 8px;
+        padding: 16px 20px;
+    }
+
+    .popup-footer .btn {
+        width: 100%;
+        padding: 12px;
+    }
+}
