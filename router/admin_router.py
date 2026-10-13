@@ -32,6 +32,14 @@ def get_session():
 @router.get('/admin')
 def admin_dashboard(request:Request, session: Session = Depends(get_session)):
     print('/admin 실행')
+
+    # #관리자가 아니면 경고 페이지로 쫓아냄 
+    # if request.session.get('user_id') != 'admin':
+    #     return RedirectResponse(
+    #         url='/warning',
+    #         status_code=303
+    #     )
+
     # 현재 회원의 수가 몇 명인지 세는 SQL문 
     sql1 = text('''
         select count(*)
@@ -46,18 +54,29 @@ def admin_dashboard(request:Request, session: Session = Depends(get_session)):
     ''')
     results2 = session.execute(sql2).mappings().fetchall()
 
-    # 공지사항을 한눈에 볼 수 있게 가져오는 SQL문
+    # 최근 게시물을 긁어오는 SQL문 (by Google Gemini)
     sql3=text('''
-        select *
+        select 
+            '공지' as category,
+            notice_title as title,
+            user_id,
+            notice_date as created_at 
         from notice
-        order by notice_date desc
+        union all 
+        select 
+            '취업 꿀팁' as category,
+            job_tip_title as title,
+            user_id, 
+            job_tip_date as created_at
+        from job_tip
+        order by created_at desc
     ''')
     results3 = session.execute(sql3).mappings().fetchall() 
 
     return templates.TemplateResponse(request, 'admin-dashboard.html',{
         'total_users_count' : results1[0]['count(*)'],
         'total_api_call_count' : results2[0]['count(*)'],
-        'notices' : results3
+        'recent_posts' : results3
     })
 
 @router.get('/admin-users')
@@ -182,3 +201,8 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
         return RedirectResponse (
             url='/admin-users', status_code=303
         )
+
+@router.get('/warning')
+def warning_page(request:Request, session: Session = Depends(get_session)):
+    print('경고 페이지로 이동합니다.')
+    return templates.TemplateResponse(request, 'admin-dashboard.html')

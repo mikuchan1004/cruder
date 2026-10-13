@@ -56,23 +56,25 @@
             </div>
         </section>
 
-        <!-- 공지사항 테이블 영역 -->
+        <!-- 최근 게시물 테이블 영역 -->
         <section class="recent-posts">
-            <h2 class="section-title">공지사항</h2>
+            <h2 class="section-title">최근 게시물</h2>
             
             <div class="board-table">
                 <!-- 데스크톱용 테이블 헤더 -->
                 <div class="table-header">
+                    <div class="col-category">카테고리</div>
                     <div class="col-title">제목</div>
                     <div class="col-author">작성자</div>
                     <div class="col-date">작성일</div>
                 </div>
                 
-                {% for notice in notices %}
+                {% for post in recent_posts %}
                 <div class="table-row">
-                        <div class="col-title" data-label="제목">{{notice.notice_title}}</div>
-                        <div class="col-author" data-label="작성자">{{notice.user_id}}</div>
-                        <div class="col-date" data-label="작성일">{{notice.notice_date}}</div>
+                        <div class="col-category" data-label="카테고리">{{post.category}}</div>
+                        <div class="col-title" data-label="제목">{{post.title}}</div>
+                        <div class="col-author" data-label="작성자">{{post.user_id}}</div>
+                        <div class="col-date" data-label="작성일">{{post.created_at}}</div>
                     </div>
                 {% endfor %}
             </div>
