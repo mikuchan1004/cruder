@@ -54,38 +54,35 @@
                         <span class="badge status-suspend ">정지</span>
                         {% elif user.warning_count >= 5 %}
                         <span class="badge status-warning">경고</span>
+                        {% elif user.user_status_id == 1 %}
+                        <span class="badge status-admin"> 최고 관리자</span>
                         {% else %}
                         <span class="badge status-normal ">정상</span>
                         {% endif %}
                     </div>
                     <div class="col action-buttons" data-label="관리">
 
-                        {% if user.user_status_id == 1 %}
-                            <span class="badge status-admin">관리자</span>
+                        <form method="post" action="/admin/user/warning/{{user.user_id}}">
+                            <button class="btn btn-outline-purple" type="submit">경고</button>
+                        </form>
 
+                        <form method="post" action="/admin/user/warning/delete/{{user.user_id}}">
+                            <button class="btn btn-outline-purple" type="submit">경고 제거</button>
+                        </form>
+
+                        {% if user.user_status_id == 5 %}
+                        <form method="post" action="/admin/user/unsuspension/{{user.user_id}}">
+                            <button class="btn btn-outline-purple" type="submit">정지 해제</button>
+                        </form>
                         {% else %}
-                            <form method="post" action="/admin/user/warning/{{user.user_id}}">
-                                <button class="btn btn-outline-purple" type="submit">경고</button>
-                            </form>
-
-                            <form method="post" action="/admin/user/warning/delete/{{user.user_id}}">
-                                <button class="btn btn-outline-purple" type="submit">경고 제거</button>
-                            </form>
-
-                            {% if user.user_status_id == 5 %}
-                            <form method="post" action="/admin/user/unsuspension/{{user.user_id}}">
-                                <button class="btn btn-outline-purple" type="submit">정지 해제</button>
-                            </form>
-                            {% else %}
-                            <form method="post" action="/admin/user/suspension/{{user.user_id}}">
-                                <button class="btn btn-red" type="submit">계정 정지</button>
-                            </form>
-                            {% endif %}
-
-                            <form method="post" action="/admin/user/delete/{{user.user_id}}">
-                                <button class="btn btn-red" type="submit">회원 삭제</button>
-                            </form>
+                        <form method="post" action="/admin/user/suspension/{{user.user_id}}">
+                            <button class="btn btn-red" type="submit">계정 정지</button>
+                        </form>
                         {% endif %}
+
+                        <form method="post" action="/admin/user/delete/{{user.user_id}}">
+                            <button class="btn btn-red" type="submit">회원 삭제</button>
+                        </form>
                     </div>
                 </div>
                 {% endfor %}
