@@ -150,7 +150,7 @@ a {
 
 .status-warning {
     background-color: #ffeace;
-    color:#FFA500;
+    color: #FFA500;
 }
 
 .status-suspend {
@@ -195,7 +195,7 @@ a {
     background-color: #ffffff;
     border: 1px solid #E5E7EB;
     border-radius: 12px;
-    overflow: hidden;
+    overflow-x: auto; /* 내용이 넘칠 경우 가로 스크롤 방어 */
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
@@ -211,7 +211,7 @@ a {
 .table-row {
     padding: 18px 20px;
     border-bottom: 1px solid #F3F4F6;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #4B5563;
     transition: background-color 0.15s ease;
 }
@@ -224,44 +224,64 @@ a {
     border-bottom: none;
 }
 
+/* 각 열(Cell) 기본 스타일 */
+.table-header > div,
+.table-row > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-break: keep-all;
+    white-space: nowrap;
+}
+
 /* 텍스트 말줄임 */
 .truncate {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: block;
+    max-width: 100%;
 }
 
-/* 컬럼별 너비 설정 */
+/* 회원 관리 테이블 컬럼 비율 (아이디, 이름, 연락처, 경고, 상태, 관리) */
 .member-table .table-header, 
 .member-table .table-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 1.2fr 0.8fr 1fr 3fr;
+    grid-template-columns: 1.2fr 1fr 1.5fr 0.8fr 1fr 2.5fr;
     align-items: center;
-    text-align: center;
+    min-width: 850px; /* 데스크톱에서 깨지지 않도록 최소 너비 보장 */
 }
 
+/* 글 신고 내역 테이블 컬럼 비율 (신고번호, 작성자ID, 작성자, 신고자, 글제목, 사유, 관리) */
 .report-table .table-header, 
 .report-table .table-row {
     display: grid;
-    grid-template-columns: 0.6fr 1fr 1fr 1fr 2.5fr 2fr 1fr;
+    grid-template-columns: 0.8fr 1fr 1fr 1fr 2.5fr 1.8fr 1fr;
     align-items: center;
-    text-align: center;
+    min-width: 950px;
+}
+
+.report-table .table-row > div:nth-child(5) {
+    justify-content: flex-start;
+    padding: 0 10px;
 }
 
 /* 액션 버튼 그룹 */
 .action-buttons {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: nowrap;
 }
 
 .btn {
-    padding: 6px 14px;
+    padding: 6px 12px;
     border-radius: 6px;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
+    white-space: nowrap;
     transition: all 0.2s ease;
 }
 
@@ -335,6 +355,7 @@ a {
         border: none;
         background-color: transparent;
         box-shadow: none;
+        overflow-x: visible;
     }
 
     .member-table .table-row, 
@@ -349,30 +370,35 @@ a {
         border-radius: 12px;
         gap: 12px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        min-width: unset;
     }
 
-    .table-row .col {
+    .table-row > div {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        width: 100%;
+        white-space: normal;
     }
 
     .truncate {
         white-space: normal;
     }
 
-    .table-row .col[data-label]::before {
+    .table-row > div[data-label]::before {
         content: attr(data-label);
         font-weight: 600;
         width: 110px;
         flex-shrink: 0;
         display: inline-block;
         color: #374151;
+        text-align: left;
     }
 
     .action-buttons {
         justify-content: flex-end;
         width: 100%;
         margin-top: 8px;
+        flex-wrap: wrap;
     }
 }
