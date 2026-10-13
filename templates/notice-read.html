@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 상세보기</title>
+
+    <link rel="stylesheet" href="/assets/recult-read.css">
+    <link rel="stylesheet" href="/assets/header.css">
+    <link rel="stylesheet" href="/assets/footer.css">
+
+    <style>
+        .notice-content {
+            min-height: 250px;
+            padding: 20px;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 상단 헤더 -->
+    {% include 'header.html' %}
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="main-container">
+
+        <!-- 공지사항 제목 -->
+        <div class="job-title-area">
+            <h1>{{ notice.notice_title }}</h1>
+            <span class="company-name">공지사항</span>
+        </div>
+
+        <!-- 게시글 정보 -->
+        <div class="info-box top-box">
+
+            <div class="info-item">
+                <span class="label">글번호</span>
+                <span class="value">{{ notice.notice_id }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">작성자</span>
+                <span class="value">{{ notice.user_id }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">작성일</span>
+                <span class="value">
+                    {{ notice.notice_date.strftime('%Y-%m-%d') if notice.notice_date else '' }}
+                </span>
+            </div>
+
+        </div>
+
+        <!-- 게시글 본문 -->
+        <div class="info-box bottom-box">
+
+            <div class="info-item">
+                <span class="label">내용</span>
+            </div>
+
+            <div class="notice-content">{{ notice.notice_detail }}</div>
+
+        </div>
+
+        <!-- 하단 버튼 -->
+        <div class="button-group">
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                onclick="location.href='/notice'">
+                목록으로
+            </button>
+
+        </div>
+
+    </main>
+
+    <!-- 하단 푸터 -->
+    {% include 'footer.html' %}
+
+</body>
+</html>

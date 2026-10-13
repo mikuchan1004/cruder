@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글쓰기 에디터</title>
+    <link rel="stylesheet" href="../assets/write.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* 본문 입력 영역 */
+        #editor {
+            min-height: 350px;
+            padding: 15px;
+            outline: none;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        #editor:empty::before {
+            content: "내용을 입력하시오";
+            color: #999;
+        }
+
+        /* 본문에 삽입된 이미지 */
+        #editor img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 12px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="wireframe-header">
+        헤더
+    </header>
+
+    <main class="main-container">
+
+            <form
+                id="writeForm"
+                action="/jobtip/write"
+                method="post"
+                enctype="multipart/form-data"
+            >
+
+            <div class="form-header">
+                <input
+                    type="text"
+                    name="job_tip_title"
+                    class="title-input"
+                    placeholder="제목을 입력하시오"
+                    required
+                >
+
+                <div class="button-group">
+                    <!-- 취소 버튼 -->
+                    <button
+                        type="button"
+                        class="btn btn-cancel"
+                        onclick="location.href='/jobgogo/jobtip'">
+                        취소
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-submit">
+                        등록
+                    </button>
+                </div>
+            </div>
+
+            <div class="editor-container">
+
+                <div class="editor-toolbar">
+
+                    <!-- 이미지 버튼 -->
+                    <button
+                        type="button"
+                        class="tool-btn"
+                        onclick="document.getElementById('job_tip_attachment').click()">
+                        <i class="fa-regular fa-image"></i>
+                        <span>이미지</span>
+                    </button>
+
+                    <!-- 이미지 선택 -->
+                    <input
+                        type="file"
+                        id="job_tip_attachment"
+                        name="job_tip_attachment"
+                        accept="image/*"
+                        multiple
+                        style="display: none;"
+                    >
+
+                    <button type="button" class="tool-btn">
+                        <i class="fa-solid fa-film"></i>
+                        <span>동영상</span>
+                    </button>
+
+                    <button type="button" class="tool-btn">
+                        <i class="fa-solid fa-paperclip"></i>
+                        <span>첨부 파일</span>
+                    </button>
+
+                </div>
+
+                <!-- 실제 글과 이미지를 함께 작성하는 영역 -->
+                <div class="editor-content">
+                    <div
+                        id="editor"
+                        contenteditable="true"
+                        role="textbox"
+                        aria-label="게시글 내용"
+                        aria-multiline="true"
+                    ></div>
+                </div>
+
+                <!-- Python으로 전달할 본문 HTML -->
+                <input
+                    type="hidden"
+                    name="job_tip_detail"
+                    id="job_tip_detail"
+                >
+
+            </div>
+        </form>
+    </main>
+
+    <footer class="wireframe-footer">
+        푸터
+    </footer>
+
+    <script>
+        const editor = document.getElementById("editor");
+        const fileInput = document.getElementById("job_tip_attachment");
+        const writeForm = document.getElementById("writeForm");
+        const detailInput = document.getElementById("job_tip_detail");
+
+        // 이미지 버튼 클릭 후 선택한 사진을 본문에 표시
+        fileInput.addEventListener("change", function () {
+
+            const files = Array.from(this.files);
+
+            for (const file of files) {
+
+                if (!file.type.startsWith("image/")) {
+                    continue;
+                }
+
+                const image = document.createElement("img");
+
+                // 서버 업로드 전 임시 미리보기 주소
+                const imageURL = URL.createObjectURL(file);
+
+                image.src = imageURL;
+                image.alt = file.name;
+
+                image.addEventListener("load", function () {
+                    URL.revokeObjectURL(imageURL);
+                }, { once: true });
+
+                editor.appendChild(image);
+            }
+        });
+
+        // 등록 버튼을 눌렀을 때 본문 내용 전달
+        writeForm.addEventListener("submit", function (event) {
+
+            // 취소 버튼이면 본문 검사 생략
+            if (event.submitter?.classList.contains("btn-cancel")) {
+                return;
+            }
+
+            if (editor.textContent.trim() === "" &&
+                editor.querySelectorAll("img").length === 0) {
+                event.preventDefault();
+                alert("내용을 입력해주세요.");
+                return;
+            }
+
+            detailInput.value = editor.innerHTML;
+        });
+    </script>
+
+</body>
+</html>
