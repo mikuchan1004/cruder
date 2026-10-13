@@ -29,7 +29,7 @@ def get_session():
     with Session(engine) as session:
         yield session
 
-@router.get('/admin')
+@router.get('/jobgogo/admin')
 def admin_dashboard(request:Request, session: Session = Depends(get_session)):
     print('/admin 실행')
 
@@ -79,7 +79,7 @@ def admin_dashboard(request:Request, session: Session = Depends(get_session)):
         'recent_posts' : results3
     })
 
-@router.get('/admin-users')
+@router.get('/jobgogo/admin-users')
 def users(request:Request, session: Session = Depends(get_session)):
     print('/admin-users 실행')
 
@@ -238,7 +238,7 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
             url='/admin-users', status_code=303
         )
 
-@router.get('/admin/user/search')
+@router.get('jobgogo/admin/user/search')
 def search_user(request: Request, keyword : str = "" , session: Session = Depends(get_session)):
     print('사용자 검색을 실행합니다.')
 
@@ -288,7 +288,7 @@ def search_user(request: Request, keyword : str = "" , session: Session = Depend
         }
     )
 
-@router.get('/admin-board')
+@router.get('/jobgogo/admin-board')
 def admin_board(request:Request, session: Session = Depends(get_session)):
     print('게시물관리 페이지로 이동합니다.')
 
@@ -345,12 +345,12 @@ def delete_post(request: Request,  post_number : int, category: str = Form(...) 
                 url='/admin-board', status_code=303
             )
 
-@router.get('/warning')
+@router.get('/jobgogo/warning')
 def warning_page(request:Request, session: Session = Depends(get_session)):
     print('경고 페이지로 이동합니다.')
     return templates.TemplateResponse(request, 'warning.html')
 
-@router.get('/logout')
+@router.get('/jobgogo/logout')
 def logout(request: Request):
     print('로그아웃합니다.')
     request.session.clear()
