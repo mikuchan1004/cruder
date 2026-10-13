@@ -122,10 +122,13 @@ def signup(
 def jobgogo(
     request: Request
 ):
+    
+    login_error=request.session.pop('login_error',None)
     return templates.TemplateResponse(
         request,
         'login.html'
     )
+    
 
 # =========================================================
 # 로그인 처리
@@ -163,11 +166,13 @@ def login(
     user=result.mappings().fetchone()
     # 아이디 검증
     if user is None:
+        
+          request.session['login_error']='아이디 또는 비밀번호가 올바르지 않습니다.'
           return RedirectResponse(
-                url='/login',
+                url='/jobgogo/login',
                 status_code=303
             )
-    #  아이디 혹은 비밀번호가 틀렸을 경우  
+    #  비밀번호가 틀렸을 경우  
     if not verify(user_pw,user['user_pw']):
         
             request.session['login_error']='아이디 또는 비밀번호가 올바르지 않습니다.'
@@ -175,12 +180,20 @@ def login(
                                     url='/jobgogo/login',
                                     status_code=303
                                 )        
+        
+      
+    # 로그인 성공!
+    
+    request.session.pop('login_error',None)
+            
     request.session["user_id"] = user['user_id']
     request.session["user_name"] = user['user_name']
     request.session["user_status_id"] = user['user_status_id']
+
+    
     
     return RedirectResponse(
-           url='/jobgogo?login=success',
+           url='/jobgogo',
            status_code=303
        )
     

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -7,34 +8,45 @@
     <link rel="stylesheet" href="/assets/login.css">
 </head>
 <body>
+
     <div class="login-container">
+
+        <!-- 로그인 제목 -->
         <h1 class="page-title">LOGIN</h1>
-        
+
+        <!-- 로그인 입력 영역 -->
         <div class="login-content">
-            <!-- 좌측 입력 폼 영역 -->
+
+            <!-- 아이디 및 비밀번호 -->
             <div class="form-section">
+
                 <form
                     id="login-form"
                     class="login-form"
                     method="post"
                     action="/jobgogo/login"
                 >
+
+                    <!-- 아이디 -->
                     <input
                         type="text"
                         name="user_id"
                         maxlength="12"
                         placeholder="아이디 입력"
                         class="form-input"
-                        value="{{ entered_user_id | default('') }}"
                         autocomplete="username"
                         required
                     >
 
-                    <!-- 로그인 실패 시에만 에러 메시지 노출 -->
-                    {% if error %}
-                    <p class="error-message">! {{ error }}</p>
-                    {% endif %}
+                    <!-- 로그인 실패 메시지 -->
+              {% if request.session.get('login_error') %}
+                    <p class="error-message">
+                { { login_error } }
+                    </p>
 
+              {% endif %}      
+
+                    <!-- 비밀번호 -->
                     <input
                         type="password"
                         name="user_pw"
@@ -43,28 +55,42 @@
                         autocomplete="current-password"
                         required
                     >
+
                 </form>
+
             </div>
 
-            <!-- 우측 로그인 버튼 영역 -->
+            <!-- 로그인 버튼 -->
             <div class="button-section">
                 <button
                     type="submit"
                     form="login-form"
                     class="btn-login"
-                >로그인</button>
+                >
+                    로그인
+                </button>
             </div>
+
         </div>
 
-        <!-- 하단 보조 링크 영역 -->
+        <!-- 하단 메뉴 -->
         <div class="login-links">
-            <span class="warning-text">경고창</span>
+
             <div class="signup-prompt">
                 <span>아직 회원이 아니신가요?</span>
-                <a href="/jobgogo/signup" class="link-purple">회원가입</a>
+
+                <a href="/jobgogo/signup" class="link-purple">
+                    회원가입
+                </a>
             </div>
-            <a href="/jobgogo" class="link-purple link-main">메인으로</a>
+
+            <a href="/jobgogo" class="link-purple link-main">
+                메인으로
+            </a>
+
         </div>
+
     </div>
+
 </body>
 </html>

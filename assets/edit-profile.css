@@ -1,258 +1,582 @@
 /* ==================================
-   기본 리셋 및 폰트 설정
+   기본 설정
 =================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
-    background-color: #F8F9FA;
-    color: #212529;
-}
-
-ul {
-    list-style: none;
+    background: #F8F9FC;
+    color: #232536;
 }
 
 a {
-    text-decoration: none;
     color: inherit;
+    text-decoration: none;
 }
 
-/* 임시 헤더 & 푸터 */
-.wireframe-header, .wireframe-footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 1.05rem;
-    background-color: #ffffff;
-    border-bottom: 1px solid #E5E7EB;
-    color: #4B5563;
-}
-
-.wireframe-footer {
-    border-top: 1px solid #E5E7EB;
-    border-bottom: none;
-    margin-top: auto; 
-}
-
-/* 메인 컨테이너 (2단 레이아웃) */
-.mypage-container {
-    display: flex;
+.mypage-main {
     width: 100%;
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-    gap: 30px;
+    min-height: calc(100vh - 88px);
+    padding: 54px 24px 80px;
 }
 
 /* ==================================
-   좌측 사이드바
+   상단 타이틀
 =================================== */
-.sidebar {
-    width: 260px;
-    background-color: #ffffff;
-    border: 1px solid #E5E7EB;
-    border-radius: 12px;
-    padding: 30px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-shrink: 0;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-}
-
-.sidebar-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 35px;
-    color: #111;
-}
-
-.sidebar-menu {
+.mypage-hero {
     width: 100%;
-    text-align: center;
+    max-width: 1180px;
+    margin: 0 auto 24px;
+    padding: 0 4px;
+}
+
+.hero-copy {
     display: flex;
     flex-direction: column;
+    gap: 7px;
+}
+
+.hero-eyebrow,
+.section-kicker {
+    color: #7656CC;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.hero-copy h1 {
+    color: #242334;
+    font-size: clamp(30px, 3vw, 40px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1.4px;
+}
+
+.hero-copy p {
+    color: #777B8B;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* ==================================
+   전체 레이아웃
+=================================== */
+.mypage-layout {
+    display: grid;
+    grid-template-columns: 245px minmax(0, 1fr);
     gap: 24px;
-}
 
-.sidebar-menu a {
-    font-size: 1.05rem;
-    color: #6B7280;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-/* 활성화된 메뉴 굵게 표시 */
-.sidebar-menu a.active {
-    font-weight: 700;
-    color: #6B46C1;
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
 }
 
 /* ==================================
-   우측 메인 콘텐츠 (회원 정보 수정 폼)
+   마이페이지 사이드바
 =================================== */
-.content-box {
-    flex: 1;
-    background-color: #ffffff;
-    border: 1px solid #E5E7EB;
-    border-radius: 12px;
-    padding: 40px;
-    display: flex;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+.mypage-sidebar {
+    align-self: start;
+    overflow: hidden;
+
+    background: #FFFFFF;
+    border: 1px solid #ECEAF4;
+    border-radius: 16px;
+    box-shadow: 0 7px 24px rgba(40, 30, 83, 0.055);
 }
 
-.form-container {
+.sidebar-heading {
     display: flex;
-    width: 100%;
-    gap: 40px;
-}
-
-/* 프로필 아바타 영역 */
-.avatar-area {
-    flex-shrink: 0;
-}
-
-.avatar {
-    width: 80px;
-    height: 80px;
-    background-color: #E5E7EB;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    font-size: 2rem;
-    color: #4B5563;
+    gap: 12px;
+    padding: 22px 20px;
+    border-bottom: 1px solid #F0EEF6;
 }
 
-/* 폼 영역 */
+.sidebar-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+
+    background: linear-gradient(145deg, #F0EBFF, #E7DEFF);
+    color: #6941C6;
+    font-size: 17px;
+}
+
+.sidebar-heading div {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sidebar-heading strong {
+    overflow: hidden;
+    color: #2B2938;
+    font-size: 15px;
+    font-weight: 750;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidebar-heading span:not(.sidebar-icon) {
+    color: #9295A3;
+    font-size: 12px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 12px;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-height: 46px;
+    padding: 11px 13px;
+
+    border-radius: 10px;
+    color: #626676;
+    font-size: 14px;
+    font-weight: 650;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.sidebar-nav a i {
+    width: 18px;
+    color: #9295A6;
+    font-size: 15px;
+    text-align: center;
+    transition: color 0.2s ease;
+}
+
+.sidebar-nav a:hover {
+    background: #F7F4FF;
+    color: #6941C6;
+    transform: translateX(2px);
+}
+
+.sidebar-nav a:hover i,
+.sidebar-nav a.active i {
+    color: #6941C6;
+}
+
+.sidebar-nav a.active {
+    background: #F3EFFF;
+    color: #6941C6;
+    font-weight: 750;
+}
+
+/* ==================================
+   우측 회원정보 수정 영역
+=================================== */
+.edit-content {
+    min-width: 0;
+}
+
+.edit-card {
+    overflow: hidden;
+    padding: 30px;
+
+    background: #FFFFFF;
+    border: 1px solid #ECEAF4;
+    border-radius: 18px;
+    box-shadow: 0 7px 24px rgba(40, 30, 83, 0.05);
+}
+
+.edit-card-header {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    padding-bottom: 24px;
+    margin-bottom: 26px;
+    border-bottom: 1px solid #F0EEF6;
+}
+
+.edit-profile-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+
+    background: linear-gradient(145deg, #7353D7, #9679E8);
+    color: #FFFFFF;
+    font-size: 23px;
+    box-shadow: 0 8px 18px rgba(105, 65, 198, 0.2);
+}
+
+.edit-card-header h2 {
+    margin-top: 4px;
+    color: #292735;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+}
+
+.edit-card-header p {
+    margin-top: 5px;
+    color: #8B8E9C;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* ==================================
+   오류 메시지
+=================================== */
+.form-error {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 22px;
+    padding: 13px 15px;
+
+    background: #FFF3F3;
+    border: 1px solid #FFDADA;
+    border-radius: 11px;
+
+    color: #C63A3A;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+/* ==================================
+   폼
+=================================== */
 .edit-form {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-width: 400px;
-}
-
-.edit-form input {
     width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #D1D5DB;
-    border-radius: 8px;
-    font-size: 1rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 21px 18px;
+}
+
+.form-field {
+    min-width: 0;
+}
+
+.form-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 8px;
+
+    color: #4A4756;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon > i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    z-index: 1;
+
+    color: #A19CAC;
+    font-size: 14px;
+
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.input-with-icon input {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 15px 12px 42px;
+
+    background: #FFFFFF;
+    border: 1px solid #DDD9E6;
+    border-radius: 11px;
+
+    color: #33313F;
+    font-size: 14px;
     outline: none;
-    transition: border-color 0.2s;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
 
-.edit-form input:focus {
-    border-color: #6B46C1;
+.input-with-icon input::placeholder {
+    color: #B0ACB8;
 }
 
-.edit-form input::placeholder {
-    color: #9CA3AF;
+.input-with-icon input:hover:not(:disabled) {
+    border-color: #CAC1DD;
+}
+
+.input-with-icon input:focus {
+    border-color: #8062CF;
+    box-shadow: 0 0 0 4px rgba(118, 86, 204, 0.1);
+}
+
+.input-with-icon:focus-within > i {
+    color: #7656CC;
 }
 
 .disabled-input {
-    background-color: #F9FAFB;
-    color: #9CA3AF;
+    background: #F7F7FA !important;
+    color: #9A97A3 !important;
+    border-color: #E5E3EA !important;
     cursor: not-allowed;
-    border-color: #E5E7EB !important;
 }
 
-/* 하단 버튼 그룹 */
+.form-field small {
+    display: block;
+    margin-top: 6px;
+
+    color: #9A9DAA;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* ==================================
+   안내 박스
+=================================== */
+.form-guide {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    margin-top: 25px;
+    padding: 14px 16px;
+
+    background: #F7F4FF;
+    border: 1px solid #E6DEFA;
+    border-radius: 11px;
+}
+
+.form-guide i {
+    margin-top: 2px;
+    color: #7656CC;
+    font-size: 14px;
+}
+
+.form-guide p {
+    color: #74698E;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* ==================================
+   버튼
+=================================== */
 .btn-group {
     display: flex;
     justify-content: flex-end;
-    gap: 12px;
-    margin-top: 30px;
+    gap: 10px;
+
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid #F0EEF6;
 }
 
 .btn {
-    background-color: #6B46C1;
-    color: #fff;
-    border: none;
-    padding: 12px 32px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 44px;
+    padding: 10px 20px;
+
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 750;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
 }
 
-.btn:hover {
-    background-color: #5533A3;
+.btn-cancel {
+    background: #FFFFFF;
+    border: 1px solid #DDD9E5;
+    color: #62606B;
+}
+
+.btn-cancel:hover {
+    background: #F8F8FA;
+    border-color: #CBC7D2;
+    transform: translateY(-1px);
+}
+
+.btn-confirm {
+    background: linear-gradient(135deg, #7851D8, #6240BE);
+    border: 1px solid transparent;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(107, 70, 193, 0.2);
+}
+
+.btn-confirm:hover {
+    background: linear-gradient(135deg, #6840CB, #5231A5);
+    box-shadow: 0 6px 18px rgba(107, 70, 193, 0.3);
     transform: translateY(-1px);
 }
 
 /* ==================================
-   모바일 반응형 웹 설정 (미디어 쿼리)
+   접근성
 =================================== */
-@media (max-width: 768px) {
-    .mypage-container {
+.sidebar-nav a:focus-visible,
+.btn:focus-visible,
+.input-with-icon input:focus-visible {
+    outline: 3px solid #B8A3F5;
+    outline-offset: 3px;
+}
+
+/* ==================================
+   태블릿
+=================================== */
+@media (max-width: 900px) {
+    .mypage-main {
+        padding: 38px 18px 60px;
+    }
+
+    .mypage-layout {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .sidebar-heading {
+        padding: 18px;
+    }
+
+    .sidebar-nav {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 7px;
+    }
+
+    .sidebar-nav a {
         flex-direction: column;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .sidebar {
-        width: 100%;
-        padding: 20px;
-        flex-direction: row;
-        flex-wrap: wrap;
         justify-content: center;
-        gap: 15px;
-    }
+        gap: 7px;
 
-    .sidebar-title {
-        width: 100%;
-        margin-bottom: 5px;
+        min-height: 74px;
+        padding: 10px 5px;
+
         text-align: center;
+        font-size: 11px;
     }
 
-    .sidebar-menu {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
+    .sidebar-nav a:hover {
+        transform: none;
+    }
+}
+
+/* ==================================
+   모바일
+=================================== */
+@media (max-width: 680px) {
+    .mypage-main {
+        padding: 30px 14px 48px;
     }
 
-    .content-box {
-        width: 100%;
-        padding: 25px 20px;
+    .mypage-hero {
+        margin-bottom: 18px;
     }
 
-    .form-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
+    .hero-copy h1 {
+        font-size: 29px;
     }
 
-    .input-group {
-        width: 100%;
-        max-width: 100%;
+    .hero-copy p {
+        font-size: 13px;
+    }
+
+    .sidebar-heading {
+        padding: 16px;
+    }
+
+    .sidebar-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 10px;
+    }
+
+    .sidebar-nav a:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .edit-card {
+        padding: 22px 16px;
+        border-radius: 15px;
+    }
+
+    .edit-card-header {
+        align-items: flex-start;
+        gap: 14px;
+        padding-bottom: 20px;
+        margin-bottom: 22px;
+    }
+
+    .edit-profile-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 15px;
+        font-size: 20px;
+    }
+
+    .edit-card-header h2 {
+        font-size: 20px;
+    }
+
+    .edit-card-header p {
+        font-size: 12px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .form-field.full-width {
+        grid-column: auto;
     }
 
     .btn-group {
-        width: 100%;
-        justify-content: space-between;
-        gap: 10px;
+        flex-direction: column-reverse;
     }
 
     .btn {
-        flex: 1;
-        padding: 14px;
+        width: 100%;
+        min-height: 46px;
     }
 }

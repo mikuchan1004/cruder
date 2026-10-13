@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>채용 공고 와이어프레임</title>
+    <title>채용 공고 </title>
     <link rel="stylesheet" href="../assets/recult.css">
     <link rel="stylesheet" href="../assets/header.css">
     <!-- 푸터 css적용 -->
@@ -26,34 +26,49 @@
         </div>
 
         <!-- 게시판 (테이블) 영역 -->
+
+        
         <div class="table-area">
-            <!-- 데스크톱용 테이블 헤더 -->
-            <div class="table-header">
-                <span>회사명</span>
-                <span>공고명</span>
-                <span>경력</span>
-                <span>지역</span>
-                <span>상세</span>
-            </div>
-            
-            <!-- 리스트 아이템 1 -->
-            <div class="table-row">
-                <span class="col" data-label="회사명">네이버</span>
-                <span class="col" data-label="공고명">백엔드 개발자 모집</span>
-                <span class="col" data-label="경력">3년이상</span>
-                <span class="col" data-label="지역">천안시 동남구</span>
-                <span class="col" data-label="상세"><a href="#" class="detail-link">상세보기</a></span>
-            </div>
-            
-            <!-- 리스트 아이템 2 -->
-            <div class="table-row">
-                <span class="col" data-label="회사명">구글</span>
-                <span class="col" data-label="공고명">백엔드 개발자 모집</span>
-                <span class="col" data-label="경력">5년이상</span>
-                <span class="col" data-label="지역">천안시 서북구</span>
-                <span class="col" data-label="상세"><a href="#" class="detail-link">상세보기</a></span>
-            </div>
-        </div>
+     
+
+<div class="table-header">
+    <span>기관명</span>
+    <span>공고명</span>
+    <span>채용 인원</span>
+    <span>채용 구분</span>
+    <span>상세</span>
+</div>
+
+{% for job in jobs %}
+    {% if job.ongoing_yn == 'Y' %}
+    <div class="table-row">
+        <span class="col" data-label="기관명">
+            {{ job.inst_nm }}
+        </span>
+
+        <span class="col" data-label="공고명">
+            {{ job.recrut_pbanc_ttl }}
+        </span>
+
+        <span class="col" data-label="채용 인원">
+            {{ job.recrut_nope }}명
+        </span>
+
+        <span class="col" data-label="채용 구분">
+            {{ job.recrut_se_nm }}
+        </span>
+
+        <span class="col" data-label="상세">
+            <a href="https://job.alio.go.kr/mobile2021/recruit/recruitView.do?idx={{ job.recrut_pblnt_sn }}"
+               class="detail-link"
+               target="_blank">
+                상세보기
+            </a>
+        </span>
+    </div>
+    {% endif %}
+{% endfor %}
+
 
         <!-- 페이지네이션 영역 -->
         <div class="pagination">

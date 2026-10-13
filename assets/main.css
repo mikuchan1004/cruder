@@ -152,6 +152,12 @@ body {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
 }
 
+.card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
 .card-header {
     display: flex;
     justify-content: space-between;
@@ -191,6 +197,8 @@ body {
 .job-title {
     font-size: 1.1rem;
     font-weight: 600;
+    line-height: 1.5;
+    min-height: 4.95rem;
     margin-bottom: 16px;
     color: #111;
     word-break: keep-all;
@@ -215,8 +223,8 @@ body {
 .date {
     font-size: 0.85rem;
     color: #9CA3AF;
+    margin-top: auto;
     margin-bottom: 20px;
-    flex-grow: 1;
     line-height: 1.4;
 }
 
@@ -231,6 +239,13 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+}
+
+.btn-detail a {
+    display: block;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
 }
 
 .btn-detail:hover {
@@ -288,6 +303,7 @@ body {
     transition: all 0.2s ease;
     box-shadow: 0 4px 6px rgba(107, 70, 193, 0.2);
     white-space: nowrap;
+    text-decoration: none;
 }
 
 .btn-ai-search:hover {

@@ -64,7 +64,10 @@ def mypage(
         request=request,
         name='my-page.html',
         context={
-            'user': user
+            'user': user,
+            'user_id': request.session.get('user_id'),
+            'user_name': request.session.get('user_name'),
+            'user_status_id': request.session.get('user_status_id')
         }
     )
 

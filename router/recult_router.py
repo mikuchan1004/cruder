@@ -43,7 +43,23 @@ def recult(
     request: Request,
     session: Session = Depends(get_session)
 ):
-    print('채용 공고 페이지 접속 성공!')   
+    print('채용 공고 페이지 접속 성공!') 
+    
+    
+    try:
+        sql_jobs_notice = text('''
+            SELECT *
+            FROM jobs
+            WHERE ongoing_yn = 'Y'
+            ORDER BY pbanc_bgng_ymd DESC
+            LIMIT 8;
+        ''')
+
+        # 채용공고 가져오기
+        result=session.exec(sql_jobs_notice)
+        jobs=result.mappings().fetchall()
+    except Exception as e:
+        print('에러에러')      
 
     return templates.TemplateResponse(
         request=request,
@@ -51,6 +67,7 @@ def recult(
         context={
 
             # 로그인 세션
+            "jobs":jobs,
             "user_id": request.session.get("user_id"),
             "user_name": request.session.get("user_name"),
             "user_status_id": request.session.get("user_status_id")
