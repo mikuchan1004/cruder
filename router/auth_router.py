@@ -27,7 +27,7 @@ templates = Jinja2Templates(directory='templates/')
 # =========================================================
 
 @router.get('/jobgogo/signup')
-def signup(request: Request):
+def _signup(request: Request):
     
     return templates.TemplateResponse(
         request,
@@ -35,7 +35,7 @@ def signup(request: Request):
     )
     
 # =========================================================
-# 회원가입 처리
+# 회원가입 처리(여기서 null값 못들어가게 막겠습니다.)
 # =========================================================
 ctx_pw = CryptContext(
     schemes=['argon2'],
