@@ -161,21 +161,20 @@ def login(
            )
     
     user=result.mappings().fetchone()
-    
+    # 아이디 검증
     if user is None:
           return RedirectResponse(
                 url='/login',
                 status_code=303
             )
+    #  아이디 혹은 비밀번호가 틀렸을 경우  
     if not verify(user_pw,user['user_pw']):
-            request.session['login_error']='아이디 또는 비밀번호가 올바르지 않습니다.'
         
-    
+            request.session['login_error']='아이디 또는 비밀번호가 올바르지 않습니다.'
             return RedirectResponse(
-                        url='/jobgogo/login',
-                        status_code=303
-                    )
-            
+                                    url='/jobgogo/login',
+                                    status_code=303
+                                )        
     request.session["user_id"] = user['user_id']
     request.session["user_name"] = user['user_name']
     request.session["user_status_id"] = user['user_status_id']
@@ -240,4 +239,3 @@ def logout(request: Request):
     
 
     
-# 내일 작업 따로 하는걸로!

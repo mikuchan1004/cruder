@@ -1,58 +1,230 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 맞춤 추천 - 취업 할래말래</title>
-    <link rel="stylesheet" href="../assets/ai-chat.css">
-    <!-- FontAwesome (로봇 아이콘 렌더링용) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <!-- 상단 임시 헤더 -->
-    <header class="wireframe-header">
-        헤더
-    </header>
 
-    <!-- 메인 챗봇 콘텐츠 영역 -->
-    <main class="chat-main">
-        <div class="chat-container">
-            
-            <!-- AI 메세지 영역 -->
-            <section class="ai-message-section">
-                <div class="bot-icon">
+    <title>chatjoppt - AI 맞춤 채용 추천</title>
+
+    <link rel="stylesheet" href="../assets/ai-chat.css">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- ==============================
+         상단 헤더
+    ============================== -->
+    <header class="chat-header">
+
+        <div class="header-inner">
+
+            <div class="brand">
+                <div class="brand-icon">
                     <i class="fa-solid fa-robot"></i>
                 </div>
-                <div class="message-box outline-yellow">
-                    <p>
-                        안녕하세요. 취업 도우미입니다.<br>
-                        원하는 직무나 기술 스택을 알려주시면<br>
-                        맞춤형 채용 공고를 알려드릴께요.<br>
-                        아래의 형식으로 입력하시면 보다 나은<br>
-                        결과를 얻을 수 있습니다.
-                    </p>
-                    <div class="example-format">
-                        <p>직무: 개발자</p>
-                        <p>경력: 신입</p>
-                        <p>기술스택:파이선,자바</p>
-                        <p>희망 지역:지역무관</p>
-                    </div>
+
+                <div class="brand-text">
+                    <h1>chatjoppt</h1>
+                    <span>AI 맞춤 채용 추천 서비스</span>
                 </div>
+            </div>
+
+            <div class="header-status">
+                <span class="status-dot"></span>
+                AI 취업 도우미
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==============================
+         메인 채팅 화면
+    ============================== -->
+    <main class="chat-main">
+
+        <div class="chat-container">
+
+            <!-- 채팅 상단 -->
+            <div class="chat-top">
+
+                <div class="chat-top-title">
+                    <h2>AI 취업 상담</h2>
+                    <p>나에게 맞는 채용 공고를 찾아보세요.</p>
+                </div>
+
+                <button type="button" class="reset-btn">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    새 대화
+                </button>
+
+            </div>
+
+
+            <!-- ==============================
+                 채팅 메시지 영역
+            ============================== -->
+            <section class="chat-messages">
+
+                <!-- AI 메시지 -->
+                <div class="message ai-message">
+
+                    <div class="avatar ai-avatar">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+
+                    <div class="message-content">
+
+                        <span class="sender-name">
+                            chatjoppt
+                        </span>
+
+                        <div class="message-bubble ai-bubble">
+
+                            <h3>안녕하세요! 👋</h3>
+
+                            <p>
+                                취업 도우미
+                                <strong>chatjoppt</strong>입니다.
+                            </p>
+
+                            <p>
+                                원하는 직무, 경력, 기술 스택,
+                                희망 지역을 알려주시면
+                                맞춤형 채용 공고를 추천해 드릴게요.
+                            </p>
+
+                            <!-- 입력 예시 -->
+                            <div class="example-box">
+
+                                <div class="example-title">
+                                    <i class="fa-solid fa-lightbulb"></i>
+                                    입력 예시
+                                </div>
+
+                                <p>
+                                    신입 백엔드 개발자이고
+                                    Python, Java를 사용할 수 있습니다.
+                                    지역은 상관없어요.
+                                </p>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!--
+                    사용자 메시지 디자인 예시
+
+                    실제 채팅 기능 연동 시
+                    아래 구조를 반복하여 출력하면 됩니다.
+
+                <div class="message user-message">
+
+                    <div class="message-content">
+
+                        <span class="sender-name">나</span>
+
+                        <div class="message-bubble user-bubble">
+                            신입 백엔드 개발자 공고를 추천해 주세요.
+                        </div>
+
+                    </div>
+
+                </div>
+                -->
+
             </section>
 
-            <!-- 사용자 입력 영역 -->
-            <section class="user-input-section">
-                <h2 class="input-title">입력칸</h2>
-                <!-- textarea placeholder 내 줄바꿈을 위해 &#13;&#10; 사용 -->
-                <textarea class="input-box outline-yellow" placeholder="원하는 직무, 경력, 기술 스택, 희망 지역 등을 자유롭게 입력해주세요.&#13;&#10;예) 신입 백엔드 개발자이고 Python, Java를 사용할 수 있습니다. 지역은 상관없어요"></textarea>
+
+            <!-- ==============================
+                 추천 질문
+            ============================== -->
+            <div class="suggestion-area">
+
+                <p class="suggestion-title">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    이런 질문은 어떠세요?
+                </p>
+
+                <div class="suggestion-list">
+
+                    <button type="button" class="suggestion-btn">
+                        <i class="fa-solid fa-code"></i>
+                        신입 개발자 추천
+                    </button>
+
+                    <button type="button" class="suggestion-btn">
+                        <i class="fa-brands fa-python"></i>
+                        Python 채용공고
+                    </button>
+
+                    <button type="button" class="suggestion-btn">
+                        <i class="fa-solid fa-location-dot"></i>
+                        지역 무관 채용
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==============================
+                 사용자 입력 영역
+            ============================== -->
+            <section class="chat-input-section">
+
+                <form class="chat-form" method="post" action="#">
+
+                    <textarea
+                        name="question"
+                        class="chat-input"
+                        rows="2"
+                        placeholder="직무, 경력, 기술 스택, 희망 지역 등을 자유롭게 입력해 주세요..."
+                        required
+                    ></textarea>
+
+                    <div class="input-bottom">
+
+                        <span class="input-guide">
+                            나에게 맞는 채용 공고를 찾아보세요.
+                        </span>
+
+                        <button type="submit" class="send-btn"
+                                aria-label="메시지 전송">
+                            <i class="fa-solid fa-arrow-up"></i>
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <p class="input-notice">
+                    chatjoppt의 추천 결과는 실제 채용 공고와 차이가 있을 수 있습니다.
+                </p>
+
             </section>
 
         </div>
+
     </main>
 
-    <!-- 하단 임시 푸터 -->
-    <footer class="wireframe-footer">
-        &lt;푸터 삽입&gt;
+
+    <!-- ==============================
+         하단 푸터
+    ============================== -->
+    <footer class="chat-footer">
+        © 2026 취업 할래말래 · chatjoppt
     </footer>
+
 </body>
 </html>
