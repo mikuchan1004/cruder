@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자페이지 - 회원 및 신고 관리</title>
-    <link rel="stylesheet" href="../assets/admin-users.css">
+    <!--
+        <link rel="stylesheet" href="{{ url_for('assets', path='admin-users.css') }}">
+        이렇게 작성하면 URL 구조가 몇 단계 깊어지더라도 항상 올바른 정적 파일 주소를 생성해 줍니다. 
+        <by Google Gemini>
+    -->
+    <link rel="stylesheet" href="{{ url_for('assets', path='admin-users.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -37,7 +42,9 @@
                 <h2 class="section-title">회원관리</h2>
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="아이디 또는 이름 검색">
+                    <form method="get" action="/admin/user/search">
+                        <input type="text" name="keyword" placeholder="아이디 또는 이름 검색">
+                    </form>
                 </div>
             </div>
 
@@ -117,7 +124,7 @@
                 </div>
 
                 <!-- 리스트 아이템 1 -->
-                 {% for report in reports %}
+                {% for report in reports %}
                 <div class="table-row">
                     <div class="col" data-label="신고 번호">{{report.report_id}}</div>
                     <div class="col" data-label="글 작성자 ID">{{report.author_id}}</div>

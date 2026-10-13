@@ -233,6 +233,56 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
             url='/admin-users', status_code=303
         )
 
+@router.get('/admin/user/search')
+def search_user(request: Request, keyword : str = "" , session: Session = Depends(get_session)):
+    print('사용자 검색을 실행합니다.')
+
+    # 이름이나 아이디에 검색어가 포함된 회원을 찾는 SQL문
+    sql_search = text('''
+        select * from user
+        where (
+            :keyword = ''
+            or user_name like :search_keyword
+            or user_id like :search_keyword
+        )
+        order by user_id
+    ''')
+    result = session.execute(sql_search, {
+        'keyword' : keyword,
+        'search_keyword' : f'%{keyword}%'
+})
+    search_list = result.mappings().fetchall()
+
+    sql_report = text('''
+        select 
+            rl.report_id , jt.user_id as author_id , us.user_name,  rl.user_id as reporter_id, jt.job_tip_title, rl.report_reason
+        from 
+            report_logs as rl
+        left join 
+            job_tip as jt on rl.job_tip_no = jt.job_tip_no
+        left join 
+            user as us on jt.user_id = us.user_id
+    ''')
+    post_report_list = (
+        session.execute(sql_report).mappings().fetchall()
+    )
+
+    sql_count = text('''
+        select count(*)
+        from report_logs
+    ''')
+    report_count = (
+        session.execute(sql_count).mappings().fetchall()
+    )
+
+    return templates.TemplateResponse (
+        request, 'admin-users.html', {
+            'users' : search_list,
+            'reports' : post_report_list,
+            'report_count' : report_count[0]['count(*)']
+        }
+    )
+
 @router.get('/warning')
 def warning_page(request:Request, session: Session = Depends(get_session)):
     print('경고 페이지로 이동합니다.')
