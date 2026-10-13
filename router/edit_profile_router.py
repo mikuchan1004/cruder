@@ -139,6 +139,6 @@ def update_profile(
     request.session['user_name'] = user.user_name
 
     return RedirectResponse(
-        url='/jobgogo/mypage',
+        url='/jobgogo/mypage?edit=success',
         status_code=303
     )
