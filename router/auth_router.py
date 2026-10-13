@@ -75,7 +75,7 @@ def signup(
                   :user_home,
                   :user_email,
                   :user_phone,
-                  1
+                  3
                             
               )    
                  
