@@ -328,7 +328,7 @@ def delete_post(request: Request,  post_number : int, category: str = Form(...) 
             else:
                 sql = text('''
                     delete from job_tip
-                    where job_tip_number = :post_number
+                    where job_tip_no = :post_number
                 ''')
             session.execute(sql, {'post_number' : post_number})
             session.commit()
@@ -336,6 +336,9 @@ def delete_post(request: Request,  post_number : int, category: str = Form(...) 
         session.rollback()
         print(f"게시글 삭제에 실패했습니다. : {e}")
 
+    return RedirectResponse (
+                url='/admin-board', status_code=303
+            )
 
 @router.get('/warning')
 def warning_page(request:Request, session: Session = Depends(get_session)):
