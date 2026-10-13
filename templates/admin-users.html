@@ -102,7 +102,7 @@
         <!-- 글 신고 내역 섹션 -->
         <section class="admin-section">
             <div class="section-header">
-                <h2 class="section-title">글 신고 내역 <span class="badge badge-count">총 3건</span></h2>
+                <h2 class="section-title">글 신고 내역 <span class="badge badge-count">총 {{report_count}}건</span></h2>
             </div>
             <div class="board-table report-table">
                 <!-- 테이블 헤더 -->
@@ -110,25 +110,28 @@
                     <div class="col" data-label="신고 번호">신고 번호</div>
                     <div class="col" data-label="글 작성자 ID">글 작성자 ID</div>
                     <div class="col" data-label="글 작성자">글 작성자</div>
-                    <div class="col" data-label="글 신고자">글 신고자</div>
+                    <div class="col" data-label="글 신고자 ID">글 신고자</div>
                     <div class="col" data-label="글 제목">글 제목</div>
                     <div class="col" data-label="신고 사유">신고 사유</div>
                     <div class="col" data-label="관리">관리</div>
                 </div>
 
                 <!-- 리스트 아이템 1 -->
+                 {% for report in reports %}
                 <div class="table-row">
-                    <div class="col" data-label="신고 번호">1</div>
-                    <div class="col" data-label="글 작성자 ID">user1</div>
-                    <div class="col" data-label="글 작성자">사용자 1</div>
-                    <div class="col" data-label="글 신고자">사용자 2</div>
-                    <div class="col truncate" data-label="글 제목">구직자 여러분! 취업때문에 고민이시죠?</div>
-                    <div class="col truncate" data-label="신고 사유">광고가 의심됩니다.</div>
+                    <div class="col" data-label="신고 번호">{{report.report_id}}</div>
+                    <div class="col" data-label="글 작성자 ID">{{report.author_id}}</div>
+                    <div class="col" data-label="글 작성자">{{report.user_name}}</div>
+                    <div class="col" data-label="글 신고자 ID">{{report.reporter_id}}</div>
+                    <div class="col truncate" data-label="글 제목">{{report.job_tip_title}}</div>
+                    <div class="col truncate" data-label="신고 사유">{{report.report_reason}}</div>
                     <div class="col action-buttons" data-label="관리">
-                        <button class="btn btn-red">삭제</button>
+                        <form method="post" action="/admin/user/report/delete/{{report.report_id}}">
+                            <button class="btn btn-red" type="button">삭제</button>
+                        </form>
                     </div>
                 </div>
-
+                {% endfor %}
             </div>
         </section>
 

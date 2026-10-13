@@ -88,9 +88,40 @@ def users(request:Request, session: Session = Depends(get_session)):
         select * from user
     ''')
     results1 = session.execute(sql1).mappings().fetchall()
+
+    # 신고가 접수된 취업꿀팁 게시판의 글 제목과 신고 사유를 긁어오는 SQL문 
+    sql2 = text('''
+        select 
+            rl.report_id , jt.user_id as author_id , us.user_name,  rl.user_id as reporter_id, jt.job_tip_title, rl.report_reason
+        from 
+            report_logs as rl
+        left join 
+            job_tip as jt on rl.job_tip_no = jt.job_tip_no
+        left join 
+            user as us on jt.user_id = us.user_id
+    ''')
+    results2 = session.execute(sql2).mappings().fetchall()
+
+    # 신고 건수를 세는 SQL문 
+    sql3 = text ('''
+        select count(*)
+        from report_logs
+    ''')
+    results3 = session.execute(sql3).mappings().fetchall()
+
     return templates.TemplateResponse(request, 'admin-users.html', {
-        'users' : results1
+        'users' : results1,
+        'reports' : results2,
+        'report_count' : results3[0]['count(*)']
     })
+
+@router.post('/admin/user/report/delete/{report_id}')
+def report_delete(request: Request, report_id : int, session : Session = Depends(get_session)):
+    sql = text ('''
+        delete from report_logs
+        where report_id = :report_id
+    ''')
+    session.execute(sql, {'report_id' : report_id})
 
 @router.post('/admin/user/warning/{user_id}')
 def user_warning(request:Request, user_id: str, session: Session = Depends(get_session)):
@@ -205,4 +236,4 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
 @router.get('/warning')
 def warning_page(request:Request, session: Session = Depends(get_session)):
     print('경고 페이지로 이동합니다.')
-    return templates.TemplateResponse(request, 'admin-dashboard.html')
+    return templates.TemplateResponse(request, 'warning.html')
