@@ -22,12 +22,12 @@
           
             <form class="search-bar" method="get" action="/jobgogo">
               <input type="text" name="keyword" placeholder="공고명, 기관명, 지역을 검색해보세요"
-               value="{{ keyword | default('', true) }}">
-                <select>
+               >
+                <select name="selectNum">
                     <option value="8">8</option>
                     <option value="16">16</option>
                 </select>
-                <button type="button" class="btn-search">검색</button>
+                <button type="submit" class="btn-search">검색</button>
            </form>
         </header>
 

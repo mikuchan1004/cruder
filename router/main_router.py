@@ -41,10 +41,15 @@ router.mount(
 @router.get('/jobgogo')
 def jobgogo(
     request: Request,
-    # keyword : str = "" ,
+    selectNum: str = '0',
+    keyword : str = "" ,
     session: Session = Depends(get_session)
 ):
     print('메인 페이지 접속 성공!')
+    print('키워드 나오냐?',keyword)
+    print('셀렉트 나오냐?',selectNum)
+    
+    search_keyword = f'%{keyword}%'
 
     # 채용공고를 가져오기 위한 SQL문
     try:
@@ -52,27 +57,34 @@ def jobgogo(
             SELECT *
             FROM jobs
             WHERE ongoing_yn = 'Y'
+            and(
+                recrut_pbanc_ttl like :keyword 
+                or inst_nm like :keyword 
+                or work_rgn_nm_lst like :keyword 
+            )
             ORDER BY pbanc_bgng_ymd DESC
-            LIMIT 8;
+            LIMIT :selectNum
         ''')
 
         # 채용공고 가져오기
-        result=session.exec(sql_jobs_notice)
+        result=session.exec(sql_jobs_notice,params={'keyword':search_keyword, 'selectNum':int(selectNum)})
         jobs=result.mappings().fetchall()
+        
+        return templates.TemplateResponse(
+            request=request,
+            name='main.html',
+            context={
+                "jobs": jobs,
+                "keyword" : keyword,
+
+                # 로그인 세션
+                "user_id": request.session.get("user_id"),
+                "user_name": request.session.get("user_name"),
+                "user_status_id": request.session.get("user_status_id")
+            }
+        )
     except Exception as e:
-        print('에러에러')    
+        print('에러에러', e)    
     
 
-    return templates.TemplateResponse(
-        request=request,
-        name='main.html',
-        context={
-            "jobs": jobs,
-
-            # 로그인 세션
-            "user_id": request.session.get("user_id"),
-            "user_name": request.session.get("user_name"),
-            "user_status_id": request.session.get("user_status_id")
-        }
-    )
     
