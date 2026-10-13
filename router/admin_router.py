@@ -283,6 +283,41 @@ def search_user(request: Request, keyword : str = "" , session: Session = Depend
         }
     )
 
+@router.get('/admin-board')
+def admin_board(request:Request, session: Session = Depends(get_session)):
+    print('게시물관리 페이지로 이동합니다.')
+
+    sql_post = text('''
+        select 
+            '공지' as category,
+            notice_title as title,
+            notice_id as post_no,
+            notice_detail as post_detail,
+            user_id,
+            notice_date as created_at 
+            from notice
+            union all 
+        select 
+            '취업 꿀팁' as category,
+            job_tip_title as title,
+            job_tip_no as post_no,
+            job_tip_detail as post_detail,
+            user_id, 
+            job_tip_date as created_at
+            from job_tip
+    ''')
+    result = session.execute(sql_post).mappings().fetchall()
+
+    return templates.TemplateResponse (
+        request, 'admin-board.html', {
+            'posts' : result
+        }
+    )
+
+@router.post('/admin/board/modify/{post_number}')
+def update_post(request: Request, post_number : int, session: Session = Depends(get_session)):
+    print('글 수정을 실행합니다.')
+
 @router.get('/warning')
 def warning_page(request:Request, session: Session = Depends(get_session)):
     print('경고 페이지로 이동합니다.')
