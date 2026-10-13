@@ -52,7 +52,6 @@ def mypage(
 
     # 회원 정보가 존재하지 않는 경우
     if user is None:
-        request.session.clear()
 
         return RedirectResponse(
             url='/jobgogo/login',
