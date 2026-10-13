@@ -5,6 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자페이지 - 게시물 관리</title>
     <link rel="stylesheet" href="../assets/admin-board.css">
+    <script>
+        window.onload = () => {
+            // 상세 내용 버튼 클릭시 상세 내용 팝업창 열기
+            document.querySelector('.info-btn').addEventListener('click', () => {
+                document.querySelector('.info_popup').classList.remove('hide')
+            })
+            // 화면의 모든 상세 내용 버튼들에 클릭 기능 달아주기 
+            document.querySelectorAll('.info-btn').forEach(btn => {
+                btn.addEventListener('click' , (e) => {
+                    const target = e.currentTraget 
+                    const popup = document.querySelector('.info_popup')
+
+                    // 상세내용 버튼에 태그(data-*) 형태로 숨겨둔 정보들을 
+                    // 팝업창 안에 있는 입력 칸(input)들에 하나씩 자동으로 채워넣음
+                    popup.querySelector('[name = "category"]').value = e.currentTarget.dataset.category; // 카테고리
+                    popup.querySelector('[name = "post_number"]').value = e.currentTarget.dataset.id; // 글 번호 
+                    popup.querySelector('[name = "post_title"]').value = e.currentTarget.dataset.title; // 제목 
+                    popup.querySelector('[name = "post_detail"]').value = e.currentTarget.dataset.detail; // 내용
+
+                    // 팝업창 안의 '수정' 버튼 링크 주소를 클릭한 글의 번호에 맞춰서 동적으로 바꿔줌
+                    popup.querySelector('#modify-button').formAction=`/admin/board/modify/${e.currentTarget.dataset.id}`
+
+                    // 팝업창 안의 '삭제' 버튼 링크 주소를 클릭한 글의 번호에 맞춰서 동적으로 바꿔줌
+                    popup.querySelector('#delete-button').formAction = `/admin/board/delete/${e.currentTarget.dataset.id}`
+
+                    // 상세 정보  채우기가 끝났으니, 숨겨져있던 상새내용 팝업을 화면에 띄워줌
+                    popup.classList.remove('hide')
+                })
+            })
+
+            // 팝업창 안의 닫기 버튼 클릭 시 팝업창 숨기기 
+            document.querySelectorAll('#close').forEach(closeBtn => {
+                closeBtn.addEventListener('click' , (e) => {
+                    e.target.closest('.info_popup').classList.add('hide');
+                })
+            })
+        }
+    </script>
 </head>
 <body>
     <!-- 상단 헤더 영역 -->
@@ -13,9 +51,9 @@
             <h1 class="logo">관리자페이지</h1>
             <nav class="gnb">
                 <ul>
-                    <li><a href="#">대시보드</a></li>
-                    <li><a href="#">회원관리</a></li>
-                    <li><a href="#" class="active">게시물관리</a></li>
+                    <li><a href="/admin">대시보드</a></li>
+                    <li><a href="/admin-users">회원관리</a></li>
+                    <li><a href="/admin-board" class="active">게시물관리</a></li>
                     <li><a href="#">채용 공고 관리</a></li>
                     <li><a href="#">문의관리</a></li>
                 </ul>
@@ -43,25 +81,39 @@
             </div>
             
             <!-- 리스트 아이템 1 -->
+             {% for post in posts%}
             <div class="table-row">
-                <div class="col" data-label="카테고리">공지</div>
-                <div class="col" data-label="글 번호">1</div>
-                <div class="col truncate" data-label="제목">공지사항입니다.</div>
-                <div class="col" data-label="작성자">admin</div>
+                <div class="col" data-label="카테고리">{{post.category}}</div>
+                <div class="col" data-label="글 번호">{{post.post_no}}</div>
+                <div class="col truncate" data-label="제목">{{post.title}}</div>
+                <div class="col" data-label="작성자">{{post.user_id}}</div>
                 <div class="col action-buttons" data-label="관리">
-                    <button class="btn btn-outline-purple">상세내용</button>
+                    <button class="btn btn-outline-purple info-btn"
+                    data-category="{{post.category}}" data-id="{{post.post_no}}" data-title="{{post.title}}"
+                    data-detail="{{post.post_detail}}">상세내용</button>
                 </div>
             </div>
-
-            <!-- 리스트 아이템 2 -->
-            <div class="table-row">
-                <div class="col" data-label="카테고리">취업 꿀팁</div>
-                <div class="col" data-label="글 번호">1</div>
-                <div class="col truncate" data-label="제목">취업 꿀팁 그 첫번째!</div>
-                <div class="col" data-label="작성자">admin</div>
-                <div class="col action-buttons" data-label="관리">
-                    <button class="btn btn-outline-purple">상세내용</button>
+            {% endfor %}
+        </div>
+        <!-- 상세내용 팝업-->
+        <div class="popup-overlay info_popup hide">
+            <div class="popup-card">
+                <div class="popup-header">
+                    <h2 class="popup-title">상세내용</h2>
                 </div>
+                <form method="post" action="/admin/board/modify" entype="multipart/form-data">
+                    <div class="popup-body">
+                        카테고리 : <input class="form-control" type="text" name="category" readonly><br>
+                        글 번호 : <input class="form-control" type="number" name="post_number" readonly><br>
+                        제목 : <input class="form-control" type="text" name="post_title"><br>
+                        내용 : <textarea class="form-control" type="text" name="post_detail"></textarea><br> 
+                    </div>
+                    <div class="popup-footer">
+                        <button class="btn btn-outline-purple" id="modify-button" type="submit" formmethod="post">수정</button>
+                        <button class="btn btn-red" id="delete-button" type="submit" formmethod="post">삭제</button>
+                        <button class="btn btn-outline-purple" id="close" type="button">닫기</button>
+                    </div>
+                </form>
             </div>
         </div>
     </main>
