@@ -349,3 +349,13 @@ def delete_post(request: Request,  post_number : int, category: str = Form(...) 
 def warning_page(request:Request, session: Session = Depends(get_session)):
     print('경고 페이지로 이동합니다.')
     return templates.TemplateResponse(request, 'warning.html')
+
+@router.get('/logout')
+def logout(request: Request):
+    print('로그아웃합니다.')
+    request.session.clear()
+
+    return RedirectResponse(
+        url = '/jobgogo' ,
+        status_code=303
+    )
