@@ -14,6 +14,11 @@
             <!-- 좌측 회원 정보 입력 폼 -->
             <div class="form-section">
                 <form method="post" action="/api/signup">
+
+                        <!-- 이름입력-->
+                    <div class="input-row">
+                        <input type="tel" placeholder="이름 입력" class="form-input" name="user_name">
+                    </div>
                     <!-- 아이디 -->
                     <div class="input-row">
                         <input type="text" placeholder="아이디" class="form-input flex-grow" name="user_id">
@@ -50,6 +55,8 @@
                     <div class="input-row">
                         <input type="tel" placeholder="전화번호는 010-1234-5678 형식으로 입력" class="form-input" name="user_phone">
                     </div>
+
+                    
                     
                     <!-- 경고 메세지 -->
                     <div class="warning-message">
