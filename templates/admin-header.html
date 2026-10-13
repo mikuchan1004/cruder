@@ -13,6 +13,6 @@
         </div>
         <div class="header-right">
             <span class="admin-greeting">{{ request.session.get('user_name') }}님 환영합니다</span>
-            <button type="button" class="btn-logout">로그아웃</button>
+            <a href="/logout" class="btn-logout">로그아웃</a>
         </div>
     </header>
