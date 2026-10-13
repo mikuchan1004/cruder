@@ -180,7 +180,7 @@ def login(
     request.session["user_status_id"] = user['user_status_id']
     
     return RedirectResponse(
-           url='/jobgogo',
+           url='/jobgogo?login=success',
            status_code=303
        )
     
