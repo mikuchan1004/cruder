@@ -314,9 +314,28 @@ def admin_board(request:Request, session: Session = Depends(get_session)):
         }
     )
 
-@router.post('/admin/board/modify/{post_number}')
-def update_post(request: Request, post_number : int, session: Session = Depends(get_session)):
-    print('글 수정을 실행합니다.')
+@router.post('/admin/board/delete/{post_number}')
+def delete_post(request: Request,  post_number : int, category: str = Form(...) , session: Session = Depends(get_session)):
+    print('글 삭제를 실행합니다.')
+
+    try:
+            # 카테고리 값에 따라 대상 테이블과 PK 컬럼을 분기 
+            if category in ['공지' , '공지사항']:
+                sql = text('''
+                    delete from notice
+                    where notice_id = :post_number
+                ''')
+            else:
+                sql = text('''
+                    delete from job_tip
+                    where job_tip_number = :post_number
+                ''')
+            session.execute(sql, {'post_number' : post_number})
+            session.commit()
+    except Exception as e:
+        session.rollback()
+        print(f"게시글 삭제에 실패했습니다. : {e}")
+
 
 @router.get('/warning')
 def warning_page(request:Request, session: Session = Depends(get_session)):
