@@ -41,6 +41,7 @@ router.mount(
 @router.get('/jobgogo')
 def jobgogo(
     request: Request,
+    # keyword : str = "" ,
     session: Session = Depends(get_session)
 ):
     print('메인 페이지 접속 성공!')
@@ -74,3 +75,4 @@ def jobgogo(
             "user_status_id": request.session.get("user_status_id")
         }
     )
+    
