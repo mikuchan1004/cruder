@@ -1,6 +1,7 @@
 from sqlmodel import create_engine, Session, SQLModel
 from sqlalchemy import text, URL
 
+from fastapi import HTTPException
 from fastapi import FastAPI, Request, Depends, Form, UploadFile, File
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -17,28 +18,38 @@ load_dotenv()
 
 database_url = os.getenv('DATABASE_URL')
 
-router.mount(
-    "/assets",
-    StaticFiles(directory="assets"),
-    name="assets"
-)
-
 engine = create_engine(database_url, echo=True)
 
 def get_session():
     with Session(engine) as session:
         yield session
 
-@router.get('/jobgogo/admin')
-def admin_dashboard(request:Request, session: Session = Depends(get_session)):
-    print('/admin 실행')
+def require_admin(request: Request):
+    user_status_id = request.session.get('user_status_id')
 
-    # #관리자가 아니면 경고 페이지로 쫓아냄 
-    # if request.session.get('user_id') != 'admin':
-    #     return RedirectResponse(
-    #         url='/warning',
-    #         status_code=303
-    #     )
+    if user_status_id not in (1, 2):
+        raise HTTPException(
+            status_code=303,
+            headers={
+                'Location': '/jobgogo/warning'
+            }
+        )
+
+def require_super_admin(request: Request):
+    if request.session.get('user_status_id') != 1:
+        raise HTTPException(
+            status_code=303,
+            headers={'Location': '/jobgogo/warning'}
+        )
+
+@router.get('/jobgogo/admin')
+def admin_dashboard(
+    request:Request, 
+    session: Session = Depends(get_session), 
+    # #관리자가 아니면 경고 페이지로 쫓아냄
+    _: None = Depends(require_admin)
+):
+    print('/admin 실행')
 
     # 현재 회원의 수가 몇 명인지 세는 SQL문 
     sql1 = text('''
@@ -82,7 +93,11 @@ def admin_dashboard(request:Request, session: Session = Depends(get_session)):
     })
 
 @router.get('/jobgogo/admin-users')
-def users(request:Request, session: Session = Depends(get_session)):
+def users(
+    request:Request, 
+    session: Session = Depends(get_session), 
+    _: None = Depends(require_admin)
+):
     print('/admin-users 실행')
 
     # 등록된 모든 회원을 가져오는 SQL문
@@ -117,16 +132,28 @@ def users(request:Request, session: Session = Depends(get_session)):
         'report_count' : results3[0]['count(*)']
     })
 
+# 신고 삭제
 @router.post('/jobgogo/admin/user/report/delete/{report_id}')
-def report_delete(request: Request, report_id : int, session : Session = Depends(get_session)):
+def report_delete(
+    request: Request, 
+    report_id : int, 
+    session : Session = Depends(get_session), 
+    _: None = Depends(require_admin)
+):
     sql = text ('''
         delete from report_logs
         where report_id = :report_id
     ''')
     session.execute(sql, {'report_id' : report_id})
+    session.commit()
+
+    return RedirectResponse(
+        url='/jobgogo/admin-users',
+        status_code=303
+    )
 
 @router.post('/jobgogo/admin/user/warning/{user_id}')
-def user_warning(request:Request, user_id: str, session: Session = Depends(get_session)):
+def user_warning(request:Request, user_id: str, session: Session = Depends(get_session), _: None = Depends(require_admin)):
     print('경고 횟수를 1 올립니다.')
     # 회원의 누적 경고 횟수를 1씩 올리는 SQL문
     sql1 = text('''
@@ -168,7 +195,8 @@ def user_warning(request:Request, user_id: str, session: Session = Depends(get_s
 def user_warning_delete(
     request: Request,
     user_id: str,
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    _: None = Depends(require_admin)
 ):
     print('경고 횟수를 1 낮춥니다.')
 
@@ -201,7 +229,7 @@ def user_warning_delete(
     )
 
 @router.post('/jobgogo/admin/user/suspension/{user_id}')
-def user_suspension (request:Request, user_id: str, session: Session = Depends(get_session)):
+def user_suspension (request:Request, user_id: str, session: Session = Depends(get_session), _: None = Depends(require_admin)):
     print('계정을 정지합니다.')
 
     sql = text('''
@@ -216,13 +244,14 @@ def user_suspension (request:Request, user_id: str, session: Session = Depends(g
     return RedirectResponse(url='/jobgogo/admin-users', status_code=303)
 
 @router.post('/jobgogo/admin/user/unsuspension/{user_id}')
-def user_unsuspension(request:Request, user_id: str, session: Session = Depends(get_session)):
+def user_unsuspension(request:Request, user_id: str, session: Session = Depends(get_session), _: None = Depends(require_admin)):
     print('계정 정지를 해제합니다.')
 
     sql = text('''
         update user
         set user_status_id = 3
         where user_id = :user_id
+        and user_status_id = 5
     ''')
     session.execute(sql, {'user_id' : user_id})
     session.commit()
@@ -230,12 +259,12 @@ def user_unsuspension(request:Request, user_id: str, session: Session = Depends(
     return RedirectResponse(url='/jobgogo/admin-users', status_code=303)
 
 @router.post('/jobgogo/admin/user/delete/{user_id}')
-def user_delete(request:Request, user_id: str, session:Session = Depends(get_session)):
+def user_delete(request:Request, user_id: str, session:Session = Depends(get_session), _: None = Depends(require_admin)):
     print('계정을 삭제합니다.')
 
     sql = text('''
         delete from user
-        where user_id = :user_id and user_status_id != 1 and 2
+        where user_id = :user_id and user_status_id not in (1, 2)
     ''')
     try:
         session.execute(sql, {'user_id' : user_id})
@@ -251,7 +280,7 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
         )
 
 @router.get('/jobgogo/admin/user/search')
-def search_user(request: Request, keyword : str = "" , session: Session = Depends(get_session)):
+def search_user(request: Request, keyword : str = "" , session: Session = Depends(get_session), _: None = Depends(require_admin)):
     print('사용자 검색을 실행합니다.')
 
     # 이름이나 아이디에 검색어가 포함된 회원을 찾는 SQL문
@@ -301,7 +330,12 @@ def search_user(request: Request, keyword : str = "" , session: Session = Depend
     )
 
 @router.post('/jobgogo/admin/user/get-admin/{user_id}')
-def get_admin (request:Request, user_id: str, session:Session = Depends(get_session)):
+def get_admin (
+    request:Request,
+    user_id: str,
+    session:Session = Depends(get_session),
+    _: None = Depends(require_super_admin)
+):
     print('관리자 권한을 부여합니다.')
 
     sql = text('''
@@ -318,13 +352,19 @@ def get_admin (request:Request, user_id: str, session:Session = Depends(get_sess
     )
 
 @router.post('/jobgogo/admin/user/lose-admin/{user_id}')
-def lose_admin (request:Request, user_id: str, session:Session = Depends(get_session)):
+def lose_admin (
+    request:Request, 
+    user_id: str, 
+    session:Session = Depends(get_session), 
+    _: None = Depends(require_super_admin)
+):
     print('관리자 권한을 박탈합니다.')
 
     sql = text('''
         update user
         set user_status_id = 3
-        where user_id = :user_id and user_status_id = 2
+        where user_id = :user_id
+        and user_status_id = 2
     ''')
 
     session.execute(sql, {'user_id' : user_id})
@@ -336,7 +376,7 @@ def lose_admin (request:Request, user_id: str, session:Session = Depends(get_ses
 
 
 @router.get('/jobgogo/admin-board')
-def admin_board(request:Request, session: Session = Depends(get_session)):
+def admin_board(request:Request, session: Session = Depends(get_session), _: None = Depends(require_admin)):
     print('게시물관리 페이지로 이동합니다.')
 
     sql_post = text('''
@@ -367,23 +407,30 @@ def admin_board(request:Request, session: Session = Depends(get_session)):
     )
 
 @router.post('/jobgogo/admin/board/delete/{post_number}')
-def delete_post(request: Request,  post_number : int, category: str = Form(...) , session: Session = Depends(get_session)):
+def delete_post(
+    request: Request, 
+    post_number : int, 
+    category: str = Form(...), 
+    session: Session = Depends(get_session), 
+    _: None = Depends(require_admin)
+):
     print('글 삭제를 실행합니다.')
 
     try:
-            # 카테고리 값에 따라 대상 테이블과 PK 컬럼을 분기 
-            if category in ['공지' , '공지사항']:
-                sql = text('''
-                    delete from notice
-                    where notice_id = :post_number
-                ''')
-            else:
-                sql = text('''
-                    delete from job_tip
-                    where job_tip_no = :post_number
-                ''')
-            session.execute(sql, {'post_number' : post_number})
-            session.commit()
+        # 카테고리 값에 따라 대상 테이블과 PK 컬럼을 분기 
+        if category in ['공지' , '공지사항']:
+            sql = text('''
+                delete from notice
+                where notice_id = :post_number
+            ''')
+        else:
+            sql = text('''
+                delete from job_tip
+                where job_tip_no = :post_number
+            ''')
+        session.execute(sql, {'post_number' : post_number})
+        session.commit()
+
     except Exception as e:
         session.rollback()
         print(f"게시글 삭제에 실패했습니다. : {e}")
@@ -393,7 +440,7 @@ def delete_post(request: Request,  post_number : int, category: str = Form(...) 
             )
 
 @router.get('/jobgogo/admin-recult')
-def recult(request:Request,  session:Session = Depends(get_session)):
+def recult(request:Request,  session:Session = Depends(get_session), _: None = Depends(require_admin)):
     print('채용 공고 관리 페이지로 이동합니다.')
 
     # DB에 저장된 채용 공고들을 뽑아옵니다.
@@ -417,9 +464,13 @@ def recult(request:Request,  session:Session = Depends(get_session)):
     })
 
 @router.post('/jobgogo/admin-recult/delete/{recrut_pblnt_sn}')
-def delete_recult(request: Request,  recrut_pblnt_sn : int, session: Session = Depends(get_session)):
+def delete_recult(
+    request: Request,  
+    recrut_pblnt_sn : int, 
+    session: Session = Depends(get_session), 
+    _: None = Depends(require_admin)
+):
     print('채용공고를 삭제합니다.')
-
 
     # DB에 저장되어있는 채용공고를 삭제하는 SQL문 
     sql = text('''
@@ -427,7 +478,7 @@ def delete_recult(request: Request,  recrut_pblnt_sn : int, session: Session = D
         where recrut_pblnt_sn = :recrut_pblnt_sn
     ''')
 
-    session.execute(sql , {'recurt_pnlnt_sn' : recrut_pblnt_sn })
+    session.execute(sql , {'recrut_pblnt_sn' : recrut_pblnt_sn })
     session.commit()
 
     return RedirectResponse(
@@ -459,7 +510,10 @@ def admin_inquiry(request:Request,  session:Session = Depends(get_session)):
     })
 
 @router.get('/jobgogo/warning')
-def warning_page(request:Request, session: Session = Depends(get_session)):
+def warning_page(
+    request:Request, 
+    session: Session = Depends(get_session)
+):
     print('경고 페이지로 이동합니다.')
     return templates.TemplateResponse(request, 'warning.html')
 

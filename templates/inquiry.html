@@ -73,56 +73,7 @@
                 </form>
             </section>
 
-            <!-- 내 문의 목록 -->
-            <section class="inquiry-section">
-                <div class="section-heading">
-                    <h2>내 문의 내역</h2>
-                    <p>등록한 문의와 답변 상태를 확인할 수 있습니다.</p>
-                </div>
-
-                <div class="inquiry-list">
-
-                    {% if inquiries %}
-
-                        {% for inquiry in inquiries %}
-                        <a href="/jobgogo/inquiry/{{ inquiry.inquiry_id }}"
-                           class="inquiry-item">
-
-                            <div class="inquiry-item-info">
-                                <span class="inquiry-category">
-                                    {{ inquiry.inquiry_type }}
-                                </span>
-
-                                <h3>{{ inquiry.inquiry_title }}</h3>
-
-                                <span class="inquiry-date">
-                                    {{ inquiry.inquiry_date }}
-                                </span>
-                            </div>
-
-                            {% if inquiry.inquiry_answer %}
-                                <span class="status completed">
-                                    답변 완료
-                                </span>
-                            {% else %}
-                                <span class="status waiting">
-                                    답변 대기
-                                </span>
-                            {% endif %}
-
-                        </a>
-                        {% endfor %}
-
-                    {% else %}
-
-                        <div class="inquiry-empty">
-                            <p>등록된 문의 내역이 없습니다.</p>
-                        </div>
-
-                    {% endif %}
-
-                </div>
-            </section>
+           
 
         </div>
     </main>

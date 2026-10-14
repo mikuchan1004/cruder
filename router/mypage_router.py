@@ -5,7 +5,7 @@ from fastapi.responses import RedirectResponse
 from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
 
-from sqlmodel import Session
+from sqlmodel import Session,text
 
 from database import get_session
 from DTO.UserDTO import User
@@ -69,3 +69,43 @@ def mypage(
             'user_status_id': request.session.get('user_status_id')
         }
     )
+    
+    
+@router.get('/jobgogo/inquiry_list')
+def inquiry_list(request:Request,
+    session: Session = Depends(get_session)       
+     ):
+    user_id=request.session.get('user_id')
+    
+    if user_id is None:
+        return RedirectResponse(
+            url='/jobgogo'
+            ,status_code=303
+        )
+    
+    sql=text('''
+             select *
+             from inquiry
+             where user_id=:user_id 
+             
+             ''')
+    
+    result=session.exec(
+        sql,
+        params={
+          'user_id': user_id
+        }
+    )
+    results= result.mappings().fetchall()
+    
+    # html 출력
+    
+    return templates.TemplateResponse(
+    request=request,
+    name='inquiry_result.html',
+    context={
+        'inquiries': results,
+        'user_id': user_id,
+        # 'user_name': request.session.get('user_name')
+    }
+    )  
