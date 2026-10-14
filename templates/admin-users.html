@@ -52,7 +52,7 @@
                     <div class="col" data-label="상태">
                         {% if user.user_status_id == 5 %}
                         <span class="badge status-suspend ">정지</span>
-                        {% elif user.warning_count >= 5 %}
+                        {% elif user.user_status_id == 4 %}
                         <span class="badge status-warning">경고</span>
                         {% elif user.user_status_id == 1 %}
                         <span class="badge status-admin"> 최고 관리자</span>
@@ -81,7 +81,7 @@
                         </form>
                         {% endif %}
 
-                        {% if user.user_status_id ==  1 and 2 %}
+                        {% if user.user_status_id in [1, 2] %}
                         <form method="post" action="/jobgogo/admin-users">
                             <button class="btn btn-red">회원 삭제</button>
                         </form>
@@ -90,15 +90,19 @@
                                 <button class="btn btn-red" type="submit">회원 삭제</button>
                             </form>
                             {% endif %}
-                            {% if user.user_status_id == 3 %}
-                            <form method="post" action="/jobgogo/admin/user/get-admin/{{user.user_id}}">
-                                <button class="btn btn-outline-purple" type="submit">관리자 권한 부여</button>
-                            </form>
-                            {% else %}
-                            <form method="post" action="/jobgogo/admin/user/lose-admin/{{user.user_id}}">
-                                <button class="btn btn-outline-purple" type="submit">관리자 권한 박탈</button>
-                            </form>
-                            {% endif %}
+                        {% if user.user_status_id == 3 %}
+                        <form method="post" action="/jobgogo/admin/user/get-admin/{{user.user_id}}">
+                            <button class="btn btn-outline-purple" type="submit">
+                                관리자 권한 부여
+                            </button>
+                        </form>
+                        {% elif user.user_status_id == 2 %}
+                        <form method="post" action="/jobgogo/admin/user/lose-admin/{{user.user_id}}">
+                            <button class="btn btn-outline-purple" type="submit">
+                                관리자 권한 박탈
+                            </button>
+                        </form>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
@@ -133,7 +137,7 @@
                     <div class="col truncate" data-label="신고 사유">{{report.report_reason}}</div>
                     <div class="col action-buttons" data-label="관리">
                         <form method="post" action="/jobgogo/admin/user/report/delete/{{report.report_id}}">
-                            <button class="btn btn-red" type="button">삭제</button>
+                            <button class="btn btn-red" type="submit">삭제</button>
                         </form>
                     </div>
                 </div>

@@ -163,29 +163,40 @@ def user_warning(request:Request, user_id: str, session: Session = Depends(get_s
     return RedirectResponse(url='/jobgogo/admin-users' , status_code=303)
 
 @router.post('/jobgogo/admin/user/warning/delete/{user_id}')
-def user_warning_delete(request:Request, user_id: str, session: Session = Depends(get_session)):
-    print('경고 횟수를 1 낮춥니다')
+def user_warning_delete(
+    request: Request,
+    user_id: str,
+    session: Session = Depends(get_session)
+):
+    print('경고 횟수를 1 낮춥니다.')
 
-    # 현재 경고 횟수를 먼저 확인합니다.
-    sql_all = text('''
-        select warning_count 
-        from user 
-        where user_id = :user_id
-    ''')
-    result = session.execute(sql_all, {'user_id' : user_id})
-    warning_count = result.mappings().fetchone()
-    print ('현재 경고 횟수 : ' , warning_count['warning_count'] )
-
-    # 경고 횟수가 1 이상인경우에만 경고를 1개 줄여줍니다. (0개 미만으로 내려가지 않게 방어)
-    sql = text('''
+    # 경고 횟수가 1 이상일 때만 1 감소
+    sql_warning = text('''
         update user
         set warning_count = warning_count - 1
-        where user_id = :user_id and warning_count >= 1
+        where user_id = :user_id
+        and warning_count >= 1
     ''')
-    session.execute(sql, {'user_id' : user_id})
+
+    session.execute(sql_warning, {'user_id': user_id})
+
+    # 경고 횟수가 5 미만으로 내려갔다면
+    # 경고 회원(4)을 일반 회원(3)으로 복구
+    sql_status = text('''
+        update user
+        set user_status_id = 3
+        where user_id = :user_id
+        and warning_count < 5
+        and user_status_id = 4
+    ''')
+
+    session.execute(sql_status, {'user_id': user_id})
     session.commit()
 
-    return RedirectResponse(url='/jobgogo/admin-users' , status_code=303)
+    return RedirectResponse(
+        url='/jobgogo/admin-users',
+        status_code=303
+    )
 
 @router.post('/jobgogo/admin/user/suspension/{user_id}')
 def user_suspension (request:Request, user_id: str, session: Session = Depends(get_session)):
