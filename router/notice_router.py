@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, Depends, Form, HTTPException
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Session
 from sqlalchemy import text
@@ -9,6 +9,21 @@ from database import get_session
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
+
+def popup_error(message: str):
+    import json
+
+    message = json.dumps(message, ensure_ascii=False)
+    message = message.replace("<", "\\u003c").replace(">", "\\u003e")
+
+    return HTMLResponse(
+        content=f"""
+        <script>
+            alert({message});
+            history.back();
+        </script>
+        """
+    )
 
 
 # 공지사항 목록 조회
@@ -82,7 +97,11 @@ def commNotice(
             'notice_list': notice_list,
             'keyword': keyword,
             'page': page,
-            'total_page': total_page
+            'total_page': total_page,
+
+            'user_id': request.session.get('user_id'),
+            'user_name': request.session.get('user_name'),
+            'user_status_id': request.session.get('user_status_id')
         }
     )
 
@@ -111,10 +130,7 @@ def notice_detail(
     ).mappings().first()
 
     if notice is None:
-        raise HTTPException(
-            status_code=404,
-            detail="게시글이 없습니다."
-        )
+        return popup_error("해당 게시글이 존재하지 않습니다")
 
     return templates.TemplateResponse(
         request=request,
@@ -128,7 +144,12 @@ def notice_detail(
 def write_page(request: Request):
     return templates.TemplateResponse(
         request=request,
-        name='write.html'
+        name='write.html',
+        context={
+            'user_id': request.session.get('user_id'),
+            'user_name': request.session.get('user_name'),
+            'user_status_id': request.session.get('user_status_id')
+        }
     )
 
 
@@ -142,7 +163,15 @@ def noticeWriteData(
 ):
     user_id = request.session.get('user_id')
 
-    if user_id != 'admin':
+    adminchk = text('''
+        SELECT user_status_id
+        FROM user
+        WHERE user_id = :user_id
+        '''
+    )
+    adm_chk=session.execute(adminchk, {"user_id" :user_id}).scalar_one_or_none()
+
+    if adm_chk != 1:
         return RedirectResponse(
             url='/error-404',
             status_code=303

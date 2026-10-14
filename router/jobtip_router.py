@@ -270,13 +270,26 @@ def jobtipWriteData(
         status_code=303
     )
 
+
+@router.get('/jobtip/6n23')
+def ytb():
+    print('easteregg')
+    return RedirectResponse(
+        url='https://www.youtube.com/watch?v=Zpx83AUavn0',
+        status_code=302)
+
 # 글 읽기
 @router.get('/jobtip/{job_tip_no}')
 def jobtip_read(
     request: Request,
-    job_tip_no: int,
+    job_tip_no: str,
     session: Session = Depends(get_session)
 ):
+    if not job_tip_no.isdecimal():
+        return popup_error("게시글이 없습니다!")
+
+    job_tip_no = int(job_tip_no)
+    
     sql = text('''
         SELECT
             job_tip_no,
@@ -501,5 +514,4 @@ def jobtip_delete(
         url='/jobgogo/jobtip',
         status_code=303
     )
-
 
