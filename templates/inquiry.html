@@ -31,7 +31,7 @@
                 </div>
 
                 <form method="post"
-                      action="/jobgogo/inquiry"
+                      action="/api/inquiry/add"
                       class="inquiry-form">
 
                     <div class="form-group">
@@ -39,9 +39,8 @@
                         <select id="inquiry_type"
                                 name="inquiry_type"
                                 required>
-                            <option value="">문의 유형 선택</option>
-                            <option value="계정">계정 문의</option>
-                            <option value="채용">채용 공고</option>
+                            <option value="계정" >계정 문의</option>
+                            <option value="채용" >채용 공고</option>
                             <option value="오류">서비스 오류</option>
                             <option value="기타">기타 문의</option>
                         </select>
