@@ -326,3 +326,142 @@ a {
 .page-btn.arrow {
     font-size: 12px;
 }
+
+/* ==================================
+   팝업 레이어
+=================================== */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(17, 24, 39, 0.45);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.popup-overlay.hide {
+    display: none !important;
+}
+
+.popup-card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 520px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E5E7EB;
+    overflow: hidden;
+    animation: popupFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.popup-header {
+    padding: 18px 24px;
+    border-bottom: 1px solid #F3F4F6;
+    background-color: #FAFAFA;
+}
+
+.popup-title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.popup-body {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    color: #374151;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.popup-body br {
+    display: none;
+}
+
+.popup-body .form-control {
+    width: 100%;
+    margin-top: 6px;
+    padding: 9px 12px;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #1F2937;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.popup-body .form-control:focus {
+    border-color: #6B46C1;
+    box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.12);
+}
+
+.popup-body .form-control[readonly] {
+    background-color: #F9FAFB;
+    color: #6B7280;
+    border-color: #E5E7EB;
+}
+
+.popup-body textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.popup-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    border-top: 1px solid #F3F4F6;
+    background-color: #FAFAFA;
+}
+
+.popup-footer .btn {
+    padding: 7px 16px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+}
+
+#delete-button {
+    background-color: #FEF2F2;
+    color: #DC2626;
+    border-color: #FECACA;
+}
+
+#delete-button:hover {
+    background-color: #DC2626;
+    color: #ffffff;
+}
+
+#close {
+    background-color: #F3F4F6;
+    color: #4B5563;
+    border-color: #E5E7EB;
+}
+
+#close:hover {
+    background-color: #E5E7EB;
+    color: #111827;
+}
