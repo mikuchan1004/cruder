@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>최근 작성한 게시물 - 취업 할래말래</title>
-    <link rel="stylesheet" href="../assets/recent-posts.css">
+    <link rel="stylesheet" href="/assets/recent-posts.css">
     <!-- FontAwesome (사용자 프로필 아이콘 렌더링용) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/header.css">
+    <link rel="stylesheet" href="/assets/footer.css">
+
 </head>
 <body>
-    <!-- 상단 임시 헤더 -->
-    <header class="wireframe-header">
-        헤더
-    </header>
+
+    {% include 'header.html' %}
 
     <!-- 메인 레이아웃 컨테이너 -->
     <main class="mypage-container">
@@ -41,42 +42,61 @@
             <div class="board-table">
                 <!-- 데스크톱용 테이블 헤더 -->
                 <div class="table-header">
-                    <div class="col-category">카테고리</div>
+                    <div class="col-category">글번호</div>
                     <div class="col-title">제목</div>
                     <div class="col-author">작성자</div>
                     <div class="col-date">작성일</div>
                     <div class="col-action"></div> <!-- 버튼 영역 -->
                 </div>
-                
+
                 <!-- 리스트 아이템 1 -->
-                <div class="table-row">
+                <!-- <div class="table-row">
                     <div class="col-category" data-label="카테고리">취업 꿀팁 게시판</div>
                     <div class="col-title" data-label="제목">취업하고 싶으면 이글부터 봐라</div>
                     <div class="col-author" data-label="작성자">123</div>
                     <div class="col-date" data-label="작성일">1750-05-11</div>
                     <div class="col-action"><button class="btn-view">보기</button></div>
-                </div>
-
-                <!-- 리스트 아이템 2 -->
+                </div> -->
+                
+                {% for job in job_tip_list %}
                 <div class="table-row">
-                    <div class="col-category" data-label="카테고리">취업 꿀팁 게시판</div>
-                    <div class="col-title" data-label="제목">책읽으면 졸리다</div>
-                    <div class="col-author" data-label="작성자">123</div>
-                    <div class="col-date" data-label="작성일">2010-07-15</div>
-                    <div class="col-action"><button class="btn-view">보기</button></div>
+                    <div class="col-num" data-label="번호">
+                        {{ job.job_tip_no }}
+                    </div>
+
+                    <div class="col-title" data-label="제목">
+                        <a href="/jobtip/{{ job.job_tip_no }}">
+                            {{ job.job_tip_title }}
+                        </a>
+                    </div>
+
+                    <div class="col-author" data-label="글쓴이">
+                        {{ job.user_id }}
+                    </div>
+
+                    <div class="col-date" data-label="날짜">
+                        {{ job.job_tip_date.strftime('%Y-%m-%d') if job.job_tip_date else '' }}
+                    </div>
+
+                    <div class="col-action">
+                        <a href="/jobtip/{{ job.job_tip_no }}" class="btn-view">보기</a>
+                    </div>
                 </div>
+                {% endfor %}
+                
             </div>
         </section>
     </main>
 
     <!-- 하단 액션 버튼 영역 -->
     <div class="bottom-action">
-        <button type="button" class="btn-return">마이페이지로</button>
+    <button type="button-action" class="btn-return"
+    onclick="location.href='/jobgogo/mypage'">
+    마이페이지로
+    </button>
     </div>
 
-    <!-- 하단 임시 푸터 -->
-    <footer class="wireframe-footer">
-        푸터
-    </footer>
+{% include 'footer.html' %}
+
 </body>
 </html>

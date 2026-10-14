@@ -105,7 +105,7 @@ def inquiry_list(request:Request,
     name='inquiry_result.html',
     context={
         'inquiries': results,
-        'user_id': user_id,
+        'user_id': user_id
         # 'user_name': request.session.get('user_name')
     }
     )  

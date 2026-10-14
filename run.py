@@ -16,6 +16,7 @@ from router.jobtip_router import router as jobtip_router
 from router.ai_chat_router import router as ai_chat_router
 from router.notice_router import router as notice_router
 from router.inquiry_router import router as inquiry_router
+from router.recent_posts import router as recent_posts
 
 from config import SESSION_SECRET_KEY
 
@@ -35,6 +36,7 @@ router.include_router(jobtip_router)
 router.include_router(ai_chat_router)
 router.include_router(notice_router)
 router.include_router(inquiry_router)
+router.include_router(recent_posts)
 
 
 router.add_middleware(
