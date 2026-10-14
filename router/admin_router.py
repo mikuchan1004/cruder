@@ -115,7 +115,7 @@ def users(request:Request, session: Session = Depends(get_session)):
         'report_count' : results3[0]['count(*)']
     })
 
-@router.post('/admin/user/report/delete/{report_id}')
+@router.post('/jobgogo/admin/user/report/delete/{report_id}')
 def report_delete(request: Request, report_id : int, session : Session = Depends(get_session)):
     sql = text ('''
         delete from report_logs
@@ -123,7 +123,7 @@ def report_delete(request: Request, report_id : int, session : Session = Depends
     ''')
     session.execute(sql, {'report_id' : report_id})
 
-@router.post('/admin/user/warning/{user_id}')
+@router.post('/jobgogo/admin/user/warning/{user_id}')
 def user_warning(request:Request, user_id: str, session: Session = Depends(get_session)):
     print('경고 횟수를 1 올립니다.')
     # 회원의 누적 경고 횟수를 1씩 올리는 SQL문
@@ -160,9 +160,9 @@ def user_warning(request:Request, user_id: str, session: Session = Depends(get_s
     session.execute(sql3, {'user_id' : user_id})
     session.commit()
 
-    return RedirectResponse(url='/admin-users' , status_code=303)
+    return RedirectResponse(url='/jobgogo/admin-users' , status_code=303)
 
-@router.post('/admin/user/warning/delete/{user_id}')
+@router.post('/jobgogo/admin/user/warning/delete/{user_id}')
 def user_warning_delete(request:Request, user_id: str, session: Session = Depends(get_session)):
     print('경고 횟수를 1 낮춥니다')
 
@@ -187,7 +187,7 @@ def user_warning_delete(request:Request, user_id: str, session: Session = Depend
 
     return RedirectResponse(url='/jobgogo/admin-users' , status_code=303)
 
-@router.post('/admin/user/suspension/{user_id}')
+@router.post('/jobgogo/admin/user/suspension/{user_id}')
 def user_suspension (request:Request, user_id: str, session: Session = Depends(get_session)):
     print('계정을 정지합니다.')
 
@@ -202,7 +202,7 @@ def user_suspension (request:Request, user_id: str, session: Session = Depends(g
 
     return RedirectResponse(url='/jobgogo/admin-users', status_code=303)
 
-@router.post('/admin/user/unsuspension/{user_id}')
+@router.post('/jobgogo/admin/user/unsuspension/{user_id}')
 def user_unsuspension(request:Request, user_id: str, session: Session = Depends(get_session)):
     print('계정 정지를 해제합니다.')
 
@@ -216,7 +216,7 @@ def user_unsuspension(request:Request, user_id: str, session: Session = Depends(
 
     return RedirectResponse(url='/jobgogo/admin-users', status_code=303)
 
-@router.post('/admin/user/delete/{user_id}')
+@router.post('/jobgogo/admin/user/delete/{user_id}')
 def user_delete(request:Request, user_id: str, session:Session = Depends(get_session)):
     print('계정을 삭제합니다.')
 
@@ -238,7 +238,7 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
             url='/admin-users', status_code=303
         )
 
-@router.get('jobgogo/admin/user/search')
+@router.get('/jobgogo/admin/user/search')
 def search_user(request: Request, keyword : str = "" , session: Session = Depends(get_session)):
     print('사용자 검색을 실행합니다.')
 
@@ -319,7 +319,7 @@ def admin_board(request:Request, session: Session = Depends(get_session)):
         }
     )
 
-@router.post('/admin/board/delete/{post_number}')
+@router.post('/jobgogo/admin/board/delete/{post_number}')
 def delete_post(request: Request,  post_number : int, category: str = Form(...) , session: Session = Depends(get_session)):
     print('글 삭제를 실행합니다.')
 
