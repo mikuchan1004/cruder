@@ -1,3 +1,4 @@
+from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -9,6 +10,7 @@ from router.auth_router import router as auth_router
 from router.admin_router import router as admin_router
 from router.mypage_router import router as mypage_router
 from router.edit_profile_router import router as edit_profile_router
+from router.bookmark_router import router as bookmark_router
 from router.recult_router import router as recult_router
 from router.jobtip_router import router as jobtip_router
 from router.ai_chat_router import router as ai_chat_router
@@ -16,6 +18,8 @@ from router.notice_router import router as notice_router
 from router.inquiry_router import router as inquiry_router
 
 from config import SESSION_SECRET_KEY
+
+BASE_DIR = Path(__file__).resolve().parent
 
 router = FastAPI()
 
@@ -25,6 +29,7 @@ router.include_router(auth_router)
 router.include_router(admin_router)
 router.include_router(mypage_router)
 router.include_router(edit_profile_router)
+router.include_router(bookmark_router)
 router.include_router(recult_router)
 router.include_router(jobtip_router)
 router.include_router(ai_chat_router)
@@ -52,8 +57,14 @@ router.add_middleware(
 # 정적 파일
 router.mount(
     "/assets",
-    StaticFiles(directory="assets"),
+    StaticFiles(directory=str(BASE_DIR / "assets")),
     name="assets"
+)
+
+router.mount(
+    "/static",
+    StaticFiles(directory=str(BASE_DIR / "static")),
+    name="static"
 )
 
 @router.get('/')
