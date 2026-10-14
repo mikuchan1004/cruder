@@ -62,7 +62,7 @@ def recult(
                    or work_rgn_nm_lst like :keyword 
                )
                ORDER BY pbanc_bgng_ymd DESC
-               limit 8
+               limit 9
            ''')
    
            # 채용공고 가져오기
