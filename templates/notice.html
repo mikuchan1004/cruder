@@ -35,13 +35,14 @@
             </form>
 
             <!-- 글쓰기 버튼 -->
-            <button
-                type="button"
-                class="btn-write"
-                onclick="location.href='/write'">
-                글쓰기
-            </button>
-
+                {% if adm_chk == 1 %}
+                <button
+                    type="button"
+                    class="btn-write"
+                    onclick="location.href='/write'">
+                    글쓰기
+                </button>
+                {% endif %}
         </div>
 
         <!-- 게시판 테이블 -->

@@ -77,6 +77,17 @@
                 목록으로
             </button>
 
+            <form
+    action="/notice/{{ notice.notice_id }}/delete"
+    method="post"
+    onsubmit="return confirm('정말 삭제하시겠습니까?');"
+    style="display: inline;"
+>
+    <button type="submit" class="btn btn-cancel">
+        삭제
+    </button>
+</form>
+
         </div>
 
     </main>

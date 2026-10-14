@@ -90,19 +90,34 @@ def commNotice(
 
     total_page = (notice_count + page_size - 1) // page_size
 
+    user_id = request.session.get('user_id')
+
+    adminchk = text('''
+        SELECT user_status_id
+        FROM user
+        WHERE user_id = :user_id
+    ''')
+
+    adm_chk = session.execute(
+        adminchk,
+        {"user_id": user_id}
+    ).scalar_one_or_none()
+
     return templates.TemplateResponse(
         request=request,
         name='notice.html',
         context={
-            'notice_list': notice_list,
-            'keyword': keyword,
-            'page': page,
-            'total_page': total_page,
+        'notice_list': notice_list,
+        'keyword': keyword,
+        'page': page,
+        'total_page': total_page,
 
-            'user_id': request.session.get('user_id'),
-            'user_name': request.session.get('user_name'),
-            'user_status_id': request.session.get('user_status_id')
-        }
+        'adm_chk': adm_chk,
+
+        'user_id': user_id,
+        'user_name': request.session.get('user_name'),
+        'user_status_id': request.session.get('user_status_id')
+    }
     )
 
 
@@ -141,12 +156,26 @@ def notice_detail(
 
 # 공지사항 글쓰기 화면
 @router.get('/write')
-def write_page(request: Request):
+def write_page(request: Request,
+               session: Session=Depends(get_session)
+):
+
+    user_id = request.session.get('user_id')
+    
+    adminchk = text('''
+            SELECT user_status_id
+            FROM user
+            WHERE user_id = :user_id
+            '''
+        )
+    adm_chk=session.execute(adminchk, {"user_id" :user_id}).scalar_one_or_none()
+        
     return templates.TemplateResponse(
         request=request,
         name='write.html',
         context={
-            'user_id': request.session.get('user_id'),
+            'adm_chk': adm_chk,
+            'user_id': user_id,
             'user_name': request.session.get('user_name'),
             'user_status_id': request.session.get('user_status_id')
         }
@@ -172,10 +201,7 @@ def noticeWriteData(
     adm_chk=session.execute(adminchk, {"user_id" :user_id}).scalar_one_or_none()
 
     if adm_chk != 1:
-        return RedirectResponse(
-            url='/error-404',
-            status_code=303
-        )
+        return popup_error("로그인이 필요합니다.")
 
     if notice_title.strip() == '' or notice_detail.strip() == '':
         return RedirectResponse(
@@ -213,6 +239,83 @@ def noticeWriteData(
     session.commit()
 
     return RedirectResponse(
-        url='/notice',
+        url='/jobgogo/notice',
+        status_code=303
+    )
+
+
+# 삭제버튼
+@router.post('/notice/{notice_id}/delete')
+def notice_delete(
+    request: Request,
+    notice_id: int,
+    session: Session = Depends(get_session)
+):
+    # 로그인 확인
+    user_id = request.session.get('user_id')
+
+    if not user_id:
+        return popup_error("로그인이 필요합니다.")
+
+    # 게시글 존재 여부 및 작성자 확인
+    sql_check = text('''
+        SELECT user_id
+        FROM notice
+        WHERE notice_id = :notice_id
+        FOR UPDATE
+    ''')
+
+    notice = session.execute(
+        sql_check,
+        {'notice_id': notice_id}
+    ).mappings().first()
+
+    if notice is None:
+        session.rollback()
+        return popup_error("게시글이 없습니다.")
+
+    # 현재 로그인한 사용자의 관리자 권한 조회
+    adminchk = text('''
+        SELECT user_status_id
+        FROM user
+        WHERE user_id = :user_id
+    ''')
+
+    adm_chk = session.execute(
+        adminchk,
+        {'user_id': user_id}
+    ).scalar_one_or_none()
+
+    # 관리자 권한 확인
+    if adm_chk != 1:
+        session.rollback()
+        return popup_error("관리자만 공지사항을 삭제할 수 있습니다.")
+
+    try:
+        # 공지사항 삭제
+        sql_delete_notice = text('''
+            DELETE FROM notice
+            WHERE notice_id = :notice_id
+        ''')
+
+        result = session.execute(
+            sql_delete_notice,
+            {'notice_id': notice_id}
+        )
+
+        if result.rowcount == 0:
+            session.rollback()
+            return popup_error("게시글 삭제에 실패했습니다.")
+
+        # 삭제 확정
+        session.commit()
+
+    except Exception:
+        session.rollback()
+        raise
+
+    # 공지사항 목록으로 이동
+    return RedirectResponse(
+        url='/jobgogo/notice',
         status_code=303
     )
