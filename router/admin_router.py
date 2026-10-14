@@ -235,7 +235,7 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
         print(e)
 
         return RedirectResponse (
-            url='/admin-users', status_code=303
+            url='/jobgogo/admin-users', status_code=303
         )
 
 @router.get('jobgogo/admin/user/search')

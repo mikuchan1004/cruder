@@ -56,8 +56,10 @@
                         <span class="badge status-warning">경고</span>
                         {% elif user.user_status_id == 1 %}
                         <span class="badge status-admin"> 최고 관리자</span>
+                        {% elif user.user_status_id == 2 %}
+                        <span class="badge status-admin"> 일반 관리자</span>
                         {% else %}
-                        <span class="badge status-normal ">정상</span>
+                        <span class="badge status-normal ">일반 회원</span>
                         {% endif %}
                     </div>
                     <div class="col action-buttons" data-label="관리">
@@ -80,9 +82,14 @@
                         </form>
                         {% endif %}
 
+                        {% if user.user_status_id == 1 and 2 %}
+                        <form method="post" action="/jobgogo/admin-users">
+                            <button class="btn btn-red">회원 삭제</button>
+                            {% else %}
                         <form method="post" action="/admin/user/delete/{{user.user_id}}">
                             <button class="btn btn-red" type="submit">회원 삭제</button>
                         </form>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
