@@ -7,7 +7,9 @@
     <title>글쓰기 에디터</title>
     <link rel="stylesheet" href="../assets/write.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link rel="stylesheet" href="/assets/header.css">
+    <link rel="stylesheet" href="/assets/footer.css">
+    
     <style>
         /* 본문 입력 영역 */
         #editor {
@@ -34,9 +36,7 @@
 </head>
 <body>
 
-    <header class="wireframe-header">
-        헤더
-    </header>
+    {% include 'header.html' %}
 
     <main class="main-container">
 
@@ -130,9 +130,7 @@
         </form>
     </main>
 
-    <footer class="wireframe-footer">
-        푸터
-    </footer>
+    {% include 'footer.html' %}
 
     <script>
         const editor = document.getElementById("editor");

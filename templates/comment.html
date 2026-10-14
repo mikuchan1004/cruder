@@ -1,66 +1,94 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>댓글 영역 와이어프레임</title>
-    <link rel="stylesheet" href="../assets/comment.css">
-    <!-- FontAwesome (프로필 아이콘 등을 위해 사용) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <div class="comments-section">
-        <!-- 댓글 타이틀 -->
-        <h2 class="comments-title">댓글</h2>
+<!-- 댓글 영역 -->
+<section class="comments-section">
 
-        <!-- 댓글 리스트 영역 -->
-        <div class="comments-list">
-            <!-- 댓글 아이템 1 (내 댓글 - 삭제 버튼 있음) -->
-            <div class="comment-item">
-                <div class="comment-avatar">
-                    <i class="fa-regular fa-user"></i>
-                </div>
-                <div class="comment-content">
-                    <div class="comment-header">
-                        <span class="author">익명1</span>
-                        <span class="date">2025-05-11</span>
-                    </div>
-                    <div class="comment-body">
-                        <p class="text">꿀팁 감사요~</p>
-                        <button type="button" class="btn-delete">삭제</button>
-                    </div>
-                </div>
+    <!-- 댓글 타이틀 -->
+    <h2 class="comments-title">댓글</h2>
+
+    <!-- 댓글 리스트 영역 -->
+    <div class="comments-list">
+
+        <!-- 댓글 목록 -->
+        {% for comment in reple_list %}
+
+        <div class="comment-item">
+
+            <div class="comment-avatar">
+                <i class="fa-regular fa-user"></i>
             </div>
 
-            <!-- 댓글 아이템 2 -->
-            <div class="comment-item">
-                <div class="comment-avatar">
-                    <i class="fa-regular fa-user"></i>
+            <div class="comment-content">
+
+                <div class="comment-header">
+
+                    <!-- 댓글 작성자 -->
+                    <span class="author">
+                        {{ comment.user_id }}
+                    </span>
+
                 </div>
-                <div class="comment-content">
-                    <div class="comment-header">
-                        <span class="author">익명7</span>
-                        <span class="date">2025-05-11</span>
-                    </div>
-                    <div class="comment-body">
-                        <p class="text">잘 썼어요</p>
-                    </div>
+
+                <div class="comment-body">
+
+                    <!-- 댓글 내용 -->
+                    <p class="text">{{ comment.reple }}</p>
+
+                    <!-- 본인이 작성한 댓글일 때만 삭제 버튼 표시 -->
+                    {% if user_id == comment.user_id %}
+                        <form
+                            action="/jobtip/{{ job.job_tip_no }}/reple/del"
+                            method="post"
+                            onsubmit="return confirm('댓글을 삭제하시겠습니까?');"
+                        >
+                            <input
+                                type="hidden"
+                                name="reple_no"
+                                value="{{ comment.reple_no }}"
+                            >
+
+                            <button type="submit" class="btn-delete">
+                                삭제
+                            </button>
+                        </form>
+                    {% endif %}
+
                 </div>
+
             </div>
         </div>
 
-        <!-- 페이지네이션 (드롭다운 형태) -->
-        <div class="comments-pagination">
-            <select aria-label="페이지 선택">
-                <option value="1">1</option>
-            </select>
-        </div>
+        {% else %}
 
-        <!-- 댓글 입력 영역 -->
-        <div class="comment-input-area">
-            <input type="text" class="comment-input" placeholder="입력 필드">
-            <button type="button" class="btn-submit">전송</button>
-        </div>
+        <!-- 댓글이 없는 경우 -->
+        <p>등록된 댓글이 없습니다.</p>
+
+        {% endfor %}
+
     </div>
-</body>
-</html>
+
+    <!-- 페이지네이션 -->
+    <div class="comments-pagination">
+        <select aria-label="페이지 선택">
+            <option value="1">1</option>
+        </select>
+    </div>
+
+    <!-- 댓글 입력 영역전개 -->
+    <form
+    action="/jobtip/{{ job.job_tip_no }}"
+    method="post"
+    class="comment-input-area"
+>
+    <input
+        type="text"
+        name="reple"
+        class="comment-input"
+        placeholder="댓글을 입력하세요"
+        required
+    >
+
+    <button type="submit" class="btn-submit">
+        전송
+    </button>
+</form>
+
+</section>
