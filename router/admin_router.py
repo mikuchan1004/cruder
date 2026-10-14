@@ -311,7 +311,7 @@ def lose_admin (request:Request, user_id: str, session:Session = Depends(get_ses
     sql = text('''
         update user
         set user_status_id = 3
-        where user_id = :user_id and user_status_id = 1 and 2 
+        where user_id = :user_id and user_status_id = 2
     ''')
 
     session.execute(sql, {'user_id' : user_id})
