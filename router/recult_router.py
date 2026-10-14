@@ -38,7 +38,7 @@ router.mount(
 # 메인 페이지 접속 라우팅
 ########################################################## 
 
-# 이거는 지피티가 짜준 예시 코드라고 생각하면 될거같음..
+
 
 @router.get('/jobgogo/recult')
 def recult(
@@ -47,18 +47,21 @@ def recult(
     page: int = 1,
     session: Session = Depends(get_session)
 ):
+    print('취업 공고 사이트 접속 성공!')
+    # 혹시 모를 공백을 제거한다.
+    
+    keyword=keyword.strip()
     # 한 페이지당 9개
-    limit = 9
-
+    search_keyword = f'%{keyword}%'
     # 페이지 번호 계산
     if page<1:
-        page=1     
+        page=1 
     
+    # 한 페이지에 게시물 9개싞 보여줌
+    limit = 9
     offset = (page - 1) * limit
 
-    search_keyword = f'%{keyword}%'
-
-    # 채용공고 조회
+    # 데이터 베이스에서 채용 중인 항목만 조회함
     sql = text('''
         SELECT *
         FROM jobs

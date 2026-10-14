@@ -14,11 +14,14 @@ templates = Jinja2Templates(directory='templates/')
 
 
 ################################################################################
-#  1:1 문의 라우팅
+#  1:1 문의 라우팅(로그인 된 사람만 접속 가능한 설정임.)
 ################################################################################
 
 @router.get('/inquiry')
-def inquiry(request:Request):
+def inquiry(request:Request,
+            ):
     return templates.TemplateResponse(
         request,'inquiry.html'
     )
+    
+    
