@@ -93,7 +93,7 @@
                         <div class="col font-bold" data-label="유형">{{inquiry.inquiry_type}}</div>
                         <div class="col font-bold truncate" data-label="제목">{{inquiry.inquiry_title}}</div>
                         <div class="col" data-label="상태">
-                            {% if inquiry.inquiry_status_name == '답변완료' %}
+                            {% if inquiry.inquiry_status_id == 2 %}
                             <span class=" badge completed">{{inquiry.inquiry_status_name}}</span>
                             {% else %}
                             <span class=" badge pending">{{inquiry.inquiry_status_name}}</span>

@@ -497,6 +497,7 @@ def admin_inquiry(request:Request,  session:Session = Depends(get_session)):
             u.user_name, 
             inq.inquiry_type, 
             inq.inquiry_title,
+            inq.inquiry_status_id,
             inq.inquiry_answer,
             inqs.inquiry_status_name
         from inquiry as inq
