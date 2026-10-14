@@ -58,10 +58,7 @@
                     <p>현재 모집 중인 채용 공고를 확인해보세요.</p>
                 </div>
 
-                <a href="/jobgogo/recult" class="view-all">
-                    전체 보기
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
+        
             </div>
 
             <!-- 채용 공고 카드 영역 -->
@@ -135,17 +132,26 @@
         <!-- 페이지네이션: 현재 디자인만 적용 -->
         <div class="pagination">
 
-            <button type="button" class="page-btn arrow">◀</button>
+    {% if page > 1 %}
+    <a href="/jobgogo/recult?page={{ page - 1 }}&keyword={{ keyword | urlencode }}">
+        이전
+    </a>
+    {% endif %}
 
-            <button type="button" class="page-btn active">1</button>
-            <button type="button" class="page-btn">2</button>
-            <button type="button" class="page-btn">3</button>
-            <button type="button" class="page-btn">4</button>
-            <button type="button" class="page-btn">5</button>
+    {% for p in range(1, total_pages + 1) %}
+    <a href="/jobgogo/recult?page={{ p }}&keyword={{ keyword | urlencode }}"
+       class="{% if p == page %}active{% endif %}">
+        {{ p }}
+    </a>
+    {% endfor %}
 
-            <button type="button" class="page-btn arrow">▶</button>
+    {% if page < total_pages %}
+    <a href="/jobgogo/recult?page={{ page + 1 }}&keyword={{ keyword | urlencode }}">
+        다음
+    </a>
+    {% endif %}
 
-        </div>
+</div>
 
     </main>
 
