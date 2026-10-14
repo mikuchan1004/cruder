@@ -28,7 +28,11 @@
                         채용 공고 관리
                     </a>
                 </li>
-                <li><a href="#">문의관리</a></li>
+                <li><a href="/jobgogo/admin-inquiry"
+                    class="{{ 'active' if request.url.path.startswith('/jobgogo/admin-inquiry') else '' }}">
+                        문의관리
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
