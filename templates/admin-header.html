@@ -1,39 +1,39 @@
-    <header class="admin-header">
-        <div class="header-left">
-            <h1 class="logo">관리자페이지</h1>
-            <nav class="gnb">
-                <ul>
-                    <li>
-                        <a href="/jobgogo/admin"
-                        class="{{ 'active' if request.url.path == '/jobgogo/admin' else '' }}">
-                            대시보드
-                        </a>
-                    </li>
+<header class="admin-header">
+    <div class="header-left">
+        <h1 class="logo">관리자페이지</h1>
+        <nav class="gnb">
+            <ul>
+                <li>
+                    <a href="/jobgogo/admin" class="{{ 'active' if request.url.path == '/jobgogo/admin' else '' }}">
+                        대시보드
+                    </a>
+                </li>
 
-                    <li>
-                        <a href="/jobgogo/admin-users"
+                <li>
+                    <a href="/jobgogo/admin-users"
                         class="{{ 'active' if request.url.path.startswith('/jobgogo/admin-users') else '' }}">
-                            회원관리
-                        </a>
-                    </li>
+                        회원관리
+                    </a>
+                </li>
 
-                    <li>
-                        <a href="/jobgogo/admin-board"
+                <li>
+                    <a href="/jobgogo/admin-board"
                         class="{{ 'active' if request.url.path.startswith('/jobgogo/admin-board') else '' }}">
-                            게시물관리
-                        </a>
-                    </li>
-                    <li><a href="/jobgogo/admin-recult"
-                        class="{{'active' if request.url.path.startswith('/jobgogo/admin-recult') else "}}">
+                        게시물관리
+                    </a>
+                </li>
+                <li>
+                    <a href="/jobgogo/admin-recult"
+                        class="{{ 'active' if request.url.path.startswith('/jobgogo/admin-recult') else '' }}">
                         채용 공고 관리
                     </a>
                 </li>
-                    <li><a href="#">문의관리</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="header-right">
-            <span class="admin-greeting">{{ request.session.get('user_name') }}님 환영합니다</span>
-            <a href="/jobgogo/logout" class="btn-logout">로그아웃</a>
-        </div>
-    </header>
+                <li><a href="#">문의관리</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="header-right">
+        <span class="admin-greeting">{{ request.session.get('user_name') }}님 환영합니다</span>
+        <a href="/jobgogo/logout" class="btn-logout">로그아웃</a>
+    </div>
+</header>
