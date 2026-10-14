@@ -497,6 +497,7 @@ def admin_inquiry(request:Request,  session:Session = Depends(get_session)):
             u.user_name, 
             inq.inquiry_type, 
             inq.inquiry_title,
+            inq.inquiry_answer,
             inqs.inquiry_status_name
         from inquiry as inq
         left join user as u on inq.user_id = u.user_id
@@ -508,6 +509,29 @@ def admin_inquiry(request:Request,  session:Session = Depends(get_session)):
     return templates.TemplateResponse(request,'admin-inquiry.html', {
         'inquiry_lists' : results
     })
+
+@router.post('/jobgogo/admin-inquiry/answer/{id}')
+def answer_inquiry(  request: Request,  
+    id : int, inquiry_answer: str = Form(),
+    session: Session = Depends(get_session), 
+    _: None = Depends(require_admin)):
+    print ('문의 답변을 실행합니다.')
+
+    sql = text ('''
+        update inquiry 
+        set 
+            inquiry_answer = :inquiry_answer,
+            inquiry_status_id = 2,
+            inquiry_answer_date = NOW()
+        where inquiry_id = :id
+    ''')
+    session.execute(sql, {
+        'id' : id,
+        'inquiry_answer' : inquiry_answer
+    }) 
+    session.commit()
+
+    return RedirectResponse(url='/jobgogo/admin-inquiry' , status_code=303)
 
 @router.get('/jobgogo/warning')
 def warning_page(

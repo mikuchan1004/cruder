@@ -5,6 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자페이지 - 문의관리</title>
     <link rel="stylesheet" href="../assets/admin-inquiry.css">
+    <script>
+        window.onload = ( ) => {
+            const rows = document.querySelectorAll('#adminInquiryTable  .table-row' )
+            const form = document.querySelector('#inquiryAnswerForm')
+            const typeDisplay = document.querySelector('#selectedInquiryType')
+            const titleDisplay = document.querySelector('#selectedInquiryTitle')
+            const answerTextarea = document.querySelector('#inquiryAnswer')
+
+            rows.forEach(row => {
+                row.addEventListener('click' , (e) => {
+                    rows.forEach(r => r.classList.remove('selected'))
+                    row.classList.add('selected')
+
+                    const id = row.dataset.id
+                    const type = row.dataset.type
+                    const title = row.dataset.title
+                    const answer = row.dataset.answer || ''
+
+                    typeDisplay.textContent = type
+                    titleDisplay.textContent = title
+                    answerTextarea.value = answer
+
+                    form.action=`/jobgogo/admin-inquiry/answer/${id}`
+                })
+            })
+
+            const statusFilter = document.querySelector('#inquiryStatusFilter')
+
+            statusFilter.addEventListener(
+                'change',
+                function () {
+                    const selected = this.value
+
+                    document.querySelectorAll('#adminInquiryTable  .table-row').forEach(row => {
+                        const badge = row.querySelector('.badge')
+                        if (
+                            (selected === 'all' || (badge && badge.classList.contains(selected)))
+                        ) {
+                            row.style.display = ''
+                        } else {
+                            row.style.display = 'none'
+                        }
+                    })
+                }
+            )
+        } 
+    </script>
 </head>
 <body>
     <!-- 상단 헤더 영역 -->
@@ -14,17 +61,17 @@
     <main class="admin-main">
         <div class="page-header">
             <h2 class="section-title">문의관리</h2>
-            <select class="status-filter">
+            <select class="status-filter" id="inquiryStatusFilter">
                 <option value="all">전체</option>
-                <option value="pending">답변대기</option>
                 <option value="completed">답변완료</option>
+                <option value="pending">답변대기</option>
             </select>
         </div>
-        
+
         <div class="content-wrapper">
             <!-- 좌측 문의 목록 테이블 영역 -->
             <section class="inquiry-list-section">
-                <div class="board-table">
+                <div class="board-table" id="adminInquiryTable">
                     <!-- 테이블 헤더 -->
                     <div class="table-header">
                         <div class="col" data-label="글 번호">글 번호</div>
@@ -33,44 +80,46 @@
                         <div class="col" data-label="제목">제목</div>
                         <div class="col" data-label="상태">상태</div>
                     </div>
-                    
-                    <!-- 리스트 아이템 1 -->
-                    <div class="table-row">
-                        <div class="col font-bold" data-label="글 번호">1</div>
-                        <div class="col font-bold" data-label="회원">user1</div>
-                        <div class="col font-bold" data-label="유형">AI 채팅</div>
-                        <div class="col font-bold truncate" data-label="제목">AI 채팅은 어디서 할 수 있나요</div>
-                        <div class="col" data-label="상태"><span class="badge pending">답변대기</span></div>
-                    </div>
 
-                    <!-- 리스트 아이템 2 -->
-                    <div class="table-row text-gray">
-                        <div class="col" data-label="글 번호">2</div>
-                        <div class="col" data-label="회원">user2</div>
-                        <div class="col" data-label="유형">사이트 이용</div>
-                        <div class="col truncate" data-label="제목">회원 탈퇴는 어디서 할 수 있나요</div>
-                        <div class="col" data-label="상태"><span class="badge completed">답변완료</span></div>
+                    <!-- 리스트 아이템 1 -->
+                    {% for inquiry in inquiry_lists%}
+                    <div class="table-row" 
+                    data-id="{{inquiry.inquiry_id}}" 
+                    data-type="{{inquiry.inquiry_type}}"
+                    data-title="{{inquiry.inquiry_title}}"
+                    data-answer="{{inquiry.inquiry_answer if inquiry.inquiry_answer else ''}}">
+                        <div class="col font-bold" data-label="글 번호">{{inquiry.inquiry_id}}</div>
+                        <div class="col font-bold" data-label="회원">{{inquiry.user_name}}</div>
+                        <div class="col font-bold" data-label="유형">{{inquiry.inquiry_type}}</div>
+                        <div class="col font-bold truncate" data-label="제목">{{inquiry.inquiry_title}}</div>
+                        <div class="col" data-label="상태">
+                            {% if inquiry.inquiry_status_name == '답변완료' %}
+                            <span class=" badge completed">{{inquiry.inquiry_status_name}}</span>
+                            {% else %}
+                            <span class=" badge pending">{{inquiry.inquiry_status_name}}</span>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
+                    {% endfor %}
             </section>
 
             <!-- 우측 문의 답변 폼 영역 -->
             <section class="inquiry-reply-section">
                 <div class="reply-box">
                     <h3 class="reply-title">문의 답변</h3>
-                    
+
                     <div class="inquiry-info">
-                        <h4 class="inquiry-type">AI 채팅</h4>
-                        <p class="inquiry-question">AI 채팅은 어디서 할 수 있나요</p>
+                        <h4 class="inquiry-type" id="selectedInquiryType">목록에서 문의를 선택해 주세요.</h4>
+                        <p class="inquiry-question" id="selectedInquiryTitle">제목이 여기에 표시됩니다.</p>
                     </div>
-                    
-                    <div class="reply-form">
-                        <label class="reply-label">답변</label>
-                        <textarea class="reply-textarea" placeholder="답변 내용을 입력해주세요.">AI 채팅은 메인페이지의 공고 영역 하단에 있는 버튼을 누르시면 됩니다. 감사합니다.</textarea>
-                    </div>
-                    
-                    <button type="button" class="btn-submit">답변 등록</button>
+                    <form method="post" action="/jobgogo/admin-inquiry/answer/{id}" id="inquiryAnswerForm">
+                        <div class="reply-form">
+                            <label class="reply-label">답변</label>
+                            <textarea class="reply-textarea" id="inquiryAnswer" name="inquiry_answer" placeholder="답변을 입력해주세요."></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit" id="inquiryAnswerButton">답변 등록</button>
                 </div>
+                </form>
             </section>
         </div>
     </main>
