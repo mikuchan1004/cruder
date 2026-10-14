@@ -1,0 +1,448 @@
+
+/* ==========================================
+   1:1 문의 상세보기
+   inquiry_detail.css
+========================================== */
+
+/* 기본 설정 */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    background-color: #f8f9fc;
+    color: #333;
+}
+
+/* ==========================================
+   메인 영역
+========================================== */
+
+.inquiry-main {
+    width: 100%;
+    min-height: 75vh;
+    padding: 60px 20px 100px;
+}
+
+.inquiry-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ==========================================
+   페이지 제목
+========================================== */
+
+.page-title {
+    margin-bottom: 35px;
+}
+
+.page-title h1 {
+    margin: 0 0 12px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #242424;
+}
+
+.page-title p {
+    margin: 0;
+    font-size: 15px;
+    color: #888;
+}
+
+/* ==========================================
+   문의 상세 박스
+========================================== */
+
+.inquiry-detail-box {
+    background: #ffffff;
+    border: 1px solid #e8e8ee;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.025);
+}
+
+/* 문의 제목 및 상태 */
+
+.inquiry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 32px 35px 28px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.inquiry-title-area {
+    flex: 1;
+    min-width: 0;
+}
+
+/* 문의 유형 */
+
+.inquiry-type {
+    display: inline-block;
+    padding: 6px 13px;
+    margin-bottom: 14px;
+    background-color: #f1edff;
+    color: #7154c9;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* 문의 제목 */
+
+.inquiry-title-area h2 {
+    margin: 0;
+    font-size: 23px;
+    font-weight: 700;
+    color: #252525;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+/* ==========================================
+   답변 처리 상태
+========================================== */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* 답변 대기 */
+
+.status-badge.waiting {
+    background-color: #fff3dc;
+    color: #b77b00;
+}
+
+/* 답변 완료 */
+
+.status-badge.completed {
+    background-color: #e7f7ed;
+    color: #23864b;
+}
+
+/* ==========================================
+   문의 작성 정보
+========================================== */
+
+.inquiry-info {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 21px 35px;
+    background-color: #fcfcfe;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 14px;
+}
+
+.info-label {
+    color: #999999;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.info-value {
+    color: #444444;
+    font-weight: 500;
+}
+
+/* ==========================================
+   문의 내용
+========================================== */
+
+.inquiry-content {
+    padding: 35px;
+    min-height: 270px;
+}
+
+.inquiry-content h3 {
+    margin: 0 0 25px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #333333;
+}
+
+.content-text {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #555555;
+
+    /* 사용자가 입력한 줄바꿈 유지 */
+    white-space: pre-wrap;
+
+    /* 긴 문자 줄바꿈 */
+    overflow-wrap: anywhere;
+}
+
+/* ==========================================
+   관리자 답변 영역
+========================================== */
+
+.answer-box {
+    margin-top: 25px;
+    background-color: #ffffff;
+    border: 1px solid #e8e8ee;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.025);
+}
+
+/* 답변 제목 */
+
+.answer-header {
+    padding: 25px 35px;
+    border-bottom: 1px solid #eeeeee;
+    background-color: #fcfbff;
+}
+
+.answer-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333333;
+}
+
+/* 관리자 정보 */
+
+.answer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 35px 0;
+    font-size: 14px;
+    color: #888888;
+}
+
+.answer-info span:first-child {
+    color: #7154c9;
+    font-weight: 700;
+}
+
+/* 답변 내용 */
+
+.answer-content {
+    min-height: 130px;
+    padding: 25px 35px 40px;
+
+    font-size: 15px;
+    line-height: 1.9;
+    color: #555555;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+/* ==========================================
+   답변 대기 상태
+========================================== */
+
+.answer-waiting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    min-height: 220px;
+    padding: 45px 20px;
+}
+
+/* 대기 아이콘 */
+
+.waiting-icon {
+    font-size: 38px;
+    margin-bottom: 18px;
+}
+
+/* 대기 메시지 */
+
+.answer-waiting p {
+    margin: 0 0 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #555555;
+}
+
+.answer-waiting span {
+    display: block;
+    font-size: 13px;
+    color: #999999;
+    line-height: 1.8;
+}
+
+/* ==========================================
+   하단 버튼
+========================================== */
+
+.button-area {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+}
+
+.btn-list {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 160px;
+    height: 47px;
+    padding: 0 25px;
+
+    background-color: #7353c5;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.btn-list:hover {
+    background-color: #5f40ae;
+    transform: translateY(-2px);
+}
+
+.btn-list:active {
+    transform: translateY(0);
+}
+
+/* ==========================================
+   태블릿 반응형
+========================================== */
+
+@media (max-width: 1024px) {
+
+    .inquiry-container {
+        max-width: 900px;
+    }
+
+    .inquiry-main {
+        padding: 45px 25px 80px;
+    }
+
+}
+
+/* ==========================================
+   모바일 반응형
+========================================== */
+
+@media (max-width: 768px) {
+
+    .inquiry-main {
+        padding: 35px 15px 60px;
+    }
+
+    .page-title {
+        margin-bottom: 25px;
+    }
+
+    .page-title h1 {
+        font-size: 24px;
+    }
+
+    .page-title p {
+        font-size: 13px;
+    }
+
+    /* 문의 헤더 */
+
+    .inquiry-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 25px 20px;
+    }
+
+    .inquiry-title-area h2 {
+        font-size: 20px;
+    }
+
+    /* 작성 정보 */
+
+    .inquiry-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    /* 문의 내용 */
+
+    .inquiry-content {
+        padding: 25px 20px;
+        min-height: 200px;
+    }
+
+    .inquiry-content h3 {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .content-text {
+        font-size: 14px;
+    }
+
+    /* 관리자 답변 */
+
+    .answer-box {
+        margin-top: 20px;
+    }
+
+    .answer-header {
+        padding: 20px;
+    }
+
+    .answer-header h3 {
+        font-size: 16px;
+    }
+
+    .answer-info {
+        padding: 20px 20px 0;
+    }
+
+    .answer-content {
+        padding: 20px;
+        font-size: 14px;
+    }
+
+    .answer-waiting {
+        padding: 40px 15px;
+    }
+
+    /* 버튼 */
+
+    .button-area {
+        margin-top: 25px;
+    }
+
+    .btn-list {
+        width: 100%;
+    }
+
+}
