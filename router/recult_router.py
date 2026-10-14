@@ -86,6 +86,26 @@ def recult(
 
     jobs = result.mappings().fetchall()
 
+    # 로그인한 사용자의 찜한 공고 ID 조회
+    user_id = request.session.get('user_id')
+    bookmarked_job_ids = set()
+
+    if user_id:
+        bookmark_sql = text('''
+            SELECT recrut_pblnt_sn
+            FROM bookmark
+            WHERE user_id = :user_id
+        ''')
+
+        bookmark_result = session.exec(
+            bookmark_sql,
+            params={'user_id': user_id}
+        )
+
+        bookmarked_job_ids = {
+            row[0] for row in bookmark_result.fetchall()
+        }
+
     # 전체 검색 결과 개수 조회
     count_sql = text('''
         SELECT COUNT(*)
@@ -116,6 +136,7 @@ def recult(
             'keyword': keyword,
             'page': page,
             'total_pages': total_pages,
+            'bookmarked_job_ids': bookmarked_job_ids,
             'user_id': request.session.get('user_id'),
             'user_name': request.session.get('user_name'),
             'user_status_id': request.session.get('user_status_id')

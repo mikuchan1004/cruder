@@ -74,8 +74,10 @@
                             <span class="badge recruiting">
                                 모집중
                             </span>
-
-                            <i class="fa-regular fa-star icon-bookmark"></i>
+                            <i
+                                class="fa-star icon-bookmark {% if job.recrut_pblnt_sn in bookmarked_job_ids %}fa-solid{% else %}fa-regular{% endif %}"
+                                data-job-id="{{ job.recrut_pblnt_sn }}"
+                            ></i>
                         </div>
 
                         <!-- 카드 본문 -->
@@ -156,6 +158,6 @@
     </main>
 
     {% include 'footer.html' %}
-
+    <script src="/assets/bookmark.js"></script>
 </body>
 </html>

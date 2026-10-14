@@ -3,83 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>찜한 공고 목록 - 취업 할래말래</title>
-    <link rel="stylesheet" href="../assets/bookmark.css">
-    <!-- FontAwesome (사용자 프로필 아이콘 렌더링용) -->
+    <title>찜한 공고 목록 - 취업할래 말래</title>
+
+    <link rel="stylesheet" href="/assets/header.css">
+    <link rel="stylesheet" href="/assets/my-page.css?v=20261014">
+    <link rel="stylesheet" href="/assets/bookmark.css?v=20261014">
+    <link rel="stylesheet" href="/assets/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- 상단 임시 헤더 -->
-    <header class="wireframe-header">
-        헤더
-    </header>
+    {% include 'header.html' %}
 
-    <!-- 메인 레이아웃 컨테이너 -->
-    <main class="mypage-container">
-        <!-- 좌측 사이드바 영역 -->
-        <aside class="sidebar">
-            <h2 class="sidebar-title">마이페이지</h2>
-            <ul class="sidebar-menu">
-                <li><a href="#">회원 정보 수정</a></li>
-                <li><a href="#">쓴 글 목록</a></li>
-                <li><a href="#" class="active">찜한 공고 목록</a></li>
-                <li><a href="#">일대일 문의</a></li>
-            </ul>
-        </aside>
-
-        <!-- 우측 메인 콘텐츠 영역 -->
-        <section class="content-area">
-            <!-- 사용자 정보 및 타이틀 -->
-            <div class="user-greeting">
-                <div class="avatar">
-                    <i class="fa-regular fa-user"></i>
-                </div>
-                <h3>OOO 님이 최근 찜한 게시글 목록</h3>
-            </div>
-
-            <!-- 찜한 공고 테이블 -->
-            <div class="bookmark-table">
-                <!-- 데스크톱용 테이블 헤더 -->
-                <div class="table-header">
-                    <div class="col-company">회사명</div>
-                    <div class="col-title">공고명</div>
-                    <div class="col-exp">경력</div>
-                    <div class="col-loc">지역</div>
-                    <div class="col-detail">상세</div>
-                    <div class="col-check"></div> <!-- 체크박스 영역 -->
-                </div>
-                
-                <!-- 리스트 아이템 1 -->
-                <div class="table-row">
-                    <div class="col-company" data-label="회사명">네이버</div>
-                    <div class="col-title" data-label="공고명">백엔드 개발자 모집</div>
-                    <div class="col-exp" data-label="경력">3년이상</div>
-                    <div class="col-loc" data-label="지역">천안시 동남구</div>
-                    <div class="col-detail"><a href="#" class="btn-detail">상세보기</a></div>
-                    <div class="col-check"><input type="checkbox" checked class="custom-checkbox"></div>
-                </div>
-
-                <!-- 리스트 아이템 2 -->
-                <div class="table-row">
-                    <div class="col-company" data-label="회사명">구글</div>
-                    <div class="col-title" data-label="공고명">백엔드 개발자 모집</div>
-                    <div class="col-exp" data-label="경력">5년이상</div>
-                    <div class="col-loc" data-label="지역">천안시 서북구</div>
-                    <div class="col-detail"><a href="#" class="btn-detail">상세보기</a></div>
-                    <div class="col-check"><input type="checkbox" class="custom-checkbox"></div>
-                </div>
-            </div>
-
-            <!-- 하단 삭제 버튼 영역 -->
-            <div class="action-area">
-                <button type="button" class="btn-delete">삭제</button>
+    <main class="mypage-main">
+        <section class="mypage-hero" aria-labelledby="bookmark-page-title">
+            <div class="hero-copy">
+                <span class="hero-eyebrow">MY PAGE</span>
+                <h1 id="bookmark-page-title">찜한 공고 목록</h1>
+                <p>관심 있는 채용 공고를 한곳에서 확인하고 관리해보세요.</p>
             </div>
         </section>
+
+        <div class="mypage-layout">
+            <aside class="mypage-sidebar" aria-label="마이페이지 메뉴">
+                <div class="sidebar-heading">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <i class="fa-regular fa-user"></i>
+                    </span>
+                    <div>
+                        <strong>{{ user_name }}</strong>
+                        <span>회원님</span>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a href="/jobgogo/mypage">
+                        <i class="fa-solid fa-house"></i>
+                        <span>마이페이지 홈</span>
+                    </a>
+                    <a href="/jobgogo/mypage/edit">
+                        <i class="fa-regular fa-address-card"></i>
+                        <span>회원 정보 수정</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                        <span>쓴 글 목록</span>
+                    </a>
+                    <a href="/jobgogo/mypage/bookmarks" class="active" aria-current="page">
+                        <i class="fa-regular fa-star"></i>
+                        <span>찜한 공고 목록</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa-regular fa-circle-question"></i>
+                        <span>일대일 문의</span>
+                    </a>
+                </nav>
+            </aside>
+
+            <section class="mypage-content">
+                <article class="profile-card bookmark-summary-card">
+                    <div class="profile-avatar bookmark-summary-icon" aria-hidden="true">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+
+                    <div class="profile-copy">
+                        <span class="profile-label">BOOKMARK</span>
+                        <h2>{{ user_name }}님의 관심 공고</h2>
+                        <p>찜한 공고를 확인하고, 필요 없는 공고는 선택해서 한 번에 삭제할 수 있어요.</p>
+                    </div>
+
+                    <span class="bookmark-total" aria-label="찜한 공고 수">
+                        <strong>{{ bookmarks|length }}</strong>
+                        <span>개</span>
+                    </span>
+                </article>
+
+                <section class="menu-section bookmark-section" aria-labelledby="bookmark-list-title">
+                    <div class="section-title-group bookmark-section-heading">
+                        <div>
+                            <span class="section-kicker">SAVED JOBS</span>
+                            <h2 id="bookmark-list-title">저장한 채용 공고</h2>
+                        </div>
+                        <p>체크박스로 공고를 선택한 뒤 삭제할 수 있습니다.</p>
+                    </div>
+
+                    {% if bookmarks %}
+                    <form
+                        id="bookmark-delete-form"
+                        action="/jobgogo/mypage/bookmarks/delete"
+                        method="post"
+                    >
+                        <div class="bookmark-toolbar">
+                            <label class="select-all-label" for="select-all">
+                                <input
+                                    type="checkbox"
+                                    id="select-all"
+                                    class="bookmark-checkbox"
+                                >
+                                <span>전체 선택</span>
+                            </label>
+
+                            <div class="bookmark-toolbar-actions">
+                                <span class="selected-count" id="selected-count" aria-live="polite">
+                                    0개 선택
+                                </span>
+                                <button
+                                    type="submit"
+                                    class="delete-button"
+                                    id="delete-selected"
+                                >
+                                    <i class="fa-regular fa-trash-can" aria-hidden="true"></i>
+                                    <span>선택 삭제</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bookmark-table" role="table" aria-label="찜한 채용 공고">
+                            <div class="bookmark-row bookmark-table-header" role="row">
+                                <div class="bookmark-check" role="columnheader">
+                                    <span class="sr-only">선택</span>
+                                </div>
+                                <div role="columnheader">회사명</div>
+                                <div role="columnheader">공고명</div>
+                                <div role="columnheader">채용구분</div>
+                                <div role="columnheader">지역</div>
+                                <div role="columnheader">상세</div>
+                            </div>
+
+                            {% for bookmark in bookmarks %}
+                            <div class="bookmark-row" role="row">
+                                <div class="bookmark-check" data-label="선택" role="cell">
+                                    <label class="bookmark-check-label">
+                                        <input
+                                            type="checkbox"
+                                            name="recrut_pblnt_sn"
+                                            value="{{ bookmark.recrut_pblnt_sn }}"
+                                            class="bookmark-checkbox item-checkbox"
+                                            aria-label="{{ bookmark.recrut_pbanc_ttl }} 선택"
+                                        >
+                                        <span class="sr-only">{{ bookmark.recrut_pbanc_ttl }} 선택</span>
+                                    </label>
+                                </div>
+
+                                <div class="bookmark-company" data-label="회사명" role="cell">
+                                    {{ bookmark.inst_nm }}
+                                </div>
+
+                                <div class="bookmark-title" data-label="공고명" role="cell" title="{{ bookmark.recrut_pbanc_ttl }}">
+                                    {{ bookmark.recrut_pbanc_ttl }}
+                                </div>
+
+                                <div class="bookmark-type" data-label="채용구분" role="cell">
+                                    {{ bookmark.recrut_se_nm or '-' }}
+                                </div>
+
+                                <div class="bookmark-location" data-label="지역" role="cell">
+                                    {{ bookmark.work_rgn_nm_lst or '-' }}
+                                </div>
+
+                                <div class="bookmark-detail" data-label="상세" role="cell">
+                                    <a
+                                        href="https://job.alio.go.kr/mobile2021/recruit/recruitView.do?idx={{ bookmark.recrut_pblnt_sn }}"
+                                        class="detail-button"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        상세보기
+                                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </form>
+                    {% else %}
+                    <div class="bookmark-empty">
+                        <span class="empty-icon" aria-hidden="true">
+                            <i class="fa-regular fa-star"></i>
+                        </span>
+                        <strong>아직 찜한 공고가 없어요.</strong>
+                        <p>관심 있는 채용 공고의 별 아이콘을 누르면 이곳에서 다시 확인할 수 있습니다.</p>
+                        <a href="/jobgogo/recult">
+                            채용 공고 보러가기
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    {% endif %}
+                </section>
+
+                <aside class="mypage-guide">
+                    <span class="guide-icon" aria-hidden="true">
+                        <i class="fa-regular fa-lightbulb"></i>
+                    </span>
+                    <div>
+                        <strong>찜한 공고 안내</strong>
+                        <p>선택 삭제는 현재 로그인한 계정의 찜 목록에서만 처리되며, 원본 채용 공고 데이터에는 영향을 주지 않습니다.</p>
+                    </div>
+                </aside>
+            </section>
+        </div>
     </main>
 
-    <!-- 하단 임시 푸터 -->
-    <footer class="wireframe-footer">
-        푸터
-    </footer>
+    {% include 'footer.html' %}
+
+    <script>
+        (() => {
+            const form = document.getElementById('bookmark-delete-form')
+            if (!form) return
+
+            const selectAll = document.getElementById('select-all')
+            const deleteButton = document.getElementById('delete-selected')
+            const selectedCount = document.getElementById('selected-count')
+
+            const getItemCheckboxes = () =>
+                Array.from(form.querySelectorAll('.item-checkbox'))
+
+            const updateSelectionState = () => {
+                const itemCheckboxes = getItemCheckboxes()
+                const checkedCount = itemCheckboxes.filter(
+                    (checkbox) => checkbox.checked
+                ).length
+
+                if (selectedCount) {
+                    selectedCount.textContent = `${checkedCount}개 선택`
+                }
+
+                if (deleteButton) {
+                    deleteButton.disabled = checkedCount === 0
+                }
+
+                if (selectAll) {
+                    selectAll.checked =
+                        itemCheckboxes.length > 0 &&
+                        checkedCount === itemCheckboxes.length
+
+                    selectAll.indeterminate =
+                        checkedCount > 0 &&
+                        checkedCount < itemCheckboxes.length
+                }
+            }
+
+            if (selectAll) {
+                selectAll.addEventListener('change', () => {
+                    getItemCheckboxes().forEach((checkbox) => {
+                        checkbox.checked = selectAll.checked
+                    })
+
+                    updateSelectionState()
+                })
+            }
+
+            form.addEventListener('change', (event) => {
+                if (event.target.matches('.item-checkbox')) {
+                    updateSelectionState()
+                }
+            })
+
+            form.addEventListener('submit', (event) => {
+                const checked = getItemCheckboxes().some(
+                    (checkbox) => checkbox.checked
+                );
+
+                if (!checked) {
+                    event.preventDefault()
+                    updateSelectionState()
+                }
+            })
+
+            updateSelectionState();
+        })()
+    </script>
 </body>
 </html>
