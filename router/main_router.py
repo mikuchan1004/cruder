@@ -41,7 +41,7 @@ router.mount(
 @router.get('/jobgogo')
 def jobgogo(
     request: Request,
-    selectNum: str = '0',
+    selectNum: int = 8,
     keyword : str = "" ,
     session: Session = Depends(get_session)
 ):
@@ -67,7 +67,7 @@ def jobgogo(
         ''')
 
         # 채용공고 가져오기
-        result=session.exec(sql_jobs_notice,params={'keyword':search_keyword, 'selectNum':int(selectNum)})
+        result=session.exec(sql_jobs_notice,params={'keyword':search_keyword, 'selectNum':selectNum})
         jobs=result.mappings().fetchall()
         
         return templates.TemplateResponse(
