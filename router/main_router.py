@@ -69,6 +69,26 @@ def jobgogo(
         # 채용공고 가져오기
         result=session.exec(sql_jobs_notice,params={'keyword':search_keyword, 'selectNum':selectNum})
         jobs=result.mappings().fetchall()
+
+        # 로그인한 사용자의 찜한 공고 ID 조회
+        user_id = request.session.get('user_id')
+        bookmarked_job_ids = set()
+
+        if user_id:
+            bookmark_sql = text('''
+                SELECT recrut_pblnt_sn
+                FROM bookmark
+                WHERE user_id = :user_id
+            ''')
+
+            bookmark_result = session.exec(
+                bookmark_sql,
+                params={'user_id': user_id}
+            )
+
+            bookmarked_job_ids = {
+                row[0] for row in bookmark_result.fetchall()
+            }
         
         return templates.TemplateResponse(
             request=request,
@@ -76,6 +96,7 @@ def jobgogo(
             context={
                 "jobs": jobs,
                 "keyword" : keyword,
+                "bookmarked_job_ids": bookmarked_job_ids,
 
                 # 로그인 세션
                 "user_id": request.session.get("user_id"),

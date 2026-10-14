@@ -49,7 +49,10 @@
                     <div class="card-header">
              
                         <span class="badge recruiting">모집중</span>
-                        <i class="fa-regular fa-star icon-bookmark"></i>
+                        <i
+                            class="fa-star icon-bookmark {% if job.recrut_pblnt_sn in bookmarked_job_ids %}fa-solid{% else %}fa-regular{% endif %}"
+                            data-job-id="{{ job.recrut_pblnt_sn }}"
+                        ></i>
                     </div>
                     <div class="card-body">
                         <span class="company-name">{{job.inst_nm}}</span>
@@ -83,5 +86,6 @@
 
     {% include 'footer.html' %}  
     <script src="../assets/login.js"></script>
+    <script src="/assets/bookmark.js"></script>
 </body>
 </html>
