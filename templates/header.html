@@ -18,8 +18,8 @@
 
     <!-- 우측 사용자 메뉴 -->
     <div class="user-menu">
-
-        {% if user_id %}
+     
+        {% if request.session.get('user_id') %}
 
             {% if user_status_id == 1 or user_status_id == 2 %}
                 <a href="/jobgogo/admin" class="admin-link">관리자 페이지</a>
