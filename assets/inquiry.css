@@ -1,296 +1,247 @@
-/* ==================================
-   기본 리셋 및 폰트 설정
-=================================== */
+
+/* 기본 설정 */
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
 }
 
 body {
-    background-color: #F8F9FA;
-    color: #212529;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    margin: 0;
+    background: #f8f9fc;
+    color: #252538;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
 }
 
-ul {
-    list-style: none;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-/* ==================================
-   상단 헤더 영역
-=================================== */
-.main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 40px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #E5E7EB;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-}
-
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-}
-
-.logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #111;
-    letter-spacing: -0.5px;
-}
-
-.gnb ul {
-    display: flex;
-    gap: 30px;
-}
-
-.gnb a {
-    font-size: 1.05rem;
-    color: #6B7280;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.gnb a:hover {
-    color: #6B46C1;
-    font-weight: 600;
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.admin-link {
-    font-size: 0.95rem;
-    color: #4B5563;
-    transition: color 0.2s;
-}
-
-.admin-link:hover {
-    color: #6B46C1;
-}
-
-.btn-logout {
-    background-color: #6B46C1;
-    color: #fff;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
-}
-
-.btn-logout:hover {
-    background-color: #5533A3;
-    transform: translateY(-1px);
-}
-
-/* ==================================
-   메인 콘텐츠 영역 (좌우 분할)
-=================================== */
+/* 메인 */
 .inquiry-main {
-    flex: 1;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
+    padding: 55px 20px 85px;
+    min-height: 75vh;
 }
 
 .inquiry-container {
-    display: flex;
-    gap: 30px;
-    height: 100%;
-    min-height: 600px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-/* 좌측 문의 작성 폼 */
-.inquiry-write-box {
-    flex: 1;
-    background-color: #ffffff;
-    border: 1px solid #E5E7EB;
+/* 페이지 제목 */
+.inquiry-heading {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.inquiry-heading h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 12px;
+}
+
+.inquiry-heading p {
+    color: #888a9b;
+    font-size: 15px;
+    margin: 0;
+}
+
+/* 공통 섹션 */
+.inquiry-section {
+    background: #fff;
+    border: 1px solid #e5e6ed;
     border-radius: 16px;
     padding: 35px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    margin-bottom: 28px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.025);
 }
 
-.input-title {
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid #E5E7EB;
-    padding-bottom: 15px;
-    margin-bottom: 30px;
-    font-size: 1.15rem;
+.section-heading {
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #eeeef2;
+}
+
+.section-heading h2 {
+    font-size: 21px;
+    margin: 0 0 8px;
+}
+
+.section-heading p {
+    font-size: 14px;
+    color: #9395a5;
+    margin: 0;
+}
+
+/* 문의 작성 */
+.inquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group label {
+    font-size: 15px;
     font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid #dedfe7;
+    border-radius: 9px;
+    background: #fff;
+    padding: 14px 16px;
+    font-size: 15px;
+    font-family: inherit;
     outline: none;
-    color: #111;
     transition: border-color 0.2s;
 }
 
-.input-title:focus {
-    border-color: #6B46C1;
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #6842bf;
 }
 
-.input-title::placeholder {
-    color: #9CA3AF;
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #a4a6b5;
 }
 
-.input-content {
-    flex: 1;
-    width: 100%;
-    background-color: #F9FAFB;
-    border: 1px solid #E5E7EB;
-    border-radius: 12px;
-    padding: 30px;
-    font-size: 1.3rem; 
-    text-align: center; 
-    resize: none;
-    outline: none;
-    margin-bottom: 24px;
-    color: #374151;
-    transition: all 0.2s;
+.form-group textarea {
+    min-height: 210px;
+    resize: vertical;
+    line-height: 1.7;
 }
 
-.input-content:focus {
-    background-color: #ffffff;
-    border-color: #6B46C1;
-}
-
-.input-content::placeholder {
-    color: #9CA3AF;
-    font-weight: 400;
+/* 등록 버튼 */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .btn-submit {
-    width: 100%;
-    background-color: #6B46C1;
-    color: #fff;
+    background: #6842bf;
     border: none;
-    padding: 16px;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    border-radius: 9px;
+    color: white;
+    font-size: 15px;
     font-weight: 600;
+    padding: 15px 38px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
+    transition: background 0.2s;
 }
 
 .btn-submit:hover {
-    background-color: #5533A3;
-    transform: translateY(-1px);
+    background: #5533a5;
 }
 
-/* 우측 문의 답변 폼 */
-.inquiry-reply-box {
-    flex: 1;
-    background-color: #ffffff;
-    border: 1px solid #E5E7EB;
-    border-radius: 16px;
-    padding: 35px;
+/* 문의 목록 */
+.inquiry-list {
+    border: 1px solid #ededf1;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.inquiry-item {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-}
-
-.reply-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 30px;
-    margin-top: 10px;
-    color: #111;
-}
-
-.reply-content {
-    flex: 1;
-    width: 100%;
-    background-color: #F9FAFB;
-    border: 1px solid #E5E7EB;
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    text-align: center;
-}
-
-.reply-content p {
-    font-size: 1.1rem;
-    color: #4B5563;
-    line-height: 1.6;
-}
-
-/* ==================================
-   하단 푸터 영역
-=================================== */
-.main-footer {
-    text-align: center;
+    gap: 20px;
     padding: 24px;
-    background-color: #ffffff;
-    border-top: 1px solid #E5E7EB;
-    font-size: 1rem;
-    color: #6B7280;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid #ededf1;
+    transition: background 0.2s;
 }
 
-/* ==================================
-   모바일 반응형 웹 설정 (미디어 쿼리)
-=================================== */
+.inquiry-item:last-child {
+    border-bottom: none;
+}
+
+.inquiry-item:hover {
+    background: #faf8ff;
+}
+
+.inquiry-item-info {
+    min-width: 0;
+}
+
+.inquiry-category {
+    color: #6842bf;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.inquiry-item h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 9px 0;
+    overflow-wrap: anywhere;
+}
+
+.inquiry-date {
+    color: #9a9baa;
+    font-size: 13px;
+}
+
+/* 답변 상태 */
+.status {
+    flex-shrink: 0;
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status.waiting {
+    background: #fff5df;
+    color: #c18a1a;
+}
+
+.status.completed {
+    background: #e9f7ef;
+    color: #299764;
+}
+
+/* 문의 없음 */
+.inquiry-empty {
+    text-align: center;
+    padding: 65px 20px;
+    color: #999baa;
+    font-size: 15px;
+}
+
+/* 반응형 */
 @media (max-width: 768px) {
-    .main-header {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-        padding: 20px;
+    .inquiry-main {
+        padding: 30px 15px 60px;
     }
 
-    .header-left {
-        flex-direction: column;
-        gap: 15px;
-        align-items: center;
+    .inquiry-heading h1 {
+        font-size: 25px;
     }
 
-    .gnb ul {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
+    .inquiry-section {
+        padding: 22px 18px;
     }
 
-    .inquiry-container {
-        flex-direction: column;
-        height: auto;
+    .form-actions {
+        display: block;
     }
 
-    .inquiry-write-box, 
-    .inquiry-reply-box {
+    .btn-submit {
         width: 100%;
-        min-height: 400px;
-        padding: 25px 20px;
     }
 
-    .input-content {
-        font-size: 1.1rem; 
-        padding: 20px;
+    .inquiry-item {
+        padding: 20px 14px;
+        gap: 10px;
     }
 
-    .reply-title {
-        font-size: 1.25rem;
+    .inquiry-item h3 {
+        font-size: 14px;
     }
 }

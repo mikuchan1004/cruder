@@ -1,55 +1,134 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1:1 문의 - 취업 할래말래</title>
-    <link rel="stylesheet" href="../assets/inquiry.css">
+    <title>1:1 문의 - 취업할래말래</title>
+
+    <link rel="stylesheet" href="/assets/inquiry.css">
+    <link rel="stylesheet" href="/assets/header.css">
+    <link rel="stylesheet" href="/assets/footer.css">
 </head>
 <body>
-    <!-- 상단 헤더 영역 -->
-    <header class="main-header">
-        <div class="header-left">
-            <h1 class="logo">&lt;로고 삽입&gt;</h1>
-            <nav class="gnb">
-                <ul>
-                    <li><a href="#">공지사항</a></li>
-                    <li><a href="#">채용 공고</a></li>
-                    <li><a href="#">취업 꿀팁</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="header-right">
-            <a href="#" class="admin-link">관리자 페이지</a>
-            <button type="button" class="btn-logout">로그아웃</button>
-        </div>
-    </header>
 
-    <!-- 메인 콘텐츠 영역 -->
+    {% include 'header.html' %}
+
     <main class="inquiry-main">
         <div class="inquiry-container">
-            
-            <!-- 좌측: 1:1 문의 작성 영역 -->
-            <section class="inquiry-write-box">
-                <input type="text" class="input-title" placeholder="제목">
-                <textarea class="input-content" placeholder="내용을 입력."></textarea>
-                <button type="button" class="btn-submit">1:1 문의 등록</button>
+
+            <!-- 페이지 제목 -->
+            <div class="inquiry-heading">
+                <h1>1:1 문의</h1>
+                <p>서비스 이용 중 궁금한 점이나 불편한 사항을 문의해 주세요.</p>
+            </div>
+
+            <!-- 문의 작성 -->
+            <section class="inquiry-section">
+                <div class="section-heading">
+                    <h2>새 문의 작성</h2>
+                    <p>문의하신 내용은 관리자만 확인할 수 있습니다.</p>
+                </div>
+
+                <form method="post"
+                      action="/jobgogo/inquiry"
+                      class="inquiry-form">
+
+                    <div class="form-group">
+                        <label for="inquiry_type">문의 유형</label>
+                        <select id="inquiry_type"
+                                name="inquiry_type"
+                                required>
+                            <option value="">문의 유형 선택</option>
+                            <option value="계정">계정 문의</option>
+                            <option value="채용">채용 공고</option>
+                            <option value="오류">서비스 오류</option>
+                            <option value="기타">기타 문의</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inquiry_title">제목</label>
+                        <input type="text"
+                               id="inquiry_title"
+                               name="inquiry_title"
+                               placeholder="문의 제목을 입력해 주세요."
+                               maxlength="200"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inquiry_detail">문의 내용</label>
+                        <textarea id="inquiry_detail"
+                                  name="inquiry_detail"
+                                  placeholder="문의 내용을 자세히 입력해 주세요."
+                                  maxlength="5000"
+                                  required></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">
+                            1:1 문의 등록
+                        </button>
+                    </div>
+                </form>
             </section>
 
-            <!-- 우측: 1:1 문의 답변 확인 영역 -->
-            <section class="inquiry-reply-box">
-                <h2 class="reply-title">1:1 문의 답변 내용</h2>
-                <div class="reply-content">
-                    <p>해당 사항은 현재로써 처리할 수 없습니다.</p>
+            <!-- 내 문의 목록 -->
+            <section class="inquiry-section">
+                <div class="section-heading">
+                    <h2>내 문의 내역</h2>
+                    <p>등록한 문의와 답변 상태를 확인할 수 있습니다.</p>
+                </div>
+
+                <div class="inquiry-list">
+
+                    {% if inquiries %}
+
+                        {% for inquiry in inquiries %}
+                        <a href="/jobgogo/inquiry/{{ inquiry.inquiry_id }}"
+                           class="inquiry-item">
+
+                            <div class="inquiry-item-info">
+                                <span class="inquiry-category">
+                                    {{ inquiry.inquiry_type }}
+                                </span>
+
+                                <h3>{{ inquiry.inquiry_title }}</h3>
+
+                                <span class="inquiry-date">
+                                    {{ inquiry.inquiry_date }}
+                                </span>
+                            </div>
+
+                            {% if inquiry.inquiry_answer %}
+                                <span class="status completed">
+                                    답변 완료
+                                </span>
+                            {% else %}
+                                <span class="status waiting">
+                                    답변 대기
+                                </span>
+                            {% endif %}
+
+                        </a>
+                        {% endfor %}
+
+                    {% else %}
+
+                        <div class="inquiry-empty">
+                            <p>등록된 문의 내역이 없습니다.</p>
+                        </div>
+
+                    {% endif %}
+
                 </div>
             </section>
-            
+
         </div>
     </main>
 
-    <!-- 하단 푸터 영역 -->
-    <footer class="main-footer">
-        &lt;푸터 삽입&gt;
-    </footer>
+    {% include 'footer.html' %}
+
 </body>
 </html>

@@ -336,6 +336,7 @@ body {
     background-color: #5533A3;
 }
 
+
 /* ==================================
    페이지네이션
 ================================== */
@@ -343,137 +344,70 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     gap: 8px;
     margin-top: 45px;
 }
 
-.page-btn {
+/* 페이지 번호 및 이전/다음 버튼 */
+.pagination a {
     display: flex;
     justify-content: center;
     align-items: center;
 
-    width: 38px;
-    height: 38px;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
 
+    background-color: #FFFFFF;
     border: 1px solid #E5E7EB;
     border-radius: 8px;
 
-    background-color: #FFFFFF;
     color: #4B5563;
-
     font-size: 14px;
     font-weight: 600;
-    cursor: pointer;
+    text-decoration: none;
 
     transition: all 0.2s ease;
 }
 
-.page-btn:hover {
+/* 마우스 올렸을 때 */
+.pagination a:hover {
+    background-color: #F5F3FF;
     border-color: #6B46C1;
     color: #6B46C1;
+    transform: translateY(-2px);
 }
 
-.page-btn.active {
+/* 현재 선택된 페이지 */
+.pagination a.active {
     background-color: #6B46C1;
     border-color: #6B46C1;
     color: #FFFFFF;
+    font-weight: 700;
+    box-shadow: 0 3px 8px rgba(107, 70, 193, 0.2);
 }
 
-.page-btn.arrow {
-    font-size: 12px;
-}
-
-/* ==================================
-   태블릿 반응형
-================================== */
-@media (max-width: 1024px) {
-    .main-container {
-        padding: 45px 25px 75px;
-    }
-
-    .job-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
-    }
+/* 현재 페이지에 마우스 올렸을 때 */
+.pagination a.active:hover {
+    background-color: #5533A3;
+    border-color: #5533A3;
+    color: #FFFFFF;
 }
 
 /* ==================================
    모바일 반응형
 ================================== */
 @media (max-width: 640px) {
-    .main-container {
-        padding: 35px 16px 60px;
-    }
-
-    .page-title-area h1 {
-        font-size: 28px;
-    }
-
-    .page-title-area p {
-        font-size: 14px;
-    }
-
-    .search-area {
-        margin-bottom: 40px;
-    }
-
-    .search-bar {
-        gap: 8px;
-    }
-
-    .search-input {
-        height: 48px;
-        padding: 0 12px;
-        font-size: 13px;
-    }
-
-    .btn-search {
-        height: 48px;
-        min-width: 76px;
-        padding: 0 12px;
-        font-size: 13px;
-    }
-
-    .section-header {
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .title-group h2 {
-        font-size: 20px;
-    }
-
-    .title-group p {
-        font-size: 12px;
-    }
-
-    .view-all {
-        font-size: 12px;
-        white-space: nowrap;
-    }
-
-    .job-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .job-card {
-        min-height: auto;
-        padding: 22px;
-    }
-
-    .job-title {
-        font-size: 17px;
-    }
-
     .pagination {
         gap: 5px;
         margin-top: 30px;
     }
 
-    .page-btn {
-        width: 34px;
+    .pagination a {
+        min-width: 34px;
         height: 34px;
+        padding: 0 9px;
         font-size: 12px;
     }
 }
