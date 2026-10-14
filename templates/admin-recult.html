@@ -5,6 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자페이지 - 채용 공고 관리</title>
     <link rel="stylesheet" href="../assets/admin-recult.css">
+    <script>
+        window.onload = () => {
+            // 상세 내용 버튼 클릭시 상세 내용 팝업창 열기
+            document.querySelector('.info-btn').addEventListener('click', () => {
+                document.querySelector('.info_popup').classList.remove('hide')
+            })
+            // 화면의 모든 상세 내용 버튼들에 클릭 기능 달아주기 
+            document.querySelectorAll('.info-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const target = e.currentTraget
+                    const popup = document.querySelector('.info_popup')
+
+                    // 상세내용 버튼에 태그(data-*) 형태로 숨겨둔 정보들을 
+                    // 팝업창 안에 있는 입력 칸(input)들에 하나씩 자동으로 채워넣음
+                    popup.querySelector('[name = "recrut_pblnt_sn"]').value = e.currentTarget.dataset.id; // 공고번호 
+                    popup.querySelector('[name = "recrut_pbanc_ttl"]').value = e.currentTarget.dataset.title // 공고제목
+                    popup.querySelector('[name = "recrut_se_nm"]').value = e.currentTarget.dataset.recrut_se_nm; // 경력
+                    popup.querySelector('[name = "inst_nm"]').value = e.currentTarget.dataset.company; // 회사
+                    popup.querySelector('[name = "work_rgn_nm_lst"]').value = e.currentTarget.dataset.work_rgn_nm_list; // 근무예정지
+                    popup.querySelector('[name = "pbanc_bgng_ymd"]').value = e.currentTarget.dataset.bgng_ymd; // 등록일
+                    popup.querySelector('[name = "pbanc_end_ymd"]').value = e.currentTarget.dataset.end_ymd; // 마감일
+                    // 팝업창 안의 '삭제' 버튼 링크 주소를 클릭한 글의 번호에 맞춰서 동적으로 바꿔줌
+                    popup.querySelector('#delete-button').formAction = `/jobgogo/admin-recult/delete/${e.currentTarget.dataset.id}`
+
+                    // 상세 정보  채우기가 끝났으니, 숨겨져있던 상새내용 팝업을 화면에 띄워줌
+                    popup.classList.remove('hide')
+                })
+            })
+
+            // 팝업창 안의 닫기 버튼 클릭 시 팝업창 숨기기 
+            document.querySelectorAll('#close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', (e) => {
+                    e.target.closest('.info_popup').classList.add('hide');
+                })
+            })
+        }
+    </script>
 </head>
 <body>
     <!-- 상단 헤더 영역 -->
@@ -13,7 +50,7 @@
     <!-- 메인 콘텐츠 영역 -->
     <main class="admin-main">
         <h2 class="section-title">채용 공고 관리</h2>
-        
+
         <!-- 채용 공고 테이블 영역 -->
         <div class="board-table">
             <!-- 테이블 헤더 -->
@@ -23,26 +60,64 @@
                 <div class="col" data-label="작성자">작성자</div>
                 <div class="col" data-label="관리">관리</div>
             </div>
-            
-            <!-- 리스트 아이템 1 -->
-            <div class="table-row">
-                <div class="col" data-label="공고 번호">1</div>
-                <div class="col truncate" data-label="제목">천안 풀스택 개발자 모집합니다.</div>
-                <div class="col" data-label="작성자">A IT</div>
-                <div class="col action-buttons" data-label="관리">
-                    <button class="btn btn-outline-purple">상세내용</button>
-                </div>
-            </div>
 
-            <!-- 리스트 아이템 2 -->
+            <!-- 리스트 아이템 1 -->
+            {% for recrut_list in recrut_lists %}
             <div class="table-row">
-                <div class="col" data-label="공고 번호">2</div>
-                <div class="col truncate" data-label="제목">천안 경력직 백엔드 개발자 모집합니다</div>
-                <div class="col" data-label="작성자">B IT</div>
+                <div class="col" data-label="공고 번호">{{recrut_list.recrut_pblnt_sn}}</div>
+                <div class="col truncate" data-label="제목">{{recrut_list.recrut_pbanc_ttl}}</div>
+                <div class="col" data-label="작성자">{{recrut_list.inst_nm}}</div>
                 <div class="col action-buttons" data-label="관리">
-                    <button class="btn btn-outline-purple">상세내용</button>
+                    <button class="btn btn-outline-purple info-btn"
+                    data-id="{{recrut_list.recrut_pblnt_sn}}" 
+                    data-title="{{recrut_list.recrut_pbanc_ttl}}"
+                    data-recrut_se_nm="{{recrut_list.recrut_se_nm}}"
+                    data-company="{{recrut_list.inst_nm}}" 
+                    data-work_rgn_nm_list="{{recrut_list.work_rgn_nm_lst}}"
+                    data-bgng_ymd="{{recrut_list.pbanc_bgng_ymd}}" 
+                    data-end_ymd="{{recrut_list.pbanc_end_ymd}}"
+                    >상세내용
+                </button>
                 </div>
             </div>
+            {% endfor %}
+        </div>
+
+        <!-- 상세내용 팝업-->
+        <div class="popup-overlay info_popup hide">
+            <div class="popup-card">
+                <div class="popup-header">
+                    <h2 class="popup-title">상세내용</h2>
+                </div>
+                <div class="popup-body">
+                    공고번호 : <input class="form-control" type="number" name="recrut_pblnt_sn" readonly><br>
+                    공고제목 : <input class="form-control" type="text" name="recrut_pbanc_ttl" readonly><br>
+                    경력 : <input class="form-control" type="text" name="recrut_se_nm" readonly><br>
+                    회사 : <input class="form-control" type="text" name="inst_nm" readonly><br>
+                    근무예정지: <input class="form-control" type="text" name="work_rgn_nm_lst" readonly><br>
+                    등록일 : <input class="form-control" type="date" name="pbanc_bgng_ymd" readonly><br>
+                    종료일 : <input class="form-control" type="date" name="pbanc_end_ymd" readonly><br>
+                </div>
+                <div class="popup-footer">
+                    <button class="btn btn-red" id="delete-button" type="submit" formmethod="post">삭제</button>
+                    <button class="btn btn-outline-purple" id="close" type="button">닫기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이지네이션: 현재 디자인만 적용 -->
+        <div class="pagination">
+
+            <button type="button" class="page-btn arrow">◀</button>
+
+            <button type="button" class="page-btn active">1</button>
+            <button type="button" class="page-btn">2</button>
+            <button type="button" class="page-btn">3</button>
+            <button type="button" class="page-btn">4</button>
+            <button type="button" class="page-btn">5</button>
+
+            <button type="button" class="page-btn arrow">▶</button>
+
         </div>
     </main>
 </body>

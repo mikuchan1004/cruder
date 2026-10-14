@@ -379,6 +379,49 @@ def delete_post(request: Request,  post_number : int, category: str = Form(...) 
                 url='/jobgogo/admin-board', status_code=303
             )
 
+@router.get('/jobgogo/admin-recult')
+def recult(request:Request,  session:Session = Depends(get_session)):
+    print('채용 공고 관리 페이지로 이동합니다.')
+
+    # DB에 저장된 채용 공고들을 뽑아옵니다.
+    sql_jobs = text('''
+        select 
+            recrut_pblnt_sn, 
+            recrut_pbanc_ttl, 
+            inst_nm, 
+            pbanc_bgng_ymd, 
+            pbanc_end_ymd, 
+            recrut_se_nm,
+            work_rgn_nm_lst
+        from jobs 
+        limit 9
+    ''')
+
+    results = session.execute(sql_jobs).mappings().fetchall()
+
+    return templates.TemplateResponse(request, 'admin-recult.html' , {
+        'recrut_lists' : results
+    })
+
+@router.post('/jobgogo/admin-recult/delete/{recrut_pblnt_sn}')
+def delete_recult(request: Request,  recrut_pblnt_sn : int, session: Session = Depends(get_session)):
+    print('채용공고를 삭제합니다.')
+
+
+    # DB에 저장되어있는 채용공고를 삭제하는 SQL문 
+    sql = text('''
+        delete from jobs
+        where recrut_pblnt_sn = :recrut_pblnt_sn
+    ''')
+
+    session.execute(sql , {'recurt_pnlnt_sn' : recrut_pblnt_sn })
+    session.commit()
+
+    return RedirectResponse(
+        url='/jobgogo/admin-recult' ,
+        status_code=303
+    )
+
 @router.get('/jobgogo/warning')
 def warning_page(request:Request, session: Session = Depends(get_session)):
     print('경고 페이지로 이동합니다.')
