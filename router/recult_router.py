@@ -41,35 +41,47 @@ router.mount(
 @router.get('/jobgogo/recult')
 def recult(
     request: Request,
+    keyword : str = "" ,
     session: Session = Depends(get_session)
 ):
     print('채용 공고 페이지 접속 성공!') 
+    print('키워드 나오니!',keyword)
     
+    search_keyword = f'%{keyword}%' 
     
+    # 채용 공고를 가져오는 부분
+    # 채용공고를 가져오기 위한 SQL문
     try:
-        sql_jobs_notice = text('''
-            SELECT *
-            FROM jobs
-            WHERE ongoing_yn = 'Y'
-            ORDER BY pbanc_bgng_ymd DESC
-            LIMIT 8;
-        ''')
-
-        # 채용공고 가져오기
-        result=session.exec(sql_jobs_notice)
-        jobs=result.mappings().fetchall()
+           sql_jobs_notice = text('''
+               SELECT *
+               FROM jobs
+               WHERE ongoing_yn = 'Y'
+               and(
+                   recrut_pbanc_ttl like :keyword 
+                   or inst_nm like :keyword 
+                   or work_rgn_nm_lst like :keyword 
+               )
+               ORDER BY pbanc_bgng_ymd DESC
+               limit 8
+           ''')
+   
+           # 채용공고 가져오기
+           result=session.exec(sql_jobs_notice,params={'keyword':search_keyword})
+           jobs=result.mappings().fetchall()
+           
+           return templates.TemplateResponse(
+               request=request,
+               name='recult.html',
+               context={
+                   "jobs": jobs,
+                   "keyword" : search_keyword,
+   
+                   # 로그인 세션
+                   "user_id": request.session.get("user_id"),
+                   "user_name": request.session.get("user_name"),
+                   "user_status_id": request.session.get("user_status_id")
+               }
+           )
     except Exception as e:
-        print('에러에러')      
-
-    return templates.TemplateResponse(
-        request=request,
-        name='recult.html',
-        context={
-
-            # 로그인 세션
-            "jobs":jobs,
-            "user_id": request.session.get("user_id"),
-            "user_name": request.session.get("user_name"),
-            "user_status_id": request.session.get("user_status_id")
-        }
-    )
+           print('에러에러', e)    
+       

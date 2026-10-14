@@ -20,67 +20,87 @@
             <p>다양한 기업의 채용 정보를 확인하세요.</p>
         </div>
 
-        <!-- 검색 영역 -->
-        <div class="search-area">
-            <input type="text" placeholder="검색" class="search-input">
-        </div>
-
-        <!-- 게시판 (테이블) 영역 -->
-
-        
-        <div class="table-area">
-     
-
-<div class="table-header">
-    <span>기관명</span>
-    <span>공고명</span>
-    <span>채용 인원</span>
-    <span>채용 구분</span>
-    <span>상세</span>
+      
+<!-- 검색 영역 -->
+<div class="search-area">
+    <form class="search-bar" method="get" action="/jobgogo/recult">
+        <input
+            type="text"
+            class="search-input"
+            name="keyword"
+            placeholder="공고명, 기관명, 지역을 검색해보세요"
+        >
+        <button type="submit" class="btn-search">
+            검색
+        </button>
+    </form>
 </div>
 
-{% for job in jobs %}
-    {% if job.ongoing_yn == 'Y' %}
-    <div class="table-row">
-        <span class="col" data-label="기관명">
-            {{ job.inst_nm }}
-        </span>
+<!-- 채용 공고 게시판 -->
+<div class="table-area">
 
-        <span class="col" data-label="공고명">
-            {{ job.recrut_pbanc_ttl }}
-        </span>
-
-        <span class="col" data-label="채용 인원">
-            {{ job.recrut_nope }}명
-        </span>
-
-        <span class="col" data-label="채용 구분">
-            {{ job.recrut_se_nm }}
-        </span>
-
-        <span class="col" data-label="상세">
-            <a href="https://job.alio.go.kr/mobile2021/recruit/recruitView.do?idx={{ job.recrut_pblnt_sn }}"
-               class="detail-link"
-               target="_blank">
-                상세보기
-            </a>
-        </span>
+    <!-- 게시판 헤더 -->
+    <div class="table-header">
+        <span>기관명</span>
+        <span>공고명</span>
+        <span>채용 인원</span>
+        <span>채용 구분</span>
+        <span>상세</span>
     </div>
-    {% endif %}
-{% endfor %}
 
+    <!-- 채용 공고 목록 -->
+    {% for job in jobs %}
+        {% if job.ongoing_yn == 'Y' %}
 
-        <!-- 페이지네이션 영역 -->
-        <div class="pagination">
-            <button class="page-btn arrow">◀</button>
-            <button class="page-btn active">1</button>
-            <button class="page-btn">2</button>
-            <button class="page-btn">3</button>
-            <button class="page-btn">4</button>
-            <button class="page-btn">5</button>
-            <button class="page-btn arrow">▶</button>
-            <span class="page-text">페이지</span>
+        <div class="table-row">
+            <span class="col company-col" data-label="기관명">
+                {{ job.inst_nm }}
+            </span>
+
+            <span class="col title-col" data-label="공고명">
+                {{ job.recrut_pbanc_ttl }}
+            </span>
+
+            <span class="col" data-label="채용 인원">
+                {{ job.recrut_nope }}명
+            </span>
+
+            <span class="col" data-label="채용 구분">
+                {{ job.recrut_se_nm }}
+            </span>
+
+            <span class="col" data-label="상세">
+                <a
+                    href="https://job.alio.go.kr/mobile2021/recruit/recruitView.do?idx={{ job.recrut_pblnt_sn }}"
+                    class="detail-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    상세보기
+                </a>
+            </span>
         </div>
+
+        {% endif %}
+    {% else %}
+        <div class="empty-row">
+            등록된 채용 공고가 없습니다.
+        </div>
+    {% endfor %}
+
+</div>
+
+<!-- 페이지네이션 (현재 디자인만 적용) -->
+<div class="pagination">
+    <button type="button" class="page-btn arrow">◀</button>
+    <button type="button" class="page-btn active">1</button>
+    <button type="button" class="page-btn">2</button>
+    <button type="button" class="page-btn">3</button>
+    <button type="button" class="page-btn">4</button>
+    <button type="button" class="page-btn">5</button>
+    <button type="button" class="page-btn arrow">▶</button>
+</div>
+
     </main>
 
     <!-- 하단 푸터 영역 -->
