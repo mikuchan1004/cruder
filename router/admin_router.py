@@ -222,8 +222,7 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
 
     sql = text('''
         delete from user
-        where user_id = :user_id
-            AND user_status_id != 1
+        where user_id = :user_id and user_status_id != 1 and 2
     ''')
     try:
         session.execute(sql, {'user_id' : user_id})
@@ -287,6 +286,41 @@ def search_user(request: Request, keyword : str = "" , session: Session = Depend
             'report_count' : report_count[0]['count(*)']
         }
     )
+
+@router.post('/jobgogo/admin/user/get-admin/{user_id}')
+def get_admin (request:Request, user_id: str, session:Session = Depends(get_session)):
+    print('관리자 권한을 부여합니다.')
+
+    sql = text('''
+        update user
+        set user_status_id = 2 
+        where user_id = :user_id and user_status_id = 3
+    ''')
+
+    session.execute(sql, {'user_id' : user_id})
+    session.commit()
+
+    return RedirectResponse (
+        url='/jobgogo/admin-users' , status_code=303
+    )
+
+@router.post('/jobgogo/admin/user/lose-admin/{user_id}')
+def lose_admin (request:Request, user_id: str, session:Session = Depends(get_session)):
+    print('관리자 권한을 박탈합니다.')
+
+    sql = text('''
+        update user
+        set user_status_id = 3
+        where user_id = :user_id and user_status_id = 1 and 2 
+    ''')
+
+    session.execute(sql, {'user_id' : user_id})
+    session.commit()
+
+    return RedirectResponse (
+        url='/jobgogo/admin-users' , status_code=303
+    )
+
 
 @router.get('/jobgogo/admin-board')
 def admin_board(request:Request, session: Session = Depends(get_session)):
