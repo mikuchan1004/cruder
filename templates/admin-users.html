@@ -64,20 +64,20 @@
                     </div>
                     <div class="col action-buttons" data-label="관리">
 
-                        <form method="post" action="/admin/user/warning/{{user.user_id}}">
+                        <form method="post" action="/jobgogo/admin/user/warning/{{user.user_id}}">
                             <button class="btn btn-outline-purple" type="submit">경고</button>
                         </form>
 
-                        <form method="post" action="/admin/user/warning/delete/{{user.user_id}}">
+                        <form method="post" action="/jobgogo/admin/user/warning/delete/{{user.user_id}}">
                             <button class="btn btn-outline-purple" type="submit">경고 제거</button>
                         </form>
 
                         {% if user.user_status_id == 5 %}
-                        <form method="post" action="/admin/user/unsuspension/{{user.user_id}}">
+                        <form method="post" action="/jobgogo/admin/user/unsuspension/{{user.user_id}}">
                             <button class="btn btn-outline-purple" type="submit">정지 해제</button>
                         </form>
                         {% else %}
-                        <form method="post" action="/admin/user/suspension/{{user.user_id}}">
+                        <form method="post" action="/jobgogo/admin/user/suspension/{{user.user_id}}">
                             <button class="btn btn-red" type="submit">계정 정지</button>
                         </form>
                         {% endif %}
@@ -123,7 +123,7 @@
                     <div class="col truncate" data-label="글 제목">{{report.job_tip_title}}</div>
                     <div class="col truncate" data-label="신고 사유">{{report.report_reason}}</div>
                     <div class="col action-buttons" data-label="관리">
-                        <form method="post" action="/admin/user/report/delete/{{report.report_id}}">
+                        <form method="post" action="/jobgogo/admin/user/report/delete/{{report.report_id}}">
                             <button class="btn btn-red" type="button">삭제</button>
                         </form>
                     </div>
