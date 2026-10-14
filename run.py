@@ -62,5 +62,5 @@ def home():
 
 if __name__ == "__main__" :
     import uvicorn
-    uvicorn.run('api:router', port=8000, reload=True, host='0.0.0.0')
-     
+    uvicorn.run('run:router', port=8000, reload=True, host='0.0.0.0')
+      
