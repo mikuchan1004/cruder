@@ -404,3 +404,9 @@ a {
         text-align: left;
     }
 }
+/*================================
+    마우스 커서 & 선택 효과
+=================================*/
+
+#adminInquiryTable .table-row{cursor: pointer;}
+#adminInquiryTable  .table-row.selected {background-color: #F3F4F6;}
