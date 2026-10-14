@@ -70,6 +70,7 @@ def admin_dashboard(request:Request, session: Session = Depends(get_session)):
             job_tip_date as created_at
         from job_tip
         order by created_at desc
+        limit 5
     ''')
     results3 = session.execute(sql3).mappings().fetchall() 
 
