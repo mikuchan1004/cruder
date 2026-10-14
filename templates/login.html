@@ -39,12 +39,11 @@
                     >
 
                     <!-- 로그인 실패 메시지 -->
-              {% if request.session.get('login_error') %}
+                    {% if login_error %}
                     <p class="error-message">
-                { { login_error } }
+                        {{ login_error }}
                     </p>
-
-              {% endif %}      
+                    {% endif %}
 
                     <!-- 비밀번호 -->
                     <input
