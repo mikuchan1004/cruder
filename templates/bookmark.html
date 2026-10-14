@@ -206,71 +206,115 @@
     {% include 'footer.html' %}
 
     <script>
-        (() => {
-            const form = document.getElementById('bookmark-delete-form')
-            if (!form) return
+        window.addEventListener('load', function(){
+            bookmarkBind()
+        })
 
-            const selectAll = document.getElementById('select-all')
-            const deleteButton = document.getElementById('delete-selected')
-            const selectedCount = document.getElementById('selected-count')
 
-            const getItemCheckboxes = () =>
-                Array.from(form.querySelectorAll('.item-checkbox'))
+        function bookmarkBind(){
+            const form = document.querySelector('#bookmark-delete-form')
 
-            const updateSelectionState = () => {
-                const itemCheckboxes = getItemCheckboxes()
-                const checkedCount = itemCheckboxes.filter(
-                    (checkbox) => checkbox.checked
-                ).length
-
-                if (selectedCount) {
-                    selectedCount.textContent = `${checkedCount}개 선택`
-                }
-
-                if (deleteButton) {
-                    deleteButton.disabled = checkedCount === 0
-                }
-
-                if (selectAll) {
-                    selectAll.checked =
-                        itemCheckboxes.length > 0 &&
-                        checkedCount === itemCheckboxes.length
-
-                    selectAll.indeterminate =
-                        checkedCount > 0 &&
-                        checkedCount < itemCheckboxes.length
-                }
+            if(form == null){
+                return
             }
 
-            if (selectAll) {
-                selectAll.addEventListener('change', () => {
-                    getItemCheckboxes().forEach((checkbox) => {
-                        checkbox.checked = selectAll.checked
+            const selectAll = document.querySelector('#select-all')
+            const deleteButton = document.querySelector('#delete-selected')
+            const selectedCount = document.querySelector('#selected-count')
+
+
+            // 전체 선택 체크박스
+            if(selectAll != null){
+                selectAll.addEventListener('change', function(event){
+                    const checkList = document.querySelectorAll('.item-checkbox')
+
+                    checkList.forEach(function(check){
+                        check.checked = event.target.checked
                     })
 
-                    updateSelectionState()
+                    updateBookmarkState()
                 })
             }
 
-            form.addEventListener('change', (event) => {
-                if (event.target.matches('.item-checkbox')) {
-                    updateSelectionState()
+
+            // 개별 체크박스 선택
+            form.addEventListener('change', function(event){
+                if(event.target.classList.contains('item-checkbox')){
+                    updateBookmarkState()
                 }
             })
 
-            form.addEventListener('submit', (event) => {
-                const checked = getItemCheckboxes().some(
-                    (checkbox) => checkbox.checked
-                );
 
-                if (!checked) {
+            // 선택 삭제
+            form.addEventListener('submit', function(event){
+                const checkList = document.querySelectorAll('.item-checkbox')
+                let checked = false
+
+                checkList.forEach(function(check){
+                    if(check.checked == true){
+                        checked = true
+                    }
+                })
+
+                if(checked == false){
                     event.preventDefault()
-                    updateSelectionState()
+                    updateBookmarkState()
                 }
             })
 
-            updateSelectionState();
-        })()
+
+            updateBookmarkState()
+        }
+
+
+        function updateBookmarkState(){
+            const checkList = document.querySelectorAll('.item-checkbox')
+            const selectAll = document.querySelector('#select-all')
+            const deleteButton = document.querySelector('#delete-selected')
+            const selectedCount = document.querySelector('#selected-count')
+
+            let checkedCount = 0
+
+            checkList.forEach(function(check){
+                if(check.checked == true){
+                    checkedCount++
+                }
+            })
+
+
+            // 선택 개수 표시
+            if(selectedCount != null){
+                selectedCount.textContent = checkedCount + '개 선택'
+            }
+
+
+            // 선택된 공고가 없으면 삭제 버튼 비활성화
+            if(deleteButton != null){
+                if(checkedCount == 0){
+                    deleteButton.disabled = true
+                } else {
+                    deleteButton.disabled = false
+                }
+            }
+
+
+            // 전체 선택 체크박스 상태
+            if(selectAll != null){
+                if(checkList.length > 0 && checkedCount == checkList.length){
+                    selectAll.checked = true
+                } else {
+                    selectAll.checked = false
+                }
+
+
+                // 일부만 선택된 경우
+                if(checkedCount > 0 && checkedCount < checkList.length){
+                    selectAll.indeterminate = true
+                } else {
+                    selectAll.indeterminate = false
+                }
+            }
+        }
     </script>
 </body>
 </html>
