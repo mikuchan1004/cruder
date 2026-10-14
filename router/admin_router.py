@@ -47,10 +47,11 @@ def admin_dashboard(request:Request, session: Session = Depends(get_session)):
     ''')
     results1 = session.execute(sql1).mappings().fetchall()
 
-    # API 호출 건수를 세는 SQL문 
+    # 모집중인 채용 공고가 몇 개인지 세는 SQL문 
     sql2=text('''
         select count(*)
-        from api_sync_log
+        from jobs
+        where ongoing_yn = 'Y'
     ''')
     results2 = session.execute(sql2).mappings().fetchall()
 
@@ -76,7 +77,7 @@ def admin_dashboard(request:Request, session: Session = Depends(get_session)):
 
     return templates.TemplateResponse(request, 'admin-dashboard.html',{
         'total_users_count' : results1[0]['count(*)'],
-        'total_api_call_count' : results2[0]['count(*)'],
+        'total_ongoing_count' : results2[0]['count(*)'],
         'recent_posts' : results3
     })
 
