@@ -18,14 +18,13 @@ body {
 }
 
 /* ==================================
-   메인 컨테이너
+   메인 영역
 ================================== */
 .main-container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1250px;
     margin: 0 auto;
-    padding: 55px 24px 80px;
-    text-align: center;
+    padding: 55px 30px 90px;
     flex: 1;
 }
 
@@ -33,6 +32,7 @@ body {
    페이지 제목
 ================================== */
 .page-title-area {
+    text-align: center;
     margin-bottom: 35px;
 }
 
@@ -55,21 +55,21 @@ body {
 .search-area {
     display: flex;
     justify-content: center;
-    margin-bottom: 40px;
+    margin-bottom: 55px;
 }
 
 .search-bar {
     display: flex;
     align-items: center;
-    width: 100%;
-    max-width: 680px;
     gap: 12px;
+    width: 100%;
+    max-width: 720px;
 }
 
 .search-input {
     flex: 1;
     min-width: 0;
-    height: 52px;
+    height: 54px;
     padding: 0 20px;
 
     background-color: #FFFFFF;
@@ -93,20 +93,23 @@ body {
 }
 
 .btn-search {
-    height: 52px;
-    min-width: 100px;
-    padding: 0 24px;
+    height: 54px;
+    min-width: 110px;
+    padding: 0 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 
     background-color: #6B46C1;
     color: #FFFFFF;
-
     border: none;
     border-radius: 10px;
 
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-
     transition: all 0.2s ease;
 }
 
@@ -115,124 +118,222 @@ body {
     transform: translateY(-1px);
 }
 
-.btn-search:active {
-    transform: translateY(0);
+/* ==================================
+   채용 공고 섹션
+================================== */
+.job-list-section {
+    width: 100%;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 25px;
+}
+
+.title-group h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.title-group p {
+    font-size: 14px;
+    color: #6B7280;
+}
+
+.view-all {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #6B46C1;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.view-all:hover {
+    text-decoration: underline;
 }
 
 /* ==================================
-   채용 공고 게시판
+   카드 그리드
 ================================== */
-.table-area {
-    width: 100%;
-    background-color: #FFFFFF;
-
-    border: 1px solid #E5E7EB;
-    border-radius: 12px;
-    overflow: hidden;
-
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-    margin-bottom: 35px;
-}
-
-/* 공통 그리드 */
-.table-header,
-.table-row {
+.job-grid {
     display: grid;
-
-    /* 기관명 / 공고명 / 채용인원 / 구분 / 상세 */
-    grid-template-columns: 1.5fr 3fr 0.9fr 1.2fr 0.9fr;
-
-    align-items: center;
-    text-align: center;
-    column-gap: 10px;
-    padding: 0 20px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
 }
 
-/* 게시판 제목 */
-.table-header {
-    min-height: 65px;
+/* ==================================
+   채용 공고 카드
+================================== */
+.job-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 285px;
 
-    background-color: #F3F4F6;
-    border-bottom: 1px solid #E5E7EB;
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
 
-    color: #374151;
-    font-size: 15px;
+    padding: 24px;
+
+    box-shadow: 0 3px 12px rgba(0,0,0,0.025);
+    transition: all 0.2s ease;
+}
+
+.job-card:hover {
+    transform: translateY(-4px);
+    border-color: #C4B5FD;
+    box-shadow: 0 10px 25px rgba(107,70,193,0.09);
+}
+
+/* ==================================
+   카드 상단
+================================== */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.badge.recruiting {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #F0FDF4;
+    color: #15803D;
+
+    border: 1px solid #BBF7D0;
+    border-radius: 6px;
+
+    padding: 5px 11px;
+    font-size: 12px;
     font-weight: 700;
 }
 
-/* 게시판 행 */
-.table-row {
-    min-height: 88px;
-    padding-top: 18px;
-    padding-bottom: 18px;
-
-    border-bottom: 1px solid #F1F3F5;
-
-    font-size: 15px;
-    color: #4B5563;
-    line-height: 1.6;
-
-    transition: background-color 0.2s ease;
+.icon-bookmark {
+    color: #9CA3AF;
+    font-size: 20px;
 }
 
-.table-row:last-child {
-    border-bottom: none;
+/* ==================================
+   카드 본문
+================================== */
+.card-body {
+    flex: 1;
 }
 
-.table-row:hover {
-    background-color: #F9F7FF;
+.company-name {
+    display: block;
+    color: #6B46C1;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* 각 컬럼 */
-.table-row .col {
-    min-width: 0;
+.job-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1F2937;
+    line-height: 1.55;
+
+    margin-bottom: 20px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
     overflow-wrap: anywhere;
     word-break: keep-all;
 }
 
-/* 기관명 */
-.company-col {
-    color: #374151;
-    font-weight: 600;
+/* ==================================
+   채용 정보 태그
+================================== */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 20px;
 }
 
-/* 공고 제목 */
-.title-col {
-    color: #374151;
-    font-weight: 500;
-    text-align: left;
-}
-
-/* 상세보기 링크 */
-.detail-link {
+.tags span {
     display: inline-flex;
-    justify-content: center;
     align-items: center;
 
-    padding: 8px 14px;
+    padding: 6px 10px;
+    background-color: #F3F4F6;
+    color: #4B5563;
 
-    color: #6B46C1;
-    background-color: #F5F0FF;
-    border-radius: 7px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* ==================================
+   카드 하단
+================================== */
+.card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    border-top: 1px solid #F3F4F6;
+    padding-top: 18px;
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    color: #6B7280;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.date i {
+    color: #9CA3AF;
+}
+
+/* 상세보기 버튼 */
+.btn-detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    width: 100%;
+    min-height: 43px;
+
+    background-color: #6B46C1;
+    color: #FFFFFF;
+
+    border: none;
+    border-radius: 8px;
 
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
-    white-space: nowrap;
 
     transition: all 0.2s ease;
 }
 
-.detail-link:hover {
-    background-color: #6B46C1;
-    color: #FFFFFF;
-}
-
-/* 공고 없는 경우 */
-.empty-row {
-    padding: 60px 20px;
-    color: #9CA3AF;
-    font-size: 15px;
+.btn-detail:hover {
+    background-color: #5533A3;
 }
 
 /* ==================================
@@ -243,22 +344,23 @@ body {
     justify-content: center;
     align-items: center;
     gap: 8px;
-    margin-top: 30px;
+    margin-top: 45px;
 }
 
 .page-btn {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
     width: 38px;
     height: 38px;
 
-    background-color: #FFFFFF;
     border: 1px solid #E5E7EB;
     border-radius: 8px;
 
+    background-color: #FFFFFF;
     color: #4B5563;
+
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -282,39 +384,39 @@ body {
 }
 
 /* ==================================
-   태블릿
+   태블릿 반응형
 ================================== */
 @media (max-width: 1024px) {
     .main-container {
-        padding: 40px 20px 70px;
+        padding: 45px 25px 75px;
     }
 
-    .table-header,
-    .table-row {
-        grid-template-columns: 1.3fr 2.5fr 0.8fr 1fr 0.9fr;
-        padding-left: 12px;
-        padding-right: 12px;
-        font-size: 14px;
+    .job-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
     }
 }
 
 /* ==================================
-   모바일
+   모바일 반응형
 ================================== */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     .main-container {
-        padding: 35px 15px 60px;
+        padding: 35px 16px 60px;
     }
 
     .page-title-area h1 {
-        font-size: 27px;
+        font-size: 28px;
     }
 
     .page-title-area p {
         font-size: 14px;
     }
 
-    /* 검색창 */
+    .search-area {
+        margin-bottom: 40px;
+    }
+
     .search-bar {
         gap: 8px;
     }
@@ -327,63 +429,51 @@ body {
 
     .btn-search {
         height: 48px;
-        min-width: 70px;
+        min-width: 76px;
         padding: 0 12px;
         font-size: 13px;
     }
 
-    /* 게시판을 카드 형태로 변경 */
-    .table-area {
-        background: transparent;
-        border: none;
-        box-shadow: none;
-        overflow: visible;
-    }
-
-    .table-header {
-        display: none;
-    }
-
-    .table-row {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        align-items: stretch;
-
-        padding: 22px;
-        margin-bottom: 15px;
-
-        background-color: #FFFFFF;
-        border: 1px solid #E5E7EB;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-        text-align: left;
-    }
-
-    .table-row .col {
-        display: flex;
-        justify-content: space-between;
+    .section-header {
         align-items: flex-start;
+        gap: 12px;
+    }
+
+    .title-group h2 {
+        font-size: 20px;
+    }
+
+    .title-group p {
+        font-size: 12px;
+    }
+
+    .view-all {
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .job-grid {
+        grid-template-columns: 1fr;
         gap: 15px;
-        text-align: right;
     }
 
-    .table-row .col::before {
-        content: attr(data-label);
-        min-width: 75px;
-        flex-shrink: 0;
-
-        font-weight: 600;
-        color: #374151;
-        text-align: left;
+    .job-card {
+        min-height: auto;
+        padding: 22px;
     }
 
-    .detail-link {
-        padding: 9px 16px;
+    .job-title {
+        font-size: 17px;
+    }
+
+    .pagination {
+        gap: 5px;
+        margin-top: 30px;
     }
 
     .page-btn {
         width: 34px;
         height: 34px;
+        font-size: 12px;
     }
 }
