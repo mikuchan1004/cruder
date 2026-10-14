@@ -435,6 +435,29 @@ def delete_recult(request: Request,  recrut_pblnt_sn : int, session: Session = D
         status_code=303
     )
 
+@router.get('/jobgogo/admin-inquiry')
+def admin_inquiry(request:Request,  session:Session = Depends(get_session)):
+    print('문의관리 페이지로 이동합니다.')
+
+    # 1:1 문의를 DB에서 긁어오는 SQL문 
+    sql = text('''
+        select 
+            inq.inquiry_id, 
+            u.user_name, 
+            inq.inquiry_type, 
+            inq.inquiry_title,
+            inqs.inquiry_status_name
+        from inquiry as inq
+        left join user as u on inq.user_id = u.user_id
+        left join inquiry_status as inqs on inq.inquiry_status_id = inqs.inquiry_status_id
+    ''')
+
+    results = session.execute(sql).mappings().fetchall()
+
+    return templates.TemplateResponse(request,'admin-inquiry.html', {
+        'inquiry_lists' : results
+    })
+
 @router.get('/jobgogo/warning')
 def warning_page(request:Request, session: Session = Depends(get_session)):
     print('경고 페이지로 이동합니다.')
