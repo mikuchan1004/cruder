@@ -6,7 +6,7 @@ class UserStatus(SQLModel,table=True):
 		primary_key = True,  
 	)
     user_status_name:str=Field(
-        max_length=5
+        max_length=20
     )
     
     user_status_code:int
