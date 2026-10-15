@@ -586,6 +586,22 @@ def answer_inquiry(  request: Request,
 
     return RedirectResponse(url='/jobgogo/admin-inquiry' , status_code=303)
 
+@router.post('/jobgogo/admin-inquiry/delete/{id}')
+def delete_inquiry(  request: Request,  
+    id : int, session: Session = Depends(get_session), 
+    _: None = Depends(require_admin)):
+    print ('문의 삭제를 실행합니다.')
+
+    sql=text('''
+    delete from inquiry 
+    where inquiry_id = :id
+    ''')
+
+    session.execute(sql, {'id' : id})
+    session.commit()
+    return RedirectResponse(url='/jobgogo/admin-inquiry' , status_code=303)
+
+
 @router.get('/jobgogo/warning')
 def warning_page(
     request:Request, 

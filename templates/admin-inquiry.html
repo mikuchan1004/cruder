@@ -30,6 +30,7 @@
                     answerTextarea.value = answer
 
                     form.action = `/jobgogo/admin-inquiry/answer/${id}`
+                    form.action=`/jobgogo/admin-inquiry/delete/${id}`
                 })
             })
 
@@ -119,6 +120,8 @@
                                 placeholder="답변을 입력해주세요."></textarea>
                         </div>
                         <button type="submit" class="btn-submit" id="inquiryAnswerButton">답변 등록</button>
+                        <br><br>
+                        <button type="submit" class="btn-submit" id="inquiryDeleteButton">문의 삭제</button>
                 </div>
                 </form>
             </section>
