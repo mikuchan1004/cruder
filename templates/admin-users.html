@@ -66,6 +66,7 @@
                     </div>
                     {% if user.user_status_id != 1 %}
                     <div class="col action-buttons" data-label="관리">
+                        {% if request.session.get('user_name') != user.user_name %}
                         <form method="post" action="/jobgogo/admin/user/warning/{{user.user_id}}">
                             <button class="btn btn-outline-purple" type="submit">경고</button>
                         </form>
@@ -73,7 +74,9 @@
                         <form method="post" action="/jobgogo/admin/user/warning/delete/{{user.user_id}}">
                             <button class="btn btn-outline-purple" type="submit">경고 제거</button>
                         </form>
+                        {% endif %}
 
+                        {% if request.session.get('user_name') != user.user_name%}
                         {% if user.user_status_id == 5 %}
                         <form method="post" action="/jobgogo/admin/user/unsuspension/{{user.user_id}}">
                             <button class="btn btn-outline-purple" type="submit">정지 해제</button>
@@ -83,7 +86,9 @@
                             <button class="btn btn-red" type="submit">회원 정지</button>
                         </form>
                         {% endif %}
+                        {% endif %}
 
+                        {% if request.session.get('user_name') != user.user_name %}
                         {% if user.user_status_id in [1, 2] %}
                         <form method="post" action="/jobgogo/admin-users">
                             <button class="btn btn-red">회원 삭제</button>
@@ -93,6 +98,9 @@
                             <button class="btn btn-red" type="submit">회원 삭제</button>
                         </form>
                         {% endif %}
+                        {% endif %}
+
+                        {% if request.session.get('user_name') != user.user_name %}
                         {% if user.user_status_id == 3 %}
                         <form method="post" action="/jobgogo/admin/user/get-admin/{{user.user_id}}">
                             <button class="btn btn-outline-purple" type="submit">
@@ -105,6 +113,7 @@
                                 관리자 권한 박탈
                             </button>
                         </form>
+                        {% endif %}
                         {% endif %}
                     </div>
                     {% endif %}
