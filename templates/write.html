@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>공지사항 글쓰기 에디터</title>
-
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
     <link rel="stylesheet" href="/assets/write.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/header.css">
@@ -37,46 +36,31 @@
 </head>
 
 <body>
-{% include 'header.html' %}
+    {% include 'header.html' %}
 
     <main class="main-container">
 
         <!-- 공지사항 글 등록 폼 -->
-        <form
-            id="writeForm"
-            action="/notice/write"
-            method="post"
-        >
+        <form id="writeForm" action="/notice/write" method="post">
 
             <div class="form-header">
 
                 <!-- 공지사항 제목 -->
-                <input
-                    type="text"
-                    name="notice_title"
-                    id="notice_title"
-                    class="title-input"
-                    placeholder="제목을 입력하시오"
-                    required
-                >
+                <input type="text" name="notice_title" id="notice_title" class="title-input" placeholder="제목을 입력하시오"
+                    required>
 
                 <div class="button-group">
 
                     <!-- 취소 버튼 -->
-                    <button
-                        type="button"
-                        class="btn btn-cancel"
-                        onclick="location.href='/jobgogo/notice'">
+                    <button type="button" class="btn btn-cancel" onclick="location.href='/jobgogo/notice'">
                         취소
                     </button>
 
                     <!-- 등록 버튼 -->
-                    <button
-                        type="submit"
-                        class="btn btn-submit">
+                    <button type="submit" class="btn btn-submit">
                         등록
                     </button>
-                    
+
 
                 </div>
             </div>
@@ -92,22 +76,13 @@
                 <!-- 본문 입력 영역 -->
                 <div class="editor-content">
 
-                    <div
-                        id="editor"
-                        contenteditable="true"
-                        role="textbox"
-                        aria-label="게시글 내용"
-                        aria-multiline="true"
-                    ></div>
+                    <div id="editor" contenteditable="true" role="textbox" aria-label="게시글 내용" aria-multiline="true">
+                    </div>
 
                 </div>
 
                 <!-- Python으로 전달할 공지사항 내용 -->
-                <input
-                    type="hidden"
-                    name="notice_detail"
-                    id="notice_detail"
-                >
+                <input type="hidden" name="notice_detail" id="notice_detail">
 
             </div>
 
@@ -115,7 +90,7 @@
 
     </main>
 
-{% include 'footer.html' %}
+    {% include 'footer.html' %}
 
     <script>
         const editor = document.getElementById("editor");

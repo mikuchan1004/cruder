@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/assets/inquiry-result.css?v=20261015">
     <link rel="stylesheet" href="/assets/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+
 </head>
 <body>
     {% include 'header.html' %}
@@ -58,10 +60,7 @@
                     {% if inquiries %}
                     <div class="inquiry-list" aria-label="내 문의 목록">
                         {% for inquiry in inquiries %}
-                        <a
-                            href="/jobgogo/inquiry/{{ inquiry.inquiry_id }}"
-                            class="inquiry-item"
-                        >
+                        <a href="/jobgogo/inquiry/{{ inquiry.inquiry_id }}" class="inquiry-item">
                             <div class="inquiry-item-main">
                                 <div class="inquiry-meta">
                                     <span class="inquiry-category">

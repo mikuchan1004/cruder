@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/assets/edit-profile.css?v=20261013">
     <link rel="stylesheet" href="/assets/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+
 </head>
 
 <body>
@@ -41,29 +43,20 @@
                     </div>
 
                     {% if error %}
-                        <div class="form-error" role="alert">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            <span>{{ error }}</span>
-                        </div>
+                    <div class="form-error" role="alert">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>{{ error }}</span>
+                    </div>
                     {% endif %}
 
-                    <form
-                        class="edit-form"
-                        method="post"
-                        action="/jobgogo/mypage/edit"
-                    >
+                    <form class="edit-form" method="post" action="/jobgogo/mypage/edit">
                         <div class="form-grid">
                             <div class="form-field full-width">
                                 <label for="user_id">아이디</label>
                                 <div class="input-with-icon">
                                     <i class="fa-regular fa-id-card"></i>
-                                    <input
-                                        id="user_id"
-                                        type="text"
-                                        value="{{ user.user_id }}"
-                                        disabled
-                                        class="disabled-input"
-                                    >
+                                    <input id="user_id" type="text" value="{{ user.user_id }}" disabled
+                                        class="disabled-input">
                                 </div>
                                 <small>아이디는 변경할 수 없습니다.</small>
                             </div>
@@ -72,14 +65,8 @@
                                 <label for="user_name">이름</label>
                                 <div class="input-with-icon">
                                     <i class="fa-regular fa-user"></i>
-                                    <input
-                                        id="user_name"
-                                        type="text"
-                                        name="user_name"
-                                        value="{{ user.user_name }}"
-                                        placeholder="이름"
-                                        required
-                                    >
+                                    <input id="user_name" type="text" name="user_name" value="{{ user.user_name }}"
+                                        placeholder="이름" required>
                                 </div>
                             </div>
 
@@ -87,14 +74,8 @@
                                 <label for="user_nickname">닉네임</label>
                                 <div class="input-with-icon">
                                     <i class="fa-regular fa-face-smile"></i>
-                                    <input
-                                        id="user_nickname"
-                                        type="text"
-                                        name="user_nickname"
-                                        value="{{ user.user_nickname }}"
-                                        placeholder="닉네임"
-                                        required
-                                    >
+                                    <input id="user_nickname" type="text" name="user_nickname"
+                                        value="{{ user.user_nickname }}" placeholder="닉네임" required>
                                 </div>
                             </div>
 
@@ -102,12 +83,7 @@
                                 <label for="user_pw">새 비밀번호</label>
                                 <div class="input-with-icon">
                                     <i class="fa-solid fa-lock"></i>
-                                    <input
-                                        id="user_pw"
-                                        type="password"
-                                        name="user_pw"
-                                        placeholder="변경하지 않으려면 비워두세요"
-                                    >
+                                    <input id="user_pw" type="password" name="user_pw" placeholder="변경하지 않으려면 비워두세요">
                                 </div>
                             </div>
 
@@ -115,12 +91,8 @@
                                 <label for="user_pw_confirm">새 비밀번호 확인</label>
                                 <div class="input-with-icon">
                                     <i class="fa-solid fa-shield-halved"></i>
-                                    <input
-                                        id="user_pw_confirm"
-                                        type="password"
-                                        name="user_pw_confirm"
-                                        placeholder="새 비밀번호 확인"
-                                    >
+                                    <input id="user_pw_confirm" type="password" name="user_pw_confirm"
+                                        placeholder="새 비밀번호 확인">
                                 </div>
                             </div>
 
@@ -128,14 +100,8 @@
                                 <label for="user_home">주소</label>
                                 <div class="input-with-icon">
                                     <i class="fa-solid fa-location-dot"></i>
-                                    <input
-                                        id="user_home"
-                                        type="text"
-                                        name="user_home"
-                                        value="{{ user.user_home }}"
-                                        placeholder="주소"
-                                        required
-                                    >
+                                    <input id="user_home" type="text" name="user_home" value="{{ user.user_home }}"
+                                        placeholder="주소" required>
                                 </div>
                             </div>
 
@@ -143,14 +109,8 @@
                                 <label for="user_email">이메일</label>
                                 <div class="input-with-icon">
                                     <i class="fa-regular fa-envelope"></i>
-                                    <input
-                                        id="user_email"
-                                        type="email"
-                                        name="user_email"
-                                        value="{{ user.user_email }}"
-                                        placeholder="이메일"
-                                        required
-                                    >
+                                    <input id="user_email" type="email" name="user_email" value="{{ user.user_email }}"
+                                        placeholder="이메일" required>
                                 </div>
                             </div>
 
@@ -158,14 +118,8 @@
                                 <label for="user_phone">전화번호</label>
                                 <div class="input-with-icon">
                                     <i class="fa-solid fa-phone"></i>
-                                    <input
-                                        id="user_phone"
-                                        type="tel"
-                                        name="user_phone"
-                                        value="{{ user.user_phone }}"
-                                        placeholder="전화번호"
-                                        required
-                                    >
+                                    <input id="user_phone" type="tel" name="user_phone" value="{{ user.user_phone }}"
+                                        placeholder="전화번호" required>
                                 </div>
                             </div>
                         </div>

@@ -5,27 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>취업 꿀팁 상세보기</title>
 
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
     <link rel="stylesheet" href="/assets/recult-read.css">
     <link rel="stylesheet" href="/assets/header.css">
     <link rel="stylesheet" href="/assets/footer.css">
     <link rel="stylesheet" href="../assets/comment.css">
     <!-- FontAwesome (프로필 아이콘 등을 위해 사용) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 
-    <style>
-        .jobtip-content {
-            min-height: 250px;
-            padding: 20px;
-            overflow-wrap: anywhere;
-            line-height: 1.8;
-        }
+<style>
+    .jobtip-content {
+        min-height: 250px;
+        padding: 20px;
+        overflow-wrap: anywhere;
+        line-height: 1.8;
+    }
 
-        .jobtip-content img {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
+    .jobtip-content img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
 </head>
 <body>
 
@@ -70,50 +72,41 @@
                 <span class="label">내용</span>
             </div>
 
-           <div class="jobtip-content">
-            <div id="post-detail">
-                {{ job.job_tip_detail | safe }}
-            </div>
+            <div class="jobtip-content">
+                <div id="post-detail">
+                    {{ job.job_tip_detail | safe }}
+                </div>
 
-            {% for image in attachment_paths %}
+                {% for image in attachment_paths %}
                 <img src="{{ image }}" alt="첨부 이미지">
-            {% endfor %}
+                {% endfor %}
             </div>
 
             <script>
                 // 이전에 저장된 임시 blob 이미지 제거
-                document.querySelectorAll('#post-detail img').forEach(function(img) {
+                document.querySelectorAll('#post-detail img').forEach(function (img) {
                     if (img.getAttribute('src')?.startsWith('blob:')) {
                         img.remove();
                     }
                 });
             </script>
-        <!-- 하단 버튼 -->
-        <div class="button-group">
+            <!-- 하단 버튼 -->
+            <div class="button-group">
 
-            <button
-                type="button"
-                class="btn btn-primary"
-                onclick="location.href='/jobgogo/jobtip'">
-                목록으로
-            </button>
-
-
-            <!-- 삭제 버튼 -->
-            <form
-                action="/jobtip/{{ job.job_tip_no }}/delete"
-                method="post"
-                onsubmit="return confirm('정말 삭제하시겠습니까?');"
-                style="display: inline;"
-            >
-                <button
-                    type="submit"
-                    class="btn btn-cancel">
-                    삭제
+                <button type="button" class="btn btn-primary" onclick="location.href='/jobgogo/jobtip'">
+                    목록으로
                 </button>
-            </form>
 
-        </div>
+
+                <!-- 삭제 버튼 -->
+                <form action="/jobtip/{{ job.job_tip_no }}/delete" method="post"
+                    onsubmit="return confirm('정말 삭제하시겠습니까?');" style="display: inline;">
+                    <button type="submit" class="btn btn-cancel">
+                        삭제
+                    </button>
+                </form>
+
+            </div>
 
     </main>
 

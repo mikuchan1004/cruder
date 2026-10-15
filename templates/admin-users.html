@@ -11,6 +11,8 @@
     -->
     <link rel="stylesheet" href="{{ url_for('assets', path='admin-users.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+
 </head>
 <body>
     <!-- 상단 헤더 영역 -->
@@ -85,11 +87,11 @@
                         <form method="post" action="/jobgogo/admin-users">
                             <button class="btn btn-red">회원 삭제</button>
                         </form>
-                            {% else %}
-                            <form method="post" action="/jobgogo/admin/user/delete/{{user.user_id}}">
-                                <button class="btn btn-red" type="submit">회원 삭제</button>
-                            </form>
-                            {% endif %}
+                        {% else %}
+                        <form method="post" action="/jobgogo/admin/user/delete/{{user.user_id}}">
+                            <button class="btn btn-red" type="submit">회원 삭제</button>
+                        </form>
+                        {% endif %}
                         {% if user.user_status_id == 3 %}
                         <form method="post" action="/jobgogo/admin/user/get-admin/{{user.user_id}}">
                             <button class="btn btn-outline-purple" type="submit">

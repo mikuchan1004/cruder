@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>쓴 글 목록 - 취업할래 말래</title>
-
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
     <link rel="stylesheet" href="/assets/header.css">
     <link rel="stylesheet" href="/assets/my-page.css?v=20261015">
     <link rel="stylesheet" href="/assets/recent-posts.css?v=20261015">
@@ -56,13 +56,8 @@
                     <form class="posts-search" action="/jobgogo/mypage/reposts" method="get" role="search">
                         <div class="posts-search-box">
                             <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-                            <input
-                                type="search"
-                                name="keyword"
-                                value="{{ keyword }}"
-                                placeholder="내가 쓴 글 검색"
-                                aria-label="내가 쓴 글 검색"
-                            >
+                            <input type="search" name="keyword" value="{{ keyword }}" placeholder="내가 쓴 글 검색"
+                                aria-label="내가 쓴 글 검색">
                         </div>
 
                         <button type="submit" class="posts-search-button">
@@ -108,34 +103,26 @@
                     {% if total_page > 1 %}
                     <nav class="posts-pagination" aria-label="쓴 글 목록 페이지 이동">
                         {% if page > 1 %}
-                        <a
-                            href="/jobgogo/mypage/reposts?page={{ page - 1 }}&keyword={{ keyword | urlencode }}"
-                            class="page-button page-arrow"
-                            aria-label="이전 페이지"
-                        >
+                        <a href="/jobgogo/mypage/reposts?page={{ page - 1 }}&keyword={{ keyword | urlencode }}"
+                            class="page-button page-arrow" aria-label="이전 페이지">
                             <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
                         </a>
                         {% endif %}
 
                         {% for num in range(1, total_page + 1) %}
-                        <a
-                            href="/jobgogo/mypage/reposts?page={{ num }}&keyword={{ keyword | urlencode }}"
-                            class="page-button {{ 'active' if num == page else '' }}"
-                            {% if num == page %}aria-current="page"{% endif %}
-                        >
+                        <a href="/jobgogo/mypage/reposts?page={{ num }}&keyword={{ keyword | urlencode }}"
+                            class="page-button {{ 'active' if num == page else '' }}" {% if num==page
+                            %}aria-current="page" {% endif %}>
                             {{ num }}
                         </a>
                         {% endfor %}
 
-                        {% if page < total_page %}
-                        <a
+                        {% if page < total_page %} <a
                             href="/jobgogo/mypage/reposts?page={{ page + 1 }}&keyword={{ keyword | urlencode }}"
-                            class="page-button page-arrow"
-                            aria-label="다음 페이지"
-                        >
+                            class="page-button page-arrow" aria-label="다음 페이지">
                             <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-                        </a>
-                        {% endif %}
+                            </a>
+                            {% endif %}
                     </nav>
                     {% endif %}
 

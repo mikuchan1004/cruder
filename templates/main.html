@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>채용 공고 검색 - 취업 할래 말래</title>
-    
+
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
     <link rel="stylesheet" href="../assets/main.css">
     <link rel="stylesheet" href="../assets/header.css">
     <!-- 푸터 css적용 -->
     <link rel="stylesheet" href="../assets/footer.css">
     <!-- 폰트어썸 (별 모양 아이콘 등을 위해 사용) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 <body>
     {% include 'header.html' %}
@@ -19,16 +21,15 @@
         <header class="header-section">
             <h1>나에게 맞는 취업 공고를 찾아보세요</h1>
             <p>공공기관 채용 공고를 검색하고 원하는 공고를 확인해보세요.</p>
-          
+
             <form class="search-bar" method="get" action="/jobgogo">
-              <input type="text" name="keyword" placeholder="공고명 · 기관명 · 지역 검색"
-               >
+                <input type="text" name="keyword" placeholder="공고명 · 기관명 · 지역 검색">
                 <select name="selectNum">
                     <option value="8">8</option>
                     <option value="16">16</option>
                 </select>
                 <button type="submit" class="btn-search">검색</button>
-           </form>
+            </form>
         </header>
 
         <!-- 채용 공고 목록 영역 -->
@@ -40,19 +41,17 @@
                 </div>
                 <a href="/jobgogo/recult" class="view-all">전체 보기</a>
             </div>
-           
+
             <div class="job-grid">
-             {% for job in jobs%} 
-               {% if job.ongoing_yn =='Y'%}
+                {% for job in jobs%}
+                {% if job.ongoing_yn =='Y'%}
                 <!-- 공고 카드 1 -->
                 <article class="job-card">
                     <div class="card-header">
-             
+
                         <span class="badge recruiting">모집중</span>
-                        <i
-                            class="fa-star icon-bookmark {% if job.recrut_pblnt_sn in bookmarked_job_ids %}fa-solid{% else %}fa-regular{% endif %}"
-                            data-job-id="{{ job.recrut_pblnt_sn }}"
-                        ></i>
+                        <i class="fa-star icon-bookmark {% if job.recrut_pblnt_sn in bookmarked_job_ids %}fa-solid{% else %}fa-regular{% endif %}"
+                            data-job-id="{{ job.recrut_pblnt_sn }}"></i>
                     </div>
                     <div class="card-body">
                         <span class="company-name">{{job.inst_nm}}</span>
@@ -64,13 +63,14 @@
                         </div>
                         <p class="date">{{job.pbanc_bgng_ymd}}~{{job.pbanc_end_ymd}}</p>
                     </div>
-                    <button class="btn-detail"><a href="https://job.alio.go.kr/mobile2021/recruit/recruitView.do?idx={{ job.recrut_pblnt_sn }}">상세보기</a></button>
+                    <button class="btn-detail"><a
+                            href="https://job.alio.go.kr/mobile2021/recruit/recruitView.do?idx={{ job.recrut_pblnt_sn }}">상세보기</a></button>
                 </article>
 
-               {% endif %}
-              {% endfor %} 
+                {% endif %}
+                {% endfor %}
             </div>
-        
+
         </section>
 
         <!-- AI 채용 추천 배너 영역 -->
@@ -80,11 +80,11 @@
                 <h2>어떤 공고가 나에게 맞을지<br>모르겠다면?</h2>
                 <p>희망 직무, 경력, 지역 등을 AI에게 알려주세요.<br>수집된 채용공고 중 적합한 공고를 찾아드립니다.</p>
             </div>
-           <a href="/chatjobpt" class="btn-ai-search"> ai 기반 공고 찾기</a>
-        
+            <a href="/chatjobpt" class="btn-ai-search"> ai 기반 공고 찾기</a>
+
     </div>
 
-    {% include 'footer.html' %}  
+    {% include 'footer.html' %}
     <script src="../assets/login.js"></script>
     <script src="/assets/bookmark.js"></script>
 </body>

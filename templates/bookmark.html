@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/assets/bookmark.css?v=20261014">
     <link rel="stylesheet" href="/assets/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+
 </head>
 <body>
     {% include 'header.html' %}
@@ -54,18 +56,10 @@
                     </div>
 
                     {% if bookmarks %}
-                    <form
-                        id="bookmark-delete-form"
-                        action="/jobgogo/mypage/bookmarks/delete"
-                        method="post"
-                    >
+                    <form id="bookmark-delete-form" action="/jobgogo/mypage/bookmarks/delete" method="post">
                         <div class="bookmark-toolbar">
                             <label class="select-all-label" for="select-all">
-                                <input
-                                    type="checkbox"
-                                    id="select-all"
-                                    class="bookmark-checkbox"
-                                >
+                                <input type="checkbox" id="select-all" class="bookmark-checkbox">
                                 <span>전체 선택</span>
                             </label>
 
@@ -73,11 +67,7 @@
                                 <span class="selected-count" id="selected-count" aria-live="polite">
                                     0개 선택
                                 </span>
-                                <button
-                                    type="submit"
-                                    class="delete-button"
-                                    id="delete-selected"
-                                >
+                                <button type="submit" class="delete-button" id="delete-selected">
                                     <i class="fa-regular fa-trash-can" aria-hidden="true"></i>
                                     <span>선택 삭제</span>
                                 </button>
@@ -100,13 +90,10 @@
                             <div class="bookmark-row" role="row">
                                 <div class="bookmark-check" data-label="선택" role="cell">
                                     <label class="bookmark-check-label">
-                                        <input
-                                            type="checkbox"
-                                            name="recrut_pblnt_sn"
+                                        <input type="checkbox" name="recrut_pblnt_sn"
                                             value="{{ bookmark.recrut_pblnt_sn }}"
                                             class="bookmark-checkbox item-checkbox"
-                                            aria-label="{{ bookmark.recrut_pbanc_ttl }} 선택"
-                                        >
+                                            aria-label="{{ bookmark.recrut_pbanc_ttl }} 선택">
                                         <span class="sr-only">{{ bookmark.recrut_pbanc_ttl }} 선택</span>
                                     </label>
                                 </div>
@@ -115,7 +102,8 @@
                                     {{ bookmark.inst_nm }}
                                 </div>
 
-                                <div class="bookmark-title" data-label="공고명" role="cell" title="{{ bookmark.recrut_pbanc_ttl }}">
+                                <div class="bookmark-title" data-label="공고명" role="cell"
+                                    title="{{ bookmark.recrut_pbanc_ttl }}">
                                     {{ bookmark.recrut_pbanc_ttl }}
                                 </div>
 
@@ -128,12 +116,8 @@
                                 </div>
 
                                 <div class="bookmark-detail" data-label="상세" role="cell">
-                                    <a
-                                        href="https://job.alio.go.kr/mobile2021/recruit/recruitView.do?idx={{ bookmark.recrut_pblnt_sn }}"
-                                        class="detail-button"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
+                                    <a href="https://job.alio.go.kr/mobile2021/recruit/recruitView.do?idx={{ bookmark.recrut_pblnt_sn }}"
+                                        class="detail-button" target="_blank" rel="noopener noreferrer">
                                         상세보기
                                         <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
                                     </a>
@@ -173,15 +157,15 @@
     {% include 'footer.html' %}
 
     <script>
-        window.addEventListener('load', function(){
+        window.addEventListener('load', function () {
             bookmarkBind()
         })
 
 
-        function bookmarkBind(){
+        function bookmarkBind() {
             const form = document.querySelector('#bookmark-delete-form')
 
-            if(form == null){
+            if (form == null) {
                 return
             }
 
@@ -191,11 +175,11 @@
 
 
             // 전체 선택 체크박스
-            if(selectAll != null){
-                selectAll.addEventListener('change', function(event){
+            if (selectAll != null) {
+                selectAll.addEventListener('change', function (event) {
                     const checkList = document.querySelectorAll('.item-checkbox')
 
-                    checkList.forEach(function(check){
+                    checkList.forEach(function (check) {
                         check.checked = event.target.checked
                     })
 
@@ -205,25 +189,25 @@
 
 
             // 개별 체크박스 선택
-            form.addEventListener('change', function(event){
-                if(event.target.classList.contains('item-checkbox')){
+            form.addEventListener('change', function (event) {
+                if (event.target.classList.contains('item-checkbox')) {
                     updateBookmarkState()
                 }
             })
 
 
             // 선택 삭제
-            form.addEventListener('submit', function(event){
+            form.addEventListener('submit', function (event) {
                 const checkList = document.querySelectorAll('.item-checkbox')
                 let checked = false
 
-                checkList.forEach(function(check){
-                    if(check.checked == true){
+                checkList.forEach(function (check) {
+                    if (check.checked == true) {
                         checked = true
                     }
                 })
 
-                if(checked == false){
+                if (checked == false) {
                     event.preventDefault()
                     updateBookmarkState()
                 }
@@ -234,7 +218,7 @@
         }
 
 
-        function updateBookmarkState(){
+        function updateBookmarkState() {
             const checkList = document.querySelectorAll('.item-checkbox')
             const selectAll = document.querySelector('#select-all')
             const deleteButton = document.querySelector('#delete-selected')
@@ -242,22 +226,22 @@
 
             let checkedCount = 0
 
-            checkList.forEach(function(check){
-                if(check.checked == true){
+            checkList.forEach(function (check) {
+                if (check.checked == true) {
                     checkedCount++
                 }
             })
 
 
             // 선택 개수 표시
-            if(selectedCount != null){
+            if (selectedCount != null) {
                 selectedCount.textContent = checkedCount + '개 선택'
             }
 
 
             // 선택된 공고가 없으면 삭제 버튼 비활성화
-            if(deleteButton != null){
-                if(checkedCount == 0){
+            if (deleteButton != null) {
+                if (checkedCount == 0) {
                     deleteButton.disabled = true
                 } else {
                     deleteButton.disabled = false
@@ -266,8 +250,8 @@
 
 
             // 전체 선택 체크박스 상태
-            if(selectAll != null){
-                if(checkList.length > 0 && checkedCount == checkList.length){
+            if (selectAll != null) {
+                if (checkList.length > 0 && checkedCount == checkList.length) {
                     selectAll.checked = true
                 } else {
                     selectAll.checked = false
@@ -275,7 +259,7 @@
 
 
                 // 일부만 선택된 경우
-                if(checkedCount > 0 && checkedCount < checkList.length){
+                if (checkedCount > 0 && checkedCount < checkList.length) {
                     selectAll.indeterminate = true
                 } else {
                     selectAll.indeterminate = false

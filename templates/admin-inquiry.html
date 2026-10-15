@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자페이지 - 문의관리</title>
     <link rel="stylesheet" href="../assets/admin-inquiry.css">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+
     <script>
-        window.onload = ( ) => {
-            const rows = document.querySelectorAll('#adminInquiryTable  .table-row' )
+        window.onload = () => {
+            const rows = document.querySelectorAll('#adminInquiryTable  .table-row')
             const form = document.querySelector('#inquiryAnswerForm')
             const typeDisplay = document.querySelector('#selectedInquiryType')
             const titleDisplay = document.querySelector('#selectedInquiryTitle')
             const answerTextarea = document.querySelector('#inquiryAnswer')
 
             rows.forEach(row => {
-                row.addEventListener('click' , (e) => {
+                row.addEventListener('click', (e) => {
                     rows.forEach(r => r.classList.remove('selected'))
                     row.classList.add('selected')
 
@@ -27,7 +29,7 @@
                     titleDisplay.textContent = title
                     answerTextarea.value = answer
 
-                    form.action=`/jobgogo/admin-inquiry/answer/${id}`
+                    form.action = `/jobgogo/admin-inquiry/answer/${id}`
                 })
             })
 
@@ -83,11 +85,9 @@
 
                     <!-- 리스트 아이템 1 -->
                     {% for inquiry in inquiry_lists%}
-                    <div class="table-row" 
-                    data-id="{{inquiry.inquiry_id}}" 
-                    data-type="{{inquiry.inquiry_type}}"
-                    data-title="{{inquiry.inquiry_title}}"
-                    data-answer="{{inquiry.inquiry_answer if inquiry.inquiry_answer else ''}}">
+                    <div class="table-row" data-id="{{inquiry.inquiry_id}}" data-type="{{inquiry.inquiry_type}}"
+                        data-title="{{inquiry.inquiry_title}}"
+                        data-answer="{{inquiry.inquiry_answer if inquiry.inquiry_answer else ''}}">
                         <div class="col font-bold" data-label="글 번호">{{inquiry.inquiry_id}}</div>
                         <div class="col font-bold" data-label="회원">{{inquiry.user_name}}</div>
                         <div class="col font-bold" data-label="유형">{{inquiry.inquiry_type}}</div>
@@ -115,7 +115,8 @@
                     <form method="post" action="/jobgogo/admin-inquiry/answer/{id}" id="inquiryAnswerForm">
                         <div class="reply-form">
                             <label class="reply-label">답변</label>
-                            <textarea class="reply-textarea" id="inquiryAnswer" name="inquiry_answer" placeholder="답변을 입력해주세요."></textarea>
+                            <textarea class="reply-textarea" id="inquiryAnswer" name="inquiry_answer"
+                                placeholder="답변을 입력해주세요."></textarea>
                         </div>
                         <button type="submit" class="btn-submit" id="inquiryAnswerButton">답변 등록</button>
                 </div>

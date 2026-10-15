@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,7 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/header.css">
     <link rel="stylesheet" href="/assets/footer.css">
-    
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+
+
     <style>
         /* 본문 입력 영역 */
         #editor {
@@ -40,34 +41,18 @@
 
     <main class="main-container">
 
-            <form
-                id="writeForm"
-                action="/jobtip/write"
-                method="post"
-                enctype="multipart/form-data"
-            >
+        <form id="writeForm" action="/jobtip/write" method="post" enctype="multipart/form-data">
 
             <div class="form-header">
-                <input
-                    type="text"
-                    name="job_tip_title"
-                    class="title-input"
-                    placeholder="제목을 입력하시오"
-                    required
-                >
+                <input type="text" name="job_tip_title" class="title-input" placeholder="제목을 입력하시오" required>
 
                 <div class="button-group">
                     <!-- 취소 버튼 -->
-                    <button
-                        type="button"
-                        class="btn btn-cancel"
-                        onclick="location.href='/jobgogo/jobtip'">
+                    <button type="button" class="btn btn-cancel" onclick="location.href='/jobgogo/jobtip'">
                         취소
                     </button>
 
-                    <button
-                        type="submit"
-                        class="btn btn-submit">
+                    <button type="submit" class="btn btn-submit">
                         등록
                     </button>
                 </div>
@@ -78,23 +63,15 @@
                 <div class="editor-toolbar">
 
                     <!-- 이미지 버튼 -->
-                    <button
-                        type="button"
-                        class="tool-btn"
+                    <button type="button" class="tool-btn"
                         onclick="document.getElementById('job_tip_attachment').click()">
                         <i class="fa-regular fa-image"></i>
                         <span>이미지</span>
                     </button>
 
                     <!-- 이미지 선택 -->
-                    <input
-                        type="file"
-                        id="job_tip_attachment"
-                        name="job_tip_attachment"
-                        accept="image/*"
-                        multiple
-                        style="display: none;"
-                    >
+                    <input type="file" id="job_tip_attachment" name="job_tip_attachment" accept="image/*" multiple
+                        style="display: none;">
 
                     <button type="button" class="tool-btn">
                         <i class="fa-solid fa-film"></i>
@@ -110,21 +87,12 @@
 
                 <!-- 실제 글과 이미지를 함께 작성하는 영역 -->
                 <div class="editor-content">
-                    <div
-                        id="editor"
-                        contenteditable="true"
-                        role="textbox"
-                        aria-label="게시글 내용"
-                        aria-multiline="true"
-                    ></div>
+                    <div id="editor" contenteditable="true" role="textbox" aria-label="게시글 내용" aria-multiline="true">
+                    </div>
                 </div>
 
                 <!-- Python으로 전달할 본문 HTML -->
-                <input
-                    type="hidden"
-                    name="job_tip_detail"
-                    id="job_tip_detail"
-                >
+                <input type="hidden" name="job_tip_detail" id="job_tip_detail">
 
             </div>
         </form>

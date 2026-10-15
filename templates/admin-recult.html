@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자페이지 - 채용 공고 관리</title>
     <link rel="stylesheet" href="../assets/admin-recult.css">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+
     <script>
         window.onload = () => {
             // 상세 내용 버튼 클릭시 상세 내용 팝업창 열기
@@ -68,16 +70,11 @@
                 <div class="col truncate" data-label="제목">{{recrut_list.recrut_pbanc_ttl}}</div>
                 <div class="col" data-label="작성자">{{recrut_list.inst_nm}}</div>
                 <div class="col action-buttons" data-label="관리">
-                    <button class="btn btn-outline-purple info-btn"
-                    data-id="{{recrut_list.recrut_pblnt_sn}}" 
-                    data-title="{{recrut_list.recrut_pbanc_ttl}}"
-                    data-recrut_se_nm="{{recrut_list.recrut_se_nm}}"
-                    data-company="{{recrut_list.inst_nm}}" 
-                    data-work_rgn_nm_list="{{recrut_list.work_rgn_nm_lst}}"
-                    data-bgng_ymd="{{recrut_list.pbanc_bgng_ymd}}" 
-                    data-end_ymd="{{recrut_list.pbanc_end_ymd}}"
-                    >상세내용
-                </button>
+                    <button class="btn btn-outline-purple info-btn" data-id="{{recrut_list.recrut_pblnt_sn}}"
+                        data-title="{{recrut_list.recrut_pbanc_ttl}}" data-recrut_se_nm="{{recrut_list.recrut_se_nm}}"
+                        data-company="{{recrut_list.inst_nm}}" data-work_rgn_nm_list="{{recrut_list.work_rgn_nm_lst}}"
+                        data-bgng_ymd="{{recrut_list.pbanc_bgng_ymd}}" data-end_ymd="{{recrut_list.pbanc_end_ymd}}">상세내용
+                    </button>
                 </div>
             </div>
             {% endfor %}

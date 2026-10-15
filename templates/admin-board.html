@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자페이지 - 게시물 관리</title>
     <link rel="stylesheet" href="../assets/admin-board.css">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+
     <script>
         window.onload = () => {
             // 상세 내용 버튼 클릭시 상세 내용 팝업창 열기
@@ -13,8 +15,8 @@
             })
             // 화면의 모든 상세 내용 버튼들에 클릭 기능 달아주기 
             document.querySelectorAll('.info-btn').forEach(btn => {
-                btn.addEventListener('click' , (e) => {
-                    const target = e.currentTraget 
+                btn.addEventListener('click', (e) => {
+                    const target = e.currentTraget
                     const popup = document.querySelector('.info_popup')
 
                     // 상세내용 버튼에 태그(data-*) 형태로 숨겨둔 정보들을 
@@ -34,7 +36,7 @@
 
             // 팝업창 안의 닫기 버튼 클릭 시 팝업창 숨기기 
             document.querySelectorAll('#close').forEach(closeBtn => {
-                closeBtn.addEventListener('click' , (e) => {
+                closeBtn.addEventListener('click', (e) => {
                     e.target.closest('.info_popup').classList.add('hide');
                 })
             })
@@ -48,7 +50,7 @@
     <!-- 메인 콘텐츠 영역 -->
     <main class="admin-main">
         <h2 class="section-title">게시물 관리</h2>
-        
+
         <!-- 게시물 테이블 영역 -->
         <div class="board-table">
             <!-- 테이블 헤더 -->
@@ -59,18 +61,18 @@
                 <div class="col" data-label="작성자">작성자</div>
                 <div class="col" data-label="관리">관리</div>
             </div>
-            
+
             <!-- 리스트 아이템 1 -->
-             {% for post in posts%}
+            {% for post in posts%}
             <div class="table-row">
                 <div class="col" data-label="카테고리">{{post.category}}</div>
                 <div class="col" data-label="글 번호">{{post.post_no}}</div>
                 <div class="col truncate" data-label="제목">{{post.title}}</div>
                 <div class="col" data-label="작성자">{{post.user_id}}</div>
                 <div class="col action-buttons" data-label="관리">
-                    <button class="btn btn-outline-purple info-btn"
-                    data-category="{{post.category}}" data-id="{{post.post_no}}" data-title="{{post.title}}"
-                    data-detail="{{post.post_detail}}">상세내용</button>
+                    <button class="btn btn-outline-purple info-btn" data-category="{{post.category}}"
+                        data-id="{{post.post_no}}" data-title="{{post.title}}"
+                        data-detail="{{post.post_detail}}">상세내용</button>
                 </div>
             </div>
             {% endfor %}
@@ -81,19 +83,19 @@
                 <div class="popup-header">
                     <h2 class="popup-title">상세내용</h2>
                 </div>
-                    <div class="popup-body">
-                        카테고리 : <input class="form-control" type="text" name="category" readonly><br>
-                        글 번호 : <input class="form-control" type="number" name="post_number" readonly><br>
-                        제목 : <input class="form-control" type="text" name="post_title"><br>
-                        내용 : <textarea class="form-control" type="text" name="post_detail"></textarea><br> 
-                    </div>
-                    <div class="popup-footer">
-                        <form method="post" action="/jobgogo/admin-board/delete/{post_number}">
-                            <input type="hidden" name="category" id="popup-delete-category" value="">
-                            <button class="btn btn-red" id="delete-button" type="submit" formmethod="post">삭제</button>
-                        </form>
-                        <button class="btn btn-outline-purple" id="close" type="button">닫기</button>
-                    </div>
+                <div class="popup-body">
+                    카테고리 : <input class="form-control" type="text" name="category" readonly><br>
+                    글 번호 : <input class="form-control" type="number" name="post_number" readonly><br>
+                    제목 : <input class="form-control" type="text" name="post_title"><br>
+                    내용 : <textarea class="form-control" type="text" name="post_detail"></textarea><br>
+                </div>
+                <div class="popup-footer">
+                    <form method="post" action="/jobgogo/admin-board/delete/{post_number}">
+                        <input type="hidden" name="category" id="popup-delete-category" value="">
+                        <button class="btn btn-red" id="delete-button" type="submit" formmethod="post">삭제</button>
+                    </form>
+                    <button class="btn btn-outline-purple" id="close" type="button">닫기</button>
+                </div>
             </div>
         </div>`
     </main>

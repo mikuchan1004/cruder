@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,6 +8,8 @@
     <link rel="stylesheet" href="/assets/notice.css">
     <link rel="stylesheet" href="/assets/header.css">
     <link rel="stylesheet" href="/assets/footer.css">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+
 </head>
 <body>
 
@@ -25,24 +26,15 @@
             <form action="/notice" method="get" class="search-box">
                 <span class="search-icon">🔍</span>
 
-                <input
-                    type="text"
-                    name="keyword"
-                    value="{{ keyword }}"
-                    placeholder="검색"
-                    class="search-input"
-                >
+                <input type="text" name="keyword" value="{{ keyword }}" placeholder="검색" class="search-input">
             </form>
 
             <!-- 글쓰기 버튼 -->
-                {% if adm_chk == 1 %}
-                <button
-                    type="button"
-                    class="btn-write"
-                    onclick="location.href='/write'">
-                    글쓰기
-                </button>
-                {% endif %}
+            {% if adm_chk == 1 %}
+            <button type="button" class="btn-write" onclick="location.href='/write'">
+                글쓰기
+            </button>
+            {% endif %}
         </div>
 
         <!-- 게시판 테이블 -->
@@ -109,9 +101,7 @@
 
             <!-- 이전 페이지 -->
             {% if page > 1 %}
-            <button
-                type="button"
-                class="page-btn arrow"
+            <button type="button" class="page-btn arrow"
                 onclick="location.href='/notice?page={{ page - 1 }}&keyword={{ keyword | urlencode }}'">
                 ◀
             </button>
@@ -119,25 +109,20 @@
 
             <!-- 페이지 번호 -->
             {% for num in range(1, total_page + 1) %}
-            <button
-                type="button"
-                class="page-btn {% if num == page %}active{% endif %}"
+            <button type="button" class="page-btn {% if num == page %}active{% endif %}"
                 onclick="location.href='/notice?page={{ num }}&keyword={{ keyword | urlencode }}'">
                 {{ num }}
             </button>
             {% endfor %}
 
             <!-- 다음 페이지 -->
-            {% if page < total_page %}
-            <button
-                type="button"
-                class="page-btn arrow"
+            {% if page < total_page %} <button type="button" class="page-btn arrow"
                 onclick="location.href='/notice?page={{ page + 1 }}&keyword={{ keyword | urlencode }}'">
                 ▶
-            </button>
-            {% endif %}
+                </button>
+                {% endif %}
 
-            <span class="page-text">페이지</span>
+                <span class="page-text">페이지</span>
 
         </div>
 
