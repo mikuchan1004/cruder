@@ -23,19 +23,26 @@ templates = Jinja2Templates(directory='templates/')
 def inquiry(request:Request):
     print('1대일 문의 게시판 접속 성공함')
     # 로그인 안한 사람이 일대일 문의 게시판 접속 못하게 막는 코드
-    login_chk=request.session.get('user_id')
-    
-    if not login_chk:
-        return RedirectResponse(
+    user_id = request.session.get('user_id')
+    print('id 체크',user_id)
+
+
+    if user_id is None:
+            return RedirectResponse(
                 url='/jobgogo',
                 status_code=303
             )
-        
-        
+
     return templates.TemplateResponse(
-        request,'inquiry.html'
+        request,'inquiry.html',
+
+        context={
+            'user_id': user_id,
+            'user_name': request.session.get('user_name'),
+            'user_status_id': request.session.get('user_status_id')
+        }
     )
-    
+
 ################################################################################
 #  1:1 문의 등록하는 곳입니다
 ################################################################################
@@ -49,39 +56,40 @@ def inquiry_add(request:Request,
     user_id =request.session.get('user_id')
     
     try:  
-                sql=text('''
-                    INSERT INTO inquiry(
-                    inquiry_title,
-                    inquiry_detail,
-                    inquiry_date,
-                    user_id,
-                    inquiry_status_id,
-                    inquiry_type
-                )
-                VALUES(
-                    :inquiry_title,
-                    :inquiry_detail,
-                    NOW(),
-                    :user_id,
-                    1,
-                    :inquiry_type
-                )
+        sql=text('''
+            INSERT INTO inquiry(
+            inquiry_title,
+            inquiry_detail,
+            inquiry_date,
+            user_id,
+            inquiry_status_id,
+            inquiry_type
+        )
+        VALUES(
+            :inquiry_title,
+            :inquiry_detail,
+            NOW(),
+            :user_id,
+            1,
+            :inquiry_type
+        )
 
-                ''')
-                result=session.exec(sql,
-                    params={
-                        'inquiry_type':inquiry_type,
-                        'inquiry_title':inquiry_title,
-                        'inquiry_detail':inquiry_detail,
-                        'user_id':user_id
-                    }
-                )
-                session.commit()
-                
-                return RedirectResponse(
-                    url='/inquiry',
-                    status_code=303
-                )          
+        ''')
+        result=session.exec(sql,
+            params={
+                'inquiry_type':inquiry_type,
+                'inquiry_title':inquiry_title,
+                'inquiry_detail':inquiry_detail,
+                'user_id':user_id
+            }
+        )
+        session.commit()
+        
+        return RedirectResponse(
+            url='/inquiry',
+            status_code=303
+        )
+       
     except Exception as e:
                 print('에러',e)   
 
@@ -123,13 +131,13 @@ def inquiry_list(request:Request,
     context={
         'inquiries': results,
         'user_id': user_id,
-        # 'user_name': request.session.get('user_name')
+        'user_name': request.session.get('user_name'),
+        'user_status_id': request.session.get('user_status_id')
     }
- 
-    )
+)
     
     
- # 문의 내역상세조회...!
+# 문의 내역상세조회...!
 @router.get('/jobgogo/inquiry/{inquiry_id}')
 def inquiry_list_deatil(request:Request,
     inquiry_id:int,                                        
@@ -139,8 +147,7 @@ def inquiry_list_deatil(request:Request,
     print('id 체크',user_id)
     print('id 체크',inquiry_id)
 
-  
-        
+
     if user_id is None:
             return RedirectResponse(
                 url='/jobgogo',
@@ -152,29 +159,29 @@ def inquiry_list_deatil(request:Request,
        from inquiry
        where inquiry_id=:inquiry_id
        and user_id=:user_id      
-             ''')
+            ''')
     
     result=session.exec(
-             sql,
-             params={
+            sql,
+            params={
                'user_id':user_id,
                'inquiry_id': inquiry_id
-             }
-         )       
+            }
+        )  
     results= result.mappings().fetchone()
     
-     # html 출력
-        
+    # html 출력    
     return templates.TemplateResponse(
         request=request,
         name='inquiry_result_deatil.html',
         
         context={
             'inquiry':results,
-             'user_name':request.session.get('user_name'),
-             'user_id':user_id,
+            'user_id': user_id,
+            'user_name': request.session.get('user_name'),
+            'user_status_id': request.session.get('user_status_id')
         }
-        )
+    )
     
 
 
