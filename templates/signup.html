@@ -1,188 +1,256 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>회원가입 - 취업 할래말래</title>
-    <link rel="shortcut icon" href="/static/images/favicon.ico">
-    <link rel="stylesheet" href="../assets/signup.css">
-</head>
-<body>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" />
+    <link rel="stylesheet" href="../assets/signup.css" />
+  </head>
+  <body>
     <div class="signup-container">
-        <h1 class="page-title">회원가입</h1>
+      <h1 class="page-title">회원가입</h1>
 
-        <div class="signup-content">
-            <!-- 좌측 회원 정보 입력 폼 -->
-            <div class="form-section">
-                <form method="post" action="/api/signup">
-
-                    <!-- 이름입력-->
-                    <div class="input-row">
-                        <input type="tel" placeholder="이름 입력" class="form-input" name="user_name">
-                    </div>
-                    <!-- 아이디 -->
-                    <div class="input-row">
-                        <input type="text" placeholder="아이디" class="form-input flex-grow" name="user_id">
-                        <button type="button" class="btn btn-purple btn-small">중복확인</button>
-                    </div>
-
-                    <!-- 비밀번호 -->
-                    <div class="input-row">
-                        <input type="password" placeholder="비밀번호" class="form-input" name="user_pw">
-                    </div>
-
-                    <!-- 비밀번호 확인 -->
-                    <div class="input-row">
-                        <input type="password" placeholder="비밀번호 확인" class="form-input" name="user_pw">
-                    </div>
-
-                    <!-- 닉네임 -->
-                    <div class="input-row">
-                        <input type="text" placeholder="닉네임" class="form-input" name="user_nickname">
-                    </div>
-
-                    <!-- 주소 -->
-                    <div class="input-row">
-                        <input type="text" placeholder="주소" class="form-input flex-grow" name="user_home">
-                        <button type="button" class="btn btn-purple btn-small">주소 검색</button>
-                    </div>
-
-                    <!-- 이메일 -->
-                    <div class="input-row">
-                        <input type="email" placeholder="이메일: (@mail.com형식으로 입력)" class="form-input" name="user_email">
-                    </div>
-
-                    <!-- 전화번호 -->
-                    <div class="input-row">
-                        <input type="tel" placeholder="전화번호는 010-1234-5678 형식으로 입력" class="form-input"
-                            name="user_phone">
-                    </div>
-
-
-
-                    <!-- 경고 메세지 -->
-                    <div class="warning-message">
-                        경고 메세지
-                    </div>
-
-                    <!-- 액션 버튼 -->
-                    <div class="action-buttons">
-                        <button type="submit" class="btn btn-purple btn-large">가입</button>
-                        <button type="button" class="btn btn-purple btn-large"
-                            onclick="location.href='/jobgogo'">취소</button>
-                    </div>
-                </form>
+      <div class="signup-content">
+        <!-- 좌측 회원 정보 입력 폼 -->
+        <div class="form-section">
+          <form method="post" action="/api/signup">
+            <!-- 이름입력-->
+            <div class="input-row">
+              <input
+                type="tel"
+                placeholder="이름 입력"
+                class="form-input"
+                name="user_name"
+              />
+            </div>
+            <!-- 아이디 -->
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="아이디"
+                class="form-input flex-grow"
+                name="user_id"
+              />
+              <button type="button" class="btn btn-purple btn-small">
+                중복확인
+              </button>
             </div>
 
-          
-<!-- 우측 약관 영역 -->
-<div class="terms-section">
+            <!-- 비밀번호 -->
+            <div class="input-row">
+              <input
+                type="password"
+                placeholder="비밀번호"
+                class="form-input"
+                name="user_pw"
+              />
+            </div>
 
-    <h2 class="terms-main-title">약관 동의</h2>
-    <p class="terms-description">
-        서비스 이용을 위해 아래 약관에 동의해주세요.
-    </p>
+            <!-- 비밀번호 확인 -->
+            <div class="input-row">
+              <input
+                type="password"
+                placeholder="비밀번호 확인"
+                class="form-input"
+                name="user_pw"
+              />
+            </div>
 
-    <!-- 서비스 이용약관 -->
-    <div class="terms-card">
+            <!-- 닉네임 -->
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="닉네임"
+                class="form-input"
+                name="user_nickname"
+              />
+            </div>
 
-        <h3 class="terms-title">서비스 이용약관</h3>
+            <!-- 주소 -->
+            <div class="input-row">
+              <input
+                type="text"
+                placeholder="주소"
+                class="form-input flex-grow"
+                name="user_home"
+              />
+              <button type="button" class="btn btn-purple btn-small">
+                주소 검색
+              </button>
+            </div>
 
-        <div class="terms-box">
-            <h4>제1조 (목적)</h4>
-            <p>
-                본 약관은 '취업 할래말래'가 제공하는
-                서비스의 이용조건 및 절차,
-                회원의 권리와 의무 등을 규정함을
-                목적으로 합니다.
-            </p>
+            <!-- 이메일 -->
+            <div class="input-row">
+              <input
+                type="email"
+                placeholder="이메일: (@mail.com형식으로 입력)"
+                class="form-input"
+                name="user_email"
+              />
+            </div>
 
-            <h4>제2조 (용어의 정의)</h4>
-            <p>
-                1. 서비스란 회사가 제공하는 채용정보,
-                취업 커뮤니티 등의 서비스를 의미합니다.
-            </p>
-            <p>
-                2. 회원이란 본 약관에 동의하고
-                회원가입을 완료한 이용자를 의미합니다.
-            </p>
+            <!-- 전화번호 -->
+            <div class="input-row">
+              <input
+                type="tel"
+                placeholder="전화번호는 010-1234-5678 형식으로 입력"
+                class="form-input"
+                name="user_phone"
+              />
+            </div>
 
-            <h4>제3조 (약관의 효력)</h4>
-            <p>
-                본 약관은 회원이 동의하고
-                회원가입을 완료한 때부터 적용됩니다.
-            </p>
+            <!-- 경고 메세지 -->
+            <div class="warning-message">경고 메세지</div>
 
-            <h4>제4조 (회원의 의무)</h4>
-            <p>
-                회원은 타인의 정보를 도용하거나
-                서비스 운영을 방해해서는 안 됩니다.
-            </p>
-
-            <h4>제5조 (서비스 이용)</h4>
-            <p>
-                회원은 채용공고 조회, 취업정보 공유,
-                커뮤니티 등의 서비스를 이용할 수 있습니다.
-            </p>
+            <!-- 액션 버튼 -->
+            <div class="action-buttons">
+              <button type="submit" class="btn btn-purple btn-large">
+                가입
+              </button>
+              <button
+                type="button"
+                class="btn btn-purple btn-large"
+                onclick="location.href = '/jobgogo'"
+              >
+                취소
+              </button>
+            </div>
+          </form>
         </div>
 
-        <label class="agree-label">
-            <input type="checkbox" class="agree-check"
-                   id="agree-service" required>
-            <span>[필수] 서비스 이용약관에 동의합니다.</span>
-        </label>
+        <!-- 우측 약관 영역 -->
+        <div class="terms-section">
+          <h2 class="terms-main-title">약관 동의</h2>
+          <p class="terms-description">
+            서비스 이용을 위해 아래 약관에 동의해주세요.
+          </p>
 
-    </div>
+          <!-- 서비스 이용약관 -->
+          <div class="terms-card">
+            <h3 class="terms-title">서비스 이용약관</h3>
 
-    <!-- 개인정보 수집 동의 -->
-    <div class="terms-card">
+            <div class="terms-box">
+              <h4>제1조 (목적)</h4>
+              <p>
+                본 약관은 '취업 할래말래'가 제공하는 서비스의 이용조건 및 절차,
+                회원의 권리와 의무 등을 규정함을 목적으로 합니다.
+              </p>
 
-        <h3 class="terms-title">개인정보 수집 및 이용</h3>
+              <h4>제2조 (용어의 정의)</h4>
+              <p>
+                1. 서비스란 회사가 제공하는 채용정보, 취업 커뮤니티 등의
+                서비스를 의미합니다.
+              </p>
+              <p>
+                2. 회원이란 본 약관에 동의하고 회원가입을 완료한 이용자를
+                의미합니다.
+              </p>
 
-        <div class="terms-box privacy-box">
+              <h4>제3조 (약관의 효력)</h4>
+              <p>
+                본 약관은 회원이 동의하고 회원가입을 완료한 때부터 적용됩니다.
+              </p>
 
-            <h4>1. 수집하는 개인정보</h4>
-            <p>
-                이름, 아이디, 비밀번호, 닉네임,
-                이메일, 전화번호, 주소
-            </p>
+              <h4>제4조 (회원의 의무)</h4>
+              <p>
+                회원은 타인의 정보를 도용하거나 서비스 운영을 방해해서는 안
+                됩니다.
+              </p>
 
-            <h4>2. 개인정보 이용 목적</h4>
-            <p>
-                회원 관리, 서비스 제공,
-                문의사항 처리 및 부정 이용 방지
-            </p>
+              <h4>제5조 (서비스 이용)</h4>
+              <p>
+                회원은 채용공고 조회, 취업정보 공유, 커뮤니티 등의 서비스를
+                이용할 수 있습니다.
+              </p>
+            </div>
 
-            <h4>3. 개인정보 보유 기간</h4>
-            <p>
-                회원 탈퇴 시까지 보유하며,
-                관련 법령에 따라 보관이 필요한
-                정보는 해당 기간 동안 보관합니다.
-            </p>
+            <label class="agree-label">
+              <input
+                type="checkbox"
+                class="agree-check"
+                id="agree-service"
+                required
+              />
+              <span>[필수] 서비스 이용약관에 동의합니다.</span>
+            </label>
+          </div>
 
-            <h4>4. 동의 거부 권리</h4>
-            <p>
-                개인정보 수집에 동의하지 않을 수 있으나,
-                필수 항목에 동의하지 않으면
-                회원가입이 제한될 수 있습니다.
-            </p>
+          <!-- 개인정보 수집 동의 -->
+          <div class="terms-card">
+            <h3 class="terms-title">개인정보 수집 및 이용</h3>
 
+            <div class="terms-box privacy-box">
+              <h4>1. 수집하는 개인정보</h4>
+              <p>이름, 아이디, 비밀번호, 닉네임, 이메일, 전화번호, 주소</p>
+
+              <h4>2. 개인정보 이용 목적</h4>
+              <p>회원 관리, 서비스 제공, 문의사항 처리 및 부정 이용 방지</p>
+
+              <h4>3. 개인정보 보유 기간</h4>
+              <p>
+                회원 탈퇴 시까지 보유하며, 관련 법령에 따라 보관이 필요한 정보는
+                해당 기간 동안 보관합니다.
+              </p>
+
+              <h4>4. 동의 거부 권리</h4>
+              <p>
+                개인정보 수집에 동의하지 않을 수 있으나, 필수 항목에 동의하지
+                않으면 회원가입이 제한될 수 있습니다.
+              </p>
+            </div>
+
+            <label class="agree-label">
+              <input
+                type="checkbox"
+                class="agree-check"
+                id="agree-privacy"
+                required
+              />
+              <span>[필수] 개인정보 수집 및 이용에 동의합니다.</span>
+            </label>
+          </div>
+
+          <!-- 전체 동의 -->
+          <div class="agree-all-box">
+            <label class="agree-label">
+              <input type="checkbox" id="agree-all" />
+              <span>전체 약관에 동의합니다.</span>
+            </label>
+          </div>
         </div>
-
-        <label class="agree-label">
-            <input type="checkbox" class="agree-check"
-                   id="agree-privacy" required>
-            <span>[필수] 개인정보 수집 및 이용에 동의합니다.</span>
-        </label>
-
+      </div>
     </div>
 
-    <!-- 전체 동의 -->
-    <div class="agree-all-box">
-        <label class="agree-label">
-            <input type="checkbox" id="agree-all">
-            <span>전체 약관에 동의합니다.</span>
-        </label>
-    </div>
+    <script>
+      window.addEventListener('load', function() {
+     hasAgreedToTerms()
+    })
 
-</div>
+function hasAgreedToTerms() {
+    // 전체 선택
+    const agreeAll = document.getElementById('agree-all')
+    const agreePrivacy = document.getElementById('agree-privacy')
+    const agreeService = document.getElementById('agree-service')
+
+    // 전체 동의 체크했을 경우
+    agreeAll.addEventListener('change', function() {
+        agreePrivacy.checked = agreeAll.checked
+        agreeService.checked = agreeAll.checked
+    })
+
+    // 개별 선택의 경우
+    agreePrivacy.addEventListener('change', checkAgree)
+    agreeService.addEventListener('change', checkAgree)
+
+    function checkAgree() {
+        if (agreeService.checked && agreePrivacy.checked) {
+            agreeAll.checked = true
+        } else {
+            agreeAll.checked = false
+        }
+    }
+}
+    </script>
+  </body>
+</html>
