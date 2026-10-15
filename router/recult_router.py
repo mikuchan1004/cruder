@@ -127,6 +127,19 @@ def recult(
 
     # 총 페이지 수 계산
     total_pages = (total_count + limit - 1) // limit
+    
+       # 몇 그룹씩 끊을지 생각하기
+    page_group=5
+    
+    # 시작 페이지 그룹 계산하기
+    start_page=((page-1)//5)*page_group+1
+    # 마지막 페이지 그룹 계산 
+    end_page=start_page+page_group-1
+    
+    if end_page>total_pages:
+        end_page=total_pages
+   
+    
 
     return templates.TemplateResponse(
         request=request,
@@ -136,6 +149,8 @@ def recult(
             'keyword': keyword,
             'page': page,
             'total_pages': total_pages,
+            'start_page':start_page,
+            'end_page':end_page,
             'bookmarked_job_ids': bookmarked_job_ids,
             'user_id': request.session.get('user_id'),
             'user_name': request.session.get('user_name'),
