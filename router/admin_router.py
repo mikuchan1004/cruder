@@ -410,7 +410,7 @@ def admin_board(request:Request, session: Session = Depends(get_session), _: Non
 def delete_post(
     request: Request, 
     post_number : int, 
-    category: str = Form(...), 
+    category: str = Form(...),
     session: Session = Depends(get_session), 
     _: None = Depends(require_admin)
 ):
@@ -426,9 +426,9 @@ def delete_post(
         else:
             sql = text('''
                 delete from job_tip
-                where job_tip_no = :post_number
+                where job_tip_no = :post_number 
             ''')
-        session.execute(sql, {'post_number' : post_number})
+        session.execute(sql, {'post_number' : post_number , 'category' : category})
         session.commit()
 
         return RedirectResponse (

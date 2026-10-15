@@ -23,6 +23,7 @@
                     popup.querySelector('[name = "post_number"]').value = e.currentTarget.dataset.id; // 글 번호 
                     popup.querySelector('[name = "post_title"]').value = e.currentTarget.dataset.title; // 제목 
                     popup.querySelector('[name = "post_detail"]').value = e.currentTarget.dataset.detail; // 내용
+                    popup.querySelector('#popup-delete-category').value = e.currentTarget.dataset.category;
                     // 팝업창 안의 '삭제' 버튼 링크 주소를 클릭한 글의 번호에 맞춰서 동적으로 바꿔줌
                     popup.querySelector('#delete-button').formAction = `/jobgogo/admin-board/delete/${e.currentTarget.dataset.id}`
 
@@ -88,12 +89,13 @@
                     </div>
                     <div class="popup-footer">
                         <form method="post" action="/jobgogo/admin-board/delete/{post_number}">
+                            <input type="hidden" name="category" id="popup-delete-category" value="">
                             <button class="btn btn-red" id="delete-button" type="submit" formmethod="post">삭제</button>
                         </form>
                         <button class="btn btn-outline-purple" id="close" type="button">닫기</button>
                     </div>
             </div>
-        </div>
+        </div>`
     </main>
 </body>
 </html>
