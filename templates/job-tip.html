@@ -1,133 +1,238 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>커뮤니티 게시판</title>
 
-    <link rel="stylesheet" href="/assets/job-tip.css">
+    <title>취업 꿀팁 게시판 - 취업할래말래</title>
+
+    <!-- CSS 연결 -->
     <link rel="stylesheet" href="/assets/header.css">
     <link rel="stylesheet" href="/assets/footer.css">
-    <link rel="stylesheet" href="/assets/comment.css">
-    <link rel="shortcut icon" href="/static/images/favicon.ico">
-
+    <link rel="stylesheet" href="/assets/job-tip.css">
 </head>
+
 <body>
 
+    <!-- 공통 헤더 -->
     {% include 'header.html' %}
 
-    <!-- 메인 콘텐츠 영역 -->
-    <main class="main-container">
 
-        <!-- 검색 및 글쓰기 영역 -->
-        <div class="board-controls">
+    <!-- 게시판 메인 -->
+    <main class="board-main">
 
-            <!-- 검색 기능 -->
-            <form action="/jobgogo/jobtip" method="get" class="search-box">
-                <span class="search-icon">🔍</span>
+        <div class="board-container">
 
-                <input type="text" name="keyword" value="{{ keyword }}" placeholder="검색" class="search-input">
-            </form>
 
-            <!-- 글쓰기 버튼 -->
-            <button type="button" class="btn-write" onclick="location.href='/jobtip/write'">
-                글쓰기
-            </button>
+            <!-- =====================================
+                 게시판 제목
+            ====================================== -->
 
-        </div>
+            <div class="board-page-title">
 
-        <!-- 게시판 테이블 -->
-        <div class="board-table">
+                <h1>
+                    취업 <span>꿀팁</span> 게시판
+                </h1>
 
-            <!-- 게시판 헤더 -->
-            <div class="board-header">
-                <div class="col-num">번호</div>
-                <div class="col-title">제목</div>
-                <div class="col-author">글쓴이</div>
-                <div class="col-date">날짜</div>
-                <div class="col-views">조회수</div>
-            </div>
+                <div class="title-line"></div>
 
-            <!-- DB에서 가져온 게시글 반복 출력 -->
-            {% for job in job_tip_list %}
-
-            <div class="board-row">
-
-                <!-- 게시글 번호 -->
-                <div class="col-num" data-label="번호">
-                    {{ job.job_tip_no }}
-                </div>
-
-                <!-- 게시글 제목 -->
-                <div class="col-title" data-label="제목">
-                    <a href="/jobtip/{{ job.job_tip_no }}">
-                        {{ job.job_tip_title }}
-                    </a>
-                </div>
-                <!-- 작성자 -->
-                <div class="col-author" data-label="글쓴이">
-                    {{ job.user_id }}
-                </div>
-
-                <!-- 작성 날짜 -->
-                <div class="col-date" data-label="날짜">
-                    {{ job.job_tip_date.strftime('%Y-%m-%d') if job.job_tip_date else '' }}
-                </div>
-
-                <!-- 조회수 -->
-                <div class="col-views" data-label="조회수">
-                    -
-                </div>
+                <p>
+                    취업 준비 경험과 유용한 정보를
+                    자유롭게 공유해보세요.
+                </p>
 
             </div>
 
-            {% else %}
 
-            <!-- 게시글이 없을 경우 -->
-            <div class="board-row">
-                <div class="col-title" data-label="제목">
-                    등록된 게시글이 없습니다.
-                </div>
+            <!-- =====================================
+                 검색 및 글쓰기
+            ====================================== -->
+
+            <div class="board-controls">
+
+                <!-- 검색 기능 -->
+                <form
+                    action="/jobgogo/jobtip"
+                    method="get"
+                    class="board-search"
+                >
+
+                    <input
+                        type="text"
+                        name="keyword"
+                        value="{{ keyword | default('', true) }}"
+                        placeholder="게시글 제목 검색"
+                        class="search-input"
+                    >
+
+                    <button
+                        type="submit"
+                        class="btn-search"
+                    >
+                        검색
+                    </button>
+
+                </form>
+
+
+                <!-- 글쓰기 버튼 -->
+                <a
+                    href="/jobtip/write"
+                    class="btn-write"
+                >
+                    + 글쓰기
+                </a>
+
             </div>
 
-            {% endfor %}
 
-        </div>
+            <!-- =====================================
+                 게시판 테이블
+            ====================================== -->
 
-        <!-- 페이지네이션 -->
-        <div class="pagination">
+            <div class="board-table-wrap">
 
-            <!-- 이전 페이지 -->
-            {% if page > 1 %}
-            <button type="button" class="page-btn arrow"
-                onclick="location.href='/jobgogo/jobtip?page={{ page - 10 }}&keyword={{ keyword | urlencode }}'">
-                ◀
-            </button>
-            {% endif %}
+                <table class="board-table">
 
-            <!-- 페이지 번호 -->
-            {% for num in range(1, total_page + 1) %}
+                    <!-- 테이블 헤더 -->
+                    <thead>
 
-            <button type="button" class="page-btn {% if num == page %}active{% endif %}"
-                onclick="location.href='/jobgogo/jobtip?page={{ num }}&keyword={{ keyword | urlencode }}'">
-                {{ num }}
-            </button>
+                        <tr>
+                            <th class="col-num">번호</th>
+                            <th class="col-title">제목</th>
+                            <th class="col-author">작성자</th>
+                            <th class="col-date">작성일</th>
+                            <th class="col-views">조회수</th>
+                        </tr>
 
-            {% endfor %}
+                    </thead>
 
-            <!-- 다음 페이지 -->
-            {% if page < total_page %} <button type="button" class="page-btn arrow"
-                onclick="location.href='/jobgogo/jobtip?page={{ page + 1 }}&keyword={{ keyword | urlencode }}'">
-                ▶
-                </button>
+
+                    <!-- 게시글 목록 -->
+                    <tbody>
+
+                        {% for job in job_tip_list %}
+
+                        <tr>
+
+                            <!-- 게시글 번호 -->
+                            <td class="col-num">
+                                {{ job.job_tip_no }}
+                            </td>
+
+
+                            <!-- 게시글 제목 -->
+                            <td class="col-title">
+
+                                <a
+                                    href="/jobtip/{{ job.job_tip_no }}"
+                                    class="post-title"
+                                >
+                                    {{ job.job_tip_title }}
+                                </a>
+
+                            </td>
+
+
+                            <!-- 작성자 -->
+                            <td class="col-author">
+                                {{ job.user_id }}
+                            </td>
+
+
+                            <!-- 작성 날짜 -->
+                            <td class="col-date">
+
+                                {{ job.job_tip_date.strftime('%Y-%m-%d')
+                                   if job.job_tip_date else '' }}
+
+                            </td>
+
+
+                            <!-- 조회수 -->
+                            <td class="col-views">
+                                -
+                            </td>
+
+                        </tr>
+
+
+                        {% else %}
+
+                        <!-- 등록된 게시글이 없는 경우 -->
+                        <tr>
+                            <td colspan="5" class="empty-board">
+                                등록된 게시글이 없습니다.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- =====================================
+                 페이지네이션
+            ====================================== -->
+
+            {% if total_page > 1 %}
+
+            <div class="pagination">
+
+                <!-- 이전 페이지 -->
+                {% if page > 1 %}
+
+                <a
+                    href="/jobgogo/jobtip?page={{ page - 1 }}&keyword={{ keyword | default('', true) | urlencode }}"
+                    class="page-btn arrow"
+                >
+                    &lt;
+                </a>
+
                 {% endif %}
 
-                <span class="page-text">페이지</span>
+
+                <!-- 페이지 번호 -->
+                {% for num in range(1, total_page + 1) %}
+
+                <a
+                    href="/jobgogo/jobtip?page={{ num }}&keyword={{ keyword | default('', true) | urlencode }}"
+                    class="page-btn {% if num == page %}active{% endif %}"
+                >
+                    {{ num }}
+                </a>
+
+                {% endfor %}
+
+
+                <!-- 다음 페이지 -->
+                {% if page < total_page %}
+
+                <a
+                    href="/jobgogo/jobtip?page={{ page + 1 }}&keyword={{ keyword | default('', true) | urlencode }}"
+                    class="page-btn arrow"
+                >
+                    &gt;
+                </a>
+
+                {% endif %}
+
+            </div>
+
+            {% endif %}
+
 
         </div>
 
     </main>
 
+
+    <!-- 공통 푸터 -->
     {% include 'footer.html' %}
 
 </body>
