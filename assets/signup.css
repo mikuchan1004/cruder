@@ -1,226 +1,468 @@
-/* ==================================
-   기본 리셋 및 폰트 설정
-=================================== */
+
+/* =========================================
+   기본 설정
+========================================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
 }
 
 body {
-    background-color: #F8F9FA;
-    color: #212529;
-    display: flex;
-    justify-content: center;
-    padding: 40px 20px;
+    font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+    background-color: #f7f8fa;
+    color: #222;
     min-height: 100vh;
 }
 
-/* 회원가입 컨테이너 */
+/* =========================================
+   회원가입 전체 컨테이너
+========================================= */
+
 .signup-container {
-    width: 100%;
-    max-width: 1000px;
+    width: 1100px;
+    max-width: calc(100% - 40px);
+    margin: 40px auto;
+    padding: 45px 45px 50px;
+
     background-color: #ffffff;
-    border: 1px solid #E5E7EB;
-    border-radius: 16px;
-    padding: 45px 40px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-    margin: auto;
+    border: 1px solid #e2e5ea;
+    border-radius: 15px;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
 }
 
-/* 타이틀 */
+/* 페이지 제목 */
 .page-title {
     text-align: center;
-    font-size: 2.2rem;
+    font-size: 32px;
     font-weight: 700;
-    margin-bottom: 35px;
-    color: #111;
-    letter-spacing: -0.5px;
+    margin-bottom: 40px;
+    color: #171717;
+    letter-spacing: -1px;
 }
 
-/* 콘텐츠 래퍼 (좌우 분할) */
+/* =========================================
+   좌우 영역 배치
+========================================= */
+
 .signup-content {
     display: flex;
-    gap: 40px;
     align-items: flex-start;
+    gap: 35px;
 }
 
-/* ==================================
-   좌측 폼 영역
-=================================== */
+/* 좌측 회원가입 */
 .form-section {
     flex: 1;
+    min-width: 0;
 }
 
-.signup-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+/* 우측 약관 */
+.terms-section {
+    flex: 1;
+    min-width: 0;
+
+    padding: 0;
+    background: #ffffff;
+    border: none;
+    border-radius: 0;
+}
+
+/* =========================================
+   회원가입 입력 폼
+========================================= */
+
+.form-section form {
+    width: 100%;
 }
 
 .input-row {
     display: flex;
+    align-items: stretch;
     gap: 10px;
+    margin-bottom: 12px;
+    width: 100%;
 }
 
+/* 입력창 */
 .form-input {
     width: 100%;
-    padding: 12px 16px;
+    min-width: 0;
+    height: 50px;
+
+    padding: 0 15px;
+
+    border: 1px solid #d6dbe3;
+    border-radius: 7px;
+
     background-color: #ffffff;
-    border: 1px solid #D1D5DB;
-    border-radius: 8px;
-    font-size: 1rem;
+
+    font-size: 14px;
+    color: #333;
+
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+/* 입력창 선택 */
 .form-input:focus {
-    border-color: #6B46C1;
+    border-color: #7350c5;
+    box-shadow: 0 0 0 3px rgba(115, 80, 197, 0.09);
 }
 
+/* 입력창 안내 글씨 */
 .form-input::placeholder {
-    color: #9CA3AF;
+    color: #9ba6ba;
 }
 
-.flex-grow {
+/* 버튼과 함께 사용하는 입력창 */
+.form-input.flex-grow {
     flex: 1;
+    width: 0;
 }
 
-/* 공통 버튼 스타일 */
+/* =========================================
+   공통 버튼
+========================================= */
+
 .btn {
     border: none;
-    color: #fff;
-    cursor: pointer;
+    border-radius: 7px;
+
+    font-size: 14px;
     font-weight: 600;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s ease;
+
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-/* 보라색 테마 버튼 */
 .btn-purple {
-    background-color: #6B46C1;
-    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
+    background-color: #6f49c6;
+    color: #ffffff;
 }
 
 .btn-purple:hover {
-    background-color: #5533A3;
-    transform: translateY(-1px);
+    background-color: #5e3bb0;
 }
 
+/* 중복확인, 주소검색 */
 .btn-small {
-    padding: 0 18px;
-    border-radius: 8px; 
-    font-size: 0.9rem;
-    white-space: nowrap;
+    width: 95px;
+    height: 50px;
+    flex-shrink: 0;
+
+    font-size: 13px;
+}
+
+/* =========================================
+   경고 메시지
+========================================= */
+
+.warning-message {
+    min-height: 24px;
+    margin: 5px 0 12px;
+
+    font-size: 13px;
+    line-height: 1.5;
+    color: #e54848;
+}
+
+/* =========================================
+   가입 / 취소 버튼
+========================================= */
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    width: 100%;
 }
 
 .btn-large {
     flex: 1;
-    padding: 14px 0;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    height: 52px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    box-shadow: 0 2px 5px rgba(111, 73, 198, 0.12);
 }
 
-/* 경고 메세지 */
-.warning-message {
-    color: #DC2626;
-    font-size: 0.85rem;
-    padding-left: 4px;
-    font-weight: 500;
+/* =========================================
+   오른쪽 약관 영역
+========================================= */
+
+/* 약관 대제목 */
+.terms-main-title {
+    margin: 0 0 8px;
+
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+
+    color: #222;
 }
 
-/* 하단 가입/취소 버튼 그룹 */
-.action-buttons {
-    display: flex;
-    gap: 16px;
-    margin-top: 10px;
+/* 설명 */
+.terms-description {
+    margin-bottom: 24px;
+
+    font-size: 13px;
+    color: #8b909b;
+
+    line-height: 1.6;
 }
 
-/* ==================================
-   우측 약관 영역
-=================================== */
-.terms-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+/* =========================================
+   약관 카드
+========================================= */
+
+.terms-card {
+    margin-bottom: 22px;
 }
+
+/* 서비스 이용약관 / 개인정보 제목 */
+.terms-title {
+    margin-bottom: 11px;
+
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+
+    color: #30323a;
+}
+
+/* =========================================
+   약관 내용 박스
+========================================= */
 
 .terms-box {
-    background-color: #F9FAFB;
-    border: 1px solid #D1D5DB;
-    border-radius: 8px;
-    padding: 24px;
-    height: 470px; 
-    overflow-y: auto; 
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #4B5563;
-    margin-bottom: 16px;
-}
+    width: 100%;
+    height: 150px;
 
-.terms-box p {
+    padding: 16px 18px;
+
+    background-color: #fafbfc;
+
+    border: 1px solid #e0e3e9;
+    border-radius: 7px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    box-sizing: border-box;
+
+    font-size: 12px;
+    line-height: 1.8;
+
+    color: #666b75;
     word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
-.terms-agree {
+/* 약관 조항 제목 */
+.terms-box h4 {
+    margin: 0 0 7px;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.6;
+
+    color: #444852;
+}
+
+/* 약관 조항 설명 */
+.terms-box p {
+    margin: 0 0 16px;
+
+    font-size: 12px;
+    font-weight: 400;
+
+    line-height: 1.8;
+    color: #696e79;
+}
+
+/* 마지막 문단 */
+.terms-box p:last-child {
+    margin-bottom: 0;
+}
+
+/* 개인정보 약관 */
+.privacy-box {
+    height: 140px;
+}
+
+/* =========================================
+   스크롤바
+========================================= */
+
+.terms-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.terms-box::-webkit-scrollbar-track {
+    background-color: #f1f2f5;
+    border-radius: 10px;
+}
+
+.terms-box::-webkit-scrollbar-thumb {
+    background-color: #c5c8d1;
+    border-radius: 10px;
+}
+
+.terms-box::-webkit-scrollbar-thumb:hover {
+    background-color: #a8acb8;
+}
+
+/* =========================================
+   약관 동의 체크박스
+========================================= */
+
+.agree-label {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    color: #374151;
+    gap: 9px;
+
+    margin-top: 11px;
+
+    font-size: 13px;
     font-weight: 500;
+
+    line-height: 1.5;
+    color: #50545d;
+
+    cursor: pointer;
+    user-select: none;
 }
 
-.agree-checkbox {
-    width: 18px;
-    height: 18px;
-    accent-color: #6B46C1;
+.agree-label span {
+    flex: 1;
+}
+
+/* 개별 동의 체크박스 */
+.agree-check {
+    width: 17px;
+    height: 17px;
+
+    margin: 0;
+    flex-shrink: 0;
+
+    accent-color: #7048c5;
     cursor: pointer;
 }
 
-/* ==================================
-   모바일 반응형 웹 설정 (미디어 쿼리)
-=================================== */
-@media (max-width: 768px) {
-    body {
-        padding: 20px 10px;
-    }
+/* =========================================
+   전체 약관 동의
+========================================= */
+
+.agree-all-box {
+    margin-top: 5px;
+    padding: 17px 18px;
+
+    background-color: #f7f5fc;
+
+    border: 1px solid #e6e0f3;
+    border-radius: 7px;
+}
+
+.agree-all-box .agree-label {
+    margin: 0;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #3d3551;
+}
+
+#agree-all {
+    width: 19px;
+    height: 19px;
+
+    margin: 0;
+    flex-shrink: 0;
+
+    accent-color: #7048c5;
+    cursor: pointer;
+}
+
+/* =========================================
+   반응형 - 태블릿
+========================================= */
+
+@media (max-width: 900px) {
 
     .signup-container {
-        padding: 25px 20px;
-        border: none;
-        box-shadow: none;
-        background-color: transparent;
+        width: 95%;
+        max-width: 700px;
+        padding: 30px;
     }
 
     .signup-content {
         flex-direction: column;
-        gap: 30px;
+        gap: 40px;
     }
 
-    .form-section, .terms-section {
+    .form-section,
+    .terms-section {
         width: 100%;
     }
 
     .page-title {
-        font-size: 1.8rem;
-        margin-bottom: 24px;
+        font-size: 28px;
+    }
+}
+
+/* =========================================
+   반응형 - 모바일
+========================================= */
+
+@media (max-width: 480px) {
+
+    .signup-container {
+        max-width: calc(100% - 24px);
+        margin: 15px auto;
+        padding: 25px 18px;
     }
 
-    .terms-box {
-        height: 220px; 
+    .page-title {
+        font-size: 25px;
+        margin-bottom: 30px;
+    }
+
+    .signup-content {
+        gap: 35px;
+    }
+
+    .form-input {
+        height: 47px;
+        font-size: 13px;
     }
 
     .btn-small {
-        padding: 0 14px;
-        font-size: 0.85rem;
+        width: 85px;
+        height: 47px;
+        font-size: 12px;
     }
 
-    .action-buttons {
-        gap: 10px;
+    .terms-main-title {
+        font-size: 19px;
+    }
+
+    .terms-box {
+        height: 145px;
+    }
+
+    .privacy-box {
+        height: 135px;
+    }
+
+    .agree-label {
+        font-size: 12px;
+    }
+
+    .btn-large {
+        height: 48px;
+        font-size: 14px;
     }
 }
