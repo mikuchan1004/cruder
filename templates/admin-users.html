@@ -64,6 +64,7 @@
                         <span class="badge status-normal ">일반 회원</span>
                         {% endif %}
                     </div>
+                    {% if user.user_status_id != 1 %}
                     <div class="col action-buttons" data-label="관리">
                         <form method="post" action="/jobgogo/admin/user/warning/{{user.user_id}}">
                             <button class="btn btn-outline-purple" type="submit">경고</button>
@@ -106,6 +107,7 @@
                         </form>
                         {% endif %}
                     </div>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
