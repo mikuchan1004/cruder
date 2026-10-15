@@ -137,6 +137,17 @@ body {
     transform: translateY(-1px);
 }
 
+.btn-cancel {
+    background-color: #DC2626;
+    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.22);
+}
+
+.btn-cancel:hover {
+    background-color: #B91C1C;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.28);
+}
+
 /* ==================================
    모바일 반응형 웹 설정 (미디어 쿼리)
 =================================== */
