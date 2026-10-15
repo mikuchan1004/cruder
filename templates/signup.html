@@ -10,10 +10,19 @@
   <body>
     <div class="signup-container">
       <h1 class="page-title">회원가입</h1>
-
+                                             
       <div class="signup-content">
         <!-- 좌측 회원 정보 입력 폼 -->
         <div class="form-section">
+             <!-- 경고 메세지 -->
+            <div class="warning-message">
+              {% if messege %}
+                    {{ messege }}
+                {% endif %}   
+            </div>
+
+
+
           <form method="post" action="/api/signup">
             <!-- 이름입력-->
             <div class="input-row">
@@ -32,7 +41,13 @@
                 class="form-input flex-grow"
                 name="user_id"
               />
-              <button type="button" class="btn btn-purple btn-small">
+
+              <button
+                type="submit"
+                class="btn btn-purple btn-small"
+                formaction="/api/check-id"
+                formmethod="get"
+              >
                 중복확인
               </button>
             </div>
@@ -100,8 +115,7 @@
               />
             </div>
 
-            <!-- 경고 메세지 -->
-            <div class="warning-message">경고 메세지</div>
+           
 
             <!-- 액션 버튼 -->
             <div class="action-buttons">
@@ -118,6 +132,8 @@
             </div>
           </form>
         </div>
+
+                
 
         <!-- 우측 약관 영역 -->
         <div class="terms-section">
@@ -221,36 +237,36 @@
         </div>
       </div>
     </div>
-
+    <!-- ###################################################################### -->
     <script>
-      window.addEventListener('load', function() {
-     hasAgreedToTerms()
-    })
+      window.addEventListener("load", function () {
+        hasAgreedToTerms();
+      });
 
-function hasAgreedToTerms() {
-    // 전체 선택
-    const agreeAll = document.getElementById('agree-all')
-    const agreePrivacy = document.getElementById('agree-privacy')
-    const agreeService = document.getElementById('agree-service')
+      function hasAgreedToTerms() {
+        // 전체 선택
+        const agreeAll = document.getElementById("agree-all");
+        const agreePrivacy = document.getElementById("agree-privacy");
+        const agreeService = document.getElementById("agree-service");
 
-    // 전체 동의 체크했을 경우
-    agreeAll.addEventListener('change', function() {
-        agreePrivacy.checked = agreeAll.checked
-        agreeService.checked = agreeAll.checked
-    })
+        // 전체 동의 체크했을 경우
+        agreeAll.addEventListener("change", function () {
+          agreePrivacy.checked = agreeAll.checked;
+          agreeService.checked = agreeAll.checked;
+        });
 
-    // 개별 선택의 경우
-    agreePrivacy.addEventListener('change', checkAgree)
-    agreeService.addEventListener('change', checkAgree)
+        // 개별 선택의 경우
+        agreePrivacy.addEventListener("change", checkAgree);
+        agreeService.addEventListener("change", checkAgree);
 
-    function checkAgree() {
-        if (agreeService.checked && agreePrivacy.checked) {
-            agreeAll.checked = true
-        } else {
-            agreeAll.checked = false
+        function checkAgree() {
+          if (agreeService.checked && agreePrivacy.checked) {
+            agreeAll.checked = true;
+          } else {
+            agreeAll.checked = false;
+          }
         }
-    }
-}
+      }
     </script>
   </body>
 </html>
