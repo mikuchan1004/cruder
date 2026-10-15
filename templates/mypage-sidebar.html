@@ -1,0 +1,62 @@
+{% set current_path = request.url.path %}
+
+{% if user is defined and user %}
+    {% set sidebar_user_name = user.user_name %}
+{% else %}
+    {% set sidebar_user_name = user_name|default('회원', true) %}
+{% endif %}
+
+<aside class="mypage-sidebar" aria-label="마이페이지 메뉴">
+    <div class="sidebar-heading">
+        <span class="sidebar-icon" aria-hidden="true">
+            <i class="fa-regular fa-user"></i>
+        </span>
+
+        <div>
+            <strong>{{ sidebar_user_name }}</strong>
+            <span>회원님</span>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a
+            href="/jobgogo/mypage"
+            class="{{ 'active' if current_path == '/jobgogo/mypage' else '' }}"
+        >
+            <i class="fa-solid fa-house"></i>
+            <span>마이페이지 홈</span>
+        </a>
+
+        <a
+            href="/jobgogo/mypage/edit"
+            class="{{ 'active' if current_path == '/jobgogo/mypage/edit' else '' }}"
+        >
+            <i class="fa-regular fa-address-card"></i>
+            <span>회원 정보 수정</span>
+        </a>
+
+        <a
+            href="/jobgogo/mypage/reposts"
+            class="{{ 'active' if current_path == '/jobgogo/mypage/reposts' else '' }}"
+        >
+            <i class="fa-regular fa-pen-to-square"></i>
+            <span>쓴 글 목록</span>
+        </a>
+
+        <a
+            href="/jobgogo/mypage/bookmarks"
+            class="{{ 'active' if current_path == '/jobgogo/mypage/bookmarks' else '' }}"
+        >
+            <i class="fa-regular fa-star"></i>
+            <span>찜한 공고 목록</span>
+        </a>
+
+        <a
+            href="/jobgogo/mypage/inquiry_list"
+            class="{{ 'active' if current_path.startswith('/jobgogo/inquiry') else '' }}"
+        >
+            <i class="fa-regular fa-circle-question"></i>
+            <span>일대일 문의</span>
+        </a>
+    </nav>
+</aside>

@@ -1,74 +1,128 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1:1 문의 - 취업할래말래</title>
+    <title>일대일 문의 - 취업할래 말래</title>
 
-    <link rel="stylesheet" href="/assets/inquiry.css">
     <link rel="stylesheet" href="/assets/header.css">
+    <link rel="stylesheet" href="/assets/my-page.css?v=20261015">
+    <link rel="stylesheet" href="/assets/inquiry-result.css?v=20261015">
     <link rel="stylesheet" href="/assets/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
     {% include 'header.html' %}
 
+    {% set user_name = request.session.get('user_name') %}
 
-     <!-- 내 문의 목록 -->
-            <section class="inquiry-section">
-                <div class="section-heading">
-                    <h2>내 문의 내역</h2>
-                    <p>등록한 문의와 답변 상태를 확인할 수 있습니다.</p>
-                </div>
+    <main class="mypage-main">
+        <section class="mypage-hero" aria-labelledby="inquiry-page-title">
+            <div class="hero-copy">
+                <span class="hero-eyebrow">MY PAGE</span>
+                <h1 id="inquiry-page-title">일대일 문의</h1>
+                <p>등록한 문의와 답변 상태를 한곳에서 확인할 수 있습니다.</p>
+            </div>
+        </section>
 
-                <div class="inquiry-list">
+        <div class="mypage-layout">
+            {% include 'mypage-sidebar.html' %}
+
+            <section class="mypage-content">
+                <article class="profile-card inquiry-summary-card">
+                    <div class="profile-avatar inquiry-summary-icon" aria-hidden="true">
+                        <i class="fa-regular fa-circle-question"></i>
+                    </div>
+
+                    <div class="profile-copy">
+                        <span class="profile-label">SUPPORT</span>
+                        <h2>{{ user_name }}님의 문의 내역</h2>
+                        <p>문의 진행 상태를 확인하고 필요한 경우 새로운 문의를 등록할 수 있어요.</p>
+                    </div>
+
+                    <a href="/inquiry" class="home-button inquiry-write-button">
+                        새 문의 작성
+                        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </article>
+
+                <section class="menu-section inquiry-history-section" aria-labelledby="inquiry-list-title">
+                    <div class="section-title-group inquiry-section-heading">
+                        <div>
+                            <span class="section-kicker">INQUIRY HISTORY</span>
+                            <h2 id="inquiry-list-title">내 문의 내역</h2>
+                        </div>
+                        <p>문의 제목을 누르면 상세 내용과 답변을 확인할 수 있습니다.</p>
+                    </div>
 
                     {% if inquiries %}
-
+                    <div class="inquiry-list" aria-label="내 문의 목록">
                         {% for inquiry in inquiries %}
-                        <a href="/jobgogo/inquiry/{{ inquiry.inquiry_id }}"
-                           class="inquiry-item">
+                        <a
+                            href="/jobgogo/inquiry/{{ inquiry.inquiry_id }}"
+                            class="inquiry-item"
+                        >
+                            <div class="inquiry-item-main">
+                                <div class="inquiry-meta">
+                                    <span class="inquiry-category">
+                                        {{ inquiry.inquiry_type }}
+                                    </span>
 
-                            <div class="inquiry-item-info">
-                                <span class="inquiry-category">
-                                    {{ inquiry.inquiry_type }}
-                                </span>
+                                    <span class="inquiry-date">
+                                        <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                                        {{ inquiry.inquiry_date }}
+                                    </span>
+                                </div>
 
                                 <h3>{{ inquiry.inquiry_title }}</h3>
-
-                                <span class="inquiry-date">
-                                    {{ inquiry.inquiry_date }}
-                                </span>
                             </div>
 
-                            {% if inquiry.inquiry_answer %}
-                                <span class="status completed">
+                            <div class="inquiry-item-side">
+                                {% if inquiry.inquiry_answer %}
+                                <span class="inquiry-status completed">
+                                    <i class="fa-solid fa-check" aria-hidden="true"></i>
                                     답변 완료
                                 </span>
-                            {% else %}
-                                <span class="status waiting">
+                                {% else %}
+                                <span class="inquiry-status waiting">
+                                    <i class="fa-regular fa-clock" aria-hidden="true"></i>
                                     답변 대기
                                 </span>
-                            {% endif %}
+                                {% endif %}
 
+                                <i class="fa-solid fa-chevron-right inquiry-arrow" aria-hidden="true"></i>
+                            </div>
                         </a>
                         {% endfor %}
-
+                    </div>
                     {% else %}
-
-                        <div class="inquiry-empty">
-                            <p>등록된 문의 내역이 없습니다.</p>
-                        </div>
-
+                    <div class="inquiry-empty">
+                        <span class="empty-icon" aria-hidden="true">
+                            <i class="fa-regular fa-message"></i>
+                        </span>
+                        <strong>아직 등록한 문의가 없어요.</strong>
+                        <p>궁금한 점이 있다면 일대일 문의를 남겨주세요.</p>
+                        <a href="/inquiry">
+                            문의 작성하기
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
                     {% endif %}
+                </section>
 
-                </div>
+                <aside class="mypage-guide">
+                    <span class="guide-icon" aria-hidden="true">
+                        <i class="fa-regular fa-lightbulb"></i>
+                    </span>
+                    <div>
+                        <strong>일대일 문의 안내</strong>
+                        <p>답변이 등록된 문의는 목록에서 바로 상태가 변경되며, 상세 페이지에서 답변 내용을 확인할 수 있습니다.</p>
+                    </div>
+                </aside>
             </section>
-
- 
+        </div>
+    </main>
 
     {% include 'footer.html' %}
-
 </body>
 </html>

@@ -88,7 +88,7 @@ def inquiry_add(request:Request,
 
 # 내가 쓴 글 목록 보는거
  
-@router.get('/jobgogo/inquiry_list')
+@router.get('/jobgogo/mypage/inquiry_list')
 def inquiry_list(request:Request,
     session: Session = Depends(get_session)       
      ):
