@@ -474,7 +474,8 @@ def recult(request:Request, page:int = 1,  session:Session = Depends(get_session
             pbanc_end_ymd, 
             recrut_se_nm,
             work_rgn_nm_lst
-        from jobs 
+        from jobs         
+        where ongoing_yn = 'Y'
         limit :limit offset :offset
     ''')
 
