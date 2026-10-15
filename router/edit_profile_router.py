@@ -135,8 +135,9 @@ def update_profile(
     session.commit()
     session.refresh(user)
 
-    # 이름은 세션에도 저장돼 있으므로 같이 갱신
+    # 이름과 닉네임은 세션에도 저장돼 있으므로 같이 갱신
     request.session['user_name'] = user.user_name
+    request.session['user_nickname'] = user.user_nickname
 
     return RedirectResponse(
         url='/jobgogo/mypage?edit=success',

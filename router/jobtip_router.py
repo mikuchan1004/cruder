@@ -72,18 +72,21 @@ def jobtip(
     # DB에서 게시글 목록 조회
     sql_jobtip = text('''
         SELECT
-            job_tip_no,
-            job_tip_title,
-            job_tip_date,
-            job_tip_detail,
-            user_id
-        FROM job_tip
+            jt.job_tip_no,
+            jt.job_tip_title,
+            jt.job_tip_date,
+            jt.job_tip_detail,
+            jt.user_id,
+            u.user_nickname
+        FROM job_tip AS jt
+        JOIN user AS u
+            ON jt.user_id = u.user_id
         WHERE (
             :keyword = ''
-            OR job_tip_title LIKE :search_keyword
-            OR job_tip_detail LIKE :search_keyword
+            OR jt.job_tip_title LIKE :search_keyword
+            OR jt.job_tip_detail LIKE :search_keyword
         )
-        ORDER BY job_tip_no DESC
+        ORDER BY jt.job_tip_no DESC
         LIMIT :page_start, :page_size
     ''')
 
@@ -292,14 +295,17 @@ def jobtip_read(
     
     sql = text('''
         SELECT
-            job_tip_no,
-            job_tip_title,
-            job_tip_detail,
-            job_tip_date,
-            job_tip_attachment,
-            user_id
-        FROM job_tip
-        WHERE job_tip_no = :job_tip_no
+            jt.job_tip_no,
+            jt.job_tip_title,
+            jt.job_tip_detail,
+            jt.job_tip_date,
+            jt.job_tip_attachment,
+            jt.user_id,
+            u.user_nickname
+        FROM job_tip AS jt
+        JOIN user AS u
+            ON jt.user_id = u.user_id
+        WHERE jt.job_tip_no = :job_tip_no
     ''')
 
     job = session.execute(
@@ -318,14 +324,17 @@ def jobtip_read(
     # 댓글 가져오기
     reple_sql = text('''
         SELECT
-            reple_no,
-            reple,
-            parent_reple_no,
-            job_tip_no,
-            user_id
-        FROM job_tip_comment
-        WHERE job_tip_no = :job_tip_no
-        ORDER BY reple_no DESC
+            c.reple_no,
+            c.reple,
+            c.parent_reple_no,
+            c.job_tip_no,
+            c.user_id,
+            u.user_nickname
+        FROM job_tip_comment AS c
+        JOIN user AS u
+            ON c.user_id = u.user_id
+        WHERE c.job_tip_no = :job_tip_no
+        ORDER BY c.reple_no DESC
     ''')
     reple_list = session.execute(
         reple_sql,
