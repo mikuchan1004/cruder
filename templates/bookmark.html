@@ -24,40 +24,7 @@
         </section>
 
         <div class="mypage-layout">
-            <aside class="mypage-sidebar" aria-label="마이페이지 메뉴">
-                <div class="sidebar-heading">
-                    <span class="sidebar-icon" aria-hidden="true">
-                        <i class="fa-regular fa-user"></i>
-                    </span>
-                    <div>
-                        <strong>{{ user_name }}</strong>
-                        <span>회원님</span>
-                    </div>
-                </div>
-
-                <nav class="sidebar-nav">
-                    <a href="/jobgogo/mypage">
-                        <i class="fa-solid fa-house"></i>
-                        <span>마이페이지 홈</span>
-                    </a>
-                    <a href="/jobgogo/mypage/edit">
-                        <i class="fa-regular fa-address-card"></i>
-                        <span>회원 정보 수정</span>
-                    </a>
-                    <a href="#">
-                        <i class="fa-regular fa-pen-to-square"></i>
-                        <span>쓴 글 목록</span>
-                    </a>
-                    <a href="/jobgogo/mypage/bookmarks" class="active" aria-current="page">
-                        <i class="fa-regular fa-star"></i>
-                        <span>찜한 공고 목록</span>
-                    </a>
-                    <a href="#">
-                        <i class="fa-regular fa-circle-question"></i>
-                        <span>일대일 문의</span>
-                    </a>
-                </nav>
-            </aside>
+            {% include 'mypage-sidebar.html' %}
 
             <section class="mypage-content">
                 <article class="profile-card bookmark-summary-card">

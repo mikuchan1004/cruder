@@ -3,100 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>최근 작성한 게시물 - 취업 할래말래</title>
-    <link rel="stylesheet" href="/assets/recent-posts.css">
-    <!-- FontAwesome (사용자 프로필 아이콘 렌더링용) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/assets/header.css">
-    <link rel="stylesheet" href="/assets/footer.css">
+    <title>쓴 글 목록 - 취업할래 말래</title>
 
+    <link rel="stylesheet" href="/assets/header.css">
+    <link rel="stylesheet" href="/assets/my-page.css?v=20261015">
+    <link rel="stylesheet" href="/assets/recent-posts.css?v=20261015">
+    <link rel="stylesheet" href="/assets/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
     {% include 'header.html' %}
 
-    <!-- 메인 레이아웃 컨테이너 -->
-    <main class="mypage-container">
-        <!-- 좌측 사이드바 영역 -->
-        <aside class="sidebar">
-            <h2 class="sidebar-title">마이페이지</h2>
-            <ul class="sidebar-menu">
-                <li><a href="#">회원 정보 수정</a></li>
-                <li><a href="#" class="active">쓴 글 목록</a></li>
-                <li><a href="#">찜한 공고 목록</a></li>
-                <li><a href="#">일대일 문의</a></li>
-            </ul>
-        </aside>
-
-        <!-- 우측 메인 콘텐츠 영역 -->
-        <section class="content-area">
-            <!-- 사용자 정보 및 타이틀 -->
-            <div class="user-greeting">
-                <div class="avatar">
-                    <i class="fa-regular fa-user"></i>
-                </div>
-                <h3>OOO 님이 최근 작성한 게시물</h3>
-            </div>
-
-            <!-- 작성 게시물 테이블 -->
-            <div class="board-table">
-                <!-- 데스크톱용 테이블 헤더 -->
-                <div class="table-header">
-                    <div class="col-category">글번호</div>
-                    <div class="col-title">제목</div>
-                    <div class="col-author">작성자</div>
-                    <div class="col-date">작성일</div>
-                    <div class="col-action"></div> <!-- 버튼 영역 -->
-                </div>
-
-                <!-- 리스트 아이템 1 -->
-                <!-- <div class="table-row">
-                    <div class="col-category" data-label="카테고리">취업 꿀팁 게시판</div>
-                    <div class="col-title" data-label="제목">취업하고 싶으면 이글부터 봐라</div>
-                    <div class="col-author" data-label="작성자">123</div>
-                    <div class="col-date" data-label="작성일">1750-05-11</div>
-                    <div class="col-action"><button class="btn-view">보기</button></div>
-                </div> -->
-                
-                {% for job in job_tip_list %}
-                <div class="table-row">
-                    <div class="col-num" data-label="번호">
-                        {{ job.job_tip_no }}
-                    </div>
-
-                    <div class="col-title" data-label="제목">
-                        <a href="/jobtip/{{ job.job_tip_no }}">
-                            {{ job.job_tip_title }}
-                        </a>
-                    </div>
-
-                    <div class="col-author" data-label="글쓴이">
-                        {{ job.user_id }}
-                    </div>
-
-                    <div class="col-date" data-label="날짜">
-                        {{ job.job_tip_date.strftime('%Y-%m-%d') if job.job_tip_date else '' }}
-                    </div>
-
-                    <div class="col-action">
-                        <a href="/jobtip/{{ job.job_tip_no }}" class="btn-view">보기</a>
-                    </div>
-                </div>
-                {% endfor %}
-                
+    <main class="mypage-main">
+        <section class="mypage-hero" aria-labelledby="recent-posts-title">
+            <div class="hero-copy">
+                <span class="hero-eyebrow">MY PAGE</span>
+                <h1 id="recent-posts-title">쓴 글 목록</h1>
+                <p>내가 작성한 취업 꿀팁 게시글을 한곳에서 확인할 수 있습니다.</p>
             </div>
         </section>
+
+        <div class="mypage-layout">
+            {% include 'mypage-sidebar.html' %}
+
+            <section class="mypage-content">
+                <article class="profile-card posts-summary-card">
+                    <div class="profile-avatar posts-summary-icon" aria-hidden="true">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </div>
+
+                    <div class="profile-copy">
+                        <span class="profile-label">MY POSTS</span>
+                        <h2>{{ user_name }}님의 작성 게시물</h2>
+                        <p>작성한 게시글을 확인하거나 원하는 글을 빠르게 찾아볼 수 있어요.</p>
+                    </div>
+
+                    <a href="/jobgogo/jobtip" class="home-button posts-board-button">
+                        게시판으로
+                        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </article>
+
+                <section class="menu-section posts-section" aria-labelledby="posts-list-title">
+                    <div class="section-title-group posts-section-heading">
+                        <div>
+                            <span class="section-kicker">POST HISTORY</span>
+                            <h2 id="posts-list-title">작성한 글</h2>
+                        </div>
+                        <p>제목 또는 내용으로 내가 작성한 게시글을 검색할 수 있습니다.</p>
+                    </div>
+
+                    <form class="posts-search" action="/jobgogo/mypage/reposts" method="get" role="search">
+                        <div class="posts-search-box">
+                            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                            <input
+                                type="search"
+                                name="keyword"
+                                value="{{ keyword }}"
+                                placeholder="내가 쓴 글 검색"
+                                aria-label="내가 쓴 글 검색"
+                            >
+                        </div>
+
+                        <button type="submit" class="posts-search-button">
+                            검색
+                        </button>
+                    </form>
+
+                    {% if job_tip_list %}
+                    <div class="posts-table" role="table" aria-label="내가 작성한 게시글">
+                        <div class="posts-row posts-table-header" role="row">
+                            <div class="posts-number" role="columnheader">번호</div>
+                            <div class="posts-title" role="columnheader">제목</div>
+                            <div class="posts-date" role="columnheader">작성일</div>
+                            <div class="posts-action" role="columnheader">상세</div>
+                        </div>
+
+                        {% for job in job_tip_list %}
+                        <div class="posts-row" role="row">
+                            <div class="posts-number" data-label="번호" role="cell">
+                                {{ job.job_tip_no }}
+                            </div>
+
+                            <div class="posts-title" data-label="제목" role="cell">
+                                <a href="/jobtip/{{ job.job_tip_no }}">
+                                    {{ job.job_tip_title }}
+                                </a>
+                            </div>
+
+                            <div class="posts-date" data-label="작성일" role="cell">
+                                {{ job.job_tip_date.strftime('%Y-%m-%d') if job.job_tip_date else '-' }}
+                            </div>
+
+                            <div class="posts-action" data-label="상세" role="cell">
+                                <a href="/jobtip/{{ job.job_tip_no }}" class="posts-view-button">
+                                    보기
+                                    <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if total_page > 1 %}
+                    <nav class="posts-pagination" aria-label="쓴 글 목록 페이지 이동">
+                        {% if page > 1 %}
+                        <a
+                            href="/jobgogo/mypage/reposts?page={{ page - 1 }}&keyword={{ keyword | urlencode }}"
+                            class="page-button page-arrow"
+                            aria-label="이전 페이지"
+                        >
+                            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                        </a>
+                        {% endif %}
+
+                        {% for num in range(1, total_page + 1) %}
+                        <a
+                            href="/jobgogo/mypage/reposts?page={{ num }}&keyword={{ keyword | urlencode }}"
+                            class="page-button {{ 'active' if num == page else '' }}"
+                            {% if num == page %}aria-current="page"{% endif %}
+                        >
+                            {{ num }}
+                        </a>
+                        {% endfor %}
+
+                        {% if page < total_page %}
+                        <a
+                            href="/jobgogo/mypage/reposts?page={{ page + 1 }}&keyword={{ keyword | urlencode }}"
+                            class="page-button page-arrow"
+                            aria-label="다음 페이지"
+                        >
+                            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                        </a>
+                        {% endif %}
+                    </nav>
+                    {% endif %}
+
+                    {% else %}
+                    <div class="posts-empty">
+                        <span class="empty-icon" aria-hidden="true">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </span>
+
+                        {% if keyword %}
+                        <strong>검색 결과가 없어요.</strong>
+                        <p>다른 검색어로 다시 찾아보세요.</p>
+                        <a href="/jobgogo/mypage/reposts">
+                            전체 글 보기
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                        {% else %}
+                        <strong>아직 작성한 게시글이 없어요.</strong>
+                        <p>취업 꿀팁 게시판에서 첫 글을 작성해보세요.</p>
+                        <a href="/jobtip/write">
+                            글 작성하기
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </section>
+
+                <aside class="mypage-guide">
+                    <span class="guide-icon" aria-hidden="true">
+                        <i class="fa-regular fa-lightbulb"></i>
+                    </span>
+                    <div>
+                        <strong>쓴 글 목록 안내</strong>
+                        <p>이 목록에는 현재 로그인한 계정으로 작성한 취업 꿀팁 게시글만 표시됩니다.</p>
+                    </div>
+                </aside>
+            </section>
+        </div>
     </main>
 
-    <!-- 하단 액션 버튼 영역 -->
-    <div class="bottom-action">
-    <button type="button-action" class="btn-return"
-    onclick="location.href='/jobgogo/mypage'">
-    마이페이지로
-    </button>
-    </div>
-
-{% include 'footer.html' %}
-
+    {% include 'footer.html' %}
 </body>
 </html>
