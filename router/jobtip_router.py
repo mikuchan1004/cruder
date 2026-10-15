@@ -72,21 +72,19 @@ def jobtip(
     # DB에서 게시글 목록 조회
     sql_jobtip = text('''
         SELECT
-            jt.job_tip_no,
-            jt.job_tip_title,
-            jt.job_tip_date,
-            jt.job_tip_detail,
-            jt.user_id,
-            u.user_nickname
-        FROM job_tip AS jt
-        JOIN user AS u
-            ON jt.user_id = u.user_id
+            job_tip_no,
+            job_tip_title,
+            job_tip_date,
+            job_tip_detail,
+            user_id,
+            view_count
+        FROM job_tip
         WHERE (
             :keyword = ''
-            OR jt.job_tip_title LIKE :search_keyword
-            OR jt.job_tip_detail LIKE :search_keyword
+            OR job_tip_title LIKE :search_keyword
+            OR job_tip_detail LIKE :search_keyword
         )
-        ORDER BY jt.job_tip_no DESC
+        ORDER BY job_tip_no DESC
         LIMIT :page_start, :page_size
     ''')
 
@@ -295,26 +293,41 @@ def jobtip_read(
     
     sql = text('''
         SELECT
-            jt.job_tip_no,
-            jt.job_tip_title,
-            jt.job_tip_detail,
-            jt.job_tip_date,
-            jt.job_tip_attachment,
-            jt.user_id,
-            u.user_nickname
-        FROM job_tip AS jt
-        JOIN user AS u
-            ON jt.user_id = u.user_id
-        WHERE jt.job_tip_no = :job_tip_no
+            job_tip_no,
+            job_tip_title,
+            job_tip_detail,
+            job_tip_date,
+            job_tip_attachment,
+            user_id,
+            view_count
+        FROM job_tip
+        WHERE job_tip_no = :job_tip_no
     ''')
 
     job = session.execute(
         sql,
         {'job_tip_no': job_tip_no}
     ).mappings().first()
-
+    
+    # 이쪽에다가 조회수 카운트하는 함수를 추가하면 될것같습니다.
+    
+    
     if job is None:
-        return popup_error("게시글이 없습니다....")
+            return popup_error("게시글이 없습니다....") 
+    view_count_sql=text('''
+                update job_tip
+                set view_count=COALESCE(view_count,0)+1
+                where job_tip_no=:job_tip_no         
+                        
+                        ''')
+    view_count=session.exec(
+        view_count_sql,params={
+            'job_tip_no':job_tip_no
+        }
+    )
+    session.commit()
+    
+    
 
     # DB에 저장된 이미지 가져오기
     attachment_paths = json.loads(
@@ -324,17 +337,14 @@ def jobtip_read(
     # 댓글 가져오기
     reple_sql = text('''
         SELECT
-            c.reple_no,
-            c.reple,
-            c.parent_reple_no,
-            c.job_tip_no,
-            c.user_id,
-            u.user_nickname
-        FROM job_tip_comment AS c
-        JOIN user AS u
-            ON c.user_id = u.user_id
-        WHERE c.job_tip_no = :job_tip_no
-        ORDER BY c.reple_no DESC
+            reple_no,
+            reple,
+            parent_reple_no,
+            job_tip_no,
+            user_id
+        FROM job_tip_comment
+        WHERE job_tip_no = :job_tip_no
+        ORDER BY reple_no DESC
     ''')
     reple_list = session.execute(
         reple_sql,
@@ -354,6 +364,7 @@ def jobtip_read(
             'user_id': request.session.get('user_id'),
             'user_name': request.session.get('user_name'),
             'user_status_id': request.session.get('user_status_id')
+           
         }
     )
 
