@@ -84,7 +84,7 @@ def admin_dashboard(
         order by created_at desc
         limit 5
     ''')
-    results3 = session.exe(sql3).mappings().fetchall() 
+    results3 = session.exec(sql3).mappings().fetchall() 
 
     # 답변 대기 중인 문의가 몇 개인지 세는 SQL문
     sql4=text('''
