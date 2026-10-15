@@ -495,10 +495,24 @@ def recult(request:Request, page:int = 1,  session:Session = Depends(get_session
     # 총 페이지 계산 
     total_pages = (total_count + limit - 1) // limit
 
+    # 몇 그룹씩 끊을지 생각하기 
+    page_group = 5
+
+    # 시작 페이지 그룹 계산하기 
+    start_page = ((page - 1)//5)*page_group+1
+
+    # 마지막 페이지 그룹 계산
+    end_page = start_page+page_group-1
+
+    if end_page>total_pages:
+        end_page=total_pages
+
     return templates.TemplateResponse(request, 'admin-recult.html' , {
         'recrut_lists' : results,
         'page' : page,
-        'total_pages' : total_pages
+        'total_pages' : total_pages,
+        'start_page' : start_page,
+        'end_page' : end_page
     })
 
 @router.post('/jobgogo/admin-recult/delete/{recrut_pblnt_sn}')
