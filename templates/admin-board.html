@@ -87,7 +87,9 @@
                         내용 : <textarea class="form-control" type="text" name="post_detail"></textarea><br> 
                     </div>
                     <div class="popup-footer">
-                        <button class="btn btn-red" id="delete-button" type="submit" formmethod="post">삭제</button>
+                        <form method="post" action="/jobgogo/admin-board/delete/{post_number}">
+                            <button class="btn btn-red" id="delete-button" type="submit" formmethod="post">삭제</button>
+                        </form>
                         <button class="btn btn-outline-purple" id="close" type="button">닫기</button>
                     </div>
             </div>

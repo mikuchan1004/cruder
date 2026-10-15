@@ -406,7 +406,7 @@ def admin_board(request:Request, session: Session = Depends(get_session), _: Non
         }
     )
 
-@router.post('/jobgogo/admin/board/delete/{post_number}')
+@router.post('/jobgogo/admin-board/delete/{post_number}')
 def delete_post(
     request: Request, 
     post_number : int, 
