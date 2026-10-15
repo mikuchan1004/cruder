@@ -86,10 +86,19 @@ def admin_dashboard(
     ''')
     results3 = session.execute(sql3).mappings().fetchall() 
 
+    # 답변 대기 중인 문의가 몇 개인지 세는 SQL문
+    sql4=text('''
+        select count(*)
+        from inquiry
+        where inquiry_status_id = 1
+    ''')
+    results4 = session.execute(sql4).mappings().fetchall()
+
     return templates.TemplateResponse(request, 'admin-dashboard.html',{
         'total_users_count' : results1[0]['count(*)'],
         'total_ongoing_count' : results2[0]['count(*)'],
-        'recent_posts' : results3
+        'recent_posts' : results3,
+        'inquiry_wating_count' : results4[0]['count(*)']
     })
 
 @router.get('/jobgogo/admin-users')
