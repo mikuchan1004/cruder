@@ -96,6 +96,7 @@ def jobgogo(
             context={
                 "jobs": jobs,
                 "keyword" : keyword,
+                "selectNum": selectNum,
                 "bookmarked_job_ids": bookmarked_job_ids,
 
                 # 로그인 세션

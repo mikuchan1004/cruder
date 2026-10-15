@@ -23,10 +23,14 @@
             <p>공공기관 채용 공고를 검색하고 원하는 공고를 확인해보세요.</p>
 
             <form class="search-bar" method="get" action="/jobgogo">
-                <input type="text" name="keyword" placeholder="공고명 · 기관명 · 지역 검색">
+                <input type="text" name="keyword" value="{{ keyword | default('', true) }}" placeholder="공고명 · 기관명 · 지역 검색">
                 <select name="selectNum">
-                    <option value="8">8</option>
-                    <option value="16">16</option>
+                    <option value="8" {% if selectNum == 8 %}selected{% endif %}>
+                        8
+                    </option>
+                    <option value="16" {% if selectNum == 16 %}selected{% endif %}>
+                        16
+                    </option>
                 </select>
                 <button type="submit" class="btn-search">검색</button>
             </form>
