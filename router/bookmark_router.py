@@ -51,11 +51,17 @@ def bookmark_page(
 
     bookmarks = result.mappings().all()
 
+    bookmark_error = request.session.pop(
+        'bookmark_error',
+        None
+    )
+
     return templates.TemplateResponse(
         request=request,
         name='bookmark.html',
         context={
             'bookmarks': bookmarks,
+            'bookmark_error': bookmark_error,
             'user_id': user_id,
             'user_name': request.session.get('user_name'),
             'user_status_id': request.session.get('user_status_id')
@@ -102,6 +108,10 @@ def delete_selected_bookmarks(
         session.rollback()
         print('선택 북마크 삭제 오류:', repr(e))
 
+        request.session['bookmark_error'] = (
+            '선택한 찜을 삭제하는 중 오류가 발생했습니다.'
+        )
+
     return RedirectResponse(
         url='/jobgogo/mypage/bookmarks',
         status_code=303
@@ -127,6 +137,30 @@ def toggle_bookmark(
         )
 
     try:
+        # 실제 존재하는 채용 공고인지 확인
+        job_sql = text('''
+            SELECT 1
+            FROM jobs
+            WHERE recrut_pblnt_sn = :recrut_pblnt_sn
+            LIMIT 1
+        ''')
+
+        job_exists = session.exec(
+            job_sql,
+            params={
+                'recrut_pblnt_sn': recrut_pblnt_sn
+            }
+        ).first()
+
+        if job_exists is None:
+            return JSONResponse(
+                status_code=404,
+                content={
+                    'success': False,
+                    'message': '존재하지 않는 채용 공고입니다.'
+                }
+            )
+
         # 현재 북마크 여부 확인
         statement = select(BookMark).where(
             BookMark.user_id == user_id,

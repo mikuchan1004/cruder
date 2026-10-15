@@ -342,6 +342,34 @@
 }
 
 /* ==================================
+   처리 결과 알림
+=================================== */
+.bookmark-alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 16px;
+    padding: 13px 15px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.bookmark-alert-error {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #B91C1C;
+}
+
+.bookmark-alert-error i {
+    flex: 0 0 auto;
+}
+
+/* ==================================
    접근성
 =================================== */
 .bookmark-checkbox:focus-visible,
