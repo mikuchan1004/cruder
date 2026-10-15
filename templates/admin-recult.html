@@ -99,7 +99,9 @@
                     종료일 : <input class="form-control" type="date" name="pbanc_end_ymd" readonly><br>
                 </div>
                 <div class="popup-footer">
-                    <button class="btn btn-red" id="delete-button" type="submit" formmethod="post">삭제</button>
+                    <form method="post" action="/jobgogo/admin-recult/delete/{recrut_pblnt_sn}">
+                        <button class="btn btn-red" id="delete-button" type="submit" formmethod="post">삭제</button>
+                    </form>
                     <button class="btn btn-outline-purple" id="close" type="button">닫기</button>
                 </div>
             </div>
