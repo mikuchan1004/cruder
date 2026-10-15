@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>문의 상세보기 - 취업할래말래</title>
+
+    <link rel="stylesheet" href="/assets/header.css">
+    <link rel="stylesheet" href="/assets/footer.css">
+    <link rel="stylesheet" href="/assets/inquiry_result_deatil.css">
+</head>
+
+<body>
+
+    {% include 'header.html' %}
+
+    <main class="inquiry-main">
+        <div class="inquiry-container">
+
+            <!-- 페이지 제목 -->
+            <div class="page-title">
+                <h1>1:1 문의 상세보기</h1>
+                <p>작성하신 문의 내용과 답변을 확인하세요.</p>
+            </div>
+
+            <!-- 문의 상세 영역 -->
+            <section class="inquiry-detail-box">
+
+                <!-- 문의 제목 및 상태 -->
+                <div class="inquiry-header">
+
+                    <div class="inquiry-title-area">
+                        <span class="inquiry-type">
+                            {{ inquiry.inquiry_type }}
+                        </span>
+
+                        <h2>{{ inquiry.inquiry_title }}</h2>
+                    </div>
+
+                    <!-- 처리 상태 -->
+                    {% if inquiry.inquiry_status_id == 1 %}
+                    <span class="status-badge waiting">
+                        답변 대기
+                    </span>
+                    {% else %}
+                    <span class="status-badge completed">
+                        답변 완료
+                    </span>
+                    {% endif %}
+
+                </div>
+
+                <!-- 문의 작성 정보 -->
+                <div class="inquiry-info">
+
+                    <div class="info-item">
+                        <span class="info-label">작성자</span>
+                        <span class="info-value">
+                            {{ user_name }}
+                        </span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">작성일</span>
+                        <span class="info-value">
+                            {{ inquiry.inquiry_date.strftime('%Y-%m-%d %H:%M') }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- 문의 내용 -->
+                <div class="inquiry-content">
+                    <h3>문의 내용</h3>
+
+                    <div class="content-text">{{ inquiry.inquiry_detail }}</div>
+                </div>
+
+            </section>
+
+            <!-- 관리자 답변 영역 -->
+            <section class="answer-box">
+
+                <div class="answer-header">
+                    <h3>관리자 답변</h3>
+                </div>
+
+                {% if inquiry.inquiry_answer %}
+
+                <!-- 답변 등록된 경우 -->
+                <div class="answer-info">
+                    <span>관리자</span>
+
+                    {% if inquiry.inquiry_answer_date %}
+                    <span>
+                        {{ inquiry.inquiry_answer_date }}
+                    </span>
+                    {% endif %}
+                </div>
+
+                <div class="answer-content">{{ inquiry.inquiry_answer }}</div>
+
+                {% else %}
+
+                <!-- 답변 없는 경우 -->
+                <div class="answer-waiting">
+                    <div class="waiting-icon">💬</div>
+
+                    <p>아직 등록된 답변이 없습니다.</p>
+
+                    <span>
+                        관리자가 문의 내용을 확인한 후
+                        답변을 등록할 예정입니다.
+                    </span>
+                </div>
+
+                {% endif %}
+
+            </section>
+
+            <!-- 하단 버튼 -->
+            <div class="button-area">
+
+                <a href="/jobgogo/inquiry_list"
+                   class="btn-list">
+                    목록으로
+                </a>
+
+            </div>
+
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+
+</body>
+</html>

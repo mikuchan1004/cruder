@@ -85,7 +85,98 @@ def inquiry_add(request:Request,
     except Exception as e:
                 print('에러',e)   
 
+
+# 내가 쓴 글 목록 보는거
+ 
+@router.get('/jobgogo/inquiry_list')
+def inquiry_list(request:Request,
+    session: Session = Depends(get_session)       
+     ):
+    user_id=request.session.get('user_id')
+    
+    if user_id is None:
+        return RedirectResponse(
+            url='/jobgogo'
+            ,status_code=303
+        )
+    
+    sql=text('''
+             select *
+             from inquiry
+             where user_id=:user_id 
+             
+             ''')
+    
+    result=session.exec(
+        sql,
+        params={
+          'user_id': user_id
+        }
+    )
+    results= result.mappings().fetchall()
+    
+    # html 출력
+    
+    return templates.TemplateResponse(
+    request=request,
+    name='inquiry_result.html',
+    context={
+        'inquiries': results,
+        'user_id': user_id,
+        # 'user_name': request.session.get('user_name')
+    }
+ 
+    )
+    
+    
+ # 문의 내역상세조회...!
+@router.get('/jobgogo/inquiry/{inquiry_id}')
+def inquiry_list_deatil(request:Request,
+    inquiry_id:int,                                        
+    session: Session = Depends(get_session)):
+    
+    user_id=request.session.get('user_id')
+    print('id 체크',user_id)
+    print('id 체크',inquiry_id)
+
+  
         
+    if user_id is None:
+            return RedirectResponse(
+                url='/jobgogo',
+                status_code=303
+            )
+            
+    sql=text('''
+       select *
+       from inquiry
+       where inquiry_id=:inquiry_id
+       and user_id=:user_id      
+             ''')
+    
+    result=session.exec(
+             sql,
+             params={
+               'user_id':user_id,
+               'inquiry_id': inquiry_id
+             }
+         )       
+    results= result.mappings().fetchone()
+    
+     # html 출력
         
+    return templates.TemplateResponse(
+        request=request,
+        name='inquiry_result_deatil.html',
+        
+        context={
+            'inquiry':results,
+             'user_name':request.session.get('user_name'),
+             'user_id':user_id,
+        }
+        )
+    
+
+
        
     
