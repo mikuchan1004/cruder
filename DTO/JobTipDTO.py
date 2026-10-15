@@ -22,3 +22,6 @@ class JobTip(SQLModel,table=True):
         foreign_key='user.user_id',
         max_length=12
     )
+    view_count:int=Field(
+        default=0
+    )
