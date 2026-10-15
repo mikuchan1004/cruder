@@ -431,13 +431,17 @@ def delete_post(
         session.execute(sql, {'post_number' : post_number})
         session.commit()
 
+        return RedirectResponse (
+            url='/jobgogo/admin-board', status_code=303
+        )
+
     except Exception as e:
         session.rollback()
         print(f"게시글 삭제에 실패했습니다. : {e}")
 
     return RedirectResponse (
-                url='/jobgogo/admin-board', status_code=303
-            )
+        url='/jobgogo/admin-board', status_code=303
+    )
 
 @router.get('/jobgogo/admin-recult')
 def recult(request:Request,  session:Session = Depends(get_session), _: None = Depends(require_admin)):

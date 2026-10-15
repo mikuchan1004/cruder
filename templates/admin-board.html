@@ -24,7 +24,7 @@
                     popup.querySelector('[name = "post_title"]').value = e.currentTarget.dataset.title; // 제목 
                     popup.querySelector('[name = "post_detail"]').value = e.currentTarget.dataset.detail; // 내용
                     // 팝업창 안의 '삭제' 버튼 링크 주소를 클릭한 글의 번호에 맞춰서 동적으로 바꿔줌
-                    popup.querySelector('#delete-button').formAction = `/jobgogo/admin/board/delete/${e.currentTarget.dataset.id}`
+                    popup.querySelector('#delete-button').formAction = `/jobgogo/admin-board/delete/${e.currentTarget.dataset.id}`
 
                     // 상세 정보  채우기가 끝났으니, 숨겨져있던 상새내용 팝업을 화면에 띄워줌
                     popup.classList.remove('hide')
