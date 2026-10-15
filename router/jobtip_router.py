@@ -99,9 +99,9 @@ def jobtip(
 
     job_tip_list = result.mappings().fetchall()
 
-    # 검색 조건에 맞는 전체 게시글 수
+    # 검색 조건에 맞는 전체 게시글 수(*에서 게시글 번호 수를 세는걸로 소소하게 바꿨습니다.)
     sql_count = text('''
-        SELECT COUNT(*) AS job_tip_count
+        SELECT COUNT(job_tip_no) AS job_tip_count
         FROM job_tip
         WHERE (
             :keyword = ''
