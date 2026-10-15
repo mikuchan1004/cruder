@@ -29,6 +29,12 @@
             {% include 'mypage-sidebar.html' %}
 
             <section class="mypage-content">
+                {% if bookmark_error %}
+                <div class="bookmark-alert bookmark-alert-error" role="alert">
+                    <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                    <span>{{ bookmark_error }}</span>
+                </div>
+                {% endif %}
                 <article class="profile-card bookmark-summary-card">
                     <div class="profile-avatar bookmark-summary-icon" aria-hidden="true">
                         <i class="fa-solid fa-star"></i>
