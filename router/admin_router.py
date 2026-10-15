@@ -385,9 +385,17 @@ def lose_admin (
 
 
 @router.get('/jobgogo/admin-board')
-def admin_board(request:Request, session: Session = Depends(get_session), _: None = Depends(require_admin)):
+def admin_board(request:Request, page:int = 1, session: Session = Depends(get_session), _: None = Depends(require_admin)):
     print('게시물관리 페이지로 이동합니다.')
 
+    # 페이지 번호 계산 
+    if page < 1:
+        page=1
+    
+    # 한 페이지당 게시물 7개씩 보여줌
+    limit = 10
+    offset = (page - 1)* limit
+    
     sql_post = text('''
         select 
             '공지' as category,
@@ -406,12 +414,42 @@ def admin_board(request:Request, session: Session = Depends(get_session), _: Non
             user_id, 
             job_tip_date as created_at
             from job_tip
+            limit :limit offset :offset
     ''')
-    result = session.execute(sql_post).mappings().fetchall()
+    post_result = session.execute(sql_post, params={
+         'limit' : limit,
+        'offset' : offset
+    }).mappings().fetchall()
+
+    # DB에 저장된 게시물의 갯수를 세는 SQL문
+    sql_count=text('''
+        select (select count(*) from notice) + (select count(*) from job_tip) as total_count
+    ''')
+    result = session.execute(sql_count)
+    total_count = result.fetchone()[0]
+
+    # 총 페이지 계산 
+    total_pages = (total_count + limit - 1) // limit
+
+    # 몇 그룹씩 끊을지 생각하기 
+    page_group = 5
+
+    # 시작 페이지 그룹 계산하기 
+    start_page = ((page - 1)//5)*page_group+1
+
+    # 마지막 페이지 그룹 계산
+    end_page = start_page+page_group-1
+
+    if end_page>total_pages:
+        end_page=total_pages
 
     return templates.TemplateResponse (
         request, 'admin-board.html', {
-            'posts' : result
+            'posts' : post_result,
+            'page' : page,
+            'total_pages' : total_pages,
+            'start_page' : start_page,
+            'end_page' : end_page
         }
     )
 

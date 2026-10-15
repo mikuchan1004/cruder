@@ -77,6 +77,7 @@
             </div>
             {% endfor %}
         </div>
+
         <!-- 상세내용 팝업-->
         <div class="popup-overlay info_popup hide">
             <div class="popup-card">
@@ -97,7 +98,23 @@
                     <button class="btn btn-outline-purple" id="close" type="button">닫기</button>
                 </div>
             </div>
-        </div>`
+        </div>
+        <!-- 페이지네이션: 현재 디자인만 적용 -->
+        <div class="pagination">
+
+            {% if start_page > 1 %}
+            <a href="/jobgogo/admin-board?page={{page - 1}}">이전 </a>
+            {% endif %}
+
+            {% for p in range(start_page, end_page + 1) %}
+            <a href="/jobgogo/admin-board?page={{p}}" class="{% if p == page %}active{% endif %}">
+                {{p}}
+            </a>
+            {% endfor %}
+
+            {% if page < total_pages%} <a href="/jobgogo/admin-board?page={{page + 1}}">다음</a>
+                {% endif %}
+        </div>
     </main>
 </body>
 </html>
