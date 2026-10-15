@@ -453,8 +453,16 @@ def delete_post(
     )
 
 @router.get('/jobgogo/admin-recult')
-def recult(request:Request,  session:Session = Depends(get_session), _: None = Depends(require_admin)):
+def recult(request:Request, page:int = 1,  session:Session = Depends(get_session), _: None = Depends(require_admin)):
     print('채용 공고 관리 페이지로 이동합니다.')
+
+    # 페이지 번호 계산 
+    if page < 1:
+        page=1
+
+    # 한 페이지당 게시물 10개씩 보여줌
+    limit = 10 
+    offset = (page - 1)* limit
 
     # DB에 저장된 채용 공고들을 뽑아옵니다.
     sql_jobs = text('''
@@ -467,13 +475,29 @@ def recult(request:Request,  session:Session = Depends(get_session), _: None = D
             recrut_se_nm,
             work_rgn_nm_lst
         from jobs 
-        limit 9
+        limit :limit offset :offset
     ''')
 
-    results = session.execute(sql_jobs).mappings().fetchall()
+    results = session.execute(sql_jobs , params = {
+        'limit' : limit,
+        'offset' : offset
+    }).mappings().fetchall()
+
+    # DB에 저장된 채용 공고의 수를 세는 SQL문 
+    sql_count = text('''
+        select count(*) from jobs 
+    ''')
+
+    result = session.execute(sql_count)
+    total_count = result.fetchone()[0]
+
+    # 총 페이지 계산 
+    total_pages = (total_count + limit - 1) // limit
 
     return templates.TemplateResponse(request, 'admin-recult.html' , {
-        'recrut_lists' : results
+        'recrut_lists' : results,
+        'page' : page,
+        'total_pages' : total_pages
     })
 
 @router.post('/jobgogo/admin-recult/delete/{recrut_pblnt_sn}')
