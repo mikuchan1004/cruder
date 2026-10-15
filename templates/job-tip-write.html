@@ -11,29 +11,6 @@
     <link rel="shortcut icon" href="/static/images/favicon.ico">
 
 
-    <style>
-        /* 본문 입력 영역 */
-        #editor {
-            min-height: 350px;
-            padding: 15px;
-            outline: none;
-            overflow-wrap: anywhere;
-            white-space: pre-wrap;
-        }
-
-        #editor:empty::before {
-            content: "내용을 입력하시오";
-            color: #999;
-        }
-
-        /* 본문에 삽입된 이미지 */
-        #editor img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 12px 0;
-        }
-    </style>
 </head>
 <body>
 
@@ -87,8 +64,7 @@
 
                 <!-- 실제 글과 이미지를 함께 작성하는 영역 -->
                 <div class="editor-content">
-                    <div id="editor" contenteditable="true" role="textbox" aria-label="게시글 내용" aria-multiline="true">
-                    </div>
+                    <div id="editor" contenteditable="true" role="textbox" aria-label="게시글 내용" aria-multiline="true"></div>
                 </div>
 
                 <!-- Python으로 전달할 본문 HTML -->

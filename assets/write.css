@@ -144,24 +144,41 @@ body {
 
 /* 에디터 본문 작성 영역 */
 .editor-content {
-    flex: 1; 
+    flex: 1;
     display: flex;
+    min-height: 0;
+    overflow: hidden;
 }
 
-.editor-content textarea {
+/* 실제 입력 요소는 textarea가 아니라 contenteditable div */
+#editor {
+    flex: 1;
     width: 100%;
     height: 100%;
+    min-height: 0;
     padding: 20px;
     border: none;
-    resize: none; 
-    font-size: 1.05rem;
     outline: none;
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    font-size: 1.05rem;
+    line-height: 1.7;
     color: #1F2937;
     background: transparent;
 }
 
-.editor-content textarea::placeholder {
+#editor:empty::before {
+    content: "내용을 입력하시오";
     color: #9CA3AF;
+    pointer-events: none;
+}
+
+#editor img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 12px 0;
 }
 
 /* ==================================

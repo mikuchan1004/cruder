@@ -1,237 +1,208 @@
 /* ==================================
-   기본 리셋 및 폰트 설정
+   취업 꿀팁 상세 - 댓글 영역
+   페이지 전역(body 등)은 건드리지 않음
 =================================== */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
-}
-
-body {
-    background-color: #F8F9FA;
-    color: #212529;
-    padding: 40px 20px;
-    display: flex;
-    justify-content: center;
-}
-
-/* 댓글 섹션 전체 컨테이너 */
 .comments-section {
     width: 100%;
-    max-width: 900px;
-    display: flex;
-    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    color: #212529;
 }
 
-/* 타이틀 */
-.comments-title {
+.comments-section .comments-title {
+    margin: 0 0 16px;
+    padding-left: 4px;
+    color: #111827;
     font-size: 1.3rem;
     font-weight: 700;
-    margin-bottom: 16px;
-    padding-left: 4px;
-    color: #111;
 }
 
-/* 댓글 리스트 */
-.comments-list {
+/* 댓글 목록 */
+.comments-section .comments-list {
+    margin-bottom: 20px;
+    overflow: hidden;
     background-color: #ffffff;
     border: 1px solid #E5E7EB;
     border-radius: 12px;
-    overflow: hidden;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-    margin-bottom: 24px;
 }
 
-.comment-item {
+.comments-section .comment-item {
     display: flex;
-    gap: 20px;
-    padding: 24px 20px;
+    gap: 18px;
+    padding: 22px 20px;
     border-bottom: 1px solid #F3F4F6;
     transition: background-color 0.15s ease;
 }
 
-.comment-item:hover {
-    background-color: #FAFAFA;
-}
-
-.comment-item:last-child {
+.comments-section .comment-item:last-child {
     border-bottom: none;
 }
 
-/* 프로필 아바타 */
-.comment-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #E5E7EB;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    color: #4B5563;
-    flex-shrink: 0;
+.comments-section .comment-item:hover {
+    background-color: #FAFAFA;
 }
 
-/* 댓글 내용 영역 */
-.comment-content {
-    flex: 1;
+/* 프로필 아바타 */
+.comments-section .comment-avatar {
     display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #F3F0FF;
+    color: #6B46C1;
+    font-size: 1.2rem;
+}
+
+/* 댓글 본문 */
+.comments-section .comment-content {
+    display: flex;
+    flex: 1;
+    min-width: 0;
     flex-direction: column;
     justify-content: center;
-    gap: 12px;
+    gap: 9px;
 }
 
-.comment-header {
+.comments-section .comment-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-}
-
-.comment-header .author {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #111;
-}
-
-.comment-header .date {
-    font-size: 0.9rem;
-    color: #9CA3AF;
-}
-
-.comment-body {
-    display: flex;
     justify-content: space-between;
+}
+
+.comments-section .comment-header .author {
+    color: #111827;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.comments-section .comment-body {
+    display: flex;
     align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
 }
 
-.comment-body .text {
-    font-size: 1.05rem;
+.comments-section .comment-body .text {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
     color: #4B5563;
+    font-size: 1rem;
     line-height: 1.6;
-    word-break: break-all;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
 }
 
-/* 삭제 버튼 */
-.btn-delete {
+/* 댓글 삭제 */
+.comments-section .btn-delete {
+    flex-shrink: 0;
+    padding: 6px 13px;
     background-color: #FEF2F2;
     color: #DC2626;
     border: 1px solid #FCA5A5;
-    padding: 6px 14px;
     border-radius: 6px;
     font-size: 0.85rem;
-    cursor: pointer;
     font-weight: 600;
-    flex-shrink: 0;
+    cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.btn-delete:hover {
+.comments-section .btn-delete:hover {
     background-color: #DC2626;
-    color: #fff;
+    color: #ffffff;
     border-color: #DC2626;
 }
 
-/* 중앙 하단 페이징 드롭다운 */
-.comments-pagination {
-    display: flex;
-    justify-content: center;
-    padding: 10px 0 24px 0;
-}
-
-.comments-pagination select {
-    padding: 8px 16px;
-    border: 1px solid #D1D5DB;
-    border-radius: 8px;
+/* 댓글 없음 */
+.comments-section .comments-empty {
+    margin: 0;
+    padding: 38px 20px;
+    color: #9CA3AF;
     font-size: 0.95rem;
-    outline: none;
-    background-color: #ffffff;
-    color: #374151;
-    cursor: pointer;
+    text-align: center;
 }
 
-/* 댓글 입력 영역 */
-.comment-input-area {
+/* 댓글 입력 */
+.comments-section .comment-input-area {
     display: flex;
     gap: 12px;
+    width: 100%;
 }
 
-.comment-input {
+.comments-section .comment-input {
     flex: 1;
+    min-width: 0;
     padding: 14px 18px;
     background-color: #ffffff;
     border: 1px solid #D1D5DB;
     border-radius: 8px;
+    color: #1F2937;
     font-size: 1rem;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.comment-input:focus {
+.comments-section .comment-input:focus {
     border-color: #6B46C1;
+    box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.10);
 }
 
-.comment-input::placeholder {
+.comments-section .comment-input::placeholder {
     color: #9CA3AF;
 }
 
-/* 전송 버튼 */
-.btn-submit {
+.comments-section .btn-submit {
+    flex-shrink: 0;
+    padding: 0 28px;
     background-color: #6B46C1;
-    color: #fff;
+    color: #ffffff;
     border: none;
-    padding: 0 30px;
     border-radius: 8px;
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
     white-space: nowrap;
     box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
+    transition: all 0.2s ease;
 }
 
-.btn-submit:hover {
+.comments-section .btn-submit:hover {
     background-color: #5533A3;
     transform: translateY(-1px);
 }
 
-/* ==================================
-   모바일 반응형 웹 설정 (미디어 쿼리)
-=================================== */
+/* 모바일 */
 @media (max-width: 768px) {
-    body {
-        padding: 20px 10px;
-    }
-
-    .comment-item {
-        gap: 15px;
+    .comments-section .comment-item {
+        gap: 13px;
         padding: 18px 15px;
     }
 
-    .comment-avatar {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
+    .comments-section .comment-avatar {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
     }
 
-    .comment-header .author,
-    .comment-body .text {
-        font-size: 0.95rem;
-    }
-
-    .comment-header .date {
-        font-size: 0.85rem;
-    }
-
-    .comment-input-area {
+    .comments-section .comment-body {
+        align-items: flex-start;
+        flex-direction: column;
         gap: 10px;
     }
 
-    .comment-input {
+    .comments-section .comment-input-area {
+        gap: 10px;
+    }
+
+    .comments-section .comment-input {
         padding: 12px 14px;
     }
 
-    .btn-submit {
+    .comments-section .btn-submit {
         padding: 0 20px;
         font-size: 0.95rem;
     }
