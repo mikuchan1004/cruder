@@ -2,7 +2,7 @@
     <!-- 좌측 브랜드 -->
     <div class="brand">
         <a href="/jobgogo" class="brand-link" aria-label="취업할래 말래 메인페이지">
-            <img src="/static/images/logo.png" alt="취업할래말래 로고">
+            <img src="/static/images/logo.png" id="secret-logo" alt="취업할래말래 로고">
             <span class="brand-name">취업할래 말래</span>
         </a>
     </div>
@@ -20,7 +20,7 @@
     <div class="user-menu">
      
         {% if request.session.get('user_id') %}
-
+           <!--user_status_id(상태 코드에 따라서 헤더에서 보이는 것이 달라짐) -->
             {% if user_status_id == 1 or user_status_id == 2 %}
                 <a href="/jobgogo/admin" class="admin-link">관리자 페이지</a>
             {% endif %}
