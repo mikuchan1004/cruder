@@ -77,8 +77,11 @@ def jobtip(
             job_tip_date,
             job_tip_detail,
             user_id,
+            user_nickname,
             view_count
-        FROM job_tip
+        FROM job_tip AS jt
+        LEFT JOIN `user` AS u
+            USING (user_id)
         WHERE (
             :keyword = ''
             OR job_tip_title LIKE :search_keyword
@@ -299,8 +302,11 @@ def jobtip_read(
             job_tip_date,
             job_tip_attachment,
             user_id,
+            user_nickname,
             view_count
-        FROM job_tip
+        FROM job_tip AS jt
+        LEFT JOIN `user` AS u
+            USING (user_id)
         WHERE job_tip_no = :job_tip_no
     ''')
 
@@ -341,8 +347,11 @@ def jobtip_read(
             reple,
             parent_reple_no,
             job_tip_no,
-            user_id
-        FROM job_tip_comment
+            user_id,
+            user_nickname
+        FROM job_tip_comment AS jc
+        LEFT JOIN `user` AS u
+            USING (user_id)
         WHERE job_tip_no = :job_tip_no
         ORDER BY reple_no DESC
     ''')
