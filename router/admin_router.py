@@ -57,7 +57,7 @@ def admin_dashboard(
         select count(*)
         from user
     ''')
-    results1 = session.executeute(sql1).mappings().fetchall()
+    results1 = session.execute(sql1).mappings().fetchall()
 
     # 모집중인 채용 공고가 몇 개인지 세는 SQL문 
     sql2=text('''
@@ -65,7 +65,7 @@ def admin_dashboard(
         from jobs
         where ongoing_yn = 'Y'
     ''')
-    results2 = session.executeute(sql2).mappings().fetchall()
+    results2 = session.execute(sql2).mappings().fetchall()
 
     # 최근 게시물을 긁어오는 SQL문 (by Google Gemini)
     sql3=text('''
@@ -85,7 +85,7 @@ def admin_dashboard(
         order by created_at desc
         limit 5
     ''')
-    results3 = session.executeute(sql3).mappings().fetchall() 
+    results3 = session.execute(sql3).mappings().fetchall() 
 
     # 답변 대기 중인 문의가 몇 개인지 세는 SQL문
     sql4=text('''
@@ -93,7 +93,7 @@ def admin_dashboard(
         from inquiry
         where inquiry_status_id = 1
     ''')
-    results4 = session.executeute(sql4).mappings().fetchall()
+    results4 = session.execute(sql4).mappings().fetchall()
 
     return templates.TemplateResponse(request, 'admin-dashboard.html',{
         'total_users_count' : results1[0]['count(*)'],
