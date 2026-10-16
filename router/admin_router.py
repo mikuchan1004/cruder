@@ -57,7 +57,7 @@ def admin_dashboard(
         select count(*)
         from user
     ''')
-    results1 = session.exec(sql1).mappings().fetchall()
+    results1 = session.executeute(sql1).mappings().fetchall()
 
     # 모집중인 채용 공고가 몇 개인지 세는 SQL문 
     sql2=text('''
@@ -65,7 +65,7 @@ def admin_dashboard(
         from jobs
         where ongoing_yn = 'Y'
     ''')
-    results2 = session.exec(sql2).mappings().fetchall()
+    results2 = session.executeute(sql2).mappings().fetchall()
 
     # 최근 게시물을 긁어오는 SQL문 (by Google Gemini)
     sql3=text('''
@@ -85,7 +85,7 @@ def admin_dashboard(
         order by created_at desc
         limit 5
     ''')
-    results3 = session.exec(sql3).mappings().fetchall() 
+    results3 = session.executeute(sql3).mappings().fetchall() 
 
     # 답변 대기 중인 문의가 몇 개인지 세는 SQL문
     sql4=text('''
@@ -93,7 +93,7 @@ def admin_dashboard(
         from inquiry
         where inquiry_status_id = 1
     ''')
-    results4 = session.exec(sql4).mappings().fetchall()
+    results4 = session.executeute(sql4).mappings().fetchall()
 
     return templates.TemplateResponse(request, 'admin-dashboard.html',{
         'total_users_count' : results1[0]['count(*)'],
@@ -114,7 +114,7 @@ def users(
     sql1 = text('''
         select * from user
     ''')
-    results1 = session.exec(sql1).mappings().fetchall()
+    results1 = session.execute(sql1).mappings().fetchall()
 
     # 신고가 접수된 취업꿀팁 게시판의 글 제목과 신고 사유를 긁어오는 SQL문 
     sql2 = text('''
@@ -127,14 +127,14 @@ def users(
         left join 
             user as us on jt.user_id = us.user_id
     ''')
-    results2 = session.exec(sql2).mappings().fetchall()
+    results2 = session.execute(sql2).mappings().fetchall()
 
     # 신고 건수를 세는 SQL문 
     sql3 = text ('''
         select count(*)
         from report_logs
     ''')
-    results3 = session.exec(sql3).mappings().fetchall()
+    results3 = session.execute(sql3).mappings().fetchall()
 
     return templates.TemplateResponse(request, 'admin-users.html', {
         'users' : results1,
@@ -154,7 +154,7 @@ def report_delete(
         delete from report_logs
         where report_id = :report_id
     ''')
-    session.exec(sql, {'report_id' : report_id})
+    session.execute(sql, {'report_id' : report_id})
     session.commit()
 
     return RedirectResponse(
@@ -194,9 +194,9 @@ def user_warning(request:Request, user_id: str, session: Session = Depends(get_s
             warning_count >= 10 and user_id = :user_id 
             AND user_status_id != 1
     ''')
-    session.exec(sql1, {'user_id' : user_id})
-    session.exec(sql2, {'user_id' : user_id})
-    session.exec(sql3, {'user_id' : user_id})
+    session.execute(sql1, {'user_id' : user_id})
+    session.execute(sql2, {'user_id' : user_id})
+    session.execute(sql3, {'user_id' : user_id})
     session.commit()
 
     return RedirectResponse(url='/jobgogo/admin-users' , status_code=303)
@@ -218,7 +218,7 @@ def user_warning_delete(
         and warning_count >= 1
     ''')
 
-    session.exec(sql_warning, {'user_id': user_id})
+    session.execute(sql_warning, {'user_id': user_id})
 
     # 경고 횟수가 5 미만으로 내려갔다면
     # 경고 회원(4)을 일반 회원(3)으로 복구
@@ -230,7 +230,7 @@ def user_warning_delete(
         and user_status_id = 4
     ''')
 
-    session.exec(sql_status, {'user_id': user_id})
+    session.execute(sql_status, {'user_id': user_id})
     session.commit()
 
     return RedirectResponse(
@@ -248,7 +248,7 @@ def user_suspension (request:Request, user_id: str, session: Session = Depends(g
         where user_id = :user_id
             AND user_status_id != 1
     ''')
-    session.exec(sql, {'user_id' : user_id})
+    session.execute(sql, {'user_id' : user_id})
     session.commit()
 
     return RedirectResponse(url='/jobgogo/admin-users', status_code=303)
@@ -263,7 +263,7 @@ def user_unsuspension(request:Request, user_id: str, session: Session = Depends(
         where user_id = :user_id
         and user_status_id = 5
     ''')
-    session.exec(sql, {'user_id' : user_id})
+    session.execute(sql, {'user_id' : user_id})
     session.commit()
 
     return RedirectResponse(url='/jobgogo/admin-users', status_code=303)
@@ -277,7 +277,7 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
         where user_id = :user_id and user_status_id not in (1, 2)
     ''')
     try:
-        session.exec(sql, {'user_id' : user_id})
+        session.execute(sql, {'user_id' : user_id})
         session.commit()
 
         return RedirectResponse (url='/jobgogo/admin-users' , status_code=303)
@@ -303,7 +303,7 @@ def search_user(request: Request, keyword : str = "" , session: Session = Depend
         )
         order by user_id
     ''')
-    result = session.exec(sql_search, {
+    result = session.execute(sql_search, {
         'keyword' : keyword,
         'search_keyword' : f'%{keyword}%'
 })
@@ -320,7 +320,7 @@ def search_user(request: Request, keyword : str = "" , session: Session = Depend
             user as us on jt.user_id = us.user_id
     ''')
     post_report_list = (
-        session.exec(sql_report).mappings().fetchall()
+        session.execute(sql_report).mappings().fetchall()
     )
 
     sql_count = text('''
@@ -328,7 +328,7 @@ def search_user(request: Request, keyword : str = "" , session: Session = Depend
         from report_logs
     ''')
     report_count = (
-        session.exec(sql_count).mappings().fetchall()
+        session.execute(sql_count).mappings().fetchall()
     )
 
     return templates.TemplateResponse (
@@ -354,7 +354,7 @@ def get_admin (
         where user_id = :user_id and user_status_id = 3
     ''')
 
-    session.exec(sql, {'user_id' : user_id})
+    session.execute(sql, {'user_id' : user_id})
     session.commit()
 
     return RedirectResponse (
@@ -377,7 +377,7 @@ def lose_admin (
         and user_status_id = 2
     ''')
 
-    session.exec(sql, {'user_id' : user_id})
+    session.execute(sql, {'user_id' : user_id})
     session.commit()
 
     return RedirectResponse (
@@ -417,7 +417,7 @@ def admin_board(request:Request, page:int = 1, session: Session = Depends(get_se
             from job_tip
             limit :limit offset :offset
     ''')
-    post_result = session.exec(sql_post, params={
+    post_result = session.execute(sql_post, params={
          'limit' : limit,
         'offset' : offset
     }).mappings().fetchall()
@@ -426,7 +426,7 @@ def admin_board(request:Request, page:int = 1, session: Session = Depends(get_se
     sql_count=text('''
         select (select count(*) from notice) + (select count(*) from job_tip) as total_count
     ''')
-    result = session.exec(sql_count)
+    result = session.execute(sql_count)
     total_count = result.fetchone()[0]
 
     # 총 페이지 계산 
@@ -476,7 +476,7 @@ def delete_post(
                 delete from job_tip
                 where job_tip_no = :post_number 
             ''')
-        session.exec(sql, {'post_number' : post_number , 'category' : category})
+        session.execute(sql, {'post_number' : post_number , 'category' : category})
         session.commit()
 
         return RedirectResponse (
@@ -517,7 +517,7 @@ def recult(request:Request, page:int = 1,  session:Session = Depends(get_session
         limit :limit offset :offset
     ''')
 
-    results = session.exec(sql_jobs , params = {
+    results = session.execute(sql_jobs , params = {
         'limit' : limit,
         'offset' : offset
     }).mappings().fetchall()
@@ -527,7 +527,7 @@ def recult(request:Request, page:int = 1,  session:Session = Depends(get_session
         select count(*) from jobs 
     ''')
 
-    result = session.exec(sql_count)
+    result = session.execute(sql_count)
     total_count = result.fetchone()[0]
 
     # 총 페이지 계산 
@@ -568,7 +568,7 @@ def delete_recult(
         where recrut_pblnt_sn = :recrut_pblnt_sn
     ''')
 
-    session.exec(sql , {'recrut_pblnt_sn' : recrut_pblnt_sn })
+    session.execute(sql , {'recrut_pblnt_sn' : recrut_pblnt_sn })
     session.commit()
 
     return RedirectResponse(
@@ -595,7 +595,7 @@ def admin_inquiry(request:Request,  session:Session = Depends(get_session)):
         left join inquiry_status as inqs on inq.inquiry_status_id = inqs.inquiry_status_id
     ''')
 
-    results = session.exec(sql).mappings().fetchall()
+    results = session.execute(sql).mappings().fetchall()
 
     return templates.TemplateResponse(request,'admin-inquiry.html', {
         'inquiry_lists' : results
@@ -616,7 +616,7 @@ def answer_inquiry(  request: Request,
             inquiry_answer_date = NOW()
         where inquiry_id = :id
     ''')
-    session.exec(sql, {
+    session.execute(sql, {
         'id' : id,
         'inquiry_answer' : inquiry_answer
     }) 
@@ -635,7 +635,7 @@ def delete_inquiry(  request: Request,
     where inquiry_id = :id
     ''')
 
-    session.exec(sql, {'id' : id})
+    session.execute(sql, {'id' : id})
     session.commit()
     return RedirectResponse(url='/jobgogo/admin-inquiry' , status_code=303)
 
