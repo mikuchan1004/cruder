@@ -407,18 +407,22 @@ def admin_board(request:Request, page:int = 1, session: Session = Depends(get_se
             notice_title as title,
             notice_id as post_no,
             notice_detail as post_detail,
-            user_id,
+            notice.user_id,
+            u.user_name as user_name,
             notice_date as created_at 
             from notice
+            left join user as u on notice.user_id = u.user_id
             union all 
         select 
             '취업 꿀팁' as category,
             job_tip_title as title,
             job_tip_no as post_no,
             job_tip_detail as post_detail,
-            user_id, 
+            job_tip.user_id, 
+            u.user_name as user_name,
             job_tip_date as created_at
             from job_tip
+            left join user as u on job_tip.user_id = u.user_id
             limit :limit offset :offset
     ''')
     post_result = session.execute(sql_post, params={
