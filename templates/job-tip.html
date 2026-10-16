@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     <title>취업 꿀팁 게시판 - 취업할래말래</title>
 
     <!-- CSS 연결 -->
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
     <link rel="stylesheet" href="/assets/header.css">
     <link rel="stylesheet" href="/assets/footer.css">
     <link rel="stylesheet" href="/assets/job-tip.css">
@@ -52,24 +53,12 @@
             <div class="board-controls">
 
                 <!-- 검색 기능 -->
-                <form
-                    action="/jobgogo/jobtip"
-                    method="get"
-                    class="board-search"
-                >
+                <form action="/jobgogo/jobtip" method="get" class="board-search">
 
-                    <input
-                        type="text"
-                        name="keyword"
-                        value="{{ keyword | default('', true) }}"
-                        placeholder="게시글 제목 검색"
-                        class="search-input"
-                    >
+                    <input type="text" name="keyword" value="{{ keyword | default('', true) }}" placeholder="게시글 제목 검색"
+                        class="search-input">
 
-                    <button
-                        type="submit"
-                        class="btn-search"
-                    >
+                    <button type="submit" class="btn-search">
                         검색
                     </button>
 
@@ -77,10 +66,7 @@
 
 
                 <!-- 글쓰기 버튼 -->
-                <a
-                    href="/jobtip/write"
-                    class="btn-write"
-                >
+                <a href="/jobtip/write" class="btn-write">
                     + 글쓰기
                 </a>
 
@@ -125,10 +111,7 @@
                             <!-- 게시글 제목 -->
                             <td class="col-title">
 
-                                <a
-                                    href="/jobtip/{{ job.job_tip_no }}"
-                                    class="post-title"
-                                >
+                                <a href="/jobtip/{{ job.job_tip_no }}" class="post-title">
                                     {{ job.job_tip_title }}
                                 </a>
 
@@ -145,7 +128,7 @@
                             <td class="col-date">
 
                                 {{ job.job_tip_date.strftime('%Y-%m-%d')
-                                   if job.job_tip_date else '' }}
+                                if job.job_tip_date else '' }}
 
                             </td>
 
@@ -187,10 +170,8 @@
                 <!-- 이전 페이지 -->
                 {% if page > 1 %}
 
-                <a
-                    href="/jobgogo/jobtip?page={{ page - 1 }}&keyword={{ keyword | default('', true) | urlencode }}"
-                    class="page-btn arrow"
-                >
+                <a href="/jobgogo/jobtip?page={{ page - 1 }}&keyword={{ keyword | default('', true) | urlencode }}"
+                    class="page-btn arrow">
                     &lt;
                 </a>
 
@@ -200,10 +181,8 @@
                 <!-- 페이지 번호 -->
                 {% for num in range(1, total_page + 1) %}
 
-                <a
-                    href="/jobgogo/jobtip?page={{ num }}&keyword={{ keyword | default('', true) | urlencode }}"
-                    class="page-btn {% if num == page %}active{% endif %}"
-                >
+                <a href="/jobgogo/jobtip?page={{ num }}&keyword={{ keyword | default('', true) | urlencode }}"
+                    class="page-btn {% if num == page %}active{% endif %}">
                     {{ num }}
                 </a>
 
@@ -211,16 +190,13 @@
 
 
                 <!-- 다음 페이지 -->
-                {% if page < total_page %}
-
-                <a
+                {% if page < total_page %} <a
                     href="/jobgogo/jobtip?page={{ page + 1 }}&keyword={{ keyword | default('', true) | urlencode }}"
-                    class="page-btn arrow"
-                >
+                    class="page-btn arrow">
                     &gt;
-                </a>
+                    </a>
 
-                {% endif %}
+                    {% endif %}
 
             </div>
 
@@ -236,4 +212,5 @@
     {% include 'footer.html' %}
 
 </body>
+
 </html>
