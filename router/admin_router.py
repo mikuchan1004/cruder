@@ -108,17 +108,29 @@ def admin_dashboard(
 
 @router.get('/jobgogo/admin-users')
 def users(
-    request:Request, 
+    request:Request, page:int = 1,
     session: Session = Depends(get_session), 
     _: None = Depends(require_admin)
 ):
     print('/admin-users 실행')
 
+    # 페이지 번호 계산 
+    if page < 1:
+        page=1
+    
+    # 한 페이지당 게시물 7개씩 보여줌
+    limit = 5
+    offset = (page - 1)* limit
+
     # 등록된 모든 회원을 가져오는 SQL문
     sql1 = text('''
         select * from user
+        limit :limit offset :offset
     ''')
-    results1 = session.execute(sql1).mappings().fetchall()
+    results1 = session.execute(sql1, params={
+        'limit' : limit,
+        'offset' : offset
+    }).mappings().fetchall()
 
     # 신고가 접수된 취업꿀팁 게시판의 글 제목과 신고 사유를 긁어오는 SQL문 
     sql2 = text('''
@@ -133,6 +145,28 @@ def users(
     ''')
     results2 = session.execute(sql2).mappings().fetchall()
 
+    sql_count= text('''
+       select count(*)
+       from user
+    ''')
+    result = session.execute(sql_count)
+    total_count = result.fetchone()[0]
+
+     # 총 페이지 계산 
+    total_pages = (total_count + limit - 1) // limit
+
+    # 몇 그룹씩 끊을지 생각하기 
+    page_group = 5
+
+    # 시작 페이지 그룹 계산하기 
+    start_page = ((page - 1)//5)*page_group+1
+
+    # 마지막 페이지 그룹 계산
+    end_page = start_page+page_group-1
+
+    if end_page>total_pages:
+        end_page=total_pages
+
     # 신고 건수를 세는 SQL문 
     sql3 = text ('''
         select count(*)
@@ -143,7 +177,11 @@ def users(
     return templates.TemplateResponse(request, 'admin-users.html', {
         'users' : results1,
         'reports' : results2,
-        'report_count' : results3[0]['count(*)']
+        'report_count' : results3[0]['count(*)'],
+        'page' : page,
+        'total_pages' : total_pages,
+        'start_page' : start_page,
+        'end_page' : end_page
     })
 
 # 신고 삭제
@@ -338,8 +376,16 @@ def user_delete(request:Request, user_id: str, session:Session = Depends(get_ses
         )
 
 @router.get('/jobgogo/admin/user/search')
-def search_user(request: Request, keyword : str = "" , session: Session = Depends(get_session), _: None = Depends(require_admin)):
+def search_user(request: Request, page: int = 1, keyword : str = "" , session: Session = Depends(get_session), _: None = Depends(require_admin)):
     print('사용자 검색을 실행합니다.')
+
+    # 페이지 번호 계산 
+    if page < 1:
+        page=1
+        
+    # 한 페이지당 게시물 7개씩 보여줌
+    limit = 5
+    offset = (page - 1)* limit
 
     # 이름이나 아이디에 검색어가 포함된 회원을 찾는 SQL문
     sql_search = text('''
@@ -350,11 +396,14 @@ def search_user(request: Request, keyword : str = "" , session: Session = Depend
             or user_id like :search_keyword
         )
         order by user_id
+        limit :limit offset :offset
     ''')
-    result = session.execute(sql_search, {
-        'keyword' : keyword,
-        'search_keyword' : f'%{keyword}%'
-})
+    result = session.execute(sql_search, 
+    {'keyword' : keyword,
+     'search_keyword' : f'%{keyword}%',
+     'limit' : limit,
+     'offset' : offset
+    })
     search_list = result.mappings().fetchall()
 
     sql_report = text('''
@@ -371,6 +420,28 @@ def search_user(request: Request, keyword : str = "" , session: Session = Depend
         session.execute(sql_report).mappings().fetchall()
     )
 
+    sql_count= text('''
+           select count(*)
+           from user
+        ''')
+    result = session.execute(sql_count)
+    total_count = result.fetchone()[0]
+    
+    # 총 페이지 계산 
+    total_pages = (total_count + limit - 1) // limit
+    
+    # 몇 그룹씩 끊을지 생각하기 
+    page_group = 5
+    
+    # 시작 페이지 그룹 계산하기 
+    start_page = ((page - 1)//5)*page_group+1
+    
+    # 마지막 페이지 그룹 계산
+    end_page = start_page+page_group-1
+    
+    if end_page>total_pages:
+        end_page=total_pages
+
     sql_count = text('''
         select count(*)
         from report_logs
@@ -383,7 +454,11 @@ def search_user(request: Request, keyword : str = "" , session: Session = Depend
         request, 'admin-users.html', {
             'users' : search_list,
             'reports' : post_report_list,
-            'report_count' : report_count[0]['count(*)']
+            'report_count' : report_count[0]['count(*)'],
+            'page' : page,
+            'total_pages' : total_pages,
+            'start_page' : start_page,
+            'end_page' : end_page
         }
     )
 
