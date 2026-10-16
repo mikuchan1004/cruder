@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,7 @@
         window.onload = () => {
             const rows = document.querySelectorAll('#adminInquiryTable  .table-row')
             const form = document.querySelector('#inquiryAnswerForm')
-            const delete_button = document.querySelector('#inquityDeleteButton')
+            const delete_form = document.querySelector('#inquiryDeleteForm')
             const typeDisplay = document.querySelector('#selectedInquiryType')
             const titleDisplay = document.querySelector('#selectedInquiryTitle')
             const answerTextarea = document.querySelector('#inquiryAnswer')
@@ -31,7 +32,7 @@
                     answerTextarea.value = answer
 
                     form.action = `/jobgogo/admin-inquiry/answer/${id}`
-                    delete_button.action=`/jobgogo/admin-inquiry/delete/${id}`
+                    delete_form.action = `/jobgogo/admin-inquiry/delete/${id}`
                 })
             })
 
@@ -57,6 +58,7 @@
         } 
     </script>
 </head>
+
 <body>
     <!-- 상단 헤더 영역 -->
     {% include 'admin-header.html' %}
@@ -122,11 +124,14 @@
                         </div>
                         <button type="submit" class="btn-submit" id="inquiryAnswerButton">답변 등록</button>
                         <br><br>
-                            <button type="submit" class="btn-submit" id="inquiryDeleteButton">문의 삭제</button>
-                        </form>
-                    </div>
+                    </form>
+                    <form method="post" action="/jobgogo/admin-inquiry/delete/{id}" id="inquiryDeleteForm">
+                        <button type="submit" class="btn-submit">문의 삭제</button>
+                    </form>
+                </div>
             </section>
         </div>
     </main>
 </body>
+
 </html>
