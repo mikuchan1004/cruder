@@ -9,9 +9,11 @@ from sqlalchemy import text
 from database import get_session
 from fastapi import FastAPI, Depends
 from sqlmodel import Session
+
 # 채용정보 관련 API를 모아두는 라우터
 router = APIRouter(tags=['채용정보 관련 라우터'])
 session = requests.Session()
+
 # Elasticsearch 연결
 # 현재는 기존 run.py에서 사용하던 로컬 Elasticsearch 주소를 그대로 유지
 es = Elasticsearch(
@@ -67,36 +69,41 @@ def fetch_jobs():
 # ==============================================================================
 # 2. Elasticsearch에 채용정보 저장
 # ==============================================================================
-# def save_jobs_to_es(jobs):
-#     # 엘라스틱서치 저장
-#     actions = []
+def save_jobs_to_es(jobs):
+    # 엘라스틱서치 저장
+    actions = []
 
-#     # ALIO에서 받아온 채용공고를 하나씩 처리
-#     for job in jobs:
-#         # 채용공고 고유번호
-#         recrut_pblnt_sn = job.get('recrutPblntSn')
+    # ALIO에서 받아온 채용공고를 하나씩 처리
+    for job in jobs:
+        # 채용공고 고유번호
+        recrut_pblnt_sn = job.get('recrutPblntSn')
 
-#         # 고유번호가 없는 데이터는 Elasticsearch 문서 ID로 사용할 수 없으므로 제외
-#         if recrut_pblnt_sn is None:
-#             continue
+        # 고유번호가 없는 데이터는 Elasticsearch 문서 ID로 사용할 수 없으므로 제외
+        if recrut_pblnt_sn is None:
+            continue
 
-#         # Elasticsearch bulk 저장 형식으로 변환
-#         actions.append({
-#             # 저장할 Elasticsearch 인덱스 이름
-#             '_index': 'alio_jobs',
+        # Elasticsearch bulk 저장 형식으로 변환
+        actions.append({
+            # 저장할 Elasticsearch 인덱스 이름
+            '_index': 'alio_jobs',
 
-#             # 채용공고 고유번호를 Elasticsearch 문서 ID로 사용
-#             '_id': recrut_pblnt_sn,
+            # 채용공고 고유번호를 Elasticsearch 문서 ID로 사용
+            '_id': str(recrut_pblnt_sn),
 
-#             # 실제로 Elasticsearch에 저장할 내용
-#             '_source': job
-#         })
+            # 실제로 Elasticsearch에 저장할 내용
+            '_source': job
+        })
 
-#     # 저장할 데이터가 하나 이상 있을 때만 실행
-#     if actions:
-#         # actions에 담긴 모든 채용공고를
-#         # Elasticsearch에 한 번에 저장
-#         helpers.bulk(es, actions)
+    # 저장할 데이터가 하나 이상 있을 때만 실행
+    if not actions:
+        return 0
+
+    success_count, _ = helpers.bulk(
+        es,
+        actions
+    )
+
+    return success_count
 
 
 # ==============================================================================
@@ -157,43 +164,6 @@ def get_jobs(keyword: str):
         'result': filtered_jobs
     }
 
-
-# ==============================================================================
-# 과거 ALIO API 요청 방식 테스트 코드
-# 공부용으로 남겨둠
-# ==============================================================================
-
-# print('ALIO_API_KEY 존재:', ALIO_API_KEY is not None)
-# print('ALIO_API_KEY 길이:', len(ALIO_API_KEY) if ALIO_API_KEY else 0)
-
-
-# response = requests.get(
-#     url,
-#     params=params,
-#     allow_redirects=False
-# )
-
-# return {
-#     'status_code': response.status_code,
-#     'response': response.text
-# }
-
-# response = requests.get(
-#     'https://opendata.alio.go.kr/new/v1/recruit/list.do',
-#     params=params,
-#     allow_redirects=False
-# )
-
-# return {
-#     'status_code': response.status_code,
-#     'location': response.headers.get('Location'),
-#     'content_type': response.headers.get('Content-Type'),
-#     'response': response.text
-
-
-# 채용 공고를 담을 변수를 생성
-# jobs=fetch_jobs()
-
 def jobs_save_db(jobs,session):
     for job in jobs:
         
@@ -214,65 +184,46 @@ def jobs_save_db(jobs,session):
         
         # db에 밀어넣기
         sql = text('''
-         insert into jobs(
-             recrut_pblnt_sn,
-             recrut_pbanc_ttl,
-             inst_nm,
-             pbanc_bgng_ymd,
-             pbanc_end_ymd,
-             src_url,
-             ongoing_yn,
-             recrut_se_nm,
-             recrut_nope,
-             work_rgn_nm_lst     
-         )
-         
-         values(
-             :recrut_pblnt_sn,
-             :recrut_pbanc_ttl,
-             :inst_nm,
-             :pbanc_bgng_ymd,
-             :pbanc_end_ymd,
-             :src_url,
-             :ongoing_yn,
-             :recrut_se_nm,
-             :recrut_nope,
-             :work_rgn_nm_lst          
-         )
-         on duplicate key update
-         recrut_pblnt_sn=:recrut_pblnt_sn,
-         recrut_pbanc_ttl=:recrut_pbanc_ttl,
-         inst_nm=:inst_nm,
-         pbanc_bgng_ymd=:pbanc_bgng_ymd,
-         pbanc_end_ymd=:pbanc_end_ymd,
-         src_url=:src_url,
-         ongoing_yn=:ongoing_yn,
-         recrut_se_nm=:recrut_se_nm,
-         recrut_nope=:recrut_nope,
-         work_rgn_nm_lst=:work_rgn_nm_lst
-         
-         
-         ''')
-        
+            insert into jobs(
+                recrut_pblnt_sn,
+                recrut_pbanc_ttl,
+                inst_nm,
+                pbanc_bgng_ymd,
+                pbanc_end_ymd,
+                src_url,
+                ongoing_yn,
+                recrut_se_nm,
+                recrut_nope,
+                work_rgn_nm_lst     
+            )
+            values(
+                :recrut_pblnt_sn,
+                :recrut_pbanc_ttl,
+                :inst_nm,
+                :pbanc_bgng_ymd,
+                :pbanc_end_ymd,
+                :src_url,
+                :ongoing_yn,
+                :recrut_se_nm,
+                :recrut_nope,
+                :work_rgn_nm_lst          
+            )
+            on duplicate key update
+            recrut_pblnt_sn=:recrut_pblnt_sn,
+            recrut_pbanc_ttl=:recrut_pbanc_ttl,
+            inst_nm=:inst_nm,
+            pbanc_bgng_ymd=:pbanc_bgng_ymd,
+            pbanc_end_ymd=:pbanc_end_ymd,
+            src_url=:src_url,
+            ongoing_yn=:ongoing_yn,
+            recrut_se_nm=:recrut_se_nm,
+            recrut_nope=:recrut_nope,
+            work_rgn_nm_lst=:work_rgn_nm_lst
+        ''')
+
         # maria db
-        
-        # sql문을 실행
-        
-        session.exec(sql, params={
-        'recrut_pblnt_sn': recrutPblntSn,
-        'recrut_pbanc_ttl': recrutPbancTtl,
-        'inst_nm': instNm,
-        'pbanc_bgng_ymd': pbancBgngYmd,
-        'pbanc_end_ymd': pbancEndYmd,
-        'src_url': srcUrl,
-        'ongoing_yn': ongoingYn,
-        'recrut_se_nm': recrutSeNm,
-        'recrut_nope': recrutNope,
-        'work_rgn_nm_lst': workRgnNmLst
-            })
-        
+
         # mariaDB 날짜 포맷 저장할때 하라는건데(gpt 피드백임)
-        
         if pbancBgngYmd:
                 pbancBgngYmd = str(pbancBgngYmd)
                 pbancBgngYmd = (
@@ -288,6 +239,20 @@ def jobs_save_db(jobs,session):
                 pbancEndYmd[4:6] + '-' +
                 pbancEndYmd[6:8]
             )
+
+        # sql문을 실행
+        session.exec(sql, params={
+            'recrut_pblnt_sn': recrutPblntSn,
+            'recrut_pbanc_ttl': recrutPbancTtl,
+            'inst_nm': instNm,
+            'pbanc_bgng_ymd': pbancBgngYmd,
+            'pbanc_end_ymd': pbancEndYmd,
+            'src_url': srcUrl,
+            'ongoing_yn': ongoingYn,
+            'recrut_se_nm': recrutSeNm,
+            'recrut_nope': recrutNope,
+            'work_rgn_nm_lst': workRgnNmLst
+        })
          
     session.commit()
     
@@ -296,14 +261,18 @@ def jobs_save_db(jobs,session):
 # 이거는 함수 테스트용
 @router.post('/jobs/sync')
 def insert_data(session: Session = Depends(get_session)): 
-    jobs=fetch_jobs()
+    jobs = fetch_jobs()
     jobs_save_db(jobs,session)
-    
-    
+    es_count = save_jobs_to_es(jobs)
+
     print('저장 성공이니!')
+
     return{'msg':'채용공고 저장 성공!',
-           'count':len(jobs)}
-   # 필터링 테스트입니다. 
+           'count':len(jobs),
+           'elasticsearch_count': es_count
+        }
+
+# 필터링 테스트입니다. 
 @router.post('/jobs/filter_jobs')
 def filter_date(keyword:str="", session: Session = Depends(get_session)):
     all_jobs=fetch_jobs()
@@ -314,5 +283,3 @@ def filter_date(keyword:str="", session: Session = Depends(get_session)):
         'msg':f'{keyword}필터링 저장성공이니이!!!!',
           'count': len(filtered_jobs)
     }
-
-    
