@@ -62,7 +62,7 @@ def mypage(
         context={
             'user': user,
             'user_id': request.session.get('user_id'),
-            'user_name': request.session.get('user_name'),
+            # 'user_name': request.session.get('user_name'),
             'user_status_id': request.session.get('user_status_id')
         }
     )
@@ -76,7 +76,7 @@ ctx_pw = CryptContext(
 @router.post('/jobgogo/mypage/edit')
 def update_profile(
     request: Request,
-    user_name: str = Form(default=''),
+    # user_name: str = Form(default='user_name'),
     user_pw: str = Form(default=''),
     user_pw_confirm: str = Form(default=''),
     user_nickname: str = Form(),
@@ -114,7 +114,7 @@ def update_profile(
                 context={
                     'user': user,
                     'user_id': request.session.get('user_id'),
-                    'user_name': request.session.get('user_name'),
+                    # 'user_name': request.session.get('user_name'),
                     'user_status_id': request.session.get('user_status_id'),
                     'error': '비밀번호가 일치하지 않습니다.'
                 },
@@ -125,7 +125,7 @@ def update_profile(
         user.user_pw = ctx_pw.hash(user_pw)
 
     # 회원 정보 수정
-    user.user_name = user_name
+    # user.user_name = user_name
     user.user_nickname = user_nickname
     user.user_home = user_home
     user.user_email = user_email
@@ -136,7 +136,7 @@ def update_profile(
     session.refresh(user)
 
     # 이름과 닉네임은 세션에도 저장돼 있으므로 같이 갱신
-    request.session['user_name'] = user.user_name
+    # request.session['user_name'] = user.user_name
     request.session['user_nickname'] = user.user_nickname
 
     return RedirectResponse(
