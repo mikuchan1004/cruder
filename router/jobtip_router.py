@@ -316,7 +316,7 @@ def jobtip_read(
             return popup_error("게시글이 없습니다....") 
     view_count_sql=text('''
                 update job_tip
-                set view_count=COALESCE(view_count,0)+1
+                set view_count=view_count+1
                 where job_tip_no=:job_tip_no         
                         
                         ''')
