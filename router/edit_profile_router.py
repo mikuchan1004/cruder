@@ -76,7 +76,7 @@ ctx_pw = CryptContext(
 @router.post('/jobgogo/mypage/edit')
 def update_profile(
     request: Request,
-    user_name: str = Form(),
+    user_name: str = Form(default=''),
     user_pw: str = Form(default=''),
     user_pw_confirm: str = Form(default=''),
     user_nickname: str = Form(),
