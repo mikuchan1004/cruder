@@ -1,45 +1,54 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>chatjoppt - AI 맞춤 채용 추천</title>
+    <title>chatjoppt - AI 공공기관 채용 검색</title>
 
-    <link rel="stylesheet" href="../assets/ai-chat.css">
-    <link rel="stylesheet" href="../assets/footer.css">
-    <link rel="shortcut icon" href="/static/images/favicon.ico">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/ai-chat.css">
+    <link rel="stylesheet" href="/assets/footer.css">
 
+    <!-- 파비콘 -->
+    <link rel="shortcut icon"
+          href="/static/images/favicon.ico">
 
     <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
 
-    <!-- ==============================
+    <!-- =====================================
          상단 헤더
-    ============================== -->
+    ====================================== -->
     <header class="chat-header">
 
         <div class="header-inner">
 
+            <!-- 로고 -->
             <div class="brand">
+
                 <div class="brand-icon">
                     <i class="fa-solid fa-robot"></i>
                 </div>
 
                 <div class="brand-text">
                     <h1>chatjoppt</h1>
-                    <span>AI 맞춤 채용 추천 서비스</span>
+                    <span>
+                        AI 기반 공공기관 채용공고 검색 서비스
+                    </span>
                 </div>
+
             </div>
 
+            <!-- 서비스 표시 -->
             <div class="header-status">
                 <span class="status-dot"></span>
-                AI 취업 도우미
+                AI 채용 검색 도우미
             </div>
 
         </div>
@@ -47,35 +56,149 @@
     </header>
 
 
-    <!-- ==============================
+    <!-- =====================================
          메인 채팅 화면
-    ============================== -->
+    ====================================== -->
     <main class="chat-main">
 
         <div class="chat-container">
 
-            <!-- 채팅 상단 -->
+            <!-- =================================
+                 채팅 상단 제목
+            ================================== -->
             <div class="chat-top">
 
                 <div class="chat-top-title">
-                    <h2>AI 취업 상담</h2>
-                    <p>나에게 맞는 채용 공고를 찾아보세요.</p>
+
+                    <h2>
+                        <i class="fa-solid fa-comments"></i>
+                        AI 공공기관 채용 검색
+                    </h2>
+
+                    <p>
+                        현재 모집 중인 공공기관 채용공고를
+                        AI로 검색해 보세요.
+                    </p>
+
                 </div>
 
+                <!-- 새 대화 -->
                 <button type="button" class="reset-btn">
+
                     <i class="fa-solid fa-rotate-right"></i>
                     새 대화
+
                 </button>
 
             </div>
 
 
-            <!-- ==============================
-                 채팅 메시지 영역
-            ============================== -->
-            <section class="chat-messages">
+            <!-- =================================
+                 AI / 사용자 채팅 메시지
+            ================================== -->
+            <section class="chat-messages"
+                     id="chat-messages"
+                     aria-label="채팅 대화 내역"
+                     aria-live="polite">
 
-                <!-- AI 메시지 -->
+                <!-- AI 첫 메시지 -->
+                <div class="message ai-message">
+
+                    <!-- AI 프로필 -->
+                    <div class="avatar ai-avatar">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+
+                    <div class="message-content">
+
+                        <span class="sender-name">
+                            chatjoppt
+                        </span>
+
+                        <!-- AI 말풍선 -->
+                        <div class="message-bubble ai-bubble">
+
+                            <h3>
+                                안녕하세요! 👋
+                            </h3>
+
+                            <p>
+                                공공기관 채용정보 검색 도우미
+                                <strong>chatjoppt</strong>입니다.
+                            </p>
+
+                            <p>
+                                ALIO에서 수집한 공공기관
+                                채용공고를 바탕으로
+                                원하시는 채용정보를 찾아드립니다.
+                            </p>
+
+                            <p>
+                                희망 직무, 근무 지역,
+                                신입·경력 여부 등
+                                원하는 조건을 자유롭게 말씀해 주세요.
+                            </p>
+
+                            <!-- 검색 예시 -->
+                            <div class="example-box">
+
+                                <div class="example-title">
+
+                                    <i class="fa-solid fa-lightbulb"></i>
+                                    이렇게 질문해 보세요
+
+                                </div>
+
+                                <p>
+                                    현재 모집 중인 공공기관 중에서
+                                    신입 지원이 가능한
+                                    채용공고를 찾아줘.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     사용자 메시지 출력 예시
+
+                     실제 JavaScript 연동 시
+                     이 구조를 추가하여 사용합니다.
+                ==================================
+
+                <div class="message user-message">
+
+                    <div class="message-content">
+
+                        <span class="sender-name">
+                            나
+                        </span>
+
+                        <div class="message-bubble user-bubble">
+                            경기도에서 근무할 수 있는
+                            신입 채용공고 찾아줘.
+                        </div>
+
+                    </div>
+
+                </div>
+
+                -->
+
+
+                <!-- =================================
+                     AI 검색 결과 출력 예시
+
+                     추후 FastAPI + Elasticsearch
+                     + Gemini RAG 응답 연결 시
+                     이 영역에 출력합니다.
+                ==================================
+
                 <div class="message ai-message">
 
                     <div class="avatar ai-avatar">
@@ -90,90 +213,78 @@
 
                         <div class="message-bubble ai-bubble">
 
-                            <h3>안녕하세요! 👋</h3>
-
                             <p>
-                                취업 도우미
-                                <strong>chatjoppt</strong>입니다.
+                                요청하신 조건과 관련 있는
+                                공공기관 채용공고를 찾았습니다.
                             </p>
 
                             <p>
-                                원하는 직무, 경력, 기술 스택,
-                                희망 지역을 알려주시면
-                                맞춤형 채용 공고를 추천해 드릴게요.
+                                아래 검색 결과를 확인해 주세요.
                             </p>
 
-                            <!-- 입력 예시 -->
-                            <div class="example-box">
-
-                                <div class="example-title">
-                                    <i class="fa-solid fa-lightbulb"></i>
-                                    입력 예시
-                                </div>
-
-                                <p>
-                                    신입 백엔드 개발자이고
-                                    Python, Java를 사용할 수 있습니다.
-                                    지역은 상관없어요.
-                                </p>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <!--
-                    사용자 메시지 디자인 예시
-
-                    실제 채팅 기능 연동 시
-                    아래 구조를 반복하여 출력하면 됩니다.
-
-                <div class="message user-message">
-
-                    <div class="message-content">
-
-                        <span class="sender-name">나</span>
-
-                        <div class="message-bubble user-bubble">
-                            신입 백엔드 개발자 공고를 추천해 주세요.
                         </div>
 
                     </div>
 
                 </div>
+
                 -->
 
             </section>
 
 
-            <!-- ==============================
-                 추천 질문
-            ============================== -->
+            <!-- =================================
+                 추천 검색 질문
+            ================================== -->
             <div class="suggestion-area">
 
                 <p class="suggestion-title">
+
                     <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    이런 질문은 어떠세요?
+                    이런 채용공고를 검색해 보세요
+
                 </p>
 
                 <div class="suggestion-list">
 
-                    <button type="button" class="suggestion-btn">
-                        <i class="fa-solid fa-code"></i>
-                        신입 개발자 추천
+                    <!-- 신입 -->
+                    <button type="button"
+                            class="suggestion-btn"
+                            data-question="현재 모집 중인 공공기관 신입 채용공고 찾아줘">
+
+                        <i class="fa-solid fa-user-graduate"></i>
+                        신입 채용공고
+
                     </button>
 
-                    <button type="button" class="suggestion-btn">
-                        <i class="fa-brands fa-python"></i>
-                        Python 채용공고
+                    <!-- 현재 모집 -->
+                    <button type="button"
+                            class="suggestion-btn"
+                            data-question="현재 모집 중인 공공기관 채용공고 알려줘">
+
+                        <i class="fa-solid fa-building-columns"></i>
+                        현재 모집 중인 공고
+
                     </button>
 
-                    <button type="button" class="suggestion-btn">
+                    <!-- 지역 -->
+                    <button type="button"
+                            class="suggestion-btn"
+                            data-question="경기도에서 근무할 수 있는 공공기관 채용공고 찾아줘">
+
                         <i class="fa-solid fa-location-dot"></i>
-                        지역 무관 채용
+                        경기도 채용공고
+
+                    </button>
+
+                    <!-- 채용인원 -->
+                    <button type="button"
+                            class="suggestion-btn"
+                            data-question="채용인원이 5명 이상인 공공기관 채용공고 찾아줘">
+
+                        <i class="fa-solid fa-users"></i>
+                        채용인원 5명 이상
+
                     </button>
 
                 </div>
@@ -181,32 +292,54 @@
             </div>
 
 
-            <!-- ==============================
-                 사용자 입력 영역
-            ============================== -->
+            <!-- =================================
+                 사용자 질문 입력
+            ================================== -->
             <section class="chat-input-section">
 
-                <form class="chat-form" method="post" action="#">
+                <form class="chat-form"
+                      id="chat-form"
+                      method="post"
+                      action="#">
 
-                    <textarea name="question" class="chat-input" rows="2"
-                        placeholder="직무, 경력, 기술 스택, 희망 지역 등을 자유롭게 입력해 주세요..." required></textarea>
+                    <textarea
+                        name="question"
+                        id="chat-input"
+                        class="chat-input"
+                        rows="2"
+                        placeholder="예: 경기도에서 근무할 수 있는 신입 공공기관 채용공고 찾아줘"
+                        aria-label="채용공고 검색 질문"
+                        required></textarea>
 
                     <div class="input-bottom">
 
                         <span class="input-guide">
-                            나에게 맞는 채용 공고를 찾아보세요.
+
+                            <i class="fa-solid fa-database"></i>
+                            ALIO 기반 공공기관 채용정보 검색
+
                         </span>
 
-                        <button type="submit" class="send-btn" aria-label="메시지 전송">
+                        <!-- 전송 버튼 -->
+                        <button type="submit"
+                                class="send-btn"
+                                aria-label="메시지 전송">
+
                             <i class="fa-solid fa-arrow-up"></i>
+
                         </button>
 
                     </div>
 
                 </form>
 
+                <!-- 하단 안내 -->
                 <p class="input-notice">
-                    chatjoppt의 추천 결과는 실제 채용 공고와 차이가 있을 수 있습니다.
+
+                    ALIO에서 수집한 채용정보를 기반으로 검색합니다.
+                    실제 모집 여부와 지원 조건은
+                    반드시 원문 공고를 확인해 주세요.
+
                 </p>
 
             </section>
@@ -216,10 +349,21 @@
     </main>
 
 
-    <!-- ==============================
-         하단 푸터
-    ============================== -->
+    <!-- =====================================
+         공통 푸터
+    ====================================== -->
     {% include 'footer.html' %}
+
+
+    <!-- =====================================
+         추천 질문 입력 기능
+         실제 RAG API 연결은 추후 구현
+    ====================================== -->
+    <script>
+
+     
+
+    </script>
 
 </body>
 </html>
