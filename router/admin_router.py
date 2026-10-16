@@ -276,12 +276,32 @@ def user_unsuspension(request:Request, user_id: str, session: Session = Depends(
 def user_delete(request:Request, user_id: str, session:Session = Depends(get_session), _: None = Depends(require_admin)):
     print('계정을 삭제합니다.')
 
-    sql = text('''
-        delete from user
-        where user_id = :user_id and user_status_id not in (1, 2)
+    params = {'user_id' : user_id}
+
+    sql_bookmark = text('''
+        delete from bookmark
+        where user_id = :user_id and user_id in (select user_id from user where user_status_id not in (1, 2))
+    ''')
+
+    sql_job_tip_comment = text('''
+        delete from job_tip_comment
+        where user_id = :user_id and user_id in (select user_id from user where user_status_id not in (1, 2))
+    ''')
+
+    sql_job_tip = text('''
+        delete from job_tip
+        where user_id = :user_id and user_id in (select user_id from user where user_status_id not in (1, 2))
+    ''')
+
+    sql_user = text('''
+        delete from user 
+        where user_id = :user_id and user_id in (select user_id from user where user_status_id not in (1, 2))
     ''')
     try:
-        session.execute(sql, {'user_id' : user_id})
+        session.execute(sql_bookmark, params)
+        session.execute(sql_job_tip_comment, params)
+        session.execute(sql_job_tip, params)
+        session.execute(sql_user, params)
         session.commit()
 
         return RedirectResponse (url='/jobgogo/admin-users' , status_code=303)
