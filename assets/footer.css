@@ -1,4 +1,3 @@
-
 /* ==================================
    Footer 전체 설정
 =================================== */
@@ -6,26 +5,25 @@
     width: 100%;
     background-color: #F8F9FA;
     border-top: 1px solid #E5E7EB;
-    padding: 30px 20px 18px;
+    padding: 35px 20px 25px;
     color: #212529;
     font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
     box-sizing: border-box;
 }
 
-/* 푸터 내부 전체 */
+/* 푸터 내부 전체 그리드 (2열) */
 .site-footer .footer-content {
     width: 100%;
     max-width: 1100px;
     margin: 0 auto;
-
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 50px;
-    align-items: start;
+    align-items: center; /* 로고와 내용의 중앙 밸런스 */
 }
 
 /* ==================================
-   CRUD 소개 영역
+   CRUD 소개 / 로고 영역 (좌측)
 =================================== */
 .site-footer .intro-section {
     min-width: 0;
@@ -44,7 +42,6 @@
 .site-footer .intro-box {
     background-color: transparent;
     border: none;
-    border-radius: 0;
     padding: 0;
     margin: 0;
     box-shadow: none;
@@ -58,8 +55,21 @@
     word-break: keep-all;
 }
 
+/* ★ 푸터 로고 / 캐릭터 이미지 (중간 적정 크기 유지) */
+.site-footer .intro-section img,
+.site-footer .footer-logo img {
+    display: block;
+    width: auto;
+    height: 75px;            /* 기존 210px은 너무 컸고 18px은 너무 작았으니 75px로 균형 */
+    max-width: 220px;
+    max-height: 90px;
+    object-fit: contain;
+    margin-bottom: 12px;
+    transition: transform 0.25s ease;
+}
+
 /* ==================================
-   일대일 문의 영역
+   일대일 문의 영역 (우측)
 =================================== */
 .site-footer .contact-section {
     min-width: 0;
@@ -70,36 +80,49 @@
     color: #212529;
     font-size: 17px;
     font-weight: 700;
-    margin: 0 0 12px;
+    margin: 0 0 14px;
     line-height: 1.3;
 }
 
 .site-footer .contact-info {
     background-color: transparent;
     border: none;
-    border-radius: 0;
     padding: 0;
     margin: 0;
-    width: 100%;
-    max-width: none;
     box-shadow: none;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
 }
 
 .site-footer .contact-info p {
-    font-size: 12px;
+    font-size: 13px;
     color: #6B7280;
-    line-height: 1.7;
-    margin: 0 0 5px;
+    line-height: 1.6;
+    margin: 0;
     word-break: keep-all;
+    display: flex;
+    align-items: center; /* 아이콘과 텍스트 중앙 맞춤 */
+    gap: 8px;           /* 아이콘과 글자 사이 간격 */
 }
 
-.site-footer .contact-info p:last-child {
-    margin-bottom: 0;
+/* ★ 텍스트 옆에 들어가는 작은 아이콘 이미지들만 선택 지정 */
+.site-footer .contact-info p img,
+.site-footer .contact-info img,
+.site-footer .footer-icon {
+    width: 16px !important;
+    height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+    object-fit: contain;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
 }
 
 /* ==================================
-   모바일 대응
+   모바일 반응형 웹 설정
 =================================== */
 @media (max-width: 768px) {
     .site-footer {
@@ -121,10 +144,12 @@
         margin-bottom: 10px;
     }
 
-    .site-footer .intro-box p {
-        font-size: 12px;
+    .site-footer .intro-section img,
+    .site-footer .footer-logo img {
+        height: 60px; /* 모바일에서는 살짝 아담하게 축소 */
     }
 
+    .site-footer .intro-box p,
     .site-footer .contact-info p {
         font-size: 12px;
     }
