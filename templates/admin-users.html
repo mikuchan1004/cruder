@@ -13,6 +13,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="/static/images/favicon.ico">
 
+    <script>
+        window.onload = () => {
+            document.querySelector('#userDeleteBtn').addEventListener('click' , () =>{
+                alert('관리자 계정은 삭제하실 수 없습니다.')
+            })
+        }
+    </script>
 </head>
 <body>
     <!-- 상단 헤더 영역 -->
@@ -90,8 +97,8 @@
 
                         {% if request.session.get('user_name') != user.user_name %}
                         {% if user.user_status_id in [1, 2] %}
-                            <button class="btn btn-red">회원 삭제</button>
-                        {% else %}
+                            <button class="btn btn-red" id="userDeleteBtn">회원 삭제</button>
+                        {% elif user.user_status_id not in [1, 2] %}
                         <form method="post" action="/jobgogo/admin/user/delete/{{user.user_id}}">
                             <button class="btn btn-red" type="submit">회원 삭제</button>
                         </form>
