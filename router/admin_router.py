@@ -276,31 +276,55 @@ def user_unsuspension(request:Request, user_id: str, session: Session = Depends(
 def user_delete(request:Request, user_id: str, session:Session = Depends(get_session), _: None = Depends(require_admin)):
     print('계정을 삭제합니다.')
 
+    # 관리자 계정 삭제 방어
+    admin_check = session.execute(
+        text("select user_status_id from user where user_id = :user_id"), {'user_id' : user_id}
+    ).fetchone()
+
+    if not admin_check or admin_check[0] in (1, 2):
+        print('관리자 계정이거나 존재하지 않는 계정은 삭제할 수 없습니다.')
+        return RedirectResponse(url='/jobgogo/admin-users', status_code=303)
+
     params = {'user_id' : user_id}
 
+    # 삭제하려는 회원의 북마크 삭제 
     sql_bookmark = text('''
         delete from bookmark
-        where user_id = :user_id and user_id in (select user_id from user where user_status_id not in (1, 2))
+        where user_id = :user_id
     ''')
 
-    sql_job_tip_comment = text('''
+    # 해당 회원이 쓴 게시물에 달린 모든 댓글 먼저 삭제 
+    sql_post_comments = text('''
         delete from job_tip_comment
-        where user_id = :user_id and user_id in (select user_id from user where user_status_id not in (1, 2))
+        where job_tip_no in (select job_tip_no from job_tip where user_id = :user_id)
     ''')
 
+    # 해당 회원이 다른 글에 작성한 본인 댓글 삭제 
+    sql_my_comments = text('''
+        delete from job_tip_comment where user_id = :user_id
+    ''')
+
+    # 게시글 삭제 
     sql_job_tip = text('''
-        delete from job_tip
-        where user_id = :user_id and user_id in (select user_id from user where user_status_id not in (1, 2))
+        delete from job_tip where user_id = :user_id
     ''')
 
+    # 해당 회원의 문의 내역 삭제 
+    sql_inquiry = text('''
+        delete from inquiry where user_id = :user_id
+    ''')
+
+    # 최종 회원 삭제 
     sql_user = text('''
         delete from user 
-        where user_id = :user_id and user_id in (select user_id from user where user_status_id not in (1, 2))
+        where user_id = :user_id 
     ''')
     try:
         session.execute(sql_bookmark, params)
-        session.execute(sql_job_tip_comment, params)
+        session.execute(sql_post_comments, params)
+        session.execute(sql_my_comments, params)
         session.execute(sql_job_tip, params)
+        session.execute(sql_inquiry, params)
         session.execute(sql_user, params)
         session.commit()
 
