@@ -72,7 +72,7 @@ def admin_dashboard(
         select 
             '공지' as category,
             notice_title as title,
-            notice.user_id,
+            notice.user_id as user_id,
             u.user_name as user_name,
             notice_date as created_at 
         from notice
@@ -81,7 +81,7 @@ def admin_dashboard(
         select 
             '취업 꿀팁' as category,
             job_tip_title as title,
-            job_tip.user_id,
+            job_tip.user_id as user_id,
             u.user_name as user_name, 
             job_tip_date as created_at
         from job_tip
@@ -407,7 +407,7 @@ def admin_board(request:Request, page:int = 1, session: Session = Depends(get_se
             notice_title as title,
             notice_id as post_no,
             notice_detail as post_detail,
-            notice.user_id,
+            notice.user_id as user_id,
             u.user_name as user_name,
             notice_date as created_at 
             from notice
@@ -418,7 +418,7 @@ def admin_board(request:Request, page:int = 1, session: Session = Depends(get_se
             job_tip_title as title,
             job_tip_no as post_no,
             job_tip_detail as post_detail,
-            job_tip.user_id, 
+            job_tip.user_id as user_id, 
             u.user_name as user_name,
             job_tip_date as created_at
             from job_tip
