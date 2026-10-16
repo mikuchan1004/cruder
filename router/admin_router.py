@@ -72,16 +72,20 @@ def admin_dashboard(
         select 
             '공지' as category,
             notice_title as title,
-            user_id,
+            notice.user_id,
+            u.user_name as user_name,
             notice_date as created_at 
         from notice
+        left join user as u on notice.user_id = u.user_id 
         union all 
         select 
             '취업 꿀팁' as category,
             job_tip_title as title,
-            user_id, 
+            job_tip.user_id,
+            u.user_name as user_name, 
             job_tip_date as created_at
         from job_tip
+        left join user as u on job_tip.user_id = u.user_id
         order by created_at desc
         limit 5
     ''')
