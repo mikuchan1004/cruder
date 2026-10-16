@@ -12,7 +12,7 @@ from database import get_session
 router = APIRouter()
 templates = Jinja2Templates(directory='templates/')
 
-@router.get('/chatjobpt')
+@router.get("/jobgogo/chatjobpt")
 def ai_chat(request:Request):
     
     return templates.TemplateResponse(

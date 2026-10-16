@@ -303,10 +303,16 @@ def insert_data(session: Session = Depends(get_session)):
     print('저장 성공이니!')
     return{'msg':'채용공고 저장 성공!',
            'count':len(jobs)}
-    
-
-        
-    
-        
+   # 필터링 테스트입니다. 
+@router.post('/jobs/filter_jobs')
+def filter_date(keyword:str="", session: Session = Depends(get_session)):
+    all_jobs=fetch_jobs()
+   
+    _, filtered_jobs = filter_jobs(all_jobs, keyword)
+    jobs_save_db(filtered_jobs, session)
+    return{
+        'msg':f'{keyword}필터링 저장성공이니이!!!!',
+          'count': len(filtered_jobs)
+    }
 
     
