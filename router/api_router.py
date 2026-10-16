@@ -144,28 +144,7 @@ def filter_jobs(jobs, keyword):
     return keyword, filtered_jobs
 
  
-# ==============================================================================
-# 4. 채용정보
-# ==============================================================================
-# GET /jobs?keyword=검색어
-# 형태로 요청할 수 있는 API
-@router.get('/jobs')
-def get_jobs(keyword: str):
-    # ALIO Open API에서 채용정보 가져오기
-    jobs = fetch_jobs()
 
-    # 가져온 채용정보를 Elasticsearch에 저장
-    save_jobs_to_es(jobs)
-
-    # 검색어를 기준으로 채용정보 필터링
-    keyword, filtered_jobs = filter_jobs(jobs, keyword)
-
-    # Swagger / 프론트에 반환할 최종 응답
-    return {
-        'keyword': keyword,
-        'count': len(filtered_jobs),
-        'result': filtered_jobs
-    }
 
 # 채용공고를 저장!
 def jobs_save_db(jobs,session):
@@ -293,11 +272,11 @@ def filter_date(keyword:str="", session: Session = Depends(get_session)):
 
 @router.post('/alio/embed/create')
 def create_embed_index():
-    if es.indices.exists(index='alio_job'):
-          es.indices.create(...)
+    if es.indices.exists(index='alio_jobs'):
+        return '이미 존재합니다!'
           
     es.indices.create(
-        index='alio_job',
+        index='alio_jobs',
         mappings={
           'properties':{
             # 채용공고번호
