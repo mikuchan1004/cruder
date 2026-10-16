@@ -1,4 +1,5 @@
-from sqlmodel import create_engine, Session, SQLModel
+from sqlmodel import create_engine, SQLModel
+from sqlalchemy.orm import Session
 from sqlalchemy import text, URL
 
 from fastapi import HTTPException
