@@ -1,209 +1,407 @@
-/* ==================================
-   취업 꿀팁 상세 - 댓글 영역
-   페이지 전역(body 등)은 건드리지 않음
-=================================== */
+
+/* ==========================================
+   댓글 전체 영역
+========================================== */
+
 .comments-section {
     width: 100%;
-    margin: 0;
-    padding: 0;
-    color: #212529;
+    margin-top: 35px;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-sizing: border-box;
 }
 
-.comments-section .comments-title {
-    margin: 0 0 16px;
-    padding-left: 4px;
-    color: #111827;
-    font-size: 1.3rem;
+/* 댓글 제목 */
+.comments-title {
+    font-size: 22px;
     font-weight: 700;
+    color: #222;
+    margin: 0 0 25px 0;
+    padding-bottom: 18px;
+    border-bottom: 2px solid #6c5ce7;
 }
 
-/* 댓글 목록 */
-.comments-section .comments-list {
-    margin-bottom: 20px;
-    overflow: hidden;
-    background-color: #ffffff;
-    border: 1px solid #E5E7EB;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+
+/* ==========================================
+   댓글 목록
+========================================== */
+
+.comments-list {
+    width: 100%;
+    margin-bottom: 25px;
 }
 
-.comments-section .comment-item {
+.comments-empty {
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    padding: 35px 10px;
+}
+
+
+/* ==========================================
+   댓글 아이템
+========================================== */
+
+.comment-item {
     display: flex;
-    gap: 18px;
-    padding: 22px 20px;
-    border-bottom: 1px solid #F3F4F6;
-    transition: background-color 0.15s ease;
+    align-items: flex-start;
+    gap: 12px;
+
+    padding: 18px 12px;
+    margin-bottom: 8px;
+
+    border-bottom: 1px solid #f0f0f0;
+    border-radius: 8px;
+
+    box-sizing: border-box;
+    min-width: 0;
 }
 
-.comments-section .comment-item:last-child {
-    border-bottom: none;
+.comment-item:hover {
+    background: #fafaff;
 }
 
-.comments-section .comment-item:hover {
-    background-color: #FAFAFA;
-}
+/* 대댓글은 깊이에 따라 HTML에서 margin-left 적용 */
 
-/* 프로필 아바타 */
-.comments-section .comment-avatar {
+
+/* ==========================================
+   프로필 아이콘
+========================================== */
+
+.comment-avatar {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+
     display: flex;
-    flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+
+    background: #f1efff;
+    color: #7568d8;
+
     border-radius: 50%;
-    background-color: #F3F0FF;
-    color: #6B46C1;
-    font-size: 1.2rem;
+    font-size: 17px;
+}
+
+
+/* ==========================================
+   댓글 내용
+========================================== */
+
+.comment-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* 작성자 영역 */
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    margin-bottom: 9px;
+}
+
+.author {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+}
+
+/* 대댓글 표시 */
+.reply-label {
+    display: inline-block;
+    padding: 3px 8px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    color: #6c5ce7;
+    background: #f0edff;
+
+    border-radius: 5px;
 }
 
 /* 댓글 본문 */
-.comments-section .comment-content {
-    display: flex;
-    flex: 1;
-    min-width: 0;
-    flex-direction: column;
-    justify-content: center;
-    gap: 9px;
+.comment-body {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
 }
 
-.comments-section .comment-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.comments-section .comment-header .author {
-    color: #111827;
-    font-size: 1rem;
-    font-weight: 700;
-}
-
-.comments-section .comment-body {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 16px;
-}
-
-.comments-section .comment-body .text {
-    flex: 1;
-    min-width: 0;
+.comment-body .text {
     margin: 0;
-    color: #4B5563;
-    font-size: 1rem;
-    line-height: 1.6;
+    word-break: break-word;
     overflow-wrap: anywhere;
     white-space: pre-wrap;
 }
 
-/* 댓글 삭제 */
-.comments-section .btn-delete {
-    flex-shrink: 0;
-    padding: 6px 13px;
-    background-color: #FEF2F2;
-    color: #DC2626;
-    border: 1px solid #FCA5A5;
-    border-radius: 6px;
-    font-size: 0.85rem;
+
+/* ==========================================
+   답글 달기 (JavaScript 없음)
+========================================== */
+
+.reply-details {
+    margin-top: 10px;
+}
+
+/* 답글 버튼 */
+.btn-reply {
+    display: inline-flex;
+    align-items: center;
+
+    font-size: 13px;
     font-weight: 600;
+    color: #777;
+
     cursor: pointer;
-    transition: all 0.2s ease;
+    list-style: none;
+
+    padding: 5px 0;
+    transition: color 0.2s;
 }
 
-.comments-section .btn-delete:hover {
-    background-color: #DC2626;
-    color: #ffffff;
-    border-color: #DC2626;
+.btn-reply::-webkit-details-marker {
+    display: none;
 }
 
-/* 댓글 없음 */
-.comments-section .comments-empty {
-    margin: 0;
-    padding: 38px 20px;
-    color: #9CA3AF;
-    font-size: 0.95rem;
-    text-align: center;
+.btn-reply:hover {
+    color: #6c5ce7;
 }
 
-/* 댓글 입력 */
-.comments-section .comment-input-area {
+/* 답글 작성창이 열렸을 때 */
+.reply-details[open] > .btn-reply {
+    color: #6c5ce7;
+}
+
+/* 답글 입력 영역 */
+.reply-input-area {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 10px;
+
     width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+
+    background: #f8f7ff;
+    border: 1px solid #e6e1ff;
+    border-radius: 9px;
+
+    box-sizing: border-box;
 }
 
-.comments-section .comment-input {
+
+/* ==========================================
+   댓글 삭제 버튼
+========================================== */
+
+.btn-delete {
+    background: transparent;
+    border: none;
+
+    font-size: 12px;
+    color: #999;
+
+    cursor: pointer;
+    padding: 5px 0;
+
+    transition: color 0.2s;
+}
+
+.btn-delete:hover {
+    color: #e74c3c;
+}
+
+
+/* ==========================================
+   일반 댓글 작성 영역
+========================================== */
+
+.comment-input-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    padding: 18px;
+
+    background: #f8f9fc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    box-sizing: border-box;
+}
+
+
+/* ==========================================
+   댓글 입력창 공통
+========================================== */
+
+.comment-input {
     flex: 1;
     min-width: 0;
-    padding: 14px 18px;
-    background-color: #ffffff;
-    border: 1px solid #D1D5DB;
+
+    height: 44px;
+    padding: 0 15px;
+
+    border: 1px solid #ddd;
     border-radius: 8px;
-    color: #1F2937;
-    font-size: 1rem;
+
+    background: white;
+    color: #333;
+
+    font-size: 14px;
+    font-family: inherit;
+
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+
+    transition: border-color 0.2s,
+                box-shadow 0.2s;
 }
 
-.comments-section .comment-input:focus {
-    border-color: #6B46C1;
-    box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.10);
+.comment-input:focus {
+    border-color: #6c5ce7;
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
 }
 
-.comments-section .comment-input::placeholder {
-    color: #9CA3AF;
+.comment-input::placeholder {
+    color: #aaa;
 }
 
-.comments-section .btn-submit {
-    flex-shrink: 0;
-    padding: 0 28px;
-    background-color: #6B46C1;
-    color: #ffffff;
+
+/* ==========================================
+   댓글 등록 버튼
+========================================== */
+
+.btn-submit {
+    height: 44px;
+    padding: 0 23px;
+
+    background: #6c5ce7;
+    color: white;
+
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
+
+    font-size: 14px;
     font-weight: 600;
+
     cursor: pointer;
     white-space: nowrap;
-    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
-    transition: all 0.2s ease;
+
+    transition: background 0.2s,
+                transform 0.2s;
 }
 
-.comments-section .btn-submit:hover {
-    background-color: #5533A3;
-    transform: translateY(-1px);
+.btn-submit:hover {
+    background: #5848cf;
 }
 
-/* 모바일 */
+.btn-submit:active {
+    transform: scale(0.97);
+}
+
+
+/* ==========================================
+   반응형 - 태블릿
+========================================== */
+
 @media (max-width: 768px) {
-    .comments-section .comment-item {
-        gap: 13px;
-        padding: 18px 15px;
+
+    .comments-section {
+        padding: 20px;
     }
 
-    .comments-section .comment-avatar {
-        width: 38px;
-        height: 38px;
-        font-size: 1rem;
+    .comments-title {
+        font-size: 20px;
     }
 
-    .comments-section .comment-body {
-        align-items: flex-start;
-        flex-direction: column;
+    .comment-item {
         gap: 10px;
+        padding: 15px 8px;
     }
 
-    .comments-section .comment-input-area {
-        gap: 10px;
+    .comment-avatar {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        font-size: 14px;
     }
 
-    .comments-section .comment-input {
-        padding: 12px 14px;
+    .comment-input-area {
+        padding: 12px;
     }
 
-    .comments-section .btn-submit {
-        padding: 0 20px;
-        font-size: 0.95rem;
+    .reply-input-area {
+        padding: 10px;
+    }
+
+    .btn-submit {
+        padding: 0 15px;
+    }
+}
+
+
+/* ==========================================
+   반응형 - 모바일
+========================================== */
+
+@media (max-width: 480px) {
+
+    .comments-section {
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .comments-title {
+        font-size: 18px;
+    }
+
+    .comment-item {
+        padding: 12px 5px;
+        gap: 8px;
+    }
+
+    .comment-avatar {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        font-size: 13px;
+    }
+
+    .author {
+        font-size: 13px;
+    }
+
+    .comment-body {
+        font-size: 13px;
+    }
+
+    .reply-label {
+        font-size: 10px;
+        padding: 2px 5px;
+    }
+
+    .comment-input-area,
+    .reply-input-area {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .comment-input {
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    .btn-submit {
+        width: 100%;
+        height: 40px;
     }
 }

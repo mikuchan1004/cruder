@@ -237,7 +237,7 @@ def chkId(
                ) 
     user=result.mappings().fetchone()
     #세선에 저장하자아
-    if user is None:
+    if user is not None:
         request.session['idChk_Messge']='이미 존재하는 아이디 입니다'
     else:
         request.session['idChk_Messge']='사용 가능한 아이디 입니다'

@@ -1,3 +1,4 @@
+
 <!-- 댓글 영역 -->
 <section class="comments-section">
 
@@ -5,20 +6,65 @@
 
     <div class="comments-list">
         {% for comment in reple_list %}
-        <div class="comment-item">
+
+        <!-- 댓글 깊이에 따른 들여쓰기 -->
+        <div class="comment-item"
+             style="margin-left: {{ [((comment.level - 1) * 20), 120] | min }}px;">
 
             <div class="comment-avatar" aria-hidden="true">
                 <i class="fa-regular fa-user"></i>
             </div>
 
             <div class="comment-content">
+
                 <div class="comment-header">
                     <span class="author">{{ comment.user_nickname }}</span>
+
+                    {% if comment.level > 1 %}
+                    <span class="reply-label">↳ 답글</span>
+                    {% endif %}
                 </div>
 
                 <div class="comment-body">
                     <p class="text">{{ comment.reple }}</p>
 
+                    <!-- 답글 달기 -->
+                    <details class="reply-details">
+
+                        <summary class="btn-reply">
+                            답글 달기
+                        </summary>
+
+                        <form
+                            action="/jobtip/{{ job.job_tip_no }}"
+                            method="post"
+                            class="reply-input-area"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="parent_reple_no"
+                                value="{{ comment.reple_no }}"
+                            >
+
+                            <input
+                                type="text"
+                                name="reple"
+                                class="comment-input"
+                                placeholder="답글을 입력하세요"
+                                autocomplete="off"
+                                required
+                            >
+
+                            <button type="submit" class="btn-submit">
+                                등록
+                            </button>
+
+                        </form>
+
+                    </details>
+
+                    <!-- 본인 댓글 삭제 -->
                     {% if user_id == comment.user_id %}
                     <form
                         action="/jobtip/{{ job.job_tip_no }}/reple/del"
@@ -36,19 +82,23 @@
                         </button>
                     </form>
                     {% endif %}
+
                 </div>
             </div>
         </div>
+
         {% else %}
         <p class="comments-empty">등록된 댓글이 없습니다.</p>
         {% endfor %}
     </div>
 
+    <!-- 일반 댓글 작성 -->
     <form
         action="/jobtip/{{ job.job_tip_no }}"
         method="post"
         class="comment-input-area"
     >
+
         <input
             type="text"
             name="reple"
@@ -61,6 +111,7 @@
         <button type="submit" class="btn-submit">
             전송
         </button>
+
     </form>
 
 </section>

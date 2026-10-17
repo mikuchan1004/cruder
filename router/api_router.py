@@ -93,7 +93,7 @@ def save_jobs_to_es(jobs):
             # 채용공고 고유번호를 Elasticsearch 문서 ID로 사용
             '_id': str(recrut_pblnt_sn),
 
-            # 실제로 Elasticsearch에 저장할 내용
+            # 실제로 Elasticsearch에 저장할 내용(지금은 원본만 저장되는 중인데 추가 구현예정)
             '_source': job
         })
 
@@ -148,6 +148,7 @@ def filter_jobs(jobs, keyword):
 
 # 채용공고를 저장!
 def jobs_save_db(jobs,session):
+    print('잘 저장되니?')
     for job in jobs:
         
         recrutPblntSn= job.get('recrutPblntSn')
@@ -272,6 +273,7 @@ def filter_date(keyword:str="", session: Session = Depends(get_session)):
 
 @router.post('/alio/embed/create')
 def create_embed_index():
+
     if es.indices.exists(index='alio_jobs'):
         return '이미 존재합니다!'
           
@@ -304,8 +306,9 @@ def create_embed_index():
           } 
         }
     )   
-    
-    return '인덱스 생성 성공!' 
+    # print('인덱스 생성된거 확인용')
+    return '인덱스 생성 성공!'
+
           
       
     

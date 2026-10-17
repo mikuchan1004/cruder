@@ -1,60 +1,95 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>글쓰기 에디터</title>
-    <link rel="stylesheet" href="../assets/write.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <title>글쓰기 에디터 - 취업할래말래</title>
+
     <link rel="stylesheet" href="/assets/header.css">
     <link rel="stylesheet" href="/assets/footer.css">
+    <link rel="stylesheet" href="/assets/write.css?v=2">
+
     <link rel="shortcut icon" href="/static/images/favicon.ico">
 
-
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
     {% include 'header.html' %}
 
     <main class="main-container">
 
-        <form id="writeForm" action="/jobtip/write" method="post" enctype="multipart/form-data">
+        <!-- 신규 게시글 작성 폼 -->
+        <form id="writeForm"
+              action="/jobtip/write"
+              method="post"
+              enctype="multipart/form-data">
 
             <div class="form-header">
-                <input type="text" name="job_tip_title" class="title-input" placeholder="제목을 입력하시오" required>
+
+                <!-- 새 글 제목 입력 -->
+                <input
+                    type="text"
+                    name="job_tip_title"
+                    class="title-input"
+                    placeholder="제목을 입력하시오"
+                    required
+                >
 
                 <div class="button-group">
+
                     <!-- 취소 버튼 -->
-                    <button type="button" class="btn btn-cancel" onclick="location.href='/jobgogo/jobtip'">
+                    <button
+                        type="button"
+                        class="btn btn-cancel"
+                        onclick="location.href='/jobgogo/jobtip'">
                         취소
                     </button>
 
+                    <!-- 등록 버튼 -->
                     <button type="submit" class="btn btn-submit">
                         등록
                     </button>
+
                 </div>
             </div>
 
             <div class="editor-container">
 
+                <!-- 에디터 상단 툴바 -->
                 <div class="editor-toolbar">
 
-                    <!-- 이미지 버튼 -->
-                    <button type="button" class="tool-btn"
+                    <!-- 이미지 첨부 -->
+                    <button
+                        type="button"
+                        class="tool-btn"
                         onclick="document.getElementById('job_tip_attachment').click()">
+
                         <i class="fa-regular fa-image"></i>
                         <span>이미지</span>
                     </button>
 
-                    <!-- 이미지 선택 -->
-                    <input type="file" id="job_tip_attachment" name="job_tip_attachment" accept="image/*" multiple
-                        style="display: none;">
+                    <!-- 이미지 파일 선택 -->
+                    <input
+                        type="file"
+                        id="job_tip_attachment"
+                        name="job_tip_attachment"
+                        accept="image/*"
+                        multiple
+                        style="display: none;"
+                    >
 
+                    <!-- 동영상 버튼 -->
                     <button type="button" class="tool-btn">
                         <i class="fa-solid fa-film"></i>
                         <span>동영상</span>
                     </button>
 
+                    <!-- 첨부 파일 버튼 -->
                     <button type="button" class="tool-btn">
                         <i class="fa-solid fa-paperclip"></i>
                         <span>첨부 파일</span>
@@ -62,16 +97,29 @@
 
                 </div>
 
-                <!-- 실제 글과 이미지를 함께 작성하는 영역 -->
+                <!-- 새 게시글 내용 작성 -->
                 <div class="editor-content">
-                    <div id="editor" contenteditable="true" role="textbox" aria-label="게시글 내용" aria-multiline="true"></div>
+
+                    <div
+                        id="editor"
+                        contenteditable="true"
+                        role="textbox"
+                        aria-label="게시글 내용"
+                        aria-multiline="true"></div>
+
                 </div>
 
                 <!-- Python으로 전달할 본문 HTML -->
-                <input type="hidden" name="job_tip_detail" id="job_tip_detail">
+                <input
+                    type="hidden"
+                    name="job_tip_detail"
+                    id="job_tip_detail"
+                >
 
             </div>
+
         </form>
+
     </main>
 
     {% include 'footer.html' %}
@@ -82,13 +130,14 @@
         const writeForm = document.getElementById("writeForm");
         const detailInput = document.getElementById("job_tip_detail");
 
-        // 이미지 버튼 클릭 후 선택한 사진을 본문에 표시
+        // 이미지 버튼 클릭 후 선택한 사진 미리보기
         fileInput.addEventListener("change", function () {
 
             const files = Array.from(this.files);
 
             for (const file of files) {
 
+                // 이미지 파일인지 확인
                 if (!file.type.startsWith("image/")) {
                     continue;
                 }
@@ -105,25 +154,25 @@
                     URL.revokeObjectURL(imageURL);
                 }, { once: true });
 
+                // 본문에 이미지 미리보기 표시
                 editor.appendChild(image);
             }
         });
 
-        // 등록 버튼을 눌렀을 때 본문 내용 전달
+        // 등록 버튼 클릭 시
         writeForm.addEventListener("submit", function (event) {
 
-            // 취소 버튼이면 본문 검사 생략
-            if (event.submitter?.classList.contains("btn-cancel")) {
-                return;
-            }
-
-            if (editor.textContent.trim() === "" &&
-                editor.querySelectorAll("img").length === 0) {
+            // 본문이 비어 있는 경우 제출 방지
+            if (
+                editor.textContent.trim() === "" &&
+                editor.querySelectorAll("img").length === 0
+            ) {
                 event.preventDefault();
                 alert("내용을 입력해주세요.");
                 return;
             }
 
+            // 작성한 HTML을 Python으로 전달
             detailInput.value = editor.innerHTML;
         });
     </script>
