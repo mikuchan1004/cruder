@@ -599,11 +599,16 @@ def delete_post(
                 where notice_id = :post_number
             ''')
         else:
-            sql = text('''
+            sql_comment = text ('''
+                delete from job_tip_comment 
+                where job_tip_no = :post_number
+            ''')
+            sql_post = text('''
                 delete from job_tip
                 where job_tip_no = :post_number 
             ''')
-        session.execute(sql, {'post_number' : post_number , 'category' : category})
+        session.execute(sql_comment , {'post_number' : post_number})
+        session.execute(sql_post, {'post_number' : post_number , 'category' : category})
         session.commit()
 
         return RedirectResponse (
