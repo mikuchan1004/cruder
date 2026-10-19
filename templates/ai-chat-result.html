@@ -1,73 +1,142 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 맞춤 공고 결과 - 취업 할래말래</title>
-    <link rel="stylesheet" href="../assets/ai-chat-result.css">
+    <title>채용 공고 - 취업할래말래</title>
     <link rel="shortcut icon" href="/static/images/favicon.ico">
+    <link rel="stylesheet" href="/assets/recult.css">
+    <link rel="stylesheet" href="/assets/header.css">
+    <link rel="stylesheet" href="/assets/footer.css">
 
-    <!-- FontAwesome (로봇 아이콘 렌더링용) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 아이콘 -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-    <!-- 상단 임시 헤더 -->
-    <header class="wireframe-header">
-        헤더
-    </header>
 
-    <!-- 메인 콘텐츠 영역 -->
-    <main class="chat-result-main">
-        <div class="result-container">
+    {% include 'header.html' %}
 
-            <!-- AI 메세지 영역 -->
-            <section class="ai-message-section">
-                <div class="bot-icon">
-                    <i class="fa-solid fa-robot"></i>
-                </div>
-                <div class="message-box outline-yellow">
-                    <p>입력하신 직무와 기술 스택을 기준으로 관련 채용공고를 찾아봤어요</p>
-                </div>
-            </section>
+    <main class="main-container">
 
-            <!-- 추천 공고 테이블 영역 -->
-            <section class="recommended-jobs-section">
-                <div class="board-table">
-                    <!-- 테이블 헤더 -->
-                    <div class="table-header">
-                        <div class="col-company">회사명</div>
-                        <div class="col-title">공고명</div>
-                        <div class="col-exp">경력</div>
-                        <div class="col-loc">지역</div>
-                        <div class="col-detail">상세</div>
-                    </div>
-
-                    <!-- 리스트 아이템 1 -->
-                    <div class="table-row">
-                        <div class="col-company" data-label="회사명">네이버</div>
-                        <div class="col-title font-bold" data-label="공고명">백엔드 개발자 모집</div>
-                        <div class="col-exp font-bold" data-label="경력">3년이상</div>
-                        <div class="col-loc" data-label="지역">천안시 동남구</div>
-                        <div class="col-detail"><a href="#" class="btn-detail">상세보기</a></div>
-                    </div>
-
-                    <!-- 리스트 아이템 2 -->
-                    <div class="table-row">
-                        <div class="col-company" data-label="회사명">구글</div>
-                        <div class="col-title font-bold" data-label="공고명">백엔드 개발자 모집</div>
-                        <div class="col-exp font-bold" data-label="경력">5년이상</div>
-                        <div class="col-loc" data-label="지역">천안시 서북구</div>
-                        <div class="col-detail"><a href="#" class="btn-detail">상세보기</a></div>
-                    </div>
-                </div>
-            </section>
-
+        <!-- 페이지 제목 -->
+        <div class="page-title-area">
+            <h1>채용 공고</h1>
+            <p>다양한 공공기관의 채용 정보를 확인하세요.</p>
         </div>
+
+        <!-- 검색 영역 -->
+        <div class="search-area">
+            <form class="search-bar"
+                  method="get"
+                  action="/jobgogo/recult">
+
+                <input
+                    type="text"
+                    class="search-input"
+                    name="keyword"
+                    placeholder="공고명 · 기관명 · 지역 검색"
+                >
+
+                <button type="submit" class="btn-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    검색
+                </button>
+
+            </form>
+        </div>
+
+        <!-- 채용 공고 목록 -->
+        <section class="job-list-section">
+
+            <!-- 목록 제목 -->
+            <div class="section-header">
+                <div class="title-group">
+                    <h2>채용 공고 목록</h2>
+                    <p>현재 모집 중인 채용 공고를 확인해보세요.</p>
+                </div>
+
+        
+            </div>
+
+            <!-- 채용 공고 카드 영역 -->
+            <div class="job-grid">
+
+                {% for job in jobs %}
+                    {% if job.ongoing_yn == 'Y' %}
+
+                    <article class="job-card">
+
+                        <!-- 카드 상단 -->
+                        <div class="card-header">
+                            <span class="badge recruiting">
+                                모집중
+                            </span>
+                            <i
+                                class="fa-star icon-bookmark {% if job.recrut_pblnt_sn in bookmarked_job_ids %}fa-solid{% else %}fa-regular{% endif %}"
+                                data-job-id="{{ job.recrut_pblnt_sn }}"
+                            ></i>
+                        </div>
+
+                        <!-- 카드 본문 -->
+                        <div class="card-body">
+
+                            <!-- 기관명 -->
+                            <span class="company-name">
+                                {{ job.inst_nm }}
+                            </span>
+
+                            <!-- 공고명 -->
+                            <h3 class="job-title">
+                                {{ job.recrut_pbanc_ttl }}
+                            </h3>
+
+                            <!-- 채용 정보 -->
+                            <div class="tags">
+                                <span>{{ job.recrut_se_nm }}</span>
+                                <span>채용인원 {{ job.recrut_nope }}명</span>
+                            </div>
+
+                        </div>
+
+                        <!-- 카드 하단 -->
+                        <div class="card-footer">
+
+                            <p class="date">
+                                <i class="fa-regular fa-calendar"></i>
+                                {{ job.pbanc_bgng_ymd }} ~
+                                {{ job.pbanc_end_ymd }}
+                            </p>
+
+                            <a
+                                href="https://job.alio.go.kr/mobile2021/recruit/recruitView.do?idx={{ job.recrut_pblnt_sn }}"
+                                class="btn-detail"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                상세보기
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+
+        </section>
+    
+
+</div>
+
     </main>
 
-    <!-- 하단 임시 푸터 -->
-    <footer class="wireframe-footer">
-        &lt;푸터 삽입&gt;
-    </footer>
+    {% include 'footer.html' %}
+    <script src="/assets/bookmark.js"></script>
 </body>
 </html>

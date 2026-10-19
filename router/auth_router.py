@@ -211,7 +211,7 @@ def login(
            status_code=303
        )
 
-# id 중복 확인 
+# id 중복확인 로직.
 
 @router.get('/api/check-id')
 def chkId(
@@ -236,7 +236,7 @@ def chkId(
                    }
                ) 
     user=result.mappings().fetchone()
-    #세선에 저장하자아
+    #세선에 저장.
     if user is not None:
         request.session['idChk_Messge']='이미 존재하는 아이디 입니다'
     else:
