@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>취업 꿀팁 수정</title>
+
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+    <link rel="stylesheet" href="/assets/write.css">
+    <link rel="stylesheet" href="/assets/header.css">
+    <link rel="stylesheet" href="/assets/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- <style>
+        #editor {
+            min-height: 250px;
+            padding: 20px;
+            outline: none;
+            overflow-y: auto;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        #editor img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 12px 0;
+            cursor: pointer;
+        }
+
+        #editor:empty::before {
+            content: "내용을 입력하시오";
+            color: #999;
+            pointer-events: none;
+        }
+    </style> -->
+</head>
+
+<body>
+
+    <!-- 공통 헤더 -->
+    {% include 'header.html' %}
+
+    <main class="main-container">
+
+        <!-- 게시글 수정 폼 -->
+        <form
+            id="writeForm"
+            action="/jobtip/{{ job.job_tip_no }}/update"
+            method="post"
+            enctype="multipart/form-data"
+        >
+
+            <div class="form-header">
+
+                <!-- 기존 제목 가져오기 -->
+                <input
+                    type="text"
+                    name="job_tip_title"
+                    class="title-input"
+                    value="{{ job.job_tip_title }}"
+                    placeholder="제목을 입력하시오"
+                    required
+                >
+
+                <div class="button-group">
+
+                    <!-- 취소 버튼 -->
+                    <button
+                        type="button"
+                        class="btn btn-cancel"
+                        onclick="location.href='/jobtip/{{ job.job_tip_no }}'"
+                    >
+                        취소
+                    </button>
+
+                    <!-- 수정 완료 버튼 -->
+                    <button
+                        type="submit"
+                        class="btn btn-submit"
+                    >
+                        수정 완료
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- 에디터 -->
+            <div class="editor-container">
+
+                <div class="editor-toolbar">
+
+                    <!-- 이미지 추가 버튼 -->
+                    <button
+                        type="button"
+                        class="tool-btn"
+                        onclick="document.getElementById('job_tip_attachment').click()"
+                    >
+                        <i class="fa-regular fa-image"></i>
+                        <span>이미지</span>
+                    </button>
+
+                    <!-- 이미지 선택 -->
+                    <input
+                        type="file"
+                        id="job_tip_attachment"
+                        name="job_tip_attachment"
+                        accept="image/*"
+                        multiple
+                        style="display: none;"
+                    >
+
+                    <button type="button" class="tool-btn">
+                        <i class="fa-solid fa-film"></i>
+                        <span>동영상</span>
+                    </button>
+
+                    <button type="button" class="tool-btn">
+                        <i class="fa-solid fa-paperclip"></i>
+                        <span>첨부 파일</span>
+                    </button>
+
+                </div>
+
+                <!-- 글과 이미지를 함께 편집 -->
+                <div class="editor-content">
+
+                    <div
+                        id="editor"
+                        contenteditable="true"
+                        role="textbox"
+                        aria-label="게시글 내용"
+                        aria-multiline="true"
+                    >{{ job.job_tip_detail | safe }}</div>
+
+                </div>
+
+                <!-- 수정한 글 내용 전달 -->
+                <input
+                    type="hidden"
+                    name="job_tip_detail"
+                    id="job_tip_detail"
+                >
+
+                <!-- 삭제되지 않은 기존 이미지 경로 전달 -->
+                <input
+                    type="hidden"
+                    name="remaining_images"
+                    id="remaining_images"
+                >
+
+            </div>
+
+        </form>
+
+    </main>
+
+    <!-- 공통 푸터 -->
+    {% include 'footer.html' %}
+
+    <script>
+        const editor = document.getElementById("editor");
+        const fileInput = document.getElementById("job_tip_attachment");
+        const writeForm = document.getElementById("writeForm");
+        const detailInput = document.getElementById("job_tip_detail");
+        const remainingInput = document.getElementById("remaining_images");
+
+        // Python에서 전달받은 기존 이미지 목록
+        const attachmentPaths = {{ attachment_paths | tojson }};
+
+        // 새로 추가한 이미지 파일 관리
+        let newImages = [];
+        let imageNumber = 0;
+
+        // 기존 본문에 남아 있는 임시 blob 이미지 제거
+        editor.querySelectorAll("img").forEach(function(img) {
+            if (img.getAttribute("src")?.startsWith("blob:")) {
+                img.remove();
+            }
+        });
+
+        // 기존 첨부 이미지를 에디터에 표시
+        attachmentPaths.forEach(function(path) {
+
+            const existing = Array.from(
+                editor.querySelectorAll("img")
+            ).some(function(img) {
+                return img.getAttribute("src") === path;
+            });
+
+            if (existing) {
+                return;
+            }
+
+            const image = document.createElement("img");
+
+            image.src = path;
+            image.alt = "기존 첨부 이미지";
+
+            editor.appendChild(image);
+        });
+
+        // 새 이미지 첨부
+        fileInput.addEventListener("change", function() {
+
+            const files = Array.from(this.files);
+
+            for (const file of files) {
+
+                if (!file.type.startsWith("image/")) {
+                    continue;
+                }
+
+                const id = String(++imageNumber);
+
+                // 새로운 이미지 목록에 저장
+                newImages.push({
+                    id: id,
+                    file: file
+                });
+
+                const image = document.createElement("img");
+                const imageURL = URL.createObjectURL(file);
+
+                image.src = imageURL;
+                image.alt = file.name;
+                image.dataset.newImageId = id;
+
+                image.addEventListener("load", function() {
+                    URL.revokeObjectURL(imageURL);
+                }, { once: true });
+
+                // 에디터 안에 이미지 표시
+                editor.appendChild(image);
+            }
+
+            // 다음 이미지 선택을 위해 초기화
+            fileInput.value = "";
+        });
+
+        // 수정 완료 버튼 클릭
+        writeForm.addEventListener("submit", function(event) {
+
+            // 현재 남아 있는 기존 이미지 경로 확인
+            const remainingImages = Array.from(
+                editor.querySelectorAll("img")
+            )
+            .map(function(img) {
+                return img.getAttribute("src");
+            })
+            .filter(function(src) {
+                return attachmentPaths.includes(src);
+            });
+
+            // 삭제되지 않은 이미지 경로를 Python으로 전달
+            remainingInput.value = JSON.stringify(
+                [...new Set(remainingImages)]
+            );
+
+            // 삭제되지 않은 새 이미지만 업로드
+            const dataTransfer = new DataTransfer();
+
+          newImages.forEach(function(item) {
+            if (editor.querySelector(`img[data-new-image-id="${item.id}"]`)) {
+                dataTransfer.items.add(item.file);
+                }
+            });
+
+            fileInput.files = dataTransfer.files;
+
+            // 본문 검사
+            if (
+                editor.textContent.trim() === "" &&
+                editor.querySelectorAll("img").length === 0
+            ) {
+                event.preventDefault();
+                alert("내용을 입력해주세요.");
+                return;
+            }
+
+            // DB에 저장할 본문 복사
+            const editorCopy = editor.cloneNode(true);
+
+            // 임시 blob 이미지는 본문에서 제거
+            // 실제 파일은 별도로 Python에 업로드
+            editorCopy.querySelectorAll("img").forEach(function(img) {
+                if (img.getAttribute("src")?.startsWith("blob:")) {
+                    img.remove();
+                }
+            });
+
+            detailInput.value = editorCopy.innerHTML;
+        });
+    </script>
+
+</body>
+</html>
