@@ -1,32 +1,39 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>취업 꿀팁 상세보기</title>
 
-    <link rel="shortcut icon" href="/static/images/favicon.ico">
-    <link rel="stylesheet" href="/assets/recult-read.css">
-    <link rel="stylesheet" href="/assets/header.css">
-    <link rel="stylesheet" href="/assets/footer.css">
-    <link rel="stylesheet" href="../assets/comment.css">
-    <!-- FontAwesome (프로필 아이콘 등을 위해 사용) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="/static/images/favicon.ico" />
+    <link rel="stylesheet" href="/assets/recult-read.css" />
+    <link rel="stylesheet" href="/assets/header.css" />
+    <link rel="stylesheet" href="/assets/footer.css" />
+    <link rel="stylesheet" href="/assets/comment.css" />
 
-<style>
-    .jobtip-content {
-        min-height: 250px;
-        padding: 20px;
-        overflow-wrap: anywhere;
-        line-height: 1.8;
-    }
+    <!-- FontAwesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
-    .jobtip-content img {
-        max-width: 100%;
-        height: auto;
-    }
-</style>
+    <style>
+        .jobtip-content {
+            min-height: 250px;
+            padding: 20px;
+            overflow-wrap: anywhere;
+            line-height: 1.8;
+        }
+
+        .jobtip-content img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
+
 <body>
 
     <!-- 상단 헤더 -->
@@ -37,23 +44,35 @@
 
         <!-- 취업 꿀팁 제목 -->
         <div class="job-title-area">
+
             <h1>{{ job.job_tip_title }}</h1>
-            <span class="company-name">취업 꿀팁</span>
+
+            <span class="company-name">
+                취업 꿀팁
+            </span>
+
         </div>
 
         <!-- 게시글 정보 -->
         <div class="info-box top-box">
 
+            <!-- 글번호 -->
             <div class="info-item">
                 <span class="label">글번호</span>
-                <span class="value">{{ job.job_tip_no }}</span>
+                <span class="value">
+                    {{ job.job_tip_no }}
+                </span>
             </div>
 
+            <!-- 작성자 -->
             <div class="info-item">
                 <span class="label">작성자</span>
-                <span class="value">{{ job.user_nickname }}</span>
+                <span class="value">
+                    {{ job.user_nickname }}
+                </span>
             </div>
 
+            <!-- 작성일 -->
             <div class="info-item">
                 <span class="label">작성일</span>
                 <span class="value">
@@ -71,44 +90,71 @@
             </div>
 
             <div class="jobtip-content">
+
+                <!-- 작성된 글 내용 -->
                 <div id="post-detail">
                     {{ job.job_tip_detail | safe }}
                 </div>
 
+                <!-- DB에 저장된 첨부 이미지 -->
                 {% for image in attachment_paths %}
-                <img src="{{ image }}" alt="첨부 이미지">
+
+                <img
+                    src="{{ image }}"
+                    alt="첨부 이미지"
+                />
+
                 {% endfor %}
+
             </div>
 
             <script>
                 // 이전에 저장된 임시 blob 이미지 제거
                 document.querySelectorAll('#post-detail img').forEach(function (img) {
+
                     if (img.getAttribute('src')?.startsWith('blob:')) {
                         img.remove();
                     }
+
                 });
             </script>
-            <!-- 하단 버튼 -->
+
+            <!-- =====================================
+                 하단 버튼 영역
+            ====================================== -->
             <div class="button-group">
 
-                <button type="button" class="btn btn-primary" onclick="location.href='/jobgogo/jobtip'">
+                <!-- 목록으로 -->
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="location.href='/jobgogo/jobtip'">
                     목록으로
                 </button>
 
+                <!-- 게시글 삭제 -->
+                <form
+                    action="/jobtip/{{ job.job_tip_no }}/delete"
+                    method="post"
+                    onsubmit="return confirm('정말 삭제하시겠습니까?');"
+                    style="display: inline;">
 
-                <!-- 삭제 버튼 -->
-                <form action="/jobtip/{{ job.job_tip_no }}/delete" method="post"
-                    onsubmit="return confirm('정말 삭제하시겠습니까?');" style="display: inline;">
-                    <button type="submit" class="btn btn-cancel">
+                    <button
+                        type="submit"
+                        class="btn btn-cancel">
                         삭제
                     </button>
+
                 </form>
 
             </div>
 
         </div>
 
-        <!-- 댓글 -->
+        <!-- =====================================
+             댓글 및 대댓글 영역
+        ====================================== -->
+
         {% include 'comment.html' %}
 
     </main>

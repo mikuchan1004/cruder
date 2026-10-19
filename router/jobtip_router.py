@@ -1,3 +1,4 @@
+
 import json
 import shutil
 from pathlib import Path
@@ -29,6 +30,7 @@ ALLOWED_IMAGES = {
     "image/gif": ".gif",
     "image/webp": ".webp"
 }
+
 
 def popup_error(message: str):
     import json
@@ -67,8 +69,6 @@ def jobtip(
     page_size = 10
     page_start = (page - 1) * page_size
 
-    
-
     # DB에서 게시글 목록 조회
     sql_jobtip = text('''
         SELECT
@@ -103,7 +103,7 @@ def jobtip(
 
     job_tip_list = result.mappings().fetchall()
 
-    # 검색 조건에 맞는 전체 게시글 수(*에서 게시글 번호 수를 세는걸로 소소하게 바꿨습니다.)
+    # 검색 조건에 맞는 전체 게시글 수
     sql_count = text('''
         SELECT COUNT(job_tip_no) AS job_tip_count
         FROM job_tip
@@ -125,7 +125,6 @@ def jobtip(
     # 전체 페이지 수
     total_page = (job_tip_count + page_size - 1) // page_size
 
-    # HTML 출력
     return templates.TemplateResponse(
         request=request,
         name='job-tip.html',
@@ -134,8 +133,6 @@ def jobtip(
             'keyword': keyword,
             'page': page,
             'total_page': total_page,
-
-            # 로그인 세션 유지
             'user_id': request.session.get('user_id'),
             'user_name': request.session.get('user_name'),
             'user_status_id': request.session.get('user_status_id')
@@ -148,15 +145,14 @@ def jobtip(
 # ==========================================
 @router.get('/jobtip/write')
 def jobtip_write_page(request: Request):
+    print('정상작동하니?')
     return templates.TemplateResponse(
         request=request,
         name='job-tip-write.html',
-
-    # 로그인 세션
-    context={
-        'user_id': request.session.get('user_id'),
-        'user_name': request.session.get('user_name'),
-        'user_status_id': request.session.get('user_status_id')
+        context={
+            'user_id': request.session.get('user_id'),
+            'user_name': request.session.get('user_name'),
+            'user_status_id': request.session.get('user_status_id')
         }
     )
 
@@ -172,7 +168,6 @@ def jobtipWriteData(
     job_tip_attachment: list[UploadFile] = File(default=[]),
     session: Session = Depends(get_session)
 ):
-    # 로그인 확인
     user_id = request.session.get('user_id')
 
     if not user_id:
@@ -181,7 +176,6 @@ def jobtipWriteData(
             status_code=303
         )
 
-    # 제목과 내용 확인
     if job_tip_title.strip() == '' or job_tip_detail.strip() == '':
         return RedirectResponse(
             url='/jobtip/write',
@@ -219,7 +213,6 @@ def jobtipWriteData(
         ensure_ascii=False
     )
 
-    # 글 쓴 날짜
     job_tip_date = datetime.now()
 
     # 번호 생성
@@ -280,9 +273,13 @@ def ytb():
     print('easteregg')
     return RedirectResponse(
         url='https://www.youtube.com/watch?v=Zpx83AUavn0',
-        status_code=302)
+        status_code=302
+    )
 
+
+# ==========================================
 # 글 읽기
+# ==========================================
 @router.get('/jobtip/{job_tip_no}')
 def jobtip_read(
     request: Request,
@@ -293,7 +290,7 @@ def jobtip_read(
         return popup_error("게시글이 없습니다!")
 
     job_tip_no = int(job_tip_no)
-    
+
     sql = text('''
         SELECT
             job_tip_no,
@@ -314,52 +311,76 @@ def jobtip_read(
         sql,
         {'job_tip_no': job_tip_no}
     ).mappings().first()
-    
-    # 이쪽에다가 조회수 카운트하는 함수를 추가하면 될것같습니다.
-    
-    
+
     if job is None:
-            return popup_error("게시글이 없습니다....") 
-    view_count_sql=text('''
-                update job_tip
-                set view_count=view_count+1
-                where job_tip_no=:job_tip_no         
-                        
-                        ''')
-    view_count=session.exec(
-        view_count_sql,params={
-            'job_tip_no':job_tip_no
-        }
+        return popup_error("게시글이 없습니다....")
+
+    # 조회수 증가
+    view_count_sql = text('''
+        UPDATE job_tip
+        SET view_count = view_count + 1
+        WHERE job_tip_no = :job_tip_no
+    ''')
+
+    session.exec(
+        view_count_sql,
+        params={'job_tip_no': job_tip_no}
     )
     session.commit()
-    
-    
 
     # DB에 저장된 이미지 가져오기
     attachment_paths = json.loads(
         job['job_tip_attachment'] or '[]'
     )
 
-    # 댓글 가져오기
+    # ======================================
+    # 대댓글 재귀 조회
+    # ======================================
     reple_sql = text('''
-        SELECT
-            reple_no,
-            reple,
-            parent_reple_no,
-            job_tip_no,
-            user_id,
-            user_nickname
-        FROM job_tip_comment AS jc
-        LEFT JOIN `user` AS u
-            USING (user_id)
-        WHERE job_tip_no = :job_tip_no
-        ORDER BY reple_no DESC
+        WITH RECURSIVE comment_recu AS (
+            SELECT
+                j.reple_no,
+                j.reple,
+                j.parent_reple_no,
+                j.user_id,
+                u.user_nickname,
+                j.job_tip_no,
+                1 AS level,
+                CAST(j.reple_no AS CHAR(200)) AS sort_key
+            FROM job_tip_comment j
+            JOIN user u USING(user_id)
+            WHERE j.parent_reple_no IS NULL
+            AND j.job_tip_no = :job_tip_no
+
+            UNION ALL
+
+            SELECT
+                j.reple_no,
+                j.reple,
+                j.parent_reple_no,
+                j.user_id,
+                u.user_nickname,
+                j.job_tip_no,
+                cr.level + 1 AS level,
+                CONCAT(
+                    cr.sort_key,
+                    '-',
+                    j.reple_no
+                ) AS sort_key
+            FROM job_tip_comment j
+            JOIN user u USING(user_id)
+            JOIN comment_recu cr
+                ON j.parent_reple_no = cr.reple_no
+        )
+        SELECT *
+        FROM comment_recu
+        ORDER BY sort_key
     ''')
+
     reple_list = session.execute(
         reple_sql,
         {'job_tip_no': job_tip_no}
     ).mappings().fetchall()
-
 
     return templates.TemplateResponse(
         request=request,
@@ -367,25 +388,46 @@ def jobtip_read(
         context={
             'job': job,
             'attachment_paths': attachment_paths,
-
-            'reple_list' : reple_list,
-
+            'reple_list': reple_list,
             'user_id': request.session.get('user_id'),
             'user_name': request.session.get('user_name'),
             'user_status_id': request.session.get('user_status_id')
-           
         }
     )
 
-# 댓글 달기
+
+# ==========================================
+# 댓글 및 대댓글 등록
+# ==========================================
 @router.post('/jobtip/{job_tip_no}')
 def jobtip_comment_write(
     request: Request,
     job_tip_no: int,
     reple: str = Form(),
+    parent_reple_no: int | None = Form(None),
     session: Session = Depends(get_session)
 ):
     user_id = request.session.get('user_id')
+
+    # 대댓글인 경우 부모 댓글 확인
+    if parent_reple_no is not None:
+        parent_reple = text('''
+            SELECT reple_no
+            FROM job_tip_comment
+            WHERE reple_no = :reple_no
+            AND job_tip_no = :job_tip_no
+        ''')
+
+        parent = session.exec(
+            parent_reple,
+            params={
+                'reple_no': parent_reple_no,
+                'job_tip_no': job_tip_no
+            }
+        ).first()
+
+        if not parent:
+            return popup_error("부모댓글이 없습니다.")
 
     if not user_id:
         return popup_error("로그인이 필요합니다.")
@@ -399,7 +441,7 @@ def jobtip_comment_write(
         )
         VALUES (
             :reple,
-            NULL,
+            :parent_reple_no,
             :job_tip_no,
             :user_id
         )
@@ -409,6 +451,7 @@ def jobtip_comment_write(
         sql,
         {
             'reple': reple,
+            'parent_reple_no': parent_reple_no,
             'job_tip_no': job_tip_no,
             'user_id': user_id
         }
@@ -422,7 +465,9 @@ def jobtip_comment_write(
     )
 
 
+# ==========================================
 # 댓글 삭제
+# ==========================================
 @router.post('/jobtip/{job_tip_no}/reple/del')
 def jobtip_comment_delete(
     request: Request,
@@ -463,22 +508,20 @@ def jobtip_comment_delete(
     )
 
 
-
-
-# 삭제버튼
+# ==========================================
+# 게시글 삭제
+# ==========================================
 @router.post('/jobtip/{job_tip_no}/delete')
 def jobtip_delete(
     request: Request,
     job_tip_no: int,
     session: Session = Depends(get_session)
 ):
-    # 로그인 확인
     user_id = request.session.get('user_id')
 
     if not user_id:
         return popup_error("로그인이 필요합니다.")
 
-    # 게시글 존재 여부 및 작성자 확인
     sql_check = text('''
         SELECT user_id
         FROM job_tip
@@ -495,13 +538,11 @@ def jobtip_delete(
         session.rollback()
         return popup_error("게시글이 없습니다")
 
-    # 본인이 작성한 게시글인지 확인
     if job['user_id'] != user_id:
         session.rollback()
         return popup_error("본인이 작성한 게시글만 지울 수 있습니다.")
 
     try:
-        # 게시글에 연결된 댓글 전체 삭제
         sql_delete_reple = text('''
             DELETE FROM job_tip_comment
             WHERE job_tip_no = :job_tip_no
@@ -512,7 +553,6 @@ def jobtip_delete(
             {'job_tip_no': job_tip_no}
         )
 
-        # 게시글 삭제
         sql_delete_jobtip = text('''
             DELETE FROM job_tip
             WHERE job_tip_no = :job_tip_no
@@ -531,16 +571,13 @@ def jobtip_delete(
             session.rollback()
             return popup_error("삭제 실패.")
 
-        # 댓글과 게시글 삭제를 DB에 확정
         session.commit()
 
     except Exception:
         session.rollback()
         raise
 
-    # 4. 게시글 목록으로 이동
     return RedirectResponse(
         url='/jobgogo/jobtip',
         status_code=303
     )
-
