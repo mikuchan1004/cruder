@@ -601,7 +601,7 @@ def delete_post(
         else:
             sql_comment = text ('''
                 delete from job_tip_comment 
-                where job_tip_no = :post_number
+                where job_tip_no = :post_number and parent_reple_no is not null 
             ''')
             sql_post = text('''
                 delete from job_tip
