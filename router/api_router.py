@@ -398,7 +398,7 @@ if not GEMINI_API_KEY :
 
 gemini=genai.Client(api_key=GEMINI_API_KEY)
 
-# 지원하는 임베딩 확인용
+# 지원하는 임베딩 모델 확인용
 for model in gemini.models.list():
     if "embed" in model.name:
         print("지원되는 임베딩 모델:", model.name)
