@@ -61,7 +61,7 @@ def fetch_jobs():
         # JSON 형태의 응답을 원한다고 서버에 알림
         'accept': 'application/json',
         # ALIO Swagger에서 사용하는 헤더
-        'swaggerType': 'ALIO 채용정보 가져오기'
+        'swaggerType': 'Y'
     }
 
     # ALIO Open API에 POST 방식으로 채용정보 요청
@@ -92,6 +92,9 @@ def save_jobs_to_es(jobs):
     actions = []
     success_count = 0
 
+    print("ES 서버 연결 확인 시작", flush=True)
+    print("ES 연결 결과:", es.ping(), flush=True)
+
     for job in jobs:
         recrut_pblnt_sn = job.get('recrutPblntSn')
 
@@ -100,7 +103,8 @@ def save_jobs_to_es(jobs):
 
         doc_id = str(recrut_pblnt_sn)
 
-        # 이미 저장된 공고 확인
+        print(f"{doc_id}: ES 중복 확인 시작", flush=True)
+
         if es.exists(index='alio_jobs', id=doc_id):
             existing = es.get(
                 index='alio_jobs',
@@ -108,11 +112,13 @@ def save_jobs_to_es(jobs):
                 source_includes=['embedding', 'content']
             )['_source']
 
-            # 기존 임베딩이 있는지 확인
             if existing.get('embedding'):
                 print(f'{doc_id}: 이미 임베딩된 공고입니다.')
                 continue
 
+        print(f"{doc_id}: 임베딩 생성 시작", flush=True)
+
+        # 이하 기존 코드 그대로 유지
         title = job.get('recrutPbancTtl') or ''
         inst_name = job.get('instNm') or ''
         region = job.get('workRgnNmLst') or ''
@@ -303,17 +309,24 @@ def jobs_save_db(jobs,session):
 
 # DB에 채용 공고를 저장한다.
 @router.post('/jobs/sync')
-def insert_data(session: Session = Depends(get_session)): 
+def insert_data(session: Session = Depends(get_session)):
+
+    print("1. ALIO 호출 시작")
+
     jobs = fetch_jobs()
-    jobs_save_db(jobs,session)
-    es_count = save_jobs_to_es(jobs)
+    print("2. ALIO 호출 성공", len(jobs))
 
-    print('저장 성공이니!')
+    jobs_save_db(jobs, session)
+    print("3. MariaDB 저장 성공")
+    #  저장 테스트 소량으로 진행
+    es_count = save_jobs_to_es(jobs[:3])
+    print("4. Elasticsearch 저장 성공")
 
-    return{'msg':'채용공고 저장 성공!',
-           'count':len(jobs),
-           'elasticsearch_count': es_count
-        }
+    return {
+        'msg': '채용공고 저장 성공!',
+        'count': len(jobs),
+        'elasticsearch_count': es_count
+    }
 
 # 필터링 테스트입니다. 
 @router.post('/jobs/filter_jobs')
