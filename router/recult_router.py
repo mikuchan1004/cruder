@@ -157,3 +157,18 @@ def recult(
             'user_status_id': request.session.get('user_status_id')
         }
     )
+
+@router.get('/es/health')
+def health() :
+    connected = es.ping()
+    print('엘라스틱서치 연결 상태 : ' , connected)
+    return {
+        'connected' : connected,
+        'msg' : "Elasticsearch 연결 " + "성공"  if connected else "실패"
+    }
+
+from elasticsearch import Elasticsearch
+
+es = Elasticsearch(
+    'http://192.168.0.46:9200' # DB 연결 주소
+)
