@@ -1,218 +1,334 @@
-/* ==================================
-   기본 리셋 및 폰트 설정
-=================================== */
+
+/* ========================================
+   공지사항 게시판 - notice.css
+======================================== */
+
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    color: #212529;
-    background-color: #F8F9FA;
+    margin: 0;
+    background: #f8f9fc;
+    color: #252c3a;
+    font-family: "Pretendard", "Noto Sans KR",
+                 "Malgun Gothic", sans-serif;
 }
 
-/* 임시 헤더 & 푸터 스타일 */
-.wireframe-header, .wireframe-footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 1.05rem;
-    background-color: #ffffff;
-    border-bottom: 1px solid #E5E7EB;
-    color: #4B5563;
-}
-
-.wireframe-footer {
-    border-top: 1px solid #E5E7EB;
-    border-bottom: none;
-    margin-top: auto; 
-}
-
-/* 메인 래퍼 */
+/* 메인 영역 */
 .main-container {
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 40px 20px;
+    width: min(1180px, calc(100% - 48px));
+    min-height: 650px;
+    margin: 50px auto 90px;
 }
 
-/* 검색 및 글쓰기 영역 */
+/* ========================================
+   검색 및 글쓰기
+======================================== */
+
 .board-controls {
     display: flex;
-    justify-content: center;
-    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
     margin-bottom: 24px;
 }
 
 .search-box {
     display: flex;
     align-items: center;
-    background-color: #ffffff;
-    border: 1px solid #D1D5DB;
-    border-radius: 8px;
-    padding: 12px 16px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
-    transition: border-color 0.2s;
+    width: 370px;
+    max-width: 100%;
+    height: 48px;
+    padding: 0 17px;
+    background: #fff;
+    border: 1px solid #dfe3eb;
+    border-radius: 9px;
+    transition: border-color .2s, box-shadow .2s;
 }
 
 .search-box:focus-within {
-    border-color: #6B46C1;
+    border-color: #7050c4;
+    box-shadow: 0 0 0 3px rgba(112, 80, 196, .08);
 }
 
 .search-icon {
-    margin-right: 10px;
-    font-size: 1rem;
-    color: #9CA3AF;
+    margin-right: 11px;
+    font-size: 17px;
+    opacity: .65;
 }
 
 .search-input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
     border: none;
     outline: none;
-    width: 100%;
-    font-size: 1rem;
     background: transparent;
+    color: #263043;
+    font-size: 14px;
 }
 
 .search-input::placeholder {
-    color: #9CA3AF;
+    color: #a0a7b5;
 }
 
+/* 글쓰기 버튼 */
 .btn-write {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: #6B46C1; 
-    color: #fff;
+    height: 46px;
+    padding: 0 25px;
     border: none;
-    padding: 10px 24px;
-    border-radius: 8px; 
-    font-size: 1rem;
+    border-radius: 8px;
+    background: #6845ba;
+    color: #fff;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(107, 70, 193, 0.2);
+    transition: background .2s, transform .2s;
 }
 
 .btn-write:hover {
-    background-color: #5533A3;
-    transform: translateY(-50%) translateY(-1px);
+    background: #55359e;
+    transform: translateY(-1px);
 }
 
-/* 게시판 테이블 스타일 (CSS Grid 적용) */
+/* ========================================
+   게시판 테이블
+======================================== */
+
 .board-table {
-    background-color: #ffffff;
-    border: 1px solid #E5E7EB;
-    border-radius: 12px;
     overflow: hidden;
-    min-height: 400px;
-    margin-bottom: 40px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    background: #fff;
+    border: 1px solid #e5e8ef;
+    border-top: 2px solid #454b5c;
+    border-radius: 8px;
+    box-shadow: 0 3px 14px rgba(30, 40, 70, .025);
 }
 
-.board-header, .board-row {
-    display: grid;
-    grid-template-columns: 1fr 4fr 1.5fr 2fr 1fr;
-    align-items: center;
-    text-align: center;
-}
-
-.board-header {
-    font-weight: 600;
-    background-color: #F9FAFB;
-    border-bottom: 1px solid #E5E7EB;
-    padding: 16px 10px;
-    font-size: 0.95rem;
-    color: #374151;
-}
-
+/* 테이블 공통 그리드 */
+.board-header,
 .board-row {
-    border-bottom: 1px solid #F3F4F6;
-    padding: 18px 10px;
-    font-size: 1rem;
-    color: #4B5563;
-    transition: background-color 0.15s ease;
+    display: grid;
+    grid-template-columns:
+        90px
+        minmax(0, 1fr)
+        150px
+        150px
+        100px;
+    align-items: center;
+    column-gap: 10px;
 }
 
-.board-row:hover {
-    background-color: #FAFAFA;
+/* 테이블 헤더 */
+.board-header {
+    min-height: 58px;
+    background: #f5f6fa;
+    border-bottom: 1px solid #e3e6ec;
+    color: #4a5262;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* 게시글 */
+.board-row {
+    min-height: 72px;
+    border-bottom: 1px solid #edf0f4;
+    background: #fff;
+    font-size: 14px;
+    transition: background .18s;
 }
 
 .board-row:last-child {
     border-bottom: none;
 }
 
-.board-row .col-title {
-    text-align: left;
-    padding-left: 20px;
-    color: #111;
-    font-weight: 500;
+.board-row:hover {
+    background: #faf9ff;
 }
 
-/* 페이지네이션 스타일 */
+/* 번호 */
+.col-num {
+    text-align: center;
+    color: #818a99;
+    font-size: 13px;
+}
+
+/* 제목 */
+.col-title {
+    min-width: 0;
+    padding: 0 16px;
+    text-align: left;
+}
+
+.board-header .col-title {
+    text-align: left;
+}
+
+.board-row .col-title a {
+    display: block;
+    overflow: hidden;
+    color: #252c3a;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.6;
+    transition: color .2s;
+}
+
+.board-row .col-title a:visited {
+    color: #252c3a;
+}
+
+.board-row .col-title a:hover {
+    color: #6845ba;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* 글쓴이 */
+.col-author {
+    overflow: hidden;
+    padding: 0 6px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #646d7d;
+}
+
+/* 날짜 */
+.col-date {
+    text-align: center;
+    color: #858d9c;
+    font-size: 13px;
+}
+
+/* 조회수 */
+.col-views {
+    text-align: center;
+    color: #858d9c;
+    font-size: 13px;
+}
+
+/* 내용이 없을 때 */
+.board-row:has(.col-title:only-child) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 190px;
+}
+
+.board-row:has(.col-title:only-child) .col-title {
+    text-align: center;
+    color: #9aa2b0;
+}
+
+/* ========================================
+   페이지네이션
+======================================== */
+
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 36px;
 }
 
 .page-btn {
-    width: 36px;
-    height: 36px;
-    border: 1px solid #D1D5DB;
-    background-color: #fff;
-    color: #374151;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    border-radius: 6px;
-    transition: all 0.2s;
+    width: 38px;
+    height: 38px;
+    border: 1px solid #e4e7ed;
+    border-radius: 7px;
+    background: #fff;
+    color: #606979;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .2s;
 }
 
 .page-btn:hover {
-    border-color: #6B46C1;
-    color: #6B46C1;
+    border-color: #6845ba;
+    color: #6845ba;
+    background: #faf8ff;
 }
 
 .page-btn.active {
-    background-color: #6B46C1;
-    color: #fff; 
-    border-color: #6B46C1;
+    border-color: #6845ba;
+    background: #6845ba;
+    color: #fff;
+    font-weight: 700;
+}
+
+.page-btn.arrow {
+    font-size: 11px;
 }
 
 .page-text {
-    font-size: 1rem;
-    margin-left: 8px;
-    color: #4B5563;
+    display: none;
 }
 
-/* ==================================
-   모바일 반응형 웹 설정 (미디어 쿼리)
-=================================== */
-@media (max-width: 768px) {
-    .board-controls {
-        flex-direction: column;
-        gap: 15px;
+/* ========================================
+   태블릿
+======================================== */
+
+@media (max-width: 900px) {
+    .main-container {
+        width: calc(100% - 32px);
+        margin-top: 35px;
     }
 
-    .btn-write {
-        position: static; 
-        transform: none;
-        align-self: flex-end; 
+    .board-header,
+    .board-row {
+        grid-template-columns:
+            60px
+            minmax(0, 1fr)
+            110px
+            110px;
+    }
+
+    .col-views {
+        display: none;
+    }
+
+    .col-title {
+        padding: 0 10px;
+    }
+}
+
+/* ========================================
+   모바일
+======================================== */
+
+@media (max-width: 600px) {
+    .main-container {
+        width: calc(100% - 24px);
+        margin: 25px auto 60px;
+        min-height: 400px;
+    }
+
+    .board-controls {
+        gap: 10px;
+        margin-bottom: 18px;
     }
 
     .search-box {
-        max-width: 100%;
+        flex: 1;
+        width: auto;
+        height: 42px;
+        padding: 0 11px;
+    }
+
+    .btn-write {
+        height: 42px;
+        padding: 0 14px;
+        white-space: nowrap;
+        font-size: 13px;
     }
 
     .board-header {
@@ -220,42 +336,49 @@ body {
     }
 
     .board-table {
-        border: none;
-        min-height: auto;
-        background-color: transparent;
-        box-shadow: none;
+        border-top: 2px solid #454b5c;
     }
 
     .board-row {
-        display: flex;
-        flex-direction: column;
-        text-align: left;
-        background-color: #ffffff;
-        border: 1px solid #E5E7EB;
-        margin-bottom: 16px;
-        padding: 20px;
-        gap: 12px;
-        border-radius: 12px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        row-gap: 8px;
+        min-height: 88px;
+        padding: 18px 15px;
     }
 
-    .board-row div {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .board-row div::before {
-        content: attr(data-label);
-        font-weight: 600;
-        width: 80px; 
-        display: inline-block;
-        color: #374151;
+    .board-row .col-num {
+        display: none;
     }
 
     .board-row .col-title {
-        padding-left: 0;
+        grid-column: 1 / -1;
+        padding: 0;
+    }
+
+    .board-row .col-title a {
+        font-size: 14px;
         font-weight: 600;
-        font-size: 1.05rem;
+    }
+
+    .board-row .col-author {
+        padding: 0;
+        text-align: left;
+        font-size: 12px;
+    }
+
+    .board-row .col-date {
+        font-size: 12px;
+        text-align: right;
+    }
+
+    .pagination {
+        margin-top: 28px;
+    }
+
+    .page-btn {
+        width: 34px;
+        height: 34px;
     }
 }

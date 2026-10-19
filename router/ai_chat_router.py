@@ -54,6 +54,6 @@ def chat_result(request: Request, question: str = Form(...)):
         {
             "answer": answer,
             "jobs": jobs,
-            # "bookmarked_job_ids": []
+            "bookmarked_job_ids": []
         }
     )
