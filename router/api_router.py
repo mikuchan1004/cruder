@@ -389,7 +389,19 @@ def create_embed_index():
     
 ##################### 제미나이 사용 할곳
 ######################## 
+
+
+
+#키가 제대로 들어왔는지 확인용
+if not GEMINI_API_KEY : 
+    print ('GEMINI_API_KEY가 비어있습니다. config.py나 .env 설정을 확인하세요.')
+
 gemini=genai.Client(api_key=GEMINI_API_KEY)
+
+# 지원하는 임베딩 확인용
+for model in gemini.models.list():
+    if "embed" in model.name:
+        print("지원되는 임베딩 모델:", model.name)
 
 # gemini에서 사용할 타입들
 from google.genai import types
@@ -401,7 +413,7 @@ def get_embedding_with_llm(title, content) :
         content: {content}
             '''
     result = gemini.models.embed_content(
-        model='gemini-embedding-2',
+        model='models/gemini-embedding-2',
 
         # 텍스트를 임베딩한다
         contents=[
@@ -434,7 +446,7 @@ def get_keyword_embedding_with_llm(keyword) :
         query: {keyword}
 '''
     result = gemini.models.embed_content(
-        model='gemini-embedding-2',
+        model='models/gemini-embedding-2',
 
         # 텍스트를 임베딩한다
         contents=[
