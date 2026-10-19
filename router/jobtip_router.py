@@ -580,3 +580,205 @@ def jobtip_delete(
         url='/jobgogo/jobtip',
         status_code=303
     )
+    
+    
+    ############################### 수정하는곳입니다..
+    
+    
+    # 수정 ㅂㅌ
+# 수정 페이지 접속 라우팅
+@router.get('/jobtip/{job_tip_no}/update')
+def jobtip_update_page(
+    request: Request,
+    job_tip_no: int,
+    session: Session = Depends(get_session)
+):
+
+
+    
+    user_id = request.session.get('user_id')
+
+    if not user_id:
+        return RedirectResponse(
+            url='/jobgogo/login',
+            status_code=303
+        )
+
+    sql = text('''
+        SELECT
+            job_tip_no,
+            job_tip_title,
+            job_tip_detail,
+            job_tip_attachment,
+            user_id
+        FROM job_tip
+        WHERE job_tip_no = :job_tip_no
+    ''')
+
+    job = session.execute(
+        sql,
+        {'job_tip_no': job_tip_no}
+    ).mappings().first()
+
+    if job is None:
+        return popup_error("게시글이 없습니다.")
+
+    if job['user_id'] != user_id:
+        return popup_error("본인이 작성한 게시글만 수정할 수 있습니다.")
+
+    # 기존 첨부 이미지 경로 불러오기
+    attachment_paths = json.loads(
+        job['job_tip_attachment'] or '[]'
+    )
+
+    return templates.TemplateResponse(
+        request=request,
+        name='job-tip-update.html',
+        context={
+            'job': job,
+            'attachment_paths': attachment_paths,
+            'user_id': user_id,
+        'user_id': request.session.get('user_id'),
+        'user_name': request.session.get('user_name'),
+        'user_status_id': request.session.get('user_status_id')
+        }
+    )
+
+
+
+
+
+# 수정 끝
+
+
+@router.post('/jobtip/{job_tip_no}/update')
+def jobtip_update_save(
+    request: Request,
+    job_tip_no: int,
+    job_tip_title: str = Form(),
+    job_tip_detail: str = Form(),
+    remaining_images: str = Form(),
+    job_tip_attachment: list[UploadFile] = File(default=[]),
+    session: Session = Depends(get_session)
+):
+    # 로그인 확인
+    user_id = request.session.get('user_id')
+
+    if not user_id:
+        return RedirectResponse(
+            url='/jobgogo/login',
+            status_code=303
+        )
+
+    # 제목과 내용 확인
+    if not job_tip_title.strip() or not job_tip_detail.strip():
+        return popup_error("제목과 내용을 입력해주세요.")
+
+    # 수정할 게시글 조회
+    sql_check = text('''
+        SELECT
+            job_tip_no,
+            job_tip_attachment,
+            user_id
+        FROM job_tip
+        WHERE job_tip_no = :job_tip_no
+    ''')
+
+    job = session.execute(
+        sql_check,
+        {'job_tip_no': job_tip_no}
+    ).mappings().first()
+
+    if job is None:
+        return popup_error("게시글이 없습니다.")
+
+    # 작성자 본인 확인
+    if job['user_id'] != user_id:
+        return popup_error("본인이 작성한 게시글만 수정할 수 있습니다.")
+
+    # DB에 저장된 기존 이미지 목록
+    old_images = json.loads(
+        job['job_tip_attachment'] or '[]'
+    )
+
+    # HTML에서 전달받은 남겨둘 이미지 목록
+    try:
+        remaining_paths = json.loads(remaining_images)
+    except (json.JSONDecodeError, TypeError):
+        return popup_error("이미지 정보가 올바르지 않습니다.")
+
+    if (
+        not isinstance(remaining_paths, list)
+        or any(not isinstance(p, str) for p in remaining_paths)
+    ):
+        return popup_error("이미지 정보가 올바르지 않습니다.")
+
+    # 기존 게시글에 속한 이미지만 유지
+    if not set(remaining_paths).issubset(set(old_images)):
+        return popup_error("이미지 정보가 올바르지 않습니다.")
+
+    attachment_paths = [
+        path for path in old_images
+        if path in remaining_paths
+    ]
+
+    # 새 이미지 파일 형식 확인
+    for file in job_tip_attachment:
+        if not file.filename:
+            continue
+
+        if file.content_type not in ALLOWED_IMAGES:
+            return popup_error("지원하지 않는 이미지 형식입니다.")
+
+    # 새 이미지 저장
+    for file in job_tip_attachment:
+        if not file.filename:
+            continue
+
+        extension = ALLOWED_IMAGES[file.content_type]
+        filename = f"{uuid4().hex}{extension}"
+        file_path = UPLOAD_DIR / filename
+
+        with open(file_path, 'wb') as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
+        attachment_paths.append(
+            f"/assets/uploads/{filename}"
+        )
+
+    # 이미지 목록을 JSON으로 변환
+    attachment_value = json.dumps(
+        attachment_paths,
+        ensure_ascii=False
+    )
+
+    # 게시글 DB 수정
+    sql_update = text('''
+        UPDATE job_tip
+        SET
+            job_tip_title = :job_tip_title,
+            job_tip_detail = :job_tip_detail,
+            job_tip_attachment = :job_tip_attachment
+        WHERE
+            job_tip_no = :job_tip_no
+            AND user_id = :user_id
+    ''')
+
+    session.execute(
+        sql_update,
+        {
+            'job_tip_title': job_tip_title,
+            'job_tip_detail': job_tip_detail,
+            'job_tip_attachment': attachment_value,
+            'job_tip_no': job_tip_no,
+            'user_id': user_id
+        }
+    )
+
+    # 변경사항 확정
+    session.commit()
+
+    return RedirectResponse(
+        url=f'/jobtip/{job_tip_no}',
+        status_code=303
+    )
