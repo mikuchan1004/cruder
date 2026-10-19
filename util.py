@@ -19,6 +19,15 @@ ELASTIC_ENDPOINT = os.getenv("ELASTIC_ENDPOINT")
 es = Elasticsearch(
     ELASTIC_ENDPOINT
 )
+
+# Gemini API 키 확인
+# print("Gemini 키 존재:", bool(GEMINI_API_KEY))
+# print("Gemini 키 길이:", len(GEMINI_API_KEY or ""))
+
+# print("Gemini 키 형식:",
+#       "AQ 형식" if GEMINI_API_KEY.startswith("AQ.")
+#       else "기타 형식")
+
 # 제미나이 연결
 gemini=genai.Client(api_key=GEMINI_API_KEY)
 

@@ -1,156 +1,149 @@
-/* ==================================
-   Footer 전체 설정
-=================================== */
+
+/* ==============================
+   Footer 전체
+============================== */
 .site-footer {
     width: 100%;
-    background-color: #F8F9FA;
-    border-top: 1px solid #E5E7EB;
-    padding: 35px 20px 25px;
-    color: #212529;
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    background: #f8f9fb;
+    border-top: 1px solid #e2e5e9;
+    padding: 25px 30px;
     box-sizing: border-box;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
 }
 
-/* 푸터 내부 전체 그리드 (2열) */
-.site-footer .footer-content {
-    width: 100%;
-    max-width: 1100px;
+/* ==============================
+   내부 레이아웃
+============================== */
+.footer-content {
+    max-width: 1200px;
     margin: 0 auto;
+
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    align-items: center; /* 로고와 내용의 중앙 밸런스 */
+    gap: 60px;
+    align-items: start;
 }
 
-/* ==================================
-   CRUD 소개 / 로고 영역 (좌측)
-=================================== */
-.site-footer .intro-section {
-    min-width: 0;
-    text-align: left;
-}
-
-.site-footer .main-title {
-    color: #6B46C1;
-    font-size: 24px;
-    font-weight: 800;
-    margin: 0 0 12px;
-    letter-spacing: -0.5px;
-    line-height: 1.3;
-}
-
-.site-footer .intro-box {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    margin: 0;
-    box-shadow: none;
-}
-
-.site-footer .intro-box p {
-    font-size: 13px;
-    color: #6B7280;
-    line-height: 1.8;
-    margin: 0;
-    word-break: keep-all;
-}
-
-/* ★ 푸터 로고 / 캐릭터 이미지 (중간 적정 크기 유지) */
-.site-footer .intro-section img,
-.site-footer .footer-logo img {
-    display: block;
-    width: auto;
-    height: 75px;            /* 기존 210px은 너무 컸고 18px은 너무 작았으니 75px로 균형 */
-    max-width: 220px;
-    max-height: 90px;
-    object-fit: contain;
-    margin-bottom: 12px;
-    transition: transform 0.25s ease;
-}
-
-/* ==================================
-   일대일 문의 영역 (우측)
-=================================== */
-.site-footer .contact-section {
-    min-width: 0;
-    text-align: left;
-}
-
-.site-footer .section-title {
-    color: #212529;
-    font-size: 17px;
-    font-weight: 700;
-    margin: 0 0 14px;
-    line-height: 1.3;
-}
-
-.site-footer .contact-info {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    margin: 0;
-    box-shadow: none;
+/* ==============================
+   왼쪽 CRUD 소개
+============================== */
+.intro-section {
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    align-items: flex-start;
+    gap: 0;
 }
 
-.site-footer .contact-info p {
-    font-size: 13px;
-    color: #6B7280;
-    line-height: 1.6;
-    margin: 0;
-    word-break: keep-all;
-    display: flex;
-    align-items: center; /* 아이콘과 텍스트 중앙 맞춤 */
-    gap: 8px;           /* 아이콘과 글자 사이 간격 */
-}
-
-/* ★ 텍스트 옆에 들어가는 작은 아이콘 이미지들만 선택 지정 */
-.site-footer .contact-info p img,
-.site-footer .contact-info img,
-.site-footer .footer-icon {
-    width: 16px !important;
-    height: 16px !important;
-    max-width: 16px !important;
-    max-height: 16px !important;
+#secret-logo {
+    width: 48px;
+    height: 48px;
     object-fit: contain;
-    flex-shrink: 0;
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0;
+    margin: 0 0 8px;
 }
 
-/* ==================================
-   모바일 반응형 웹 설정
-=================================== */
+.main-title {
+    font-size: 21px;
+    font-weight: 800;
+    color: #6545c1;
+    margin: 0 0 7px;
+    line-height: 1.3;
+}
+
+.intro-box {
+    max-width: 500px;
+}
+
+.intro-box p {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #505968;
+    word-break: keep-all;
+}
+
+/* ==============================
+   오른쪽 문의 정보
+============================== */
+.contact-section {
+    padding: 0;
+}
+
+.section-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    line-height: 1.4;
+}
+
+.section-title a {
+    color: #6545c1;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.section-title a:hover {
+    color: #49309b;
+    text-decoration: underline;
+}
+
+/* ==============================
+   프로젝트 정보
+============================== */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.contact-info p {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.55;
+    color: #505968;
+    word-break: keep-all;
+}
+
+/* 프로젝트 안내 문구 */
+.contact-info .project-notice {
+    margin-top: 7px;
+    padding-top: 8px;
+    border-top: 1px solid #e2e5e9;
+
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: #697382;
+}
+
+/* ==============================
+   모바일 반응형
+============================== */
 @media (max-width: 768px) {
     .site-footer {
-        padding: 25px 20px;
+        padding: 22px 20px;
     }
 
-    .site-footer .footer-content {
+    .footer-content {
         grid-template-columns: 1fr;
-        gap: 25px;
+        gap: 20px;
     }
 
-    .site-footer .main-title {
-        font-size: 22px;
-        margin-bottom: 10px;
+    #secret-logo {
+        width: 42px;
+        height: 42px;
     }
 
-    .site-footer .section-title {
-        font-size: 16px;
-        margin-bottom: 10px;
+    .main-title {
+        font-size: 19px;
     }
 
-    .site-footer .intro-section img,
-    .site-footer .footer-logo img {
-        height: 60px; /* 모바일에서는 살짝 아담하게 축소 */
-    }
-
-    .site-footer .intro-box p,
-    .site-footer .contact-info p {
+    .intro-box p,
+    .contact-info p {
         font-size: 12px;
+    }
+
+    .contact-section {
+        border-top: 1px solid #e2e5e9;
+        padding-top: 15px;
     }
 }
