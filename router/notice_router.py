@@ -48,7 +48,9 @@ def commNotice(
             notice_title,
             notice_detail,
             notice_date,
-            user_id
+            user_id,
+            view_count
+        
         FROM notice
         WHERE (
             :keyword = ''
@@ -102,6 +104,9 @@ def commNotice(
         adminchk,
         {"user_id": user_id}
     ).scalar_one_or_none()
+    
+    
+    
 
     return templates.TemplateResponse(
         request=request,
@@ -135,6 +140,7 @@ def notice_detail(
             notice_detail,
             notice_date,
             user_id
+    
         FROM notice
         WHERE notice_id = :notice_id
     ''')
@@ -143,6 +149,16 @@ def notice_detail(
         sql,
         {'notice_id': notice_id}
     ).mappings().first()
+    
+    # 조회수 증가로직
+    view_count_sql=text('''
+                      update notice
+                      set view_count=view_count+1
+                      where notice_id=:notice_id       
+                            ''')
+    session.exec(view_count_sql,params={
+            'notice_id':notice_id
+        })
 
     if notice is None:
         return popup_error("해당 게시글이 존재하지 않습니다")
