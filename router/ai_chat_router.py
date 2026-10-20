@@ -55,7 +55,7 @@ def ai_chat(request:Request,
     return templates.TemplateResponse(
         request=request,
         name='ai-chat.html',
-        context={}  # 템플릿으로 보낼 추가 데이터가 없다면 빈 딕셔너리로 두시면 됩니다.
+        context={}  
     )
 
  
@@ -74,6 +74,9 @@ def chat_result(
 ):
     # 1. 세션에서 user_id를 꺼내옴
     user_id = request.session.get("user_id")
+
+    
+    
 
     
     # 혹시 모를 공백제거
@@ -175,6 +178,10 @@ def chat_result(
         "question": question,
         "answer": answer,
         "jobs": jobs,
-        "bookmarked_job_ids": []
+        "bookmarked_job_ids": [],
+        'user_name': request.session.get('user_name'),
+        'user_status_id': request.session.get('user_status_id')
+        
+        
     }
 )
