@@ -319,7 +319,7 @@ def insert_data(session: Session = Depends(get_session)):
     jobs_save_db(jobs, session)
     print("3. MariaDB 저장 성공")
     #  저장 테스트 소량으로 진행
-    es_count = save_jobs_to_es(jobs[:3])
+    es_count = save_jobs_to_es(jobs)
     print("4. Elasticsearch 저장 성공")
 
     return {
@@ -477,10 +477,21 @@ def get_keyword_embedding_with_llm(keyword) :
 
 @router.get('/embed/search/hybrid')
 def hybrid(keyword) :
+    
+    print("7. hybrid 함수 진입", flush=True)
+
     # 라이센스가 없어서(trial에 있는데 클라우드 14일 도커 30일 제한)
     # rrf 직접 구현
     vector_keyword = get_keyword_embedding_with_llm(keyword)
+    print("8. Gemini 임베딩 성공", flush=True)
+
     print('2. 질문 임베딩 성공', len(vector_keyword))
+    
+    print("9. Elasticsearch 연결 확인 시작", flush=True)
+    print("10. ES 주소:", ELASTIC_ENDPOINT, flush=True)
+    print("11. ES 연결 상태:", es.ping(), flush=True)
+    
+    print("12. BM25 검색 시작", flush=True)
 
     # BM25 검색
     text_response = es.search(
@@ -499,6 +510,8 @@ def hybrid(keyword) :
         },
         size=50
     )
+    
+    print("13. BM25 검색 성공", flush=True)
     print('3 BM25 성공')
 
     # 벡터 검색
@@ -580,36 +593,116 @@ def ask_rag(question:str=' '):
         job = result['_source']
 
         contexts.append(f'''
-        [검색 결과:{idx}]
-        공고번호: {job.get('recrutPblntSn', '')}
-        제목: {job.get('recrutPbancTtl', '')}
-        기관명: {job.get('instNm', '')}
-        근무지역: {job.get('workRgnNmLst', '')}
-        채용구분: {job.get('recrutSeNm', '')}
-        채용인원: {job.get('recrutNope', '')}
-        공고시작일: {job.get('pbancBgngYmd', '')}
-        공고종료일: {job.get('pbancEndYmd', '')}
-        원문링크: {job.get('srcUrl', '')}
-        ''')
+         [검색 결과:{idx}]
+            공고번호: {job.get('recrutPblntSn', '')}
+            제목: {job.get('recrutPbancTtl', '')}
+            기관명: {job.get('instNm', '')}
+            근무지역: {job.get('workRgnNmLst', '')}
+            채용구분: {job.get('recrutSeNm', '')}
+            채용인원: {job.get('recrutNope', '')}
+            직무분야: {job.get('ncsCdNmLst', '')}
+            고용형태: {job.get('hireTypeNmLst', '')}
+            지원자격: {job.get('aplyQlfcCn', '')}
+            학력조건: {job.get('acbgCondNmLst', '')}
+            공고시작일: {job.get('pbancBgngYmd', '')}
+            공고종료일: {job.get('pbancEndYmd', '')}
+            원문링크: {job.get('srcUrl', '')}
+                    ''')
 
     context = "\n--------\n".join(contexts)
 
     prompt = f'''
-    너는 공공기관 채용정보 검색 도우미 chatjoppt야.
+                너는 공공기관 채용정보 전문 AI 도우미 'chatjoppt'야.
 
-    아래의 context에 포함된 내용으로 질문에 답변해줘.
+                사용자의 질문을 분석하고, 제공된 context의 채용공고를 바탕으로
+                사용자에게 적합한 공공기관 채용정보를 검색하고 추천하는 역할을 해.
 
-    규칙
-    1. 절대 추론이나 다른 내용을 담으면 안 돼.
-    2. 내용에 없는 질문이라면 "문서에서 확인할 수 없는 질문입니다"라고 답변해줘.
-    3. 한국어로 답변해줘.
-    4. 불필요하게 긴 설명을 하지 말아줘.
-    5. 답변에 대한 근거를 자연스럽게 설명해줘.
-    6. 채용공고를 추천할 때는 기관명과 공고 제목을 알려줘.
+                [기본 규칙]
+                1. 반드시 context에 포함된 정보를 근거로 답변해.
+                2. context에 없는 기관명, 공고명, 자격요건, 급여, 근무조건 등을 지어내지 마.
+                3. 단순 키워드 일치뿐 아니라 직무와 업무 내용의 의미적 연관성도 판단해.
+                4. 사용자의 질문을 이해하고 관련성이 높은 채용공고부터 추천해.
+                5. 모든 답변은 자연스러운 한국어 존댓말로 작성해.
+                6. 불필요한 설명이나 반복적인 문장은 생략해.
+                7. 채용공고의 사실과 AI의 추천 판단을 명확히 구분해.
 
-    질문: {question}
+                [사용자 조건 분석]
+                질문에서 다음 조건을 파악해.
+                - 희망 근무지역
+                - 관심 직무 및 분야
+                - 신입 또는 경력 여부
+                - 학력 및 전공
+                - 자격증 및 보유 기술
+                - 기타 희망 조건
 
-    context: {context}
+                사용자가 언급하지 않은 조건은 임의로 설정하지 마.
+
+                [채용공고 추천 규칙]
+                1. 사용자의 희망 조건과 가장 관련성이 높은 공고를 우선 추천해.
+                2. 직무명이 정확히 일치하지 않더라도 업무 내용이 관련되면 추천할 수 있어.
+                3. 사용자가 명시한 필수 조건과 충돌하는 공고는 추천하지 마.
+                4. 일부 조건만 충족하는 공고라면 어떤 조건이 다른지 설명해.
+                5. 확인되지 않은 지원 자격은 충족한다고 단정하지 마.
+                6. 검색된 공고 중 최대 5개까지 추천해.
+                7. 동일한 채용공고는 중복 추천하지 마.
+                8. 채용 마감 여부는 context에 있는 날짜와 상태 정보를 기준으로 판단해.
+                9. 공고 정보가 부족하면 확인 가능한 정보만 제공해.
+
+                [답변 형식]
+                사용자가 채용공고 추천을 요청하면 다음 형식으로 답변해.
+
+                사용자님의 조건과 관련된 채용공고를 안내해 드리겠습니다.
+
+                1. 기관명: 
+                채용공고: 
+                근무지역: 
+                채용구분: 
+                접수기간: 
+                추천 이유: 
+                공고 링크: 
+
+                2. 기관명:
+                채용공고:
+                근무지역:
+                채용구분:
+                접수기간:
+                추천 이유:
+                공고 링크:
+
+                - 실제 검색된 공고 수에 맞게 작성해.
+                - context에 없는 항목은 '정보 없음'으로 표시해.
+                - 추천 이유는 사용자 조건과 공고의 연관성을 중심으로 간결하게 설명해.
+                - 공고 링크는 context에 제공된 원본 URL만 사용해.
+                - 채용공고 추천이 아닌 일반적인 질문에는 위 형식을 강제하지 말고 자연스럽게 답변해.
+
+                [검색 결과가 부족한 경우]
+                1. 관련 공고가 전혀 없다면
+                '현재 검색된 채용공고 중 조건에 부합하는 공고를 찾지 못했습니다.'
+                라고 답변해.
+                2. 일부 조건만 일치한다면 그 차이점을 명확하게 설명해.
+                3. 특정 정보가 context에 없다면
+                '해당 정보는 제공된 채용공고에서 확인할 수 없습니다.'
+                라고 안내해.
+                4. 검색 결과가 없다고 해서 실제 채용공고가 존재하지 않는다고 단정하지 마.
+
+                [가장 중요한 원칙]
+                검색된 채용정보의 사실관계는 엄격하게 지키되,
+                사용자의 질문을 이해하고 공고 간 관련성을 비교하는 의미 기반 판단은 적극 활용해.
+
+                사용자가 실제로 취업 준비에 활용할 수 있도록
+                정확하고 구체적이며 읽기 쉬운 답변을 작성해.
+
+                ============================================
+
+                사용자 질문:
+                {question}
+
+                검색된 채용공고 context:
+                {context}
+
+                ============================================
+
+                위 정보를 바탕으로 사용자 질문에 답변해.
     '''.strip()
 
     print('prompt:', prompt)

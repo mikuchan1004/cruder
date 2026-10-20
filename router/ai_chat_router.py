@@ -24,12 +24,19 @@ def ai_chat(request:Request):
  
 @router.post("/api/chatjopt")
 def chat_result(request: Request, question: str = Form(...)):
+    print("1. POST 요청 도착", flush=True)
+    print("2. 사용자 질문:", question, flush=True)
+
+    print("3. ask_rag 실행 시작", flush=True)
 
     # RAG 답변
     answer = ask_rag(question)
+    print("4. ask_rag 실행 성공", flush=True)
 
     # 하이브리드 검색
+    print("5. hybrid 실행 시작", flush=True)
     results = hybrid(question)["hits"]["hits"]
+    print("6. hybrid 실행 성공", len(results), flush=True)
     # 결과 담는 곳입니다아...
     jobs = []
 
@@ -45,6 +52,7 @@ def chat_result(request: Request, question: str = Form(...)):
             "pbanc_bgng_ymd": job.get("pbancBgngYmd"),
             "pbanc_end_ymd": job.get("pbancEndYmd"),
             "ongoing_yn": job.get("ongoingYn"),
+            # 원문공고 url임.
             "src_url": job.get("srcUrl")
         })
 
@@ -57,3 +65,5 @@ def chat_result(request: Request, question: str = Form(...)):
             "bookmarked_job_ids": []
         }
     )
+
+# @router.get('/api/chatjopt')
