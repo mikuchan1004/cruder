@@ -2,6 +2,10 @@
 import os
 import requests
 
+
+
+
+
 from dotenv import load_dotenv
 from fastapi import APIRouter, HTTPException
 from openai import OpenAI
@@ -83,6 +87,7 @@ def create_embed_index():
     es.indices.create(
         index=INDEX_NAME,
         mappings={
+            # 매핑 작업을 진행합니다.
             "properties": {
                 "recrutPblntSn": {"type": "keyword"},
                 "recrutPbancTtl": {"type": "text"},
@@ -439,13 +444,19 @@ def ask_gpt(question: str):
         "question": question,
         "answer": answer,
         "count": len(results),
-        "jobs": [
-            {
-                "recrutPblntSn": hit["_source"].get("recrutPblntSn"),
-                "recrutPbancTtl": hit["_source"].get("recrutPbancTtl"),
-                "instNm": hit["_source"].get("instNm"),
-                "srcUrl": hit["_source"].get("srcUrl")
-            }
+    "jobs": [
+    {
+        "recrutPblntSn": hit["_source"].get("recrutPblntSn"),
+        "recrutPbancTtl": hit["_source"].get("recrutPbancTtl"),
+        "instNm": hit["_source"].get("instNm"),
+        "workRgnNmLst": hit["_source"].get("workRgnNmLst"),
+        "recrutSeNm": hit["_source"].get("recrutSeNm"),
+        "recrutNope": hit["_source"].get("recrutNope"),
+        "pbancBgngYmd": hit["_source"].get("pbancBgngYmd"),
+        "pbancEndYmd": hit["_source"].get("pbancEndYmd"),
+        "ongoingYn": hit["_source"].get("ongoingYn"),
+        "srcUrl": hit["_source"].get("srcUrl")
+    }
             for hit in results
         ]
     }

@@ -1,142 +1,370 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>채용 공고 - 취업할래말래</title>
-    <link rel="shortcut icon" href="/static/images/favicon.ico">
-    <link rel="stylesheet" href="/assets/recult.css">
-    <link rel="stylesheet" href="/assets/header.css">
-    <link rel="stylesheet" href="/assets/footer.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- 아이콘 -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+    <title>AI 채용 추천 결과 - 취업할래말래</title>
 
-<body>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" />
+    <link rel="stylesheet" href="/assets/recult.css" />
+    <link rel="stylesheet" href="/assets/header.css" />
+    <link rel="stylesheet" href="/assets/footer.css" />
 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- 테스트용 CSS -->
+    <style>
+      .ai-result-section {
+        margin: 30px 0 40px;
+        padding: 30px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+      }
+
+      .ai-result-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+
+      .ai-result-header i {
+        font-size: 26px;
+        color: #6741d9;
+      }
+
+      .ai-result-header h2 {
+        margin: 0;
+        font-size: 22px;
+        color: #24243b;
+      }
+
+      .ai-result-header p {
+        margin: 5px 0 0;
+        font-size: 13px;
+        color: #8b92a3;
+      }
+
+      .ai-question {
+        background: #f5f3ff;
+        border: 1px solid #ece7ff;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+      }
+
+      .ai-question strong,
+      .ai-answer strong {
+        display: block;
+        font-size: 15px;
+        margin-bottom: 12px;
+        color: #43368a;
+      }
+
+      .ai-question p {
+        margin: 0;
+        line-height: 1.8;
+        color: #374151;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+
+      .ai-answer {
+        background: #f8fafc;
+        border: 1px solid #edf0f5;
+        border-radius: 12px;
+        padding: 24px;
+      }
+
+      .ai-answer-content {
+        font-size: 14px;
+        color: #334155;
+        line-height: 2;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+
+      .ai-result-info {
+        margin-top: 20px;
+        padding: 12px 16px;
+        background: #fafafa;
+        border-radius: 8px;
+        color: #64748b;
+        font-size: 12px;
+        line-height: 1.7;
+      }
+
+      .badge.closed {
+        background: #f1f5f9;
+        color: #64748b;
+      }
+
+      .badge.unknown {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .empty-result {
+        text-align: center;
+        padding: 60px 20px;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        color: #64748b;
+      }
+
+      .empty-result i {
+        display: block;
+        font-size: 30px;
+        margin-bottom: 16px;
+      }
+
+      .back-area {
+        margin-top: 35px;
+        text-align: center;
+      }
+
+      .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 24px;
+        background: #6741d9;
+        color: #ffffff;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .btn-back:hover {
+        background: #5531c6;
+      }
+
+      .job-card .job-title {
+        overflow-wrap: anywhere;
+      }
+
+      .job-card .tags span {
+        overflow-wrap: anywhere;
+      }
+
+      @media (max-width: 768px) {
+        .ai-result-section {
+          padding: 18px;
+        }
+
+        .ai-answer {
+          padding: 16px;
+        }
+
+        .ai-result-header h2 {
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
     {% include 'header.html' %}
 
     <main class="main-container">
+      <!-- ======================================
+             페이지 제목
+        ======================================= -->
+      <div class="page-title-area">
+        <h1>
+          <i class="fa-solid fa-robot"></i>
+          AI 맞춤 채용 추천 결과
+        </h1>
 
-        <!-- 페이지 제목 -->
-        <div class="page-title-area">
-            <h1>채용 공고</h1>
-            <p>다양한 공공기관의 채용 정보를 확인하세요.</p>
+        <p>
+          chatjoppt가 ALIO 채용정보를 분석하여 관련 채용공고를 찾아드립니다.
+        </p>
+      </div>
+
+      <!-- ======================================
+             GPT RAG 답변
+        ======================================= -->
+      <section class="ai-result-section">
+        <div class="ai-result-header">
+          <i class="fa-solid fa-robot"></i>
+
+          <div>
+            <h2>chatjoppt AI 채용 추천</h2>
+            <p>GPT RAG 기반 공공기관 채용정보 분석</p>
+          </div>
         </div>
 
-        <!-- 검색 영역 -->
-        <div class="search-area">
-            <form class="search-bar"
-                  method="get"
-                  action="/jobgogo/recult">
+        <!-- 사용자가 입력한 질문 -->
+        <div class="ai-question">
+          <strong>
+            <i class="fa-solid fa-user"></i>
+            사용자 질문
+          </strong>
 
-                <input
-                    type="text"
-                    class="search-input"
-                    name="keyword"
-                    placeholder="공고명 · 기관명 · 지역 검색"
-                >
-
-                <button type="submit" class="btn-search">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    검색
-                </button>
-
-            </form>
+          <p>{{ question | default('질문 정보 없음', true) }}</p>
         </div>
 
-        <!-- 채용 공고 목록 -->
-        <section class="job-list-section">
+        <!-- GPT가 생성한 답변 -->
+        <div class="ai-answer">
+          <strong>
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            AI 분석 및 추천 결과
+          </strong>
 
-            <!-- 목록 제목 -->
-            <div class="section-header">
-                <div class="title-group">
-                    <h2>채용 공고 목록</h2>
-                    <p>현재 모집 중인 채용 공고를 확인해보세요.</p>
-                </div>
+          <div class="ai-answer-content">
+            {{ answer | default('AI 답변을 불러오지 못했습니다.', true) }}
+          </div>
+        </div>
 
-        
+        <div class="ai-result-info">
+          <i class="fa-solid fa-circle-info"></i>
+          AI 답변은 실제 ALIO 채용공고를 기반으로 생성됩니다. 실제 지원 자격과
+          채용 진행 여부는 반드시 공고 원문에서 확인해 주세요.
+        </div>
+      </section>
+
+      <!-- ======================================
+             검색된 채용공고 목록
+        ======================================= -->
+      <section class="job-list-section">
+        <div class="section-header">
+          <div class="title-group">
+            <h2>
+              <i class="fa-solid fa-briefcase"></i>
+              관련 채용 공고
+            </h2>
+
+            <p>AI 검색 과정에서 확인된 채용공고입니다.</p>
+          </div>
+
+          <span> 검색 결과 {{ jobs | length }}건 </span>
+        </div>
+
+        <!-- 채용공고 카드 -->
+        <div class="job-grid">
+          {% for job in jobs %}
+
+          <article class="job-card">
+            <!-- 카드 상단 -->
+            <div class="card-header">
+              {% if job.ongoing_yn == 'Y' %}
+
+              <span class="badge recruiting"> 모집중 </span>
+
+              {% elif job.ongoing_yn == 'N' %}
+
+              <span class="badge closed"> 모집종료 </span>
+
+              {% else %}
+
+              <span class="badge unknown"> 모집상태 미확인 </span>
+
+              {% endif %}
+
+              <!-- 기존 북마크 아이콘 -->
+              <i
+                class="fa-star icon-bookmark {% if job.recrut_pblnt_sn in bookmarked_job_ids %}fa-solid{% else %}fa-regular{% endif %}"
+                data-job-id="{{ job.recrut_pblnt_sn }}"
+              ></i>
             </div>
 
-            <!-- 채용 공고 카드 영역 -->
-            <div class="job-grid">
+            <!-- 카드 본문 -->
+            <div class="card-body">
+              <!-- 기관명 -->
+              <span class="company-name">
+                {{ job.inst_nm or '기관명 정보 없음' }}
+              </span>
 
-                {% for job in jobs %}
-                    {% if job.ongoing_yn == 'Y' %}
+              <!-- 채용공고 제목 -->
+              <h3 class="job-title">
+                {{ job.recrut_pbanc_ttl or '공고명 정보 없음' }}
+              </h3>
 
-                    <article class="job-card">
+              <!-- 채용 정보 -->
+              <div class="tags">
+                <!-- 채용 구분명 -->
+                <span> {{ job.recrut_se_nm or '채용구분 미확인' }} </span>
 
-                        <!-- 카드 상단 -->
-                        <div class="card-header">
-                            <span class="badge recruiting">
-                                모집중
-                            </span>
-                            <i
-                                class="fa-star icon-bookmark {% if job.recrut_pblnt_sn in bookmarked_job_ids %}fa-solid{% else %}fa-regular{% endif %}"
-                                data-job-id="{{ job.recrut_pblnt_sn }}"
-                            ></i>
-                        </div>
+                <span>
+                  채용인원 {% if job.recrut_nope is not none %} {{
+                  job.recrut_nope }}명 {% else %} 정보 없음 {% endif %}
+                </span>
 
-                        <!-- 카드 본문 -->
-                        <div class="card-body">
-
-                            <!-- 기관명 -->
-                            <span class="company-name">
-                                {{ job.inst_nm }}
-                            </span>
-
-                            <!-- 공고명 -->
-                            <h3 class="job-title">
-                                {{ job.recrut_pbanc_ttl }}
-                            </h3>
-
-                            <!-- 채용 정보 -->
-                            <div class="tags">
-                                <span>{{ job.recrut_se_nm }}</span>
-                                <span>채용인원 {{ job.recrut_nope }}명</span>
-                            </div>
-
-                        </div>
-
-                        <!-- 카드 하단 -->
-                        <div class="card-footer">
-
-                            <p class="date">
-                                <i class="fa-regular fa-calendar"></i>
-                                {{ job.pbanc_bgng_ymd }} ~
-                                {{ job.pbanc_end_ymd }}
-                            </p>
-
-                            <a
-                                href="https://job.alio.go.kr/mobile2021/recruit/recruitView.do?idx={{ job.recrut_pblnt_sn }}"
-                                class="btn-detail"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                상세보기
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            </a>
-
-                        </div>
-
-                    </article>
-
-                    {% endif %}
-                {% endfor %}
-
+                {% if job.work_rgn_nm_lst %}
+                <span>
+                  <i class="fa-solid fa-location-dot"></i>
+                  {{ job.work_rgn_nm_lst }}
+                </span>
+                {% endif %}
+              </div>
             </div>
 
-        </section>
-    
+            <!-- 카드 하단 -->
+            <div class="card-footer">
+              <p class="date">
+                <i class="fa-regular fa-calendar"></i>
 
-</div>
+                {{ job.pbanc_bgng_ymd or '미정' }} ~ {{ job.pbanc_end_ymd or
+                '미정' }}
+              </p>
 
+              <!-- 실제 ALIO 공고 URL -->
+              {% if job.src_url %}
+
+              <a
+                href="https://job.alio.go.kr/mobile2021/recruit/recruitView.do?idx={{ job.recrut_pblnt_sn | urlencode }}"
+                class="btn-detail"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                실제 채용공고 바로가기
+
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+
+              {% else %}
+
+              <span class="btn-detail"> 원문 링크 없음 </span>
+
+              {% endif %}
+            </div>
+          </article>
+
+          {% else %}
+
+          <div class="empty-result">
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <h3>검색된 채용공고가 없습니다.</h3>
+
+            <p>검색 조건을 변경하여 다시 시도해 주세요.</p>
+          </div>
+
+          {% endfor %}
+        </div>
+      </section>
+
+      <!-- ======================================
+             다시 질문하기
+        ======================================= -->
+      <div class="back-area">
+        <a href="/jobgogo/chatjobpt" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i>
+          다른 조건으로 다시 검색하기
+        </a>
+      </div>
     </main>
 
     {% include 'footer.html' %}
+
     <script src="/assets/bookmark.js"></script>
-</body>
+  </body>
 </html>
