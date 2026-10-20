@@ -11,7 +11,7 @@ from database import get_session
 from router.api_router import ask_rag,hybrid
 # gpt를 통한 임베딩
 from router.GPT_embedding import ask_gpt, hybrid_gpt
-
+from fastapi.responses import HTMLResponse
 
 from datetime import date
 from fastapi import Depends
@@ -34,15 +34,30 @@ def isLogin(request:Request):
     return user_id    
     
 
-
+# 여기는 단순하게 ai 채팅방입니다.
 @router.get("/jobgogo/chatjobpt")
-def ai_chat(request:Request):
+def ai_chat(request:Request,
+         ):
+    # 로그인을 한 유저만 챗좁피티를 사용가능함.
+    isLogin=request.session.get('user_id')
     
+    # 로그인 안한 유저에게 알럿 띄우고, 로그인 페이지로 친절하게 이동하는 로직
+    if not isLogin:
+           html_content='''
+           <script>
+           alert('로그인한 유저만 사용가능합니다.')
+           window.location.href='/jobgogo/login'
+           </script>
+           ''' 
+           return HTMLResponse(content=html_content, status_code=200)
+          
+           
     return templates.TemplateResponse(
-        request,'ai-chat.html'
+        name='ai-chat.html', 
+        context={'request': request}
     )
-    
- #  ai 질문 처리하는 곳
+
+
  
 
 # AI 질문 처리 및 GPT 채용 추천 결과 출력
@@ -57,14 +72,10 @@ def chat_result(
     
     
 ):
-    # 1. 로그인여부를  확인
+    # 1. 세션에서 user_id를 꺼내옴
     user_id = request.session.get("user_id")
 
-    if not user_id:
-         raise HTTPException(
-             status_code=401,
-             detail='로그인이 필요합니다...'
-         )
+    
     # 혹시 모를 공백제거
     question = question.strip()
 
