@@ -53,10 +53,10 @@ def ai_chat(request:Request,
           
            
     return templates.TemplateResponse(
-        name='ai-chat.html', 
-        context={'request': request}
+        request=request,
+        name='ai-chat.html',
+        context={}  # 템플릿으로 보낼 추가 데이터가 없다면 빈 딕셔너리로 두시면 됩니다.
     )
-
 
  
 
@@ -95,7 +95,7 @@ def chat_result(
     session.exec(sql,params={
         "user_id":user_id
     })
-    # 생성도니 채팅방의 pk를 가져오기
+    # 생성된 채팅방의 pk를 가져오기
     
     ai_chat_id=session.exec(
         text('''
@@ -115,10 +115,16 @@ def chat_result(
         'ai_chat_id':ai_chat_id
     })
     
+    
+    
     # 4. 사용자 질문 메시지 PK 가져오기
     ai_chat_message_id = session.exec(
      text("SELECT LAST_INSERT_ID()")
        ).scalar_one()
+    
+    # ai_chat_result에다 넣기
+    
+    
                  
    
         
