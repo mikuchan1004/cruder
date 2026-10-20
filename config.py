@@ -12,3 +12,6 @@ ALIO_API_KEY = os.getenv('ALIO_API_KEY')
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 SESSION_SECRET_KEY = os.getenv("SESSION_SECRET_KEY")
+
+# gpt 키
+OPENAI_API_KEY=os.getenv('OPENAI_API_KEY')

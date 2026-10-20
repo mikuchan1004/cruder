@@ -17,7 +17,7 @@ from router.ai_chat_router import router as ai_chat_router
 from router.notice_router import router as notice_router
 from router.inquiry_router import router as inquiry_router
 from router.recent_posts import router as recent_posts
-
+from router.GPT_embedding import router as GPT_embedding
 from config import SESSION_SECRET_KEY
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -37,6 +37,7 @@ router.include_router(ai_chat_router)
 router.include_router(notice_router)
 router.include_router(inquiry_router)
 router.include_router(recent_posts)
+router.include_router(GPT_embedding)
 
 
 router.add_middleware(
