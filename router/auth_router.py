@@ -211,42 +211,45 @@ def login(
            status_code=303
        )
 
-# id 중복확인 로직.
-
+# 아이디 중복확인
 @router.get('/api/check-id')
 def chkId(
-    request: Request,
-    user_id:str,
+    user_id: str,
     session: Session = Depends(get_session)
-     ):
-    
-    
-    sql=text('''
-          select user_id
-          from user
-          where user_id=:user_id   
-             ''')
-    
-    
-    result=session.exec(
-                   sql,
-                   params={
-                       'user_id':user_id,
-                       
-                   }
-               ) 
-    user=result.mappings().fetchone()
-    #세선에 저장.
-    if user is not None:
-        request.session['idChk_Messge']='이미 존재하는 아이디 입니다'
-    else:
-        request.session['idChk_Messge']='사용 가능한 아이디 입니다'
-    
-    return RedirectResponse(
-           url='/jobgogo/signup',
-           status_code=303
-       )
+):
+    # 앞뒤 공백 제거
+    user_id = user_id.strip()
 
+    # 아이디를 입력하지 않은 경우
+    if not user_id:
+        return {
+            'msg': '아이디를 입력해주세요!'
+        }
+
+    sql = text('''
+        SELECT user_id
+        FROM user
+        WHERE user_id = :user_id
+    ''')
+
+    result = session.exec(
+        sql,
+        params={
+            'user_id': user_id
+        }
+    )
+
+    user = result.mappings().fetchone()
+
+    if user is not None:
+        return {
+            'msg': '중복된 아이디입니다!'
+        }
+
+    return {
+        'msg': '사용 가능한 아이디입니다!'
+    }
+   
     
     
     # # 아이디로 사용자 조회

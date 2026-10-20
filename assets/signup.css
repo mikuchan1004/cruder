@@ -1,468 +1,450 @@
-
-/* =========================================
-   기본 설정
-========================================= */
+/* ========================================
+   전체 초기화
+======================================== */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
-    background-color: #f7f8fa;
-    color: #222;
-    min-height: 100vh;
+  min-height: 100vh;
+  padding: 40px 20px;
+
+  font-family:
+    "Pretendard", "Noto Sans KR", Arial, sans-serif;
+
+  color: #25252b;
+  background: #f5f6f8;
 }
 
-/* =========================================
-   회원가입 전체 컨테이너
-========================================= */
+/* ========================================
+   회원가입 전체 박스
+======================================== */
 
 .signup-container {
-    width: 1100px;
-    max-width: calc(100% - 40px);
-    margin: 40px auto;
-    padding: 45px 45px 50px;
+  width: 1100px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 42px;
 
-    background-color: #ffffff;
-    border: 1px solid #e2e5ea;
-    border-radius: 15px;
-
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+  background: #fff;
+  border: 1px solid #dfe2e8;
+  border-radius: 16px;
+  box-shadow: 0 6px 22px rgba(24, 24, 35, 0.05);
 }
 
-/* 페이지 제목 */
 .page-title {
-    text-align: center;
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 40px;
-    color: #171717;
-    letter-spacing: -1px;
+  margin-bottom: 38px;
+
+  font-size: 32px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -1px;
 }
 
-/* =========================================
-   좌우 영역 배치
-========================================= */
+/* ========================================
+   왼쪽 폼 / 오른쪽 약관
+======================================== */
 
 .signup-content {
-    display: flex;
-    align-items: flex-start;
-    gap: 35px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 44px;
+  align-items: start;
 }
 
-/* 좌측 회원가입 */
-.form-section {
-    flex: 1;
-    min-width: 0;
-}
-
-/* 우측 약관 */
+.form-section,
 .terms-section {
-    flex: 1;
-    min-width: 0;
-
-    padding: 0;
-    background: #ffffff;
-    border: none;
-    border-radius: 0;
+  width: 100%;
+  min-width: 0;
 }
 
-/* =========================================
-   회원가입 입력 폼
-========================================= */
-
+/* 다른 CSS의 form 설정 방지 */
 .form-section form {
-    width: 100%;
+  display: block;
+  width: 100%;
 }
 
-.input-row {
-    display: flex;
-    align-items: stretch;
-    gap: 10px;
-    margin-bottom: 12px;
-    width: 100%;
+/* ========================================
+   경고 메시지
+======================================== */
+
+.warning-message {
+  min-height: 22px;
+  margin-bottom: 10px;
+
+  color: #dc3f3f;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-/* 입력창 */
-.form-input {
-    width: 100%;
-    min-width: 0;
-    height: 50px;
+/* ========================================
+   입력 영역
+======================================== */
 
-    padding: 0 15px;
-
-    border: 1px solid #d6dbe3;
-    border-radius: 7px;
-
-    background-color: #ffffff;
-
-    font-size: 14px;
-    color: #333;
-
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+.form-section form > .input-row {
+  display: flex;
+  width: 100%;
+  margin-bottom: 13px;
+  gap: 10px;
+  align-items: center;
 }
 
-/* 입력창 선택 */
-.form-input:focus {
-    border-color: #7350c5;
-    box-shadow: 0 0 0 3px rgba(115, 80, 197, 0.09);
+/* class가 빠진 아이디 입력창에도 적용 */
+.form-section .input-row input[type="text"],
+.form-section .input-row input[type="password"],
+.form-section .input-row input[type="email"],
+.form-section .input-row input[type="tel"] {
+  display: block;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  height: 50px;
+  padding: 0 15px;
+
+  color: #333;
+  background: #fff;
+  border: 1px solid #d5d9e2;
+  border-radius: 8px;
+  outline: none;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
-/* 입력창 안내 글씨 */
-.form-input::placeholder {
-    color: #9ba6ba;
+.form-section .input-row input:focus {
+  border-color: #7048c8;
+  box-shadow: 0 0 0 3px rgba(112, 72, 200, 0.12);
 }
 
-/* 버튼과 함께 사용하는 입력창 */
-.form-input.flex-grow {
-    flex: 1;
-    width: 0;
+.form-section .input-row input::placeholder {
+  color: #9ca3b1;
 }
 
-/* =========================================
+.flex-grow {
+  flex: 1;
+}
+
+/* ========================================
+   중복확인 버튼
+======================================== */
+
+.id_Chk {
+  flex: 0 0 95px;
+  width: 95px;
+  height: 50px;
+  padding: 0;
+
+  color: #fff;
+  background: #7048c8;
+  border: none;
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+}
+
+.id_Chk:hover {
+  background: #5e37b5;
+}
+
+.id_Chk:active {
+  transform: translateY(1px);
+}
+
+/* ========================================
    공통 버튼
-========================================= */
+======================================== */
 
 .btn {
-    border: none;
-    border-radius: 7px;
+  border: none;
+  border-radius: 8px;
 
-    font-size: 14px;
-    font-weight: 600;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
 
-    cursor: pointer;
-    transition: background-color 0.2s;
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
 }
 
 .btn-purple {
-    background-color: #6f49c6;
-    color: #ffffff;
+  color: #fff;
+  background: #7048c8;
 }
 
 .btn-purple:hover {
-    background-color: #5e3bb0;
+  background: #5e37b5;
 }
 
-/* 중복확인, 주소검색 */
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* 주소 검색 버튼 */
 .btn-small {
-    width: 95px;
-    height: 50px;
-    flex-shrink: 0;
+  flex: 0 0 95px;
+  width: 95px;
+  height: 50px;
 
-    font-size: 13px;
+  font-size: 13px;
 }
 
-/* =========================================
-   경고 메시지
-========================================= */
-
-.warning-message {
-    min-height: 24px;
-    margin: 5px 0 12px;
-
-    font-size: 13px;
-    line-height: 1.5;
-    color: #e54848;
-}
-
-/* =========================================
-   가입 / 취소 버튼
-========================================= */
+/* ========================================
+   가입 / 취소
+======================================== */
 
 .action-buttons {
-    display: flex;
-    gap: 12px;
-    width: 100%;
+  display: flex;
+  width: 100%;
+  gap: 12px;
+  margin-top: 22px;
 }
 
 .btn-large {
-    flex: 1;
-    height: 52px;
+  flex: 1;
+  height: 52px;
 
-    font-size: 16px;
-    font-weight: 700;
-
-    box-shadow: 0 2px 5px rgba(111, 73, 198, 0.12);
+  font-size: 15px;
 }
 
-/* =========================================
-   오른쪽 약관 영역
-========================================= */
+/* 취소 버튼 구분 */
+.action-buttons .btn:last-child {
+  color: #574775;
+  background: #eee9f8;
+}
 
-/* 약관 대제목 */
+.action-buttons .btn:last-child:hover {
+  background: #e2daf3;
+}
+
+/* ========================================
+   약관 영역
+======================================== */
+
 .terms-main-title {
-    margin: 0 0 8px;
+  margin-bottom: 7px;
 
-    font-size: 21px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-
-    color: #222;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
-/* 설명 */
 .terms-description {
-    margin-bottom: 24px;
+  margin-bottom: 22px;
 
-    font-size: 13px;
-    color: #8b909b;
-
-    line-height: 1.6;
+  color: #8a909d;
+  font-size: 13px;
+  line-height: 1.6;
 }
-
-/* =========================================
-   약관 카드
-========================================= */
 
 .terms-card {
-    margin-bottom: 22px;
+  margin-bottom: 22px;
 }
 
-/* 서비스 이용약관 / 개인정보 제목 */
 .terms-title {
-    margin-bottom: 11px;
+  margin-bottom: 10px;
 
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: -0.4px;
-
-    color: #30323a;
+  color: #32343b;
+  font-size: 15px;
+  font-weight: 750;
 }
 
-/* =========================================
+/* ========================================
    약관 내용 박스
-========================================= */
+======================================== */
 
 .terms-box {
-    width: 100%;
-    height: 150px;
+  width: 100%;
+  height: 150px;
+  padding: 16px 18px;
 
-    padding: 16px 18px;
+  color: #666c77;
+  background: #fafbfc;
+  border: 1px solid #dfe3e9;
+  border-radius: 8px;
 
-    background-color: #fafbfc;
+  font-size: 12px;
+  line-height: 1.75;
 
-    border: 1px solid #e0e3e9;
-    border-radius: 7px;
-
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    box-sizing: border-box;
-
-    font-size: 12px;
-    line-height: 1.8;
-
-    color: #666b75;
-    word-break: keep-all;
-    overflow-wrap: break-word;
+  overflow-x: hidden;
+  overflow-y: auto;
+  word-break: keep-all;
 }
 
-/* 약관 조항 제목 */
-.terms-box h4 {
-    margin: 0 0 7px;
-
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.6;
-
-    color: #444852;
-}
-
-/* 약관 조항 설명 */
-.terms-box p {
-    margin: 0 0 16px;
-
-    font-size: 12px;
-    font-weight: 400;
-
-    line-height: 1.8;
-    color: #696e79;
-}
-
-/* 마지막 문단 */
-.terms-box p:last-child {
-    margin-bottom: 0;
-}
-
-/* 개인정보 약관 */
 .privacy-box {
-    height: 140px;
+  height: 140px;
 }
 
-/* =========================================
-   스크롤바
-========================================= */
+.terms-box h4 {
+  margin-bottom: 7px;
 
+  color: #414550;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.terms-box p {
+  margin-bottom: 15px;
+}
+
+.terms-box p:last-child {
+  margin-bottom: 0;
+}
+
+/* 스크롤바 */
 .terms-box::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 
 .terms-box::-webkit-scrollbar-track {
-    background-color: #f1f2f5;
-    border-radius: 10px;
+  background: #f0f1f4;
+  border-radius: 10px;
 }
 
 .terms-box::-webkit-scrollbar-thumb {
-    background-color: #c5c8d1;
-    border-radius: 10px;
+  background: #bdc1cc;
+  border-radius: 10px;
 }
 
-.terms-box::-webkit-scrollbar-thumb:hover {
-    background-color: #a8acb8;
-}
-
-/* =========================================
-   약관 동의 체크박스
-========================================= */
+/* ========================================
+   체크박스
+======================================== */
 
 .agree-label {
-    display: flex;
-    align-items: center;
-    gap: 9px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 11px;
 
-    margin-top: 11px;
+  color: #525660;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
 
-    font-size: 13px;
-    font-weight: 500;
-
-    line-height: 1.5;
-    color: #50545d;
-
-    cursor: pointer;
-    user-select: none;
+  cursor: pointer;
+  user-select: none;
 }
 
 .agree-label span {
-    flex: 1;
+  flex: 1;
 }
 
-/* 개별 동의 체크박스 */
-.agree-check {
-    width: 17px;
-    height: 17px;
+.agree-check,
+#agree-all {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin: 0;
 
-    margin: 0;
-    flex-shrink: 0;
-
-    accent-color: #7048c5;
-    cursor: pointer;
+  accent-color: #7048c8;
+  cursor: pointer;
 }
 
-/* =========================================
-   전체 약관 동의
-========================================= */
+/* ========================================
+   전체 동의
+======================================== */
 
 .agree-all-box {
-    margin-top: 5px;
-    padding: 17px 18px;
+  padding: 16px 18px;
+  margin-top: 4px;
 
-    background-color: #f7f5fc;
-
-    border: 1px solid #e6e0f3;
-    border-radius: 7px;
+  background: #f7f4fc;
+  border: 1px solid #e3dcf1;
+  border-radius: 8px;
 }
 
 .agree-all-box .agree-label {
-    margin: 0;
+  margin: 0;
 
-    font-size: 14px;
-    font-weight: 700;
-
-    color: #3d3551;
+  color: #403653;
+  font-size: 14px;
+  font-weight: 750;
 }
 
-#agree-all {
-    width: 19px;
-    height: 19px;
-
-    margin: 0;
-    flex-shrink: 0;
-
-    accent-color: #7048c5;
-    cursor: pointer;
-}
-
-/* =========================================
-   반응형 - 태블릿
-========================================= */
+/* ========================================
+   태블릿
+======================================== */
 
 @media (max-width: 900px) {
+  body {
+    padding: 25px 15px;
+  }
 
-    .signup-container {
-        width: 95%;
-        max-width: 700px;
-        padding: 30px;
-    }
+  .signup-container {
+    max-width: 700px;
+    padding: 32px;
+  }
 
-    .signup-content {
-        flex-direction: column;
-        gap: 40px;
-    }
+  .signup-content {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
 
-    .form-section,
-    .terms-section {
-        width: 100%;
-    }
-
-    .page-title {
-        font-size: 28px;
-    }
+  .page-title {
+    margin-bottom: 30px;
+    font-size: 28px;
+  }
 }
 
-/* =========================================
-   반응형 - 모바일
-========================================= */
+/* ========================================
+   모바일
+======================================== */
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
+  body {
+    padding: 12px;
+  }
 
-    .signup-container {
-        max-width: calc(100% - 24px);
-        margin: 15px auto;
-        padding: 25px 18px;
-    }
+  .signup-container {
+    padding: 25px 18px;
+    border-radius: 12px;
+  }
 
-    .page-title {
-        font-size: 25px;
-        margin-bottom: 30px;
-    }
+  .page-title {
+    margin-bottom: 25px;
+    font-size: 25px;
+  }
 
-    .signup-content {
-        gap: 35px;
-    }
+  .form-section .input-row input[type="text"],
+  .form-section .input-row input[type="password"],
+  .form-section .input-row input[type="email"],
+  .form-section .input-row input[type="tel"] {
+    height: 47px;
+    font-size: 13px;
+  }
 
-    .form-input {
-        height: 47px;
-        font-size: 13px;
-    }
+  .id_Chk,
+  .btn-small {
+    flex-basis: 84px;
+    width: 84px;
+    height: 47px;
+    font-size: 12px;
+  }
 
-    .btn-small {
-        width: 85px;
-        height: 47px;
-        font-size: 12px;
-    }
+  .btn-large {
+    height: 48px;
+    font-size: 14px;
+  }
 
-    .terms-main-title {
-        font-size: 19px;
-    }
+  .terms-box {
+    height: 145px;
+  }
 
-    .terms-box {
-        height: 145px;
-    }
-
-    .privacy-box {
-        height: 135px;
-    }
-
-    .agree-label {
-        font-size: 12px;
-    }
-
-    .btn-large {
-        height: 48px;
-        font-size: 14px;
-    }
+  .agree-label {
+    font-size: 12px;
+  }
 }

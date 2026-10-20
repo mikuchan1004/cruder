@@ -2,51 +2,69 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
     <title>회원가입 - 취업 할래말래</title>
-    <link rel="shortcut icon" href="/static/images/favicon.ico" />
-    <link rel="stylesheet" href="../assets/signup.css" />
+
+    <link
+      rel="shortcut icon"
+      href="/static/images/favicon.ico"
+    />
+    <link
+      rel="stylesheet"
+      href="/assets/signup.css"
+    />
   </head>
+
   <body>
     <div class="signup-container">
       <h1 class="page-title">회원가입</h1>
-                                             
+
       <div class="signup-content">
-        <!-- 좌측 회원 정보 입력 폼 -->
+        <!-- 왼쪽 회원 정보 입력 영역 -->
         <div class="form-section">
-             <!-- 경고 메세지 -->
-            <div class="warning-message">
-              {% if messege %}
-                    {{ messege }}
-                {% endif %}   
-            </div>
+          <!-- 경고 메시지 -->
+          <div class="warning-message">
+            {% if messege %}
+              {{ messege }}
+            {% endif %}
+          </div>
 
-
-
-          <form method="post" action="/api/signup">
-            <!-- 이름입력-->
+          <form
+            id="signup-form"
+            method="post"
+            action="/api/signup"
+          >
+            <!-- 이름 -->
             <div class="input-row">
               <input
-                type="tel"
-                placeholder="이름 입력"
+                type="text"
                 class="form-input"
                 name="user_name"
+                placeholder="이름 입력"
+                required
               />
             </div>
+
             <!-- 아이디 -->
             <div class="input-row">
               <input
                 type="text"
-                placeholder="아이디"
-                class="form-input flex-grow"
+                class="form-input"
                 name="user_id"
+                id="user_id"
+                placeholder="아이디"
+                maxlength="12"
+                required
               />
 
               <button
-                type="submit"
+                type="button"
                 class="id_Chk"
-                formaction="/api/check-id"
-                formmethod="get"
+                onclick="chk_id()"
               >
                 중복확인
               </button>
@@ -56,9 +74,10 @@
             <div class="input-row">
               <input
                 type="password"
-                placeholder="비밀번호"
                 class="form-input"
                 name="user_pw"
+                placeholder="비밀번호"
+                required
               />
             </div>
 
@@ -66,9 +85,10 @@
             <div class="input-row">
               <input
                 type="password"
-                placeholder="비밀번호 확인"
                 class="form-input"
-                name="user_pw"
+                id="user_pw_confirm"
+                placeholder="비밀번호 확인"
+                required
               />
             </div>
 
@@ -76,9 +96,10 @@
             <div class="input-row">
               <input
                 type="text"
-                placeholder="닉네임"
                 class="form-input"
                 name="user_nickname"
+                placeholder="닉네임"
+                required
               />
             </div>
 
@@ -86,22 +107,23 @@
             <div class="input-row">
               <input
                 type="text"
-                placeholder="주소"
                 class="form-input flex-grow"
                 name="user_home"
+                placeholder="주소"
+                required
               />
-              <button type="button" class="btn btn-purple btn-small">
-                주소 검색
-              </button>
+
+             
             </div>
 
             <!-- 이메일 -->
             <div class="input-row">
               <input
                 type="email"
-                placeholder="이메일: (@mail.com형식으로 입력)"
                 class="form-input"
                 name="user_email"
+                placeholder="이메일: example@mail.com"
+                required
               />
             </div>
 
@@ -109,23 +131,26 @@
             <div class="input-row">
               <input
                 type="tel"
-                placeholder="전화번호는 010-1234-5678 형식으로 입력"
                 class="form-input"
                 name="user_phone"
+                placeholder="전화번호: 010-1234-5678"
+                required
               />
             </div>
 
-           
-
-            <!-- 액션 버튼 -->
+            <!-- 가입 및 취소 버튼 -->
             <div class="action-buttons">
-              <button type="submit" class="btn btn-purple btn-large">
+              <button
+                type="submit"
+                class="btn btn-purple btn-large"
+              >
                 가입
               </button>
+
               <button
                 type="button"
                 class="btn btn-purple btn-large"
-                onclick="location.href = '/jobgogo'"
+                onclick="location.href='/jobgogo'"
               >
                 취소
               </button>
@@ -133,11 +158,10 @@
           </form>
         </div>
 
-                
-
-        <!-- 우측 약관 영역 -->
+        <!-- 오른쪽 약관 영역 -->
         <div class="terms-section">
           <h2 class="terms-main-title">약관 동의</h2>
+
           <p class="terms-description">
             서비스 이용을 위해 아래 약관에 동의해주세요.
           </p>
@@ -149,8 +173,8 @@
             <div class="terms-box">
               <h4>제1조 (목적)</h4>
               <p>
-                본 약관은 '취업 할래말래'가 제공하는 서비스의 이용조건 및 절차,
-                회원의 권리와 의무 등을 규정함을 목적으로 합니다.
+                본 약관은 '취업 할래말래'가 제공하는 서비스의 이용조건 및
+                절차, 회원의 권리와 의무 등을 규정함을 목적으로 합니다.
               </p>
 
               <h4>제2조 (용어의 정의)</h4>
@@ -165,13 +189,14 @@
 
               <h4>제3조 (약관의 효력)</h4>
               <p>
-                본 약관은 회원이 동의하고 회원가입을 완료한 때부터 적용됩니다.
+                본 약관은 회원이 동의하고 회원가입을 완료한 때부터
+                적용됩니다.
               </p>
 
               <h4>제4조 (회원의 의무)</h4>
               <p>
-                회원은 타인의 정보를 도용하거나 서비스 운영을 방해해서는 안
-                됩니다.
+                회원은 타인의 정보를 도용하거나 서비스 운영을 방해해서는
+                안 됩니다.
               </p>
 
               <h4>제5조 (서비스 이용)</h4>
@@ -186,33 +211,41 @@
                 type="checkbox"
                 class="agree-check"
                 id="agree-service"
+                form="signup-form"
                 required
               />
-              <span>[필수] 서비스 이용약관에 동의합니다.</span>
+
+              <span>
+                [필수] 서비스 이용약관에 동의합니다.
+              </span>
             </label>
           </div>
 
-          <!-- 개인정보 수집 동의 -->
+          <!-- 개인정보 수집 및 이용 -->
           <div class="terms-card">
             <h3 class="terms-title">개인정보 수집 및 이용</h3>
 
             <div class="terms-box privacy-box">
               <h4>1. 수집하는 개인정보</h4>
-              <p>이름, 아이디, 비밀번호, 닉네임, 이메일, 전화번호, 주소</p>
+              <p>
+                이름, 아이디, 비밀번호, 닉네임, 이메일, 전화번호, 주소
+              </p>
 
               <h4>2. 개인정보 이용 목적</h4>
-              <p>회원 관리, 서비스 제공, 문의사항 처리 및 부정 이용 방지</p>
+              <p>
+                회원 관리, 서비스 제공, 문의사항 처리 및 부정 이용 방지
+              </p>
 
               <h4>3. 개인정보 보유 기간</h4>
               <p>
-                회원 탈퇴 시까지 보유하며, 관련 법령에 따라 보관이 필요한 정보는
-                해당 기간 동안 보관합니다.
+                회원 탈퇴 시까지 보유하며, 관련 법령에 따라 보관이 필요한
+                정보는 해당 기간 동안 보관합니다.
               </p>
 
               <h4>4. 동의 거부 권리</h4>
               <p>
-                개인정보 수집에 동의하지 않을 수 있으나, 필수 항목에 동의하지
-                않으면 회원가입이 제한될 수 있습니다.
+                개인정보 수집에 동의하지 않을 수 있으나, 필수 항목에
+                동의하지 않으면 회원가입이 제한될 수 있습니다.
               </p>
             </div>
 
@@ -221,56 +254,108 @@
                 type="checkbox"
                 class="agree-check"
                 id="agree-privacy"
+                form="signup-form"
                 required
               />
-              <span>[필수] 개인정보 수집 및 이용에 동의합니다.</span>
+
+              <span>
+                [필수] 개인정보 수집 및 이용에 동의합니다.
+              </span>
             </label>
           </div>
 
           <!-- 전체 동의 -->
           <div class="agree-all-box">
             <label class="agree-label">
-              <input type="checkbox" id="agree-all" />
+              <input
+                type="checkbox"
+                id="agree-all"
+              />
+
               <span>전체 약관에 동의합니다.</span>
             </label>
           </div>
         </div>
       </div>
     </div>
-    <!-- ###################################################################### -->
+
     <script>
       window.addEventListener("load", function () {
         hasAgreedToTerms();
-
-       
       });
 
+      // 약관 전체 동의 처리
       function hasAgreedToTerms() {
-        // 전체 선택
         const agreeAll = document.getElementById("agree-all");
-        const agreePrivacy = document.getElementById("agree-privacy");
-        const agreeService = document.getElementById("agree-service");
+        const agreePrivacy =
+          document.getElementById("agree-privacy");
+        const agreeService =
+          document.getElementById("agree-service");
 
-        // 전체 동의 체크했을 경우
+        // 전체 동의를 눌렀을 때
         agreeAll.addEventListener("change", function () {
           agreePrivacy.checked = agreeAll.checked;
           agreeService.checked = agreeAll.checked;
         });
 
-        // 개별 선택의 경우
+        // 개별 약관을 눌렀을 때
         agreePrivacy.addEventListener("change", checkAgree);
         agreeService.addEventListener("change", checkAgree);
 
         function checkAgree() {
-          if (agreeService.checked && agreePrivacy.checked) {
+          if (
+            agreeService.checked &&
+            agreePrivacy.checked
+          ) {
             agreeAll.checked = true;
           } else {
             agreeAll.checked = false;
           }
         }
       }
-      
-    
+
+      // 아이디 중복확인
+      async function chk_id() {
+        const userId = document
+          .getElementById("user_id")
+          .value
+          .trim();
+
+        if (userId === "") {
+          alert("아이디를 입력해주세요!");
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            "/api/check-id?user_id=" +
+              encodeURIComponent(userId)
+          );
+
+          const result = await response.json();
+
+          alert(result.msg);
+        } catch (error) {
+          alert("중복확인 중 오류가 발생했습니다!");
+        }
+      }
+
+      // 비밀번호 확인
+      document
+        .getElementById("signup-form")
+        .addEventListener("submit", function (event) {
+          const password = document.querySelector(
+            'input[name="user_pw"]'
+          ).value;
+
+          const passwordConfirm =
+            document.getElementById("user_pw_confirm").value;
+
+          if (password !== passwordConfirm) {
+            event.preventDefault();
+            alert("비밀번호가 일치하지 않습니다!");
+          }
+        });
     </script>
   </body>
 </html>
