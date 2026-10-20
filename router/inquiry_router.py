@@ -8,7 +8,7 @@ from sqlmodel import Session, create_engine,text
 
 from database import get_session
 from DTO.InquiryDTO import Inquiry
-
+from fastapi.responses import HTMLResponse
 from fastapi import Form
 
 router = APIRouter()
@@ -20,22 +20,31 @@ templates = Jinja2Templates(directory='templates/')
 ################################################################################
 
 @router.get('/inquiry')
-def inquiry(request:Request):
+def inquiry(request: Request):
+
     print('1대일 문의 게시판 접속 성공함')
-    # 로그인 안한 사람이 일대일 문의 게시판 접속 못하게 막는 코드
+
     user_id = request.session.get('user_id')
-    print('id 체크',user_id)
+    print('id 체크', user_id)
 
-
+    # 로그인하지 않은 사용자
     if user_id is None:
-            return RedirectResponse(
-                url='/jobgogo',
-                status_code=303
-            )
+        html_content = '''
+        <script>
+            alert('로그인한 유저만 사용가능합니다.');
+            window.location.href='/jobgogo/login';
+        </script>
+        '''
 
+        return HTMLResponse(
+            content=html_content,
+            status_code=200
+        )
+
+    # 로그인한 사용자
     return templates.TemplateResponse(
-        request,'inquiry.html',
-
+        request=request,
+        name='inquiry.html',
         context={
             'user_id': user_id,
             'user_name': request.session.get('user_name'),
