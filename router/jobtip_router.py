@@ -542,16 +542,33 @@ def jobtip_delete(
         return popup_error("본인이 작성한 게시글만 지울 수 있습니다.")
 
     try:
-        sql_delete_reple = text('''
+        # 댓글 먼저 삭제
+        sql_delete_leaf = text('''
             DELETE FROM job_tip_comment
             WHERE job_tip_no = :job_tip_no
+            AND NOT EXISTS (
+                SELECT 1
+                FROM (
+                    SELECT parent_reple_no
+                    FROM job_tip_comment
+                    WHERE parent_reple_no is not null
+                ) AS cno
+                WHERE cno.parent_reple_no
+                      = job_tip_comment.reple_no
+            )
         ''')
 
-        session.execute(
-            sql_delete_reple,
-            {'job_tip_no': job_tip_no}
-        )
+        while True:
+            result = session.execute(
+                sql_delete_leaf,
+                {'job_tip_no': job_tip_no}
+            )
 
+            # 삭제할 댓글이 없으면 반복 종료
+            if result.rowcount == 0:
+                break
+
+                # 글 삭제
         sql_delete_jobtip = text('''
             DELETE FROM job_tip
             WHERE job_tip_no = :job_tip_no
@@ -780,5 +797,95 @@ def jobtip_update_save(
 
     return RedirectResponse(
         url=f'/jobtip/{job_tip_no}',
+        status_code=303
+    )
+
+
+# 신고 버튼
+@router.post("/jobtip/{job_tip_no}/report")
+def jobtip_report(
+    request: Request,
+    job_tip_no: int,
+    report_reason: str = Form(...),
+    report_detail: str = Form(""),
+    session: Session = Depends(get_session)
+):
+
+    # 로그인한 사용자 확인
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+        return RedirectResponse(
+            url="/jobgogo/login",
+            status_code=303
+        )
+
+    # 신고 사유 검증
+    valid_reasons = {
+        "스팸 / 광고",
+        "욕설 / 비방",
+        "부적절한 게시글",
+        "저작권 침해",
+        "기타"
+    }
+
+    if report_reason not in valid_reasons:
+        return popup_error("올바른 신고 사유를 선택해주세요.")
+
+    # 기타 사유일 경우 상세 내용 확인
+    report_detail = report_detail.strip()
+
+    if report_reason == "기타" and not report_detail:
+        return popup_error("상세 신고 사유를 입력해주세요.")
+
+    # 신고 대상 게시글 확인
+    sql_check = text("""
+        select job_tip_no
+        from job_tip
+        where job_tip_no = :job_tip_no
+    """)
+
+    job = session.execute(
+        sql_check,
+        {"job_tip_no": job_tip_no}
+    ).first()
+
+    if not job:
+        return popup_error("존재하지 않는 게시글입니다.")
+
+    # 신고 데이터 저장
+    sql_report = text("""
+    insert into report_logs (
+        report_reason,
+        user_id,
+        job_tip_no
+    )
+    values (
+        :report_reason,
+        :user_id,
+        :job_tip_no
+    )
+    """)
+
+    # 현재 테이블에는 상세 내용 컬럼이 없으므로
+    # 기타 사유일 때 상세 내용을 report_reason에 저장
+    if report_reason == "기타":
+        final_reason = f"기타: {report_detail}"
+    else:
+        final_reason = report_reason
+
+    session.execute(
+        sql_report,
+        {
+            "report_reason": final_reason,
+            "user_id": user_id,
+            "job_tip_no": job_tip_no
+        }
+    )
+
+    session.commit()
+
+    return RedirectResponse(
+        url=f"/jobtip/{job_tip_no}",
         status_code=303
     )

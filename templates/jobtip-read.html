@@ -10,23 +10,102 @@
     <link rel="stylesheet" href="/assets/header.css">
     <link rel="stylesheet" href="/assets/footer.css">
     <link rel="stylesheet" href="../assets/comment.css">
-    <!-- FontAwesome (프로필 아이콘 등을 위해 사용) -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<style>
-    .jobtip-content {
-        min-height: 250px;
-        padding: 20px;
-        overflow-wrap: anywhere;
-        line-height: 1.8;
-    }
+    <style>
+        .jobtip-content {
+            min-height: 250px;
+            padding: 20px;
+            overflow-wrap: anywhere;
+            line-height: 1.8;
+        }
 
-    .jobtip-content img {
-        max-width: 100%;
-        height: auto;
-    }
-</style>
+        .jobtip-content img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* 신고 팝업 배경 */
+        .report-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 신고 팝업 본문 */
+        .report-modal-content {
+            background: white;
+            padding: 30px;
+            width: 400px;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .report-modal-content h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .report-modal-content label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .report-modal-content select,
+        .report-modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .report-modal-content textarea {
+            resize: vertical;
+        }
+
+        /* 신고 팝업 버튼 */
+        .report-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .report-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .report-buttons .btn-close {
+            background: #ddd;
+            color: #333;
+        }
+
+        .report-buttons .btn-report {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .report-buttons .btn-report:hover {
+            background: #c0392b;
+        }
+    </style>
 </head>
+
 <body>
 
     <!-- 상단 헤더 -->
@@ -71,6 +150,7 @@
             </div>
 
             <div class="jobtip-content">
+
                 <div id="post-detail">
                     {{ job.job_tip_detail | safe }}
                 </div>
@@ -78,6 +158,7 @@
                 {% for image in attachment_paths %}
                 <img src="{{ image }}" alt="첨부 이미지">
                 {% endfor %}
+
             </div>
 
             <script>
@@ -88,25 +169,51 @@
                     }
                 });
             </script>
+
             <!-- 하단 버튼 -->
             <div class="button-group">
 
-                <button type="button" class="btn btn-primary" onclick="location.href='/jobgogo/jobtip'">
+                <!-- 목록 버튼 -->
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="location.href='/jobgogo/jobtip'"
+                >
                     목록으로
                 </button>
 
-
                 <!-- 삭제 버튼 -->
-                <form action="/jobtip/{{ job.job_tip_no }}/delete" method="post"
-                    onsubmit="return confirm('정말 삭제하시겠습니까?');" style="display: inline;">
+                <form
+                    action="/jobtip/{{ job.job_tip_no }}/delete"
+                    method="post"
+                    onsubmit="return confirm('정말 삭제하시겠습니까?');"
+                    style="display: inline;"
+                >
                     <button type="submit" class="btn btn-cancel">
                         삭제
                     </button>
                 </form>
 
-                <a href="/jobtip/{{job.job_tip_no}}/update" class="btn-update">
-                    수정
-                </a>
+                <!-- 수정 버튼 -->
+                <form
+                    action="/jobtip/{{ job.job_tip_no }}/update"
+                    method="get"
+                    style="display: inline;"
+                >
+                    <button type="submit" class="btn btn-cancel">
+                        수정
+                    </button>
+                </form>
+
+                <!-- 신고 버튼 -->
+                <button
+                    type="button"
+                    class="btn btn-cancel"
+                    onclick="openReportModal()"
+                >
+                    신고
+                </button>
+
             </div>
 
         </div>
@@ -116,8 +223,133 @@
 
     </main>
 
+    <!-- 신고 팝업 -->
+    <div id="reportModal" class="report-modal">
+
+        <div class="report-modal-content"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="reportModalTitle">
+
+            <h2 id="reportModalTitle">게시글 신고</h2>
+
+            <form
+                id="reportForm"
+                action="/jobtip/{{ job.job_tip_no }}/report"
+                method="post"
+                onsubmit="return confirmReport();"
+            >
+
+                <!-- 신고 대상 게시글 -->
+                <input
+                    type="hidden"
+                    name="job_tip_no"
+                    value="{{ job.job_tip_no }}"
+                >
+
+                <!-- 신고 사유 -->
+                <label for="report_reason">
+                    신고 사유
+                </label>
+
+                <select
+                    id="report_reason"
+                    name="report_reason"
+                    required
+                >
+                    <option value="">신고 사유 선택</option>
+                    <option value="스팸 / 광고">스팸 / 광고</option>
+                    <option value="욕설 / 비방">욕설 / 비방</option>
+                    <option value="부적절한 게시글">부적절한 게시글</option>
+                    <option value="저작권 침해">저작권 침해</option>
+                    <option value="기타">기타</option>
+                </select>
+
+                <!-- 상세 신고 내용 -->
+                <label for="report_detail">
+                    상세 내용
+                </label>
+
+                <textarea
+                    id="report_detail"
+                    name="report_detail"
+                    placeholder="신고 사유를 자세히 입력해주세요."
+                    rows="5"
+                ></textarea>
+
+                <!-- 신고 팝업 버튼 -->
+                <div class="report-buttons">
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        onclick="closeReportModal()"
+                    >
+                        취소
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-report"
+                    >
+                        신고하기
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
     <!-- 하단 푸터 -->
     {% include 'footer.html' %}
+
+    <script>
+
+        // 신고창 열기
+        function openReportModal() {
+            document.getElementById("reportModal").style.display = "flex";
+            document.getElementById("report_reason").focus();
+        }
+
+        // 신고창 닫기
+        function closeReportModal() {
+            document.getElementById("reportModal").style.display = "none";
+        }
+
+        // 신고 확인
+        function confirmReport() {
+
+            const reason = document.getElementById("report_reason").value;
+            const detail = document.getElementById("report_detail").value.trim();
+            if (!reason) {
+                alert("신고 사유를 선택해주세요.");
+                return false;
+            }
+
+            if (reason === "other" && !detail) {
+                alert("기타 신고 사유를 입력해주세요.");
+                return false;
+            }
+
+            return confirm("정말 이 게시글을 신고하시겠습니까?");
+        }
+
+        // 팝업 바깥 클릭 시 닫기
+        document.getElementById("reportModal").addEventListener(
+            "click",
+            function(event) {
+
+                if (event.target === this) {
+                    closeReportModal();
+                }
+
+            }
+        );
+
+    </script>
 
 </body>
 </html>
