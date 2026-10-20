@@ -594,21 +594,30 @@ def delete_post(
     try:
         # 카테고리 값에 따라 대상 테이블과 PK 컬럼을 분기 
         if category in ['공지' , '공지사항']:
-            sql = text('''
+            sql_notice = text('''
                 delete from notice
                 where notice_id = :post_number
             ''')
+            session.execute(sql_notice, {'post_number' : post_number , 'category' : category})
         else:
-            sql_comment = text ('''
+            # 대댓글을 먼저 삭제 
+            sql_child_comment = text ('''
                 delete from job_tip_comment 
-                where job_tip_no = :post_number and parent_reple_no is not null 
+                where job_tip_no = :post_number and parent_reple_no is not null
             ''')
-            sql_post = text('''
+            # 나머지 일반 댓글 삭제 
+            sql_parent_comment = text('''
+                delete from job_tip_comment 
+                where job_tip_no = :post_number
+            ''')
+            # 게시글 본문 삭제
+            sql_post = text ('''
                 delete from job_tip
-                where job_tip_no = :post_number 
+                where job_tip_no = :post_number
             ''')
-        session.execute(sql_comment , {'post_number' : post_number})
-        session.execute(sql_post, {'post_number' : post_number , 'category' : category})
+        session.execute(sql_child_comment , {'post_number' : post_number})
+        session.execute(sql_parent_comment, {'post_number' : post_number})
+        session.execute(sql_post, {'post_number' : post_number})
         session.commit()
 
         return RedirectResponse (
