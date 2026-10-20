@@ -68,6 +68,7 @@ def chat_result(
     request: Request,
     # 사용자가 입력한거
     question: str = Form(...),
+    # 세션의존성 주입
     session: Session = Depends(get_session)
     
     
@@ -89,7 +90,7 @@ def chat_result(
         )
      # 질문 내용을 실제로 db에 저장하는 과정 추가
      
-
+#    질문을 전송함과 동시에 ai_chat_romm에 시간과 user_id를 저장함
     sql=text('''
            insert into ai_chat_room(
             ai_chat_date,user_id)
@@ -152,8 +153,8 @@ def chat_result(
 
     # 5. HTML에서 사용할 데이터 형식으로 변환
     jobs = []
-
-    for job in results:
+    # jobs는 딕셔너리임
+    for job in results: 
 
         jobs.append({
             "recrut_pblnt_sn": job.get("recrutPblntSn"),

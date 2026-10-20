@@ -484,6 +484,7 @@ def jobtip_comment_delete(
         WHERE reple_no = :reple_no
         AND job_tip_no = :job_tip_no
         AND user_id = :user_id
+        AND reple_no=:reple_no
     ''')
 
     result = session.execute(
